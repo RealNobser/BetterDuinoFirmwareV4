@@ -165,6 +165,7 @@
 #include <Arduino.h>
 #include <SendOnlySoftwareSerial.h>
 #include <config.h>
+#include "Panel.h"
 
 #define SERIALBUFFERSIZE 256
 
@@ -201,6 +202,21 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
     protected:
         SendOnlySoftwareSerial Serial_MP3   = SendOnlySoftwareSerial(P_MP3);
         SendOnlySoftwareSerial Serial_Slave = SendOnlySoftwareSerial(P_SLAVE);
+
+        Panel Panel1 = Panel(90, 180);
+        Panel Panel2 = Panel(90, 180);
+        Panel Panel3 = Panel(90, 180);
+        Panel Panel4 = Panel(90, 180);
+        Panel Panel5 = Panel(90, 180);
+        Panel Panel6 = Panel(90, 180);
+        Panel Panel7 = Panel(90, 180);
+        Panel Panel8 = Panel(90, 180);
+        Panel Panel9 = Panel(90, 180);
+        Panel Panel10= Panel(90, 180);
+        Panel Panel11= Panel(90, 180);
+
+        Panel* Panel0 = nullptr;    // Placeholder for index
+        Panel* Panels[MAX_PANELS+1];
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);

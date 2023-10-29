@@ -59,6 +59,7 @@
 #define P_SERVO_09  12
 #define P_SERVO_10  13
 #define P_SERVO_11  7
+#define MAX_PANELS  11
 
 #define P_MP3       15
 #define P_SLAVE     14

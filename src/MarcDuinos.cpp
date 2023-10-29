@@ -87,6 +87,33 @@ void MarcDuinoDomeMaster::init()
     Serial_Slave.println("To Slave");
     Serial_MP3.println("To MP3");
     #endif
+
+    // Panels
+    Panel1.attach(P_SERVO_01);
+    Panel2.attach(P_SERVO_02);
+    Panel3.attach(P_SERVO_03);
+    Panel4.attach(P_SERVO_04);
+    Panel5.attach(P_SERVO_05);
+    Panel6.attach(P_SERVO_06);
+    Panel7.attach(P_SERVO_07);
+    Panel8.attach(P_SERVO_08);
+    Panel9.attach(P_SERVO_09);
+    Panel10.attach(P_SERVO_10);
+    Panel11.attach(P_SERVO_11);
+
+    Panels[0] = Panel0;
+    Panels[1] = &Panel1;
+    Panels[2] = &Panel2;
+    Panels[3] = &Panel3;
+    Panels[4] = &Panel4;
+    Panels[5] = &Panel5;
+    Panels[6] = &Panel6;
+    Panels[7] = &Panel7;
+    Panels[8] = &Panel8;
+    Panels[9] = &Panel9;
+    Panels[10]= &Panel10;
+    Panels[11]= &Panel11;
+
 }
 
 void MarcDuinoDomeMaster::run()
@@ -184,27 +211,35 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
 
     int param_num = atoi(param);
 
-    if (strcmp(cmd, "SE"))
+    if (strcmp(cmd, "SE")==0)
     {
 
     } 
-    else if (strcmp(cmd, "OP"))
+    else if (strcmp(cmd, "OP")==0)
     {
-        
+        if ((param_num > 0) && (param_num <=MAX_PANELS))
+        {
+            Panels[param_num]->open();
+            Panels[param_num]->stop();
+        }
     }
-    else if (strcmp(cmd, "CL"))
+    else if (strcmp(cmd, "CL")==0)
+    {
+        if ((param_num > 0) && (param_num <=MAX_PANELS))
+        {
+            Panels[param_num]->close();
+            Panels[param_num]->stop();
+        }
+    }
+    else if (strcmp(cmd, "RC")==0)
     {
 
     }
-    else if (strcmp(cmd, "RC"))
+    else if (strcmp(cmd, "ST")==0)
     {
 
     }
-    else if (strcmp(cmd, "ST"))
-    {
-
-    }
-    else if (strcmp(cmd, "HD"))
+    else if (strcmp(cmd, "HD")==0)
     {
 
     }
