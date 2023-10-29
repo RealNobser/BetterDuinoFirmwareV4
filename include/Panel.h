@@ -6,8 +6,10 @@
 class Panel
 {
     public:
-        Panel(VarSpeedServo& Servo);
-        Panel(VarSpeedServo& Servo, const int OpenPos, const int ClosedPos);
+        Panel(VarSpeedServo& Servo, const int Pin);
+        Panel(VarSpeedServo& Servo, const int Pin, const int OpenPos, const int ClosedPos);
+        void attach();
+        void detach();
         void open();
         void close();
         void angle(const int angle);
@@ -17,7 +19,7 @@ class Panel
 
     protected:
         VarSpeedServo& Servo;
-
+        int Pin         = 0;
         int OpenPos     = 0;
         int ClosedPos   = 0;
 };

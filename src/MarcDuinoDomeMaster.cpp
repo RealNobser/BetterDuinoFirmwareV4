@@ -32,39 +32,17 @@ void MarcDuinoDomeMaster::init()
     #endif
 
     // TODO: Get Max/Min // Open Close from EEPROM!
-    Servo1.attach(P_SERVO_01);
-    Panels[1] = new Panel(Servo1, 90,180);
-
-    Servo2.attach(P_SERVO_02);
-    Panels[2] = new Panel(Servo2, 90,180);
-
-    Servo3.attach(P_SERVO_03);
-    Panels[3] = new Panel(Servo3, 90,180);
-
-    Servo4.attach(P_SERVO_04);
-    Panels[4] = new Panel(Servo4, 90,180);
-
-    Servo5.attach(P_SERVO_05);
-    Panels[5] = new Panel(Servo5, 90,180);
-
-    Servo6.attach(P_SERVO_06);
-    Panels[6] = new Panel(Servo6, 90,180);
-
-    Servo7.attach(P_SERVO_07);
-    Panels[7] = new Panel(Servo7, 90,180);
-
-    Servo8.attach(P_SERVO_08);
-    Panels[8] = new Panel(Servo8, 90,180);
-
-    Servo9.attach(P_SERVO_09);
-    Panels[9] = new Panel(Servo9, 90,180);
-
-    Servo10.attach(P_SERVO_10);
-    Panels[10] = new Panel(Servo10, 90,180);
-
-    Servo11.attach(P_SERVO_11);
-    Panels[11] = new Panel(Servo11, 90,180);
-
+    Panels[1] = new Panel(Servo1, P_SERVO_01, 90,180);
+    Panels[2] = new Panel(Servo2, P_SERVO_02, 90,180);
+    Panels[3] = new Panel(Servo3, P_SERVO_03, 90,180);
+    Panels[4] = new Panel(Servo4, P_SERVO_04, 90,180);
+    Panels[5] = new Panel(Servo5, P_SERVO_05, 90,180);
+    Panels[6] = new Panel(Servo6, P_SERVO_06, 90,180);
+    Panels[7] = new Panel(Servo7, P_SERVO_07, 90,180);
+    Panels[8] = new Panel(Servo8, P_SERVO_08, 90,180);
+    Panels[9] = new Panel(Servo9, P_SERVO_09, 90,180);
+    Panels[10] = new Panel(Servo10, P_SERVO_10, 0,180);
+    Panels[11] = new Panel(Servo11, P_SERVO_11, 0,180);
 }
 
 void MarcDuinoDomeMaster::run()
@@ -162,11 +140,11 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
 
     int param_num = atoi(param);
 
-    if (strcmp(cmd, "SE")==0)
+    if (strcmp(cmd, "SE")==0)       // Start Sequence
     {
 
     } 
-    else if (strcmp(cmd, "OP")==0)
+    else if (strcmp(cmd, "OP")==0)  // Open Panel
     {
         #ifdef DEBUG
         Serial.print("Open Panel ");
@@ -178,7 +156,7 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
             Panels[param_num]->open();
         }
     }
-    else if (strcmp(cmd, "CL")==0)
+    else if (strcmp(cmd, "CL")==0)  // Close Panel
     {
         #ifdef DEBUG
         Serial.print("Open Panel ");
@@ -196,11 +174,29 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
     }
     else if (strcmp(cmd, "ST")==0)
     {
-
+        if ((param_num > 0) && (param_num <=MAX_PANELS))
+        {
+            Panels[param_num]->detach();
+        }
+        else if (param_num == 0)    // Alle panles
+        {
+            for(int i=1; i <= MAX_PANELS; ++i)
+            {
+                Panels[i]->detach();
+            }
+        }
     }
     else if (strcmp(cmd, "HD")==0)
     {
 
+    }
+    // NEW
+    else if (strcmp(cmd, "DT")==0)  // Detach servo from pin
+    {
+        if ((param_num > 0) && (param_num <=MAX_PANELS))
+        {
+            Panels[param_num]->detach();
+        }       
     }
 
 }
