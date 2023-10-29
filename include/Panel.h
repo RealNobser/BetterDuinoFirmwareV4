@@ -3,17 +3,23 @@
 
 #include <VarSpeedServo.h>
 
-class Panel : public VarSpeedServo
+class Panel
 {
     public:
-        Panel(int OpenPos, int ClosedPos);
+        Panel(VarSpeedServo& Servo);
+        Panel(VarSpeedServo& Servo, const int OpenPos, const int ClosedPos);
         void open();
         void close();
-        void angle(int angle);
+        void angle(const int angle);
+        void setEndPositions(const int OpenPos, const int ClosedPos);
+        void setOpenPos(const int Pos);
+        void setClosedPos(const int Pos);
 
     protected:
-        int OpenPos = 0;
-        int ClosedPos = 0;
+        VarSpeedServo& Servo;
+
+        int OpenPos     = 0;
+        int ClosedPos   = 0;
 };
 
 #endif // __PANEL_H__

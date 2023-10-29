@@ -1,6 +1,14 @@
+
 #include "Panel.h"
 
-Panel::Panel(int OpenPos, int ClosedPos) :
+Panel::Panel(VarSpeedServo& Servo) :
+    Servo(Servo)
+{
+
+}
+
+Panel::Panel(VarSpeedServo& Servo, const int OpenPos, const int ClosedPos) :
+    Servo(Servo),
     OpenPos(OpenPos),
     ClosedPos(ClosedPos)
 {
@@ -8,15 +16,31 @@ Panel::Panel(int OpenPos, int ClosedPos) :
 }
 void Panel::open()
 {
-    write(OpenPos, 255, true);
+    Servo.write(OpenPos, 255);
 }
 
 void Panel::close()
 {
-    write(ClosedPos, 255, true);
+    Servo.write(ClosedPos, 255);
 }
 
-void Panel::angle(int angle)
+void Panel::angle(const int angle)
 {
-    write(angle, 255, true);
+    Servo.write(angle, 255);
+}
+
+void Panel::setEndPositions(const int OpenPos, const int ClosedPos)
+{
+    this->OpenPos     = OpenPos;
+    this->ClosedPos   = ClosedPos;
+}
+
+void Panel::setOpenPos(const int Pos)
+{
+    this->OpenPos = Pos;
+}
+
+void Panel::setClosedPos(const int Pos)
+{
+    this->ClosedPos = Pos;
 }
