@@ -13,11 +13,11 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
 
-        void init();
-        void run();
+        void init() override;
+        void run() override;
 
         virtual void parseCommand(const char* command) override;
-        virtual const char* getProductName()  { return "MarcDuino Dome Master"; }
+        virtual const char* getProductName() override  { return "MarcDuino Dome Master"; }
 
     protected:
         SendOnlySoftwareSerial& Serial_Slave;

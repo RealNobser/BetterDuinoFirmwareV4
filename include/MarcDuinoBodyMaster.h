@@ -108,18 +108,15 @@ class MarcDuinoBodyMaster : public MarcDuinoBase
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
 
-        void init();
-        void run();
+        void init() override;
+        void run() override;
 
-        virtual void parseCommand(const char* command);
-        virtual const char* getProductName() { return "MarcDuino Body Master"; }
+        virtual void parseCommand(const char* command) override;
+        virtual const char* getProductName() override { return "MarcDuino Body Master"; }
 
     protected:
         SendOnlySoftwareSerial& Serial_Slave;
         SendOnlySoftwareSerial& Serial_MP3;
-
-        Panel* Panels[MAX_PANELS+1];
-
 };
 
 #endif // __MARCDUINOBODYMASTER_H__

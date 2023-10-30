@@ -158,14 +158,14 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
         {
             for (int i=7; i<=MAX_PANELS; i++)
             {
-                Panels[param_num]->open();
+                Panels[i]->open();
             }
         }
         else if (param_num == 15)    // Open Bottom Panels
         {
             for (int i=1; i<=6; i++)
             {
-                Panels[param_num]->open();
+                Panels[i]->open();
             }
         }
 
@@ -201,14 +201,14 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
         {
             for (int i=7; i<=MAX_PANELS; i++)
             {
-                Panels[param_num]->close();
+                Panels[i]->close();
             }
         }
         else if (param_num == 15)    // Open Bottom Panels
         {
             for (int i=1; i<=6; i++)
             {
-                Panels[param_num]->close();
+                Panels[i]->close();
             }
         }        
     }

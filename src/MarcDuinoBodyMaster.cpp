@@ -13,11 +13,6 @@ MarcDuinoBodyMaster::MarcDuinoBodyMaster(SendOnlySoftwareSerial& Serial_Slave, S
 
   Serial_MP3.begin(SERIAL_MP3_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
   while(!Serial_MP3);
-
-  for(int i=0; i <= MAX_PANELS; ++i)
-  {
-    Panels[i] = nullptr;
-  }
 }
 
 void MarcDuinoBodyMaster::init()

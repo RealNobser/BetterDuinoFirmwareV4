@@ -13,7 +13,7 @@ MarcDuinoDomeSlave::MarcDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, Sen
     while(!Serial_Magic);
 
     Serial_Teeces.begin(SERIAL_TEECES_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
-    while(!Serial_Teeces);
+    while(!Serial_Teeces);    
 }
 
 void MarcDuinoDomeSlave::init()

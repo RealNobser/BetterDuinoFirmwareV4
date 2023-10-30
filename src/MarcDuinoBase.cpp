@@ -6,7 +6,7 @@ MarcDuinoBase::MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSp
     Servo1(Servo1), Servo2(Servo2), Servo3(Servo3), Servo4(Servo4), Servo5(Servo5), 
     Servo6(Servo6), Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11) 
 {
-
+    memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
 }
 
 void MarcDuinoBase::init()
@@ -148,7 +148,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
 
     #ifdef DEBUG
     Serial.print("SetupCommand(Base): ");
-    Serial.println((char*)command);
+    Serial.println((const char*)command);
     #endif
 
     if (!separateCommand(command, cmd, param_num))
