@@ -6,6 +6,8 @@
 #include <SendOnlySoftwareSerial.h>
 #include <VarSpeedServo.h>
 
+#include "MarcDuinoStorage.h"
+
 class MarcDuinoBase
 {
     public:
@@ -28,6 +30,8 @@ class MarcDuinoBase
         char SerialBuffer[SERIALBUFFERSIZE];
         int BufferIndex = 0;
 
+        MarcDuinoStorage Storage;
+
         VarSpeedServo& Servo1;
         VarSpeedServo& Servo2;
         VarSpeedServo& Servo3;
@@ -40,7 +44,10 @@ class MarcDuinoBase
         VarSpeedServo& Servo10;
         VarSpeedServo& Servo11;
 
+        bool separateCommand(const char* command, char* cmd, unsigned int & param_num);
         void processSetupCommand(const char* command);
+
+        void(* resetFunc) (void) = 0;
 };
 
 #endif

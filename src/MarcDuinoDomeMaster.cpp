@@ -111,34 +111,17 @@ void MarcDuinoDomeMaster::parseCommand(const char* command)
 void MarcDuinoDomeMaster::processPanelCommand(const char* command)
 {
     char cmd[3];
-    char param[3];
+    unsigned int param_num = 0;
+
+    memset(cmd, 0x00, 3);
 
     #ifdef DEBUG
     Serial.print("PanelCommand(Master): ");
     Serial.println((char*)command);
     #endif
 
-    memset(cmd, 0x00, 3);
-    memset(param, 0x00, 3);
-
-    if (strlen(command) != 5)
-    {
-        Serial.print("Invalid Size: ");
-        Serial.println(strlen(command));
+    if (!separateCommand(command, cmd, param_num))
         return;
-    }
-    
-    memcpy(cmd, command+1, 2);
-    memcpy(param, command+3, 2);
-
-    #ifdef DEBUG
-    Serial.print("Cmd:   ");
-    Serial.println(cmd);
-    Serial.print("Param: ");
-    Serial.println(param);
-    #endif
-
-    int param_num = atoi(param);
 
     if (strcmp(cmd, "SE")==0)       // Start Sequence
     {
@@ -151,10 +134,41 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
         Serial.println(param_num);
         #endif        
 
-        if ((param_num > 0) && (param_num <=MAX_PANELS))
+        if (param_num == 0)         // open all
+        {
+            for(int i=1; i<=MAX_PANELS; i++)
+                Panels[i]->open();
+            
+            // Open Slave, too
+            Serial_Slave.print(":OP00\r");
+        }
+        else if ((param_num > 0) && (param_num <=MAX_PANELS))
         {
             Panels[param_num]->open();
         }
+        else if (param_num == 12)   // Send commands to slave to open slave panels
+        {
+            Serial_Slave.print(":OP07\r");
+        }
+        else if (param_num == 13)   // Send commands to slave to open slave panels
+        {
+            Serial_Slave.print(":OP08\r");
+        }
+        else if (param_num == 14)    // Open Top Panels
+        {
+            for (int i=7; i<=MAX_PANELS; i++)
+            {
+                Panels[param_num]->open();
+            }
+        }
+        else if (param_num == 15)    // Open Bottom Panels
+        {
+            for (int i=1; i<=6; i++)
+            {
+                Panels[param_num]->open();
+            }
+        }
+
     }
     else if (strcmp(cmd, "CL")==0)  // Close Panel
     {
@@ -163,10 +177,40 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
         Serial.println(param_num);
         #endif        
 
-        if ((param_num > 0) && (param_num <=MAX_PANELS))
+        if (param_num == 0)         // close all
+        {
+            for(int i=1; i<=MAX_PANELS; i++)
+                Panels[i]->close();
+            
+            // Open Slave, too
+            Serial_Slave.print(":CL00\r");
+        }
+        else if ((param_num > 0) && (param_num <=MAX_PANELS))
         {
             Panels[param_num]->close();
         }
+        else if (param_num == 12)   // Send commands to slave to open slave panels
+        {
+            Serial_Slave.print(":CL07\r");
+        }
+        else if (param_num == 13)   // Send commands to slave to open slave panels
+        {
+            Serial_Slave.print(":CL08\r");
+        }
+        else if (param_num == 14)    // Open Top Panels
+        {
+            for (int i=7; i<=MAX_PANELS; i++)
+            {
+                Panels[param_num]->close();
+            }
+        }
+        else if (param_num == 15)    // Open Bottom Panels
+        {
+            for (int i=1; i<=6; i++)
+            {
+                Panels[param_num]->close();
+            }
+        }        
     }
     else if (strcmp(cmd, "RC")==0)
     {
@@ -174,16 +218,16 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
     }
     else if (strcmp(cmd, "ST")==0)
     {
-        if ((param_num > 0) && (param_num <=MAX_PANELS))
+        if (param_num == 0)    // Alle panels
+        {
+            for(int i=1; i <= MAX_PANELS; i++)
+                Panels[i]->detach();
+
+            Serial_Slave.print(":ST00\r");
+        }
+        else if ((param_num > 0) && (param_num <=MAX_PANELS))
         {
             Panels[param_num]->detach();
-        }
-        else if (param_num == 0)    // Alle panles
-        {
-            for(int i=1; i <= MAX_PANELS; ++i)
-            {
-                Panels[i]->detach();
-            }
         }
     }
     else if (strcmp(cmd, "HD")==0)
@@ -191,7 +235,7 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
 
     }
     // NEW
-    else if (strcmp(cmd, "DT")==0)  // Detach servo from pin
+    else if (strcmp(cmd, "DT")==0)  // Detach servo from pin / Check if identical to ST
     {
         if ((param_num > 0) && (param_num <=MAX_PANELS))
         {

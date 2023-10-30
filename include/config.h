@@ -44,6 +44,7 @@
 #define P_SERVO_10  13
 #define P_SERVO_11  7
 #define MAX_PANELS  11
+#define I2C_DOME_MASTER
 
 // Dome Slave
 #define P_HPF_V     2
@@ -57,6 +58,7 @@
 #define P_TL
 #define P_SERVO_12  13
 #define P_SERVO_13  7
+#define I2C_DOME_SLAVE
 
 // Body Master
 #define P_DPL            2
@@ -70,6 +72,8 @@
 #define P_RIGHT_ARM_TOOL 12
 #define P_CHRG_BAY_DR    13
 #define P_RFU            7
+#define I2C_BODY_MASTER
+
 
 // #define P_MP3            15  // Same as above
 // #define P_SLAVE          14  // Same as above

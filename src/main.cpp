@@ -1,9 +1,11 @@
 #include <Arduino.h>
+
 #include "config.h"
 #include "MarcDuinoBase.h"
 #include "MarcDuinoDomeMaster.h"
 #include "MarcDuinoDomeSlave.h"
 #include "MarcDuinoBodyMaster.h"
+#include "MarcDuinoStorage.h"
 
 MarcDuinoBase* MarcDuino = nullptr;
 
@@ -30,7 +32,29 @@ void setup() {
   Serial.begin(SERIAL_BAUD);
   while(!Serial);
 
-  MarcDuino = new MarcDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+  MarcDuinoStorage Storage;
+  MarcDuinoStorage::MarcDuinoType type;
+
+  type = Storage.getType();
+  switch (type)
+  {
+    case MarcDuinoStorage::DomeMaster:
+      MarcDuino = new MarcDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      break;
+    case MarcDuinoStorage::DomeSlave:
+      MarcDuino = new MarcDuinoDomeSlave(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      break;
+    case MarcDuinoStorage::BodyMaster:
+      MarcDuino = new MarcDuinoBodyMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      break;
+    case MarcDuinoStorage::Unknown:
+      MarcDuino = new MarcDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      Storage.setType(MarcDuinoStorage::DomeMaster);
+      break;    
+    default:
+      break;
+  }
+
   MarcDuino->init();
 
   Serial.println(MarcDuino->getProductName());
