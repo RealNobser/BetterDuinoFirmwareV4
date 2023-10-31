@@ -1,8 +1,9 @@
 #ifndef __MARCDUINOBODYMASTER_H__
 #define __MARCDUINOBODYMASTER_H__
 
-#include "MarcDuinoBase.h"
 #include <SendOnlySoftwareSerial.h>
+
+#include "MarcDuinoBase.h"
 #include "Panel.h"
 
 /** Command implementation
@@ -117,6 +118,8 @@ class MarcDuinoBodyMaster : public MarcDuinoBase
     protected:
         SendOnlySoftwareSerial& Serial_Slave;
         SendOnlySoftwareSerial& Serial_MP3;
+
+        
 };
 
 #endif // __MARCDUINOBODYMASTER_H__

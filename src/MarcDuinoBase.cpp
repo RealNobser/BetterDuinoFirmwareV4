@@ -88,6 +88,50 @@ bool MarcDuinoBase::separateCommand(const char* command, char* cmd, unsigned int
     return true;
 }
 
+bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound)
+{
+    bank = 0;
+    sound = 0;
+
+    if ((strlen(command) != 4) && (strlen(command) != 2))
+    {
+        Serial.print("Invalid Size: ");
+        Serial.println(strlen(command));
+        return false;
+    }
+    
+    if (strlen(command) == 2)
+    {
+        memcpy(cmd, command+1, 1);
+
+        #ifdef DEBUG
+        Serial.print("Cmd:   ");
+        Serial.println(cmd);
+        #endif
+    }
+    else if (strlen(command) == 4)
+    {
+        char bank_char[1];
+        char sound_char[2];
+
+        memcpy(bank_char, command+2, 1);
+        memcpy(sound_char, command+3, 2);
+
+        bank=atoi(bank_char);
+        sound=atoi(sound_char);
+
+        #ifdef DEBUG
+        Serial.print("Cmd:   ");
+        Serial.println(cmd);
+        Serial.print("Bank: ");
+        Serial.println(bank_char);
+        Serial.print("Sound: ");
+        Serial.println(sound_char);
+        #endif
+    }
+    return true;
+}
+
 /*
  *	Setup Commands
  * * 
@@ -112,29 +156,42 @@ bool MarcDuinoBase::separateCommand(const char* command, char* cmd, unsigned int
  *  #SCxxddd Set Servo Degrees for Panel Closed ddd=000-180 (180deg, Servo1: SO01180)
  *  #SPxxddd Set Servo Speed, ddd=0-255
  * 
- * *	//// STARTUP SOUND CONTROLS
- *	#SS00 Disable Startup Sound, and remove startup sound delay for fast boot of R2
- *	#SS01 Default Startup Sound in file 255
- *	#SS02 Alternate Startup Sound in file 254
- *	#SS03 Second Alternate Startup Sound in file 253
+ *  //// STARTUP SOUND CONTROLS
+ *  #SSxx Set startup sound
+ *	    #SS00 : Disable Startup Sound, and remove startup sound delay for fast boot of R2
+ *	    #SS01 : Default Startup Sound in file 255
+ *      #SS02 : Alternate Startup Sound in file 254
+ *	    #SS03 : Second Alternate Startup Sound in file 253
  *
  *	// Chatty/Silent Mode
- *	#SQ00 Default Chatty Mode
- *	#SQ01 Silent on startup
+ *  #SQnn Set chatty mode
+ *	    #SQ00 : Default Chatty Mode
+ *  	#SQ01 : Silent on startup
+ *      #SQ02 : Heavy Chatty Mode
+ *
+ *  #SMxx - Disable Random Sounds   (deprecated, will be removed in future)
+ *      #SM00 : Random Sound on
+ *      #SM01 : No Random Sound + Volume off
+ *      #SM02 ; No Random Sound
  *
  *	//// PANEL SEQUENCER CONTROLS
  *	#STxx Setup Delay time between Master and Slave Panel Sequences.
  *		Use this if the Slave panels are starting too soon
  *		Values up to 250 are supported.  Values are in ms.
  *
- * //// MAIN CONFIG
+ *  //// MAIN CONFIG
  *  #MDxx Set MarcDuino Mode
  *      #MD00 : MarcDuino Dome Master
  *      #MD01 : MarcDuino Dome Slave
  *      #MD02 : MarcDuino Body Master
  *      MarcDuino will reboot immediately after setup and start in new mode.
  * 
- * //// SYSTEM FUNCTIONS
+ *  #MPxx Set MP3-Player Type
+ *      #MP00 : SparkFun MP3 Trigger
+ *      #MP01 : DFPlayer
+ *      #MP02 : Vocalizer
+ * 
+ *  //// SYSTEM FUNCTIONS
  *  #DMxx Dump EEPROM at address xx
  *  #RSET Reboot MarcDuino
  */
@@ -154,7 +211,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     if (!separateCommand(command, cmd, param_num))
         return;
 
-    if (strcmp(cmd, "SD") == 0)             // Servo Direction
+    if (strcmp(cmd, "SD") == 0)            // Servo Direction
     {
     }
     else if (strcmp(cmd, "SR") == 0)       // Individual Servo Reverse
@@ -165,14 +222,50 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "SS") == 0)       // Sound Control
     {
+        switch(param_num)
+        {
+            case 0:
+                Storage.setStartupSoundNr(0);
+            break;
+            case 1:
+                Storage.setStartupSoundNr(255);
+            break;
+            case 2:
+                Storage.setStartupSoundNr(254);
+            break;
+            case 3:
+                Storage.setStartupSoundNr(253);
+            break;
+            default:
+                Storage.setStartupSoundNr(255);
+            break;
+        }
     }
     else if (strcmp(cmd, "SQ") == 0)       // Chatty Mode
     {
     }
+    else if (strcmp(cmd, "SM") == 0)       // Disable Random Mode
+    {
+        switch(param_num)
+        {
+            case 0:
+                Storage.setDisableRandomSound(0);
+            break;
+            case 1:
+                Storage.setDisableRandomSound(1);
+            break;
+            case 2:
+                Storage.setDisableRandomSound(2);
+            break;
+            default:
+                Storage.setDisableRandomSound(0);
+            break;
+        }
+    }    
     else if (strcmp(cmd, "ST") == 0)       // Delay Time Master/Slave
     {
     }
-    else if (strcmp(cmd, "MD") == 0)        // Set MarcDuino Type and reboot in new mode
+    else if (strcmp(cmd, "MD") == 0)       // Set MarcDuino Type and reboot in new mode
     {
         switch(param_num)
         {
@@ -190,6 +283,23 @@ void MarcDuinoBase::processSetupCommand(const char* command)
                 Storage.setType(MarcDuinoStorage::BodyMaster);
                 delay(500);
                 resetFunc();
+            break;
+            default:
+            break;
+        }
+    }
+    else if (strcmp(cmd, "MP") == 0)       // Set MarcDuinoMP3Player Type
+    {
+        switch(param_num)
+        {
+            case 0:
+                Storage.setMP3Player(MarcDuinoStorage::MP3Trigger);
+            break;
+            case 1:
+                Storage.setMP3Player(MarcDuinoStorage::DFPlayer);
+            break;
+            case 2:
+                Storage.setMP3Player(MarcDuinoStorage::Vocalizer);
             break;
             default:
             break;

@@ -7,8 +7,14 @@
 * =========|=========
 *  0        SW-Version (40 = 4.0,41 = 4.1 ...=
 *  1        MarcDuinoType (0-DomeMaster, 1-DomeSlave, 2-BodyMaster)
-*  2        Startup Sound (0-none, 1-File255, 2-File254, 3-File253)
+*  2        Startup Sound (0-none, 1-File255, 2-File254, 3-File253) // depricated, see Startup Sound Nr
 *  3        Chatty/Silent Mode (0-Chatty, 1-Silent)
+*  4        MP3-Player-Type (0-SparkFun, 1-DF-Mini)
+*  5        Disable Random Sound (0-Random Sound, 1-No Random Sound + Volume off, 2-No Random Sound)
+*  6        Slave Delay Byte 1 (Delay in ms)
+*  7        Slave Deley Byte 2 (Delay in ms, 0-65535)
+*  8        Number of Servos
+*  9        Startup Sound Nr (obsoletes Startup Sound mapping)
 
 *  10       Global Servo Direction (0-Normal, 1-Reverse)
 *  11       Servo1 Servo Direction (0-Normal, 1-Reverse)
@@ -66,23 +72,48 @@
 
 #define ADDR_MARCDUINOVERSION   0x00
 #define ADDR_MARCDUINOTYPE      0x01
+#define ADDR_STARTUPSOUND       0x02
+
+#define ADDR_MARCDUINOMP3PLAYER 0x04
+#define ADDR_DISABLERANDOMSOUND 0x05
+#define ADDR_STARTUPSOUNDNR     0x06
 
 class MarcDuinoStorage
 {
     public:
         enum MarcDuinoType
         {
-            DomeMaster  = 0,
-            DomeSlave   = 1,
-            BodyMaster  = 2,
-            Unknown     = 3
+            DomeMaster          = 0,
+            DomeSlave           = 1,
+            BodyMaster          = 2,
+            UnknownMarcDuino    = 3
         };
 
+        enum MarcDuinoMP3PlayerType
+        {
+            MP3Trigger      = 0,
+            DFPlayer        = 1,
+            Vocalizer       = 2,
+            UnknownPlayer   = 3
+        };
     public:
         MarcDuinoStorage();
 
         MarcDuinoType getType();
         void setType(const MarcDuinoType type);
+
+        MarcDuinoMP3PlayerType getMP3Player();
+        void setMP3Player(const MarcDuinoMP3PlayerType type);
+
+        byte getStartupSound();
+        void setStartupSound(const byte SoundNr);
+
+        // NEW: store SoundNr directly without old mapping
+        byte getStartupSoundNr();
+        void setStartupSoundNr(const byte SoundNr);
+
+        byte getDisableRandomSound();
+        void setDisableRandomSound(const byte DisableRandomSound);
 
         void dumpToSerial();
 };

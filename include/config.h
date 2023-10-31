@@ -13,6 +13,10 @@
 
 #define HEARTBEAT_MILLIS    1000
 
+#define RANDOMSOUNDINTERVAL_MID         20000
+#define RANDOMSOUNDINTERVAL_FULL        10000
+#define RANDOMSOUNDINTERVAL_FULLPLUS    5000
+
 // DO NOT EDIT BELOW THIS LINE
 // ------------------------------------------------
 

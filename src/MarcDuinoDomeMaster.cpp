@@ -18,7 +18,26 @@ MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, S
     for(int i=0; i <= MAX_PANELS; ++i)
     {
         Panels[i] = nullptr;
-    }    
+    }
+
+    MarcDuinoStorage::MarcDuinoMP3PlayerType player = Storage.getMP3Player();
+    switch (player)
+    {
+        case MarcDuinoStorage::MP3Trigger:
+            Sound = new MarcDuinoSoundMP3Trigger(Serial_MP3);
+        break;
+        case MarcDuinoStorage::DFPlayer:
+            Sound = new MarcDuinoSoundDFPlayer(Serial_MP3);
+        break;
+        case MarcDuinoStorage::Vocalizer:
+            Sound = new MarcDuinoSoundVocalizer(Serial_MP3);
+        break;
+        default:
+            Sound = new MarcDuinoSoundMP3Trigger(Serial_MP3);
+        break;
+    }
+
+    RandomSoundMillis = millis();
 }
 
 void MarcDuinoDomeMaster::init()
@@ -43,11 +62,49 @@ void MarcDuinoDomeMaster::init()
     Panels[9] = new Panel(Servo9, P_SERVO_09, 90,180);
     Panels[10] = new Panel(Servo10, P_SERVO_10, 0,180);
     Panels[11] = new Panel(Servo11, P_SERVO_11, 0,180);
+
+    // Random Sound
+    byte DisableRandomSound = Storage.getDisableRandomSound();
+    switch (DisableRandomSound)
+    {
+        case 0:
+            RandomSoundIntervall = RANDOMSOUNDINTERVAL_FULL;
+        break;
+        case 1:
+            RandomSoundIntervall = 0;
+            Sound->VolumeOff();
+        break;
+        case 2:
+            RandomSoundIntervall = 0;
+        break;
+        default:
+            RandomSoundIntervall = RANDOMSOUNDINTERVAL_FULL;
+            Storage.setDisableRandomSound(0);
+        break;
+    }
+
+    // Startup Sound
+    byte StartupSoundNr = Storage.getStartupSoundNr();
+    if (StartupSoundNr != 0)
+    {
+        Sound->Play(StartupSoundNr);
+        if (DisableRandomSound != 0)
+            RandomSoundIntervall = 200000;
+    }
 }
 
 void MarcDuinoDomeMaster::run()
 {
     MarcDuinoBase::run();
+
+    if (RandomSoundIntervall != 0)
+    {
+        if ((millis()-RandomSoundMillis) > RandomSoundIntervall)
+        {
+            // Next Random Sound
+            RandomSoundMillis = millis();
+        }
+    }
 }
 
 /*
@@ -252,6 +309,7 @@ void MarcDuinoDomeMaster::processHoloCommand(const char* command)
     Serial.println((char*)command);
     #endif
 
+    // Forward to slave
     Serial_Slave.print(command);
     Serial_Slave.print('\r');
 }
@@ -263,19 +321,135 @@ void MarcDuinoDomeMaster::processDisplayCommand(const char* command)
     Serial.println((char*)command);
     #endif
 
+    // Forward to slave
     Serial_Slave.print(command);
     Serial_Slave.print('\r');
 }
 
+	////////////////////////////////////////////////
+	// Play sound command by bank/sound numbers
+	// $xyy
+	// x=bank number
+	// yy=sound number. If none, next sound is played in the bank
+	//
+	// Other commands
+	// $c
+	// where c is a command character
+	// R - random from 4 first banks
+	// O - sound off
+	// L - Leia message (bank 7 sound 1)
+	// C - Cantina music (bank 9 sound 5)
+	// c - Beep cantina (bank 9 sound 1)
+	// S - Scream (bank 6 sound 1)
+	// F - Faint/Short Circuit (bank 6 sound 3)
+	// D - Disco (bank 9 sound 6)
+	// s - stop sounds
+	// + - volume up
+	// - - volume down
+	// m - volume mid
+	// f - volume max
+	// p - volume min
+	// W - Star Wars music (bank 9 sound 2)
+	// w - Beep Star Wars music (bank 9 sound 7)
+	// M - Imperial March (bank 9 sound 3)
+	// i - Beep Imperial March (bank 9 sound 8)    
+	//
+	///////////////////////////////////////////////
+
 void MarcDuinoDomeMaster::processSoundCommand(const char* command)
 {
+    char cmd[3];
+    unsigned int bank = 0;
+    unsigned int sound= 0;
+
+    memset(cmd, 0x00, 3);
+    
     #ifdef DEBUG
     Serial.print("SoundCommand(Master): ");
     Serial.println((char*)command);
     #endif
 
-    Serial_MP3.print(command);
-    Serial_MP3.print('\r');
+    if (!separateSoundCommand(command, cmd, bank, sound))
+        return;
+
+    if ((bank != 0) && (sound != 0))
+    {
+        RandomSoundIntervall = 0;   // Stop Random sounds
+        Sound->Play(bank, sound);
+        return;
+    }
+
+    switch(cmd[0])
+    {
+        case 'R':   // random from 4 first banks
+            RandomSoundIntervall = 0;   // Stop Random sounds
+        break;
+        case 'O':   // sound off
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Stop();
+        break;
+        case 'L':   // Leia message (bank 7 sound 1)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(7,1);
+        break;
+        case 'C':   // Cantina music (bank 9 sound 5)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(9,5);
+        break;
+        case 'c':   // Beep cantina (bank 9 sound 1)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(9,1);
+        break;
+        case 'S':   // Scream (bank 6 sound 1)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(6,1);
+        break;
+        case 'F':   // Faint/Short Circuit (bank 6 sound 3)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(6,3);
+        break;
+        case 'D':   // Disco (bank 9 sound 6)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(9,6);
+        break;
+        case 's':   // stop sounds
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Stop();
+        break;
+        case '+':   // volume up
+            Sound->VolumeUp();
+        break;
+        case '-':   // volume down
+            Sound->VolumeDown();
+        break;
+        case 'm':   // volume mid
+            Sound->VolumeMid();
+        break;
+        case 'f':   // volume max
+            Sound->VolumeMax();
+        break;
+        case 'p':   // volume min
+            Sound->VolumeMin();
+        break;
+        case 'W':   // Star Wars music (bank 9 sound 2)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(9,2);
+        break;
+        case 'w':   // Beep Star Wars music (bank 9 sound 2)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(9,7);
+        break;
+        case 'M':   // Imperial March (bank 9 sound 3)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(9,3);
+        break;
+        case 'i':   // Beep Imperial March (bank 9 sound 3)
+            RandomSoundIntervall = 0;   // Stop Random sounds
+            Sound->Play(9,8);
+        break;
+        default:    // Ignore
+        break;
+    }
 }
 
 void MarcDuinoDomeMaster::processAltSoundCommand(const char* command)

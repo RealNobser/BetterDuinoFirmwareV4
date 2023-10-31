@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <Wire.h>
 
 #include "config.h"
 #include "MarcDuinoBase.h"
@@ -32,6 +33,9 @@ void setup() {
   Serial.begin(SERIAL_BAUD);
   while(!Serial);
 
+  // I2C - Master
+  Wire.begin();
+
   MarcDuinoStorage Storage;
   MarcDuinoStorage::MarcDuinoType type;
 
@@ -47,7 +51,7 @@ void setup() {
     case MarcDuinoStorage::BodyMaster:
       MarcDuino = new MarcDuinoBodyMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       break;
-    case MarcDuinoStorage::Unknown:
+    case MarcDuinoStorage::UnknownMarcDuino:
       MarcDuino = new MarcDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       Storage.setType(MarcDuinoStorage::DomeMaster);
       break;    

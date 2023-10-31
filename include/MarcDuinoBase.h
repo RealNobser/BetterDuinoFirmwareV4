@@ -45,6 +45,8 @@ class MarcDuinoBase
         VarSpeedServo& Servo11;
 
         bool separateCommand(const char* command, char* cmd, unsigned int & param_num);
+        bool separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound);
+
         void processSetupCommand(const char* command);
 
         void(* resetFunc) (void) = 0;

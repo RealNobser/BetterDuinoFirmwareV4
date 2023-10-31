@@ -2,6 +2,8 @@
 #define __MARCDUINODOMEMASTER_H__
 
 #include "MarcDuinoBase.h"
+#include "MarcDuinoStorage.h"
+#include "MarcDuinoSound.h"
 #include "Panel.h"
 #include <SendOnlySoftwareSerial.h>
 
@@ -24,6 +26,12 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         SendOnlySoftwareSerial& Serial_MP3;
 
         Panel* Panels[MAX_PANELS+1];
+
+        MarcDuinoSound* Sound = nullptr;
+        MarcDuinoStorage Storage;
+
+        unsigned long RandomSoundIntervall = 0;
+        unsigned long RandomSoundMillis;
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);
