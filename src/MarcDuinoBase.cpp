@@ -96,7 +96,8 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
     bank = 0;
     sound = 0;
 
-    if ((strlen(command) != 4) && (strlen(command) != 2))
+    //if ((strlen(command) != 4) && (strlen(command) != 2))
+    if ((strlen(command) <2) || (strlen(command) >4))
     {
         Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
         return false;
@@ -110,16 +111,38 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
         Serial.printf(F("Cmd: %s\r\n"), cmd);
         #endif
     }
+    else if (strlen(command) == 3)
+    {
+        char bank_char[2];
+        char sound_char[3];
+
+        memset(cmd, 0x00, 1);
+
+        memset(bank_char, 0x00, 2);
+        memset(sound_char, 0x00, 3);
+
+        memcpy(bank_char, command+1, 1);
+        memcpy(sound_char, command+2, 1);
+
+        bank=atoi(bank_char);
+        sound=atoi(sound_char);
+
+        #ifdef DEBUG_MSG
+        Serial.printf(F("Cmd: %s, Bank: %i, Sound %i\r\n"), cmd, bank, sound);
+        #endif
+    }
     else if (strlen(command) == 4)
     {
         char bank_char[2];
         char sound_char[3];
 
+        memset(cmd, 0x00, 1);
+
         memset(bank_char, 0x00, 2);
         memset(sound_char, 0x00, 3);
 
-        memcpy(bank_char, command+2, 1);
-        memcpy(sound_char, command+3, 2);
+        memcpy(bank_char, command+1, 1);
+        memcpy(sound_char, command+2, 2);
 
         bank=atoi(bank_char);
         sound=atoi(sound_char);

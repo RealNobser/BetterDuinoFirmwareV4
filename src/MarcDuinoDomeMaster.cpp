@@ -266,7 +266,7 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
 
     if (strcmp(cmd, "SE")==0)       // Start Sequence
     {
-
+        playSequence(param_num);
     } 
     else if (strcmp(cmd, "OP")==0)  // Open Panel
     {
@@ -459,34 +459,38 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
     switch(cmd[0])
     {
         case 'R':   // random from 4 first banks
-            RandomSoundIntervall = 0;   // Stop Random sounds
+            setStandardRandomSoundIntervall();
         break;
         case 'O':   // sound off
             RandomSoundIntervall = 0;   // Stop Random sounds
             Sound->VolumeOff();
         break;
         case 'L':   // Leia message (bank 7 sound 1)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+            RandomSoundMillis    = millis();
+            RandomSoundIntervall = 44000;
             Sound->Play(7,1);
         break;
         case 'C':   // Cantina music (bank 9 sound 5)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+            RandomSoundMillis    = millis();
+            RandomSoundIntervall = 56000;
             Sound->Play(9,5);
         break;
         case 'c':   // Beep cantina (bank 9 sound 1)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+            RandomSoundMillis    = millis();
+            RandomSoundIntervall = 27000;
             Sound->Play(9,1);
         break;
         case 'S':   // Scream (bank 6 sound 1)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+            RandomSoundMillis    = millis();
             Sound->Play(6,1);
         break;
         case 'F':   // Faint/Short Circuit (bank 6 sound 3)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+            RandomSoundMillis    = millis();
             Sound->Play(6,3);
         break;
         case 'D':   // Disco (bank 9 sound 6)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+            RandomSoundMillis    = millis();
+            RandomSoundIntervall = 396000;
             Sound->Play(9,6);
         break;
         case 's':   // stop sounds
@@ -545,3 +549,58 @@ void MarcDuinoDomeMaster::processAltHoloCommand(const char* command)
     #endif
     Serial_Slave.printf(F("%s\r"), command);
 }
+
+void MarcDuinoDomeMaster::playSequence(const unsigned int SeqNr)
+{
+    #ifdef DEBUG_MSG
+    Serial.printf(F("PlaySequence(Master): %i\r\n"), SeqNr);
+    #endif
+
+    Sequencer.stopSequence();
+    Sequencer.clearSequence();
+
+    // Also forward to Slave
+    playSlaveSequence(SeqNr);
+
+    switch (SeqNr)
+    {
+    case 0: // CLOSE ALL PANELS
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
+        Sequencer.startSequence();
+        break;
+    case 1:  // SCREAM
+        Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
+        //seq_loadspeed(panel_slow_speed);	// slow open
+        parseCommand("$S");         // Scream Sound
+        parseCommand("@0T5");       // Scream Display
+        parseCommand("*MF04");      // Magic Flicker for 4 seconds
+        parseCommand("*F004");      // HP Flicker for 4 seconds
+        Sequencer.startSequence();
+        break;
+    case 2: // WAVE
+        Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
+        //seq_resetspeed();
+        parseCommand("*H004");      // flash holos for 4 seconds
+        parseCommand("$213");		// happy sound
+        Sequencer.startSequence();
+        break;
+    case 3: // MOODY FAST WAVE
+        Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
+        //seq_resetspeed();
+        parseCommand("@0T2");       // 4 seconds flash display
+        parseCommand("@0W4");       // 4 seconds flash display
+        parseCommand("*F004");      // HP Flicker for 4 seconds
+        parseCommand("$34");		// moody sound
+        Sequencer.startSequence();
+        break;
+    default:
+        break;
+    }
+}
+
+void MarcDuinoDomeMaster::playSlaveSequence(const unsigned int SeqNr)
+{
+    // Todo: Delay for Slave Sequence
+    Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
+}
+
