@@ -339,7 +339,7 @@ sequence_t panel_long_disco PROGMEM=  //SE09
 		{15, 	_CLS, 	_OPN, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	/*_CLS,	_CLS,*/	_NP,	1,		11},
 		{15, 	_OPN, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	/*_CLS,	_CLS,*/	_NP,	1,		11},
 		{15, 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	/*_CLS,	_CLS,*/	_NP,	1,		11},
-		{(int16_t)36000, _NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP,	/*_NP,	_CLS,*/	_NP,	1,		11},  // 6 minutes
+		{36000, _NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP,	/*_NP,	_CLS,*/	_NP,	1,		11},  // 6 minutes
 		{2100, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP,	/*_NP,	_CLS,*/	_NP,	1,		11},  // 21 seconds
 		{0, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP,	/*_NP,	_CLS,*/	_NP,	1,		11}
 };

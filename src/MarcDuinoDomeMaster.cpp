@@ -451,7 +451,7 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
 
     if ((bank != 0) && (sound != 0))
     {
-        RandomSoundIntervall = 0;   // Stop Random sounds
+        RandomSoundMillis = millis();
         Sound->Play(bank, sound);
         return;
     }
@@ -587,11 +587,91 @@ void MarcDuinoDomeMaster::playSequence(const unsigned int SeqNr)
     case 3: // MOODY FAST WAVE
         Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
         //seq_resetspeed();
-        parseCommand("@0T2");       // 4 seconds flash display
-        parseCommand("@0W4");       // 4 seconds flash display
+        parseCommand("@0T2");       // flash display ...
+        parseCommand("@0W4");       // ... for 4 seconds
         parseCommand("*F004");      // HP Flicker for 4 seconds
         parseCommand("$34");		// moody sound
         Sequencer.startSequence();
+        break;
+    case 4: // OPEN WAVE
+        Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
+        //seq_resetspeed();
+        parseCommand("*H005");      // flash holos for 5 seconds
+        parseCommand("$36");		// long happy sound
+        Sequencer.startSequence();
+        break;
+    case 5: // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
+        Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
+        //seq_loadspeed(panel_slow_speed);					// slow speed marching ants
+        parseCommand("@0T92");      // spectrum display
+        parseCommand("*HP17");      // HPs flash for 17 seconds
+        parseCommand("$c");         // beeping cantina sound
+        parseCommand("%T52");	    // Magic Panel in VU Mode
+        //seq_add_completion_callback(resetJEDIcallback);   // callback to reset displays at end of sequence
+        //seq_add_completion_callback(resetMPcallback);     // callback to reset Magic Panel at end of sequence
+        Sequencer.startSequence();
+        break;
+    case 6: // SHORT CIRCUIT / FAINT
+        Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
+        //seq_loadspeed(panel_super_slow_speed);	// very slow speed open
+        //EXT1On(4); // Turn on Smoke for 4 seconds  Do first so there's smoke when the panels open.
+        parseCommand("$F");         // Faint sound
+        parseCommand("@0T4");       // short circuit display ...
+        parseCommand("@0W10");      // ... for 10 seconds 
+        parseCommand("*MF10");      // Magic Panel Flicker for 10 seconds
+        parseCommand("*F010");      // HPs flicker 10 seconds
+        // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
+        Sequencer.startSequence();
+        break;
+    case 7: // Cantina (Orchestral Cantina, Rhythmic Panels)
+        Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
+        // seq_resetspeed();
+        parseCommand("$C");         // Cantina sound        
+        parseCommand("@0T92");      // spectrum display
+        parseCommand("*F046");      // HPs flicker 46 seconds        
+        parseCommand("%T52");	    // Magic Panel in VU Mode        
+        // seq_add_completion_callback(resetJEDIcallback); 	// callback to reset displays at end of sequence
+        // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
+        Sequencer.startSequence();       
+        break;
+    case 8: // LEIA
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));	// Close panels
+        // seq_loadspeed(panel_slow_speed);	// Go slow
+        parseCommand("*RC01"); 	    // HP 01 in RC mode
+        parseCommand("$L");         // Leia message sound  
+        parseCommand("*F134");      // front holos flicker for 34 sec 
+        parseCommand("@0T6");       // Leia display
+        parseCommand("%T22");	    // HP in Cylon Row Scan mode       
+        Sequencer.startSequence();       
+        break;
+    case 9:	// DISCO
+        Sequencer.loadSequence(panel_long_disco, SEQ_SIZE(panel_long_disco)); // 6:26 seconds sequence
+        // seq_resetspeed();
+        // message on the logics
+        // parseCommand("@1MR2 D2   "); // message is top front is R2
+        // parseCommand("@2M  D2  ");	// message is lower front is D2
+        parseCommand("@3MSTAR WARS   ");// message in rear is STAR WARS...
+        // parseCommand("@3P61");		// ... in Aurabesh!
+        parseCommand("@0T92");      // spectrum display
+        parseCommand("@3T100");
+        parseCommand("$D");         // disco music
+        parseCommand("*F099");      // HPs flicker as long as possible   
+        parseCommand("%T52");	    // Magic Panel in VU Mode        
+        // seq_add_completion_callback(resetJEDIcallback); // callback to reset displays at end of sequence
+        // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
+        Sequencer.startSequence();       
+        break;
+
+    case 10: // QUIET   sounds off, holo stop, panel closed
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
+        //seq_loadspeed(panel_slow_speed);	// go slow
+        parseCommand("*H000");  // quick way to turn off holos if connected to MarcDuino  
+        parseCommand("@0T1");   // abort test routine, reset all to normal
+        parseCommand("*ST00");  // all holos to stop
+        parseCommand("$s");		// stop sounds
+        // seq_resetspeed();					// sequence speed to fast
+        // stop_command(0);					// all panels off RC        
+        Sequencer.startSequence();       
         break;
     default:
         break;

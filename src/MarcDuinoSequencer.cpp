@@ -94,7 +94,7 @@ void MarcDuinoSequencer::setServos()
 
     for(int i=0; i < SEQUENCE_SIZE; i++)
     {
-        Serial.print((int)pgm_read_word(&currentSequence[currentStep][i]));
+        Serial.print((unsigned int)pgm_read_word(&currentSequence[currentStep][i]));
         Serial.print(" ");
     }
     Serial.println();
