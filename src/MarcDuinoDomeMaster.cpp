@@ -81,6 +81,9 @@ void MarcDuinoDomeMaster::init()
         if (RandomSoundIntervall != 0)
             RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
     }
+
+    Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
+    Sequencer.startSequence();
 }
 
 void MarcDuinoDomeMaster::run()

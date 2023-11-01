@@ -14,13 +14,11 @@ void MarcDuinoSequencer::init()
 
 void MarcDuinoSequencer::run()
 {
-    /*
     if (currentSequence != nullptr)
     {
         if ((millis()-currentStepTime) > currentStepDuration)
             nextStep();
     }
-    */
 }
 
 void MarcDuinoSequencer::loadSequence(sequence_t_ptr Seq, const unsigned int Steps)
@@ -48,7 +46,9 @@ void MarcDuinoSequencer::startSequence()
 {
     currentStep         = 0;
 
-    currentStepDuration = currentSequence[currentStep][0];
+    currentStepDuration = (int)pgm_read_word(&currentSequence[currentStep][0]);
+    currentStepDuration *= 10;
+
     currentStepTime     = millis();
 
     setServos();    
@@ -79,7 +79,9 @@ void MarcDuinoSequencer::nextStep()
         return;
     }
 
-    currentStepDuration = currentSequence[currentStep][0];
+    currentStepDuration = (int)pgm_read_word(&currentSequence[currentStep][0]);
+    currentStepDuration *= 10;
+
     currentStepTime     = millis();
 
     setServos();
@@ -92,7 +94,7 @@ void MarcDuinoSequencer::setServos()
 
     for(int i=0; i < SEQUENCE_SIZE; i++)
     {
-        Serial.print(currentSequence[currentStep][i]);
+        Serial.print((int)pgm_read_word(&currentSequence[currentStep][i]));
         Serial.print(" ");
     }
     Serial.println();

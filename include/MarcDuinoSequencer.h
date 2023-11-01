@@ -6,8 +6,8 @@
 #define SEQ_SIZE(A) (sizeof(A) / sizeof(A[0]))
 #define SEQUENCE_SIZE (MAX_MARCUDINOSERVOS + 4)
 
-typedef int16_t sequence_t[][SEQUENCE_SIZE];
-typedef int16_t (*sequence_t_ptr)[SEQUENCE_SIZE];
+typedef const int16_t sequence_t[][SEQUENCE_SIZE];
+typedef const int16_t (*sequence_t_ptr)[SEQUENCE_SIZE];
 
 class MarcDuinoSequencer
 {
