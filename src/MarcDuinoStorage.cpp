@@ -184,6 +184,86 @@ void MarcDuinoStorage::setMinRandomPause(const byte seconds)
     EEPROM.update(ADDR_MINRANDOMPAUSE, seconds);
 }
 
+byte MarcDuinoStorage::getServoDirection(const byte ServoNr)
+{
+    uint8_t value = 0;
+    if (ServoNr > MAX_MARCUDINOSERVOS)
+        return 0;
+    value = EEPROM.read(ADDR_SERVODIRBASE+ServoNr);
+    return value;
+}
+
+void MarcDuinoStorage::setServoDirection(const byte ServoNr, const byte Direction)
+{
+    if ((ServoNr > MAX_MARCUDINOSERVOS) || (Direction > 1))
+        return;
+    EEPROM.update(ADDR_SERVODIRBASE+ServoNr, Direction);
+}
+
+byte MarcDuinoStorage::getServoSpeed(const byte ServoNr)
+{
+    uint8_t value = 0;
+    if (ServoNr > MAX_MARCUDINOSERVOS)
+        return 0;
+    value = EEPROM.read(ADDR_SERVOSPEEDBASE+ServoNr);
+    return value;
+}
+
+void MarcDuinoStorage::setServoSpeed(const byte ServoNr, const byte Speed)
+{
+    if (ServoNr > MAX_MARCUDINOSERVOS)
+        return;
+    EEPROM.update(ADDR_SERVOSPEEDBASE+ServoNr, Speed);
+}
+
+byte MarcDuinoStorage::getServoOpenPosDeg(const byte ServoNr)
+{
+    uint8_t value = 0;
+    if (ServoNr > MAX_MARCUDINOSERVOS)
+        return 0;
+    value = EEPROM.read(ADDR_SERVOOPENBASE+ServoNr);
+    return value;
+}
+
+void MarcDuinoStorage::setServoOpenPosDeg(const byte ServoNr, const byte Position)
+{
+    if ((ServoNr > MAX_MARCUDINOSERVOS) || (Position > 180))
+        return;
+    EEPROM.update(ADDR_SERVOOPENBASE+ServoNr, Position);
+}
+
+byte MarcDuinoStorage::getServoCosedPosDeg(const byte ServoNr)
+{
+    uint8_t value = 0;
+    if (ServoNr > MAX_MARCUDINOSERVOS)
+        return 0;
+    value = EEPROM.read(ADDR_SERVOCLOSEDBASE+ServoNr);
+    return value;
+}
+
+void MarcDuinoStorage::setServoClosedPosDeg(const byte ServoNr, const byte Position)
+{
+    if ((ServoNr > MAX_MARCUDINOSERVOS) || (Position > 180))
+        return;
+    EEPROM.update(ADDR_SERVOCLOSEDBASE+ServoNr, Position);
+}
+
+byte MarcDuinoStorage::getServoMidPosDeg(const byte ServoNr)
+{
+    uint8_t value = 0;
+    if (ServoNr > MAX_MARCUDINOSERVOS)
+        return 0;
+    value = EEPROM.read(ADDR_SERVOMIDBASE+ServoNr);
+    return value;
+}
+
+void MarcDuinoStorage::setServoMidPosDeg(const byte ServoNr, const byte Position)
+{
+    if ((ServoNr > MAX_MARCUDINOSERVOS) || (Position > 180))
+        return;
+    EEPROM.update(ADDR_SERVOMIDBASE+ServoNr, Position);
+}
+
 void MarcDuinoStorage::dumpToSerial()
 {
     for (unsigned int uiAddress=0; uiAddress < EEPROM.length(); uiAddress+=8)

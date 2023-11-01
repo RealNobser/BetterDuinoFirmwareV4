@@ -1,5 +1,6 @@
 
 #include"MarcDuinoDomeMaster.h"
+#include "PanelSequences.h"
 
 MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
@@ -48,7 +49,7 @@ void MarcDuinoDomeMaster::init()
     MarcDuinoBase::init();
 
     // Soft Serials
-    #ifdef DEBUG
+    #ifdef DEBUG_MSG
     Serial_Slave.println("To Slave");
     Serial_MP3.println("To MP3");
     #endif
@@ -101,11 +102,8 @@ void MarcDuinoDomeMaster::run()
             RandomSoundMillis = millis();
             setStandardRandomSoundIntervall();
 
-            #ifdef DEBUG
-            Serial.print("Random Sound, Bank ");
-            Serial.print(bank);
-            Serial.print(", Sound ");
-            Serial.println(sound);
+            #ifdef DEBUG_MSG
+            Serial.printf("Random Sound, Bank %i, Sound %i\r\n", bank, sound);
             #endif
         }
     }
@@ -116,7 +114,7 @@ void MarcDuinoDomeMaster::checkEEPROM()
     byte ConfigVersion = Storage.getConfigVersion();
     if (ConfigVersion != CONFIG_VERSION)
     {
-        #ifdef DEBUG
+        #ifdef DEBUG_MSG
         Serial.println("Invalid Config Version. Storing defaults in EEPROM and restart.");
         #endif
         Storage.setType(MarcDuinoStorage::DomeMaster);
@@ -141,6 +139,14 @@ void MarcDuinoDomeMaster::checkEEPROM()
         Storage.setMinRandomPause(MINRANDOMPAUSE);
         Storage.setMaxRandomPause(MAXRANDOMPAUSE);
 
+        for (int i=0; i <= MAX_MARCUDINOSERVOS; i++)
+        {
+            Storage.setServoDirection(i, 0);        // Direction normal, Global Setting plus each individual
+            Storage.setServoSpeed(i, 255);          // Full Speed, Global Setting plus each individual
+            Storage.setServoOpenPosDeg(i, 0);       // 0 deg open
+            Storage.setServoClosedPosDeg(i, 180);   // 180 deg open
+            Storage.setServoMidPosDeg(i, 90);       // 180 deg open
+        }
         Storage.setConfigVersion(CONFIG_VERSION);   // Final step before restart
         delay(500);
         resetFunc();
@@ -196,9 +202,8 @@ void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
 */
 void MarcDuinoDomeMaster::parseCommand(const char* command)
 {
-    #ifdef DEBUG
-    Serial.print("Command(Master): ");
-    Serial.println((char*)command);
+    #ifdef DEBUG_MSG
+    Serial.printf("Command(Master): %s\r\n", command);
     #endif
 
     switch (command[0])
@@ -249,9 +254,8 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
 
     memset(cmd, 0x00, 3);
 
-    #ifdef DEBUG
-    Serial.print("PanelCommand(Master): ");
-    Serial.println((char*)command);
+    #ifdef DEBUG_MSG
+    Serial.printf("PanelCommand(Master): %s\r\n", command);
     #endif
 
     if (!separateCommand(command, cmd, param_num))
@@ -263,9 +267,8 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
     } 
     else if (strcmp(cmd, "OP")==0)  // Open Panel
     {
-        #ifdef DEBUG
-        Serial.print("Open Panel ");
-        Serial.println(param_num);
+        #ifdef DEBUG_MSG
+        Serial.printf("Open Panel %i\r\n", param_num);
         #endif        
 
         if (param_num == 0)         // open all
@@ -306,9 +309,8 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
     }
     else if (strcmp(cmd, "CL")==0)  // Close Panel
     {
-        #ifdef DEBUG
-        Serial.print("Open Panel ");
-        Serial.println(param_num);
+        #ifdef DEBUG_MSG
+        Serial.printf("Close Panel %i\r\n", param_num);
         #endif        
 
         if (param_num == 0)         // close all
@@ -381,26 +383,22 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
 
 void MarcDuinoDomeMaster::processHoloCommand(const char* command)
 {
-    #ifdef DEBUG
-    Serial.print("HoloCommand(Master): ");
-    Serial.println((char*)command);
+    #ifdef DEBUG_MSG
+    Serial.printf("HoloCommand(Master): %s\r\n", command);
     #endif
 
     // Forward to slave
-    Serial_Slave.print(command);
-    Serial_Slave.print('\r');
+    Serial_Slave.printf("%s\r", command);
 }
 
 void MarcDuinoDomeMaster::processDisplayCommand(const char* command)
 {
-    #ifdef DEBUG
-    Serial.print("DisplayCommand(Master): ");
-    Serial.println((char*)command);
+    #ifdef DEBUG_MSG
+    Serial.printf("DisplayCommand(Master): %s\r\n", command);
     #endif
 
     // Forward to slave
-    Serial_Slave.print(command);
-    Serial_Slave.print('\r');
+    Serial_Slave.printf("%s\r", command);
 }
 
 	////////////////////////////////////////////////
@@ -441,9 +439,8 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
 
     memset(cmd, 0x00, 3);
     
-    #ifdef DEBUG
-    Serial.print("SoundCommand(Master): ");
-    Serial.println((char*)command);
+    #ifdef DEBUG_MSG
+    Serial.printf("SoundCommand(Master): %s\r\n", command);
     #endif
 
     if (!separateSoundCommand(command, cmd, bank, sound))
@@ -531,21 +528,17 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
 
 void MarcDuinoDomeMaster::processAltSoundCommand(const char* command)
 {
-    #ifdef DEBUG
-    Serial.print("AltSoundCommand(Master): ");
-    Serial.println((char*)command);
+    #ifdef DEBUG_MSG
+    Serial.printf("AltSoundCommand(Master): %s\r\n", command);
     #endif
 
-    Serial_MP3.print(command+1);
-    Serial_MP3.print('\r');
+    Serial_MP3.printf("%s\r", command+1);
 }
 
 void MarcDuinoDomeMaster::processAltHoloCommand(const char* command)
 {
-    #ifdef DEBUG
-    Serial.print("AltHoloCommand(Master): ");
-    Serial.println((char*)command);
+    #ifdef DEBUG_MSG
+    Serial.printf("AltHoloCommand(Master): %s\r\n", command);
     #endif
-    Serial_Slave.print(command);
-    Serial_Slave.print('\r');
+    Serial_Slave.printf("%s\r", command);
 }

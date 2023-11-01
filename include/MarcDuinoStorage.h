@@ -29,58 +29,70 @@
 *  0x18     Max Sounds Bank 8 (1-25)
 *  0x19     Max Sounds Bank 9 (1-25)
 
-*  10       Global Servo Direction (0-Normal, 1-Reverse)
-*  11       Servo1 Servo Direction (0-Normal, 1-Reverse)
-*  12       Servo2 Servo Direction (0-Normal, 1-Reverse)
-*  13       Servo3 Servo Direction (0-Normal, 1-Reverse)
-*  14       Servo4 Servo Direction (0-Normal, 1-Reverse)
-*  15       Servo5 Servo Direction (0-Normal, 1-Reverse)
-*  16       Servo6 Servo Direction (0-Normal, 1-Reverse)
-*  17       Servo7 Servo Direction (0-Normal, 1-Reverse)
-*  18       Servo8 Servo Direction (0-Normal, 1-Reverse)
-*  19       Servo9 Servo Direction (0-Normal, 1-Reverse)
-*  20       Servo10 Servo Direction (0-Normal, 1-Reverse)
-*  21       Servo11 Servo Direction (0-Normal, 1-Reverse)
+*  0x20     Global Servo Direction (0-Normal, 1-Reverse)
+*  0x21     Servo1 Servo Direction (0-Normal, 1-Reverse)
+*  0x22     Servo2 Servo Direction (0-Normal, 1-Reverse)
+*  0x23     Servo3 Servo Direction (0-Normal, 1-Reverse)
+*  0x24     Servo4 Servo Direction (0-Normal, 1-Reverse)
+*  0x25     Servo5 Servo Direction (0-Normal, 1-Reverse)
+*  0x26     Servo6 Servo Direction (0-Normal, 1-Reverse)
+*  0x27     Servo7 Servo Direction (0-Normal, 1-Reverse)
+*  0x28     Servo8 Servo Direction (0-Normal, 1-Reverse)
+*  0x29     Servo9 Servo Direction (0-Normal, 1-Reverse)
+*  0x2a     Servo10 Servo Direction (0-Normal, 1-Reverse)
+*  0x2b     Servo11 Servo Direction (0-Normal, 1-Reverse)
 
-*  30       Global Servo Speed (0-255)
-*  31       Servo1 Servo Speed (0-255)
-*  32       Servo2 Servo Speed (0-255)
-*  33       Servo3 Servo Speed (0-255)
-*  34       Servo4 Servo Speed (0-255)
-*  35       Servo5 Servo Speed (0-255)
-*  36       Servo6 Servo Speed (0-255)
-*  37       Servo7 Servo Speed (0-255)
-*  38       Servo8 Servo Speed (0-255)
-*  39       Servo9 Servo Speed (0-255)
-*  40       Servo10 Servo Speed (0-255)
-*  41       Servo11 Servo Speed (0-255)
+*  0x30     Global Servo Speed (0-255)
+*  0x31     Servo1 Servo Speed (0-255)
+*  0x32     Servo2 Servo Speed (0-255)
+*  0x33     Servo3 Servo Speed (0-255)
+*  0x34     Servo4 Servo Speed (0-255)
+*  0x35     Servo5 Servo Speed (0-255)
+*  0x36     Servo6 Servo Speed (0-255)
+*  0x37     Servo7 Servo Speed (0-255)
+*  0x38     Servo8 Servo Speed (0-255)
+*  0x39     Servo9 Servo Speed (0-255)
+*  0x3a     Servo10 Servo Speed (0-255)
+*  0x3b     Servo11 Servo Speed (0-255)
 
-*  50       Global Servo Open Position (0-180)
-*  51       Servo1 Servo Open Position (0-180)
-*  52       Servo2 Servo Open Position (0-180)
-*  53       Servo3 Servo Open Position (0-180)
-*  54       Servo4 Servo Open Position (0-180)
-*  55       Servo5 Servo Open Position (0-180)
-*  56       Servo6 Servo Open Position (0-180)
-*  57       Servo7 Servo Open Position (0-180)
-*  58       Servo8 Servo Open Position (0-180)
-*  59       Servo9 Servo Open Position (0-180)
-*  60       Servo10 Servo Open Position (0-180)
-*  61       Servo11 Servo Open Position (0-180)
+*  0x40     Global Servo Open Position Degree (0-180)
+*  0x41     Servo1 Servo Open Position Degree (0-180)
+*  0x42     Servo2 Servo Open Position Degree (0-180)
+*  0x43     Servo3 Servo Open Position Degree (0-180)
+*  0x44     Servo4 Servo Open Position Degree (0-180)
+*  0x45     Servo5 Servo Open Position Degree (0-180)
+*  0x46     Servo6 Servo Open Position Degree (0-180)
+*  0x47     Servo7 Servo Open Position Degree (0-180)
+*  0x48     Servo8 Servo Open Position Degree (0-180)
+*  0x49     Servo9 Servo Open Position Degree (0-180)
+*  0x4a     Servo10 Servo Open Position Degree (0-180)
+*  0x4b     Servo11 Servo Open Position Degree (0-180)
 
-*  70       Global Servo Close Position (0-180)
-*  71       Servo1 Servo Close Position (0-180)
-*  72       Servo2 Servo Close Position (0-180)
-*  73       Servo3 Servo Close Position (0-180)
-*  74       Servo4 Servo Close Position (0-180)
-*  75       Servo5 Servo Close Position (0-180)
-*  76       Servo6 Servo Close Position (0-180)
-*  77       Servo7 Servo Close Position (0-180)
-*  78       Servo8 Servo Close Position (0-180)
-*  79       Servo9 Servo Close Position (0-180)
-*  80       Servo10 Servo Close Position (0-180)
-*  81       Servo11 Servo Close Position (0-180)
+*  0x50     Global Servo Close Position Degree (0-180)
+*  0x51     Servo1 Servo Close Position Degree (0-180)
+*  0x52     Servo2 Servo Close Position Degree (0-180)
+*  0x53     Servo3 Servo Close Position Degree (0-180)
+*  0x54     Servo4 Servo Close Position Degree (0-180)
+*  0x55     Servo5 Servo Close Position Degree (0-180)
+*  0x56     Servo6 Servo Close Position Degree (0-180)
+*  0x57     Servo7 Servo Close Position Degree (0-180)
+*  0x58     Servo8 Servo Close Position Degree (0-180)
+*  0x59     Servo9 Servo Close Position Degree (0-180)
+*  0x5a     Servo10 Servo Close Position Degree (0-180)
+*  0x5b     Servo11 Servo Close Position Degree (0-180)
 
+*  0x60     Global Servo Mid Position Degree (0-180)
+*  0x61     Servo1 Servo Mid Position Degree (0-180)
+*  0x62     Servo2 Servo Mid Position Degree (0-180)
+*  0x63     Servo3 Servo Mid Position Degree (0-180)
+*  0x64     Servo4 Servo Mid Position Degree (0-180)
+*  0x65     Servo5 Servo Mid Position Degree (0-180)
+*  0x66     Servo6 Servo Mid Position Degree (0-180)
+*  0x67     Servo7 Servo Mid Position Degree (0-180)
+*  0x68     Servo8 Servo Mid Position Degree (0-180)
+*  0x69     Servo9 Servo Mid Position Degree (0-180)
+*  0x6a     Servo10 Servo Mid Position Degree (0-180)
+*  0x6b     Servo11 Servo Mid Position Degree (0-180)
 */
 
 #define ADDR_MARCDUINOVERSION   0x00
@@ -95,6 +107,12 @@
 #define ADDR_MAXRANDOMPAUSE     0x0b
 
 #define ADDR_MAXSONGSBASE       0x10
+
+#define ADDR_SERVODIRBASE       0x20
+#define ADDR_SERVOSPEEDBASE     0x30
+#define ADDR_SERVOOPENBASE      0x40
+#define ADDR_SERVOCLOSEDBASE    0x50
+#define ADDR_SERVOMIDBASE       0x60
 
 class MarcDuinoStorage
 {
@@ -118,13 +136,13 @@ class MarcDuinoStorage
         MarcDuinoStorage();
 
         byte getConfigVersion();
-        void setConfigVersion(const byte version);
+        void setConfigVersion(const byte Version);
 
         MarcDuinoType getType();
-        void setType(const MarcDuinoType type);
+        void setType(const MarcDuinoType Type);
 
         MarcDuinoMP3PlayerType getMP3Player();
-        void setMP3Player(const MarcDuinoMP3PlayerType type);
+        void setMP3Player(const MarcDuinoMP3PlayerType Type);
 
         byte getStartupSound();
         void setStartupSound(const byte SoundNr);
@@ -139,14 +157,29 @@ class MarcDuinoStorage
         byte getDisableRandomSound();
         void setDisableRandomSound(const byte DisableRandomSound);
 
-        byte getMaxSound(const byte bank);
-        void setMaxSound(const byte bank, const byte SongNr);
+        byte getMaxSound(const byte Bank);
+        void setMaxSound(const byte Bank, const byte SoundNr);
 
         byte getMaxRandomPause();
-        void setMaxRandomPause(const byte seconds);
+        void setMaxRandomPause(const byte Seconds);
 
         byte getMinRandomPause();
-        void setMinRandomPause(const byte seconds);
+        void setMinRandomPause(const byte Seconds);
+
+        byte getServoDirection(const byte ServoNr);                         // ServoNr 1-1, ServoNr=0 - Global, Direction 0-Normal / 1- Reverse
+        void setServoDirection(const byte ServoNr, const byte Direction);   // ServoNr 1-1, ServoNr=0 - Global, Direction 0-Normal / 1- Reverse
+
+        byte getServoSpeed(const byte ServoNr);                             // ServoNr 1-1, ServoNr=0 - Global, Speed 0-255
+        void setServoSpeed(const byte ServoNr, const byte Speed);           // ServoNr 1-1, ServoNr=0 - Global, Speed 0-255
+
+        byte getServoOpenPosDeg(const byte ServoNr);                        // ServoNr 1-1, ServoNr=0 - Global, Position 0-180
+        void setServoOpenPosDeg(const byte ServoNr, const byte Position);   // ServoNr 1-1, ServoNr=0 - Global, Posution 0-180
+
+        byte getServoCosedPosDeg(const byte ServoNr);                       // ServoNr 1-1, ServoNr=0 - Global, Position 0-180
+        void setServoClosedPosDeg(const byte ServoNr, const byte Position); // ServoNr 1-1, ServoNr=0 - Global, Posution 0-180
+
+        byte getServoMidPosDeg(const byte ServoNr);                         // ServoNr 1-1, ServoNr=0 - Global, Position 0-180
+        void setServoMidPosDeg(const byte ServoNr, const byte Position);    // ServoNr 1-1, ServoNr=0 - Global, Posution 0-180
 
         void dumpToSerial();
 };

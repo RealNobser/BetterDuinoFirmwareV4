@@ -1,7 +1,7 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-#define DEBUG   // Additional Log Messages to Serial
+// #define DEBUG_MSG   // Additional Log Messages to Serial
 
 #define SERIAL_BAUD         9600
 #define SERIAL_SLAVE_BAUD   9600
@@ -19,6 +19,11 @@
 #define MAX_SOUND_BANK  9
 #define MAX_BANK_SOUND  25
 
+// Original Marcduino Default Values
+#define PANEL_OPN 1000 // Open
+#define PANEL_MID 1750 // Mid Open
+#define PANEL_CLS 2000 // Closed
+
 // DO NOT EDIT BELOW THIS LINE
 // ------------------------------------------------
 
@@ -28,6 +33,8 @@
 #define VERSION         "4.0.0"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  40
+
+#define MAX_MARCUDINOSERVOS 11
 
 // Generic GPIOs
 #define P_I2C_SCL   19

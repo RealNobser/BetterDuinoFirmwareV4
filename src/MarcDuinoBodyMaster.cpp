@@ -20,7 +20,7 @@ void MarcDuinoBodyMaster::init()
     MarcDuinoBase::init();
 
     // Soft Serials
-    #ifdef DEBUG
+    #ifdef DEBUG_MSG
     Serial_Slave.println("To Slave");
     Serial_MP3.println("To MP3");
     #endif
@@ -38,9 +38,8 @@ void MarcDuinoBodyMaster::checkEEPROM()
 
 void MarcDuinoBodyMaster::parseCommand(const char* command)
 {
-    #ifdef DEBUG
-    Serial.print("Command(Body): ");
-    Serial.println((char*)command);
+    #ifdef DEBUG_MSG
+    Serial.printf("Command(Body): %s\r\n", command);
     #endif
 
     switch (command[0])

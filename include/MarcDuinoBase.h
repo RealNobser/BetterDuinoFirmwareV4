@@ -7,6 +7,7 @@
 #include <VarSpeedServo.h>
 
 #include "MarcDuinoStorage.h"
+#include "MarcDuinoSequencer.h"
 
 class MarcDuinoBase
 {
@@ -28,7 +29,8 @@ class MarcDuinoBase
 
         unsigned int MaxSoundsPerBank[10];
 
-        MarcDuinoStorage Storage;
+        MarcDuinoStorage    Storage;
+        MarcDuinoSequencer  Sequencer;
 
         VarSpeedServo& Servo1;
         VarSpeedServo& Servo2;

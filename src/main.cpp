@@ -61,9 +61,7 @@ void setup() {
 
   MarcDuino->init();
 
-  Serial.println(MarcDuino->getProductName());
-  Serial.println("Version " VERSION);
-  Serial.println();
+  Serial.printf("%s\r\nVersion %s\r\n", MarcDuino->getProductName(), VERSION);
 }
 
 void loop() {
