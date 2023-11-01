@@ -15,10 +15,9 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
 
-        void init() override;
-        void run() override;
+        virtual void init() override;
+        virtual void run() override;
 
-        virtual void parseCommand(const char* command) override;
         virtual const char* getProductName() override  { return "MarcDuino Dome Master"; }
 
     protected:
@@ -28,10 +27,17 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         Panel* Panels[MAX_PANELS+1];
 
         MarcDuinoSound* Sound = nullptr;
-        MarcDuinoStorage Storage;
 
-        unsigned long RandomSoundIntervall = 0;
-        unsigned long RandomSoundMillis;
+        unsigned long RandomSoundIntervall  = 0;
+        unsigned long RandomSoundMillis     = 0;
+
+        unsigned long MinRandomPause        = 6000;
+        unsigned long MaxRandomPause        = 12000;
+
+        virtual void checkEEPROM() override;        
+        virtual void parseCommand(const char* command) override;
+
+        void setStandardRandomSoundIntervall();
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);

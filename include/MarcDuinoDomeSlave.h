@@ -79,15 +79,17 @@ class MarcDuinoDomeSlave : public MarcDuinoBase
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
             
-        void init() override;
-        void run() override;
+        virtual void init() override;
+        virtual void run() override;
 
-        virtual void parseCommand(const char* command);
         virtual const char* getProductName() override { return "MarcDuino Dome Slave"; }
 
     protected:
         SendOnlySoftwareSerial& Serial_Magic;
         SendOnlySoftwareSerial& Serial_Teeces;
+
+        virtual void checkEEPROM() override;
+        virtual void parseCommand(const char* command);
 
         void processHoloCommand(const char* command);
         void processDisplayCommand(const char* command);

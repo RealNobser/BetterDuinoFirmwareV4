@@ -37,6 +37,9 @@ MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, S
         break;
     }
 
+    // Medium Sound at startup
+    Sound->VolumeMid();
+
     RandomSoundMillis = millis();
 }
 
@@ -64,32 +67,18 @@ void MarcDuinoDomeMaster::init()
     Panels[11] = new Panel(Servo11, P_SERVO_11, 0,180);
 
     // Random Sound
-    byte DisableRandomSound = Storage.getDisableRandomSound();
-    switch (DisableRandomSound)
-    {
-        case 0:
-            RandomSoundIntervall = RANDOMSOUNDINTERVAL_FULL;
-        break;
-        case 1:
-            RandomSoundIntervall = 0;
-            Sound->VolumeOff();
-        break;
-        case 2:
-            RandomSoundIntervall = 0;
-        break;
-        default:
-            RandomSoundIntervall = RANDOMSOUNDINTERVAL_FULL;
-            Storage.setDisableRandomSound(0);
-        break;
-    }
+    MinRandomPause = Storage.getMinRandomPause();
+    MaxRandomPause = Storage.getMaxRandomPause();
+
+    setStandardRandomSoundIntervall();
 
     // Startup Sound
     byte StartupSoundNr = Storage.getStartupSoundNr();
     if (StartupSoundNr != 0)
     {
         Sound->Play(StartupSoundNr);
-        if (DisableRandomSound != 0)
-            RandomSoundIntervall = 200000;
+        if (RandomSoundIntervall != 0)
+            RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
     }
 }
 
@@ -101,9 +90,97 @@ void MarcDuinoDomeMaster::run()
     {
         if ((millis()-RandomSoundMillis) > RandomSoundIntervall)
         {
-            // Next Random Sound
+            unsigned int bank   = 0;
+            unsigned int sound  = 0;
+
+            getRandomSound(bank, sound);
+
+            if ((bank != 0) && (sound != 0))
+                Sound->Play(bank, sound);
+
             RandomSoundMillis = millis();
+            setStandardRandomSoundIntervall();
+
+            #ifdef DEBUG
+            Serial.print("Random Sound, Bank ");
+            Serial.print(bank);
+            Serial.print(", Sound ");
+            Serial.println(sound);
+            #endif
         }
+    }
+}
+
+void MarcDuinoDomeMaster::checkEEPROM()
+{
+    byte ConfigVersion = Storage.getConfigVersion();
+    if (ConfigVersion != CONFIG_VERSION)
+    {
+        #ifdef DEBUG
+        Serial.println("Invalid Config Version. Storing defaults in EEPROM and restart.");
+        #endif
+        Storage.setType(MarcDuinoStorage::DomeMaster);
+        Storage.setMP3Player(MarcDuinoStorage::MP3Trigger);
+        Storage.setStartupSound(1);
+        Storage.setStartupSoundNr(255);
+        Storage.setChattyMode();
+        Storage.setDisableRandomSound(0);
+
+        // check SD-Card and edit sound banks!
+        Storage.setMaxSound(1, 19);
+        Storage.setMaxSound(2, 18);
+        Storage.setMaxSound(3,  7);
+        Storage.setMaxSound(4,  4);
+        Storage.setMaxSound(5,  3);
+        Storage.setMaxSound(6,  3);
+        Storage.setMaxSound(7,  3);
+        Storage.setMaxSound(8,  6);
+        Storage.setMaxSound(9,  8);
+        // check SD-Card and edit sound banks!
+
+        Storage.setMinRandomPause(MINRANDOMPAUSE);
+        Storage.setMaxRandomPause(MAXRANDOMPAUSE);
+
+        Storage.setConfigVersion(CONFIG_VERSION);   // Final step before restart
+        delay(500);
+        resetFunc();
+    }
+}
+
+void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
+{
+    byte DisableRandomSound = Storage.getDisableRandomSound();
+
+    if (!Storage.getChattyMode())
+    {
+        RandomSoundIntervall = 0;
+        return;
+    }
+
+    if ((MinRandomPause > MaxRandomPause) || (MaxRandomPause < MinRandomPause))
+    {
+        MinRandomPause = MINRANDOMPAUSE;
+        MaxRandomPause = MAXRANDOMPAUSE;
+        Storage.setMinRandomPause(MinRandomPause);
+        Storage.setMaxRandomPause(MaxRandomPause);
+    }
+
+    switch (DisableRandomSound)
+    {
+        case 0:
+            RandomSoundIntervall = random(MinRandomPause * 1000, MaxRandomPause * 1000 + 1);
+        break;
+        case 1:
+            RandomSoundIntervall = 0;
+            Sound->VolumeOff();
+        break;
+        case 2:
+            RandomSoundIntervall = 0;
+        break;
+        default:
+            RandomSoundIntervall = random(MinRandomPause * 1000, MaxRandomPause * 1000 + 1);
+            Storage.setDisableRandomSound(0);
+        break;
     }
 }
 
@@ -386,7 +463,7 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
         break;
         case 'O':   // sound off
             RandomSoundIntervall = 0;   // Stop Random sounds
-            Sound->Stop();
+            Sound->VolumeOff();
         break;
         case 'L':   // Leia message (bank 7 sound 1)
             RandomSoundIntervall = 0;   // Stop Random sounds

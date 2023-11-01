@@ -31,6 +31,11 @@ void MarcDuinoBodyMaster::run()
     MarcDuinoBase::run();
 }
 
+void MarcDuinoBodyMaster::checkEEPROM()
+{
+    
+}
+
 void MarcDuinoBodyMaster::parseCommand(const char* command)
 {
     #ifdef DEBUG

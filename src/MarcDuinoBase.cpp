@@ -7,12 +7,20 @@ MarcDuinoBase::MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSp
     Servo6(Servo6), Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11) 
 {
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
+
+    // Initilize Sound Bank Overview for Random Songs
+    MaxSoundsPerBank[0] = 0;
+    for (int i = 1; i <= MAX_SOUND_BANK; i++)
+        MaxSoundsPerBank[i] = Storage.getMaxSound(i);    
 }
 
 void MarcDuinoBase::init()
 {
     // I2C
     // Wire.begin();
+
+    // Seed Random Generator
+    randomSeed(analogRead(0));
 
     // HeartBeat-LED
     pinMode(P_LED2, OUTPUT);
@@ -21,6 +29,8 @@ void MarcDuinoBase::init()
     HeartBeatMillis = millis();
 
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
+
+    checkEEPROM();
 }
 
 void MarcDuinoBase::run()
@@ -132,6 +142,12 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
     return true;
 }
 
+void MarcDuinoBase::getRandomSound(unsigned int & bank, unsigned int & sound)
+{
+    bank = random(1,6);
+    sound = random(1, MaxSoundsPerBank[bank]+1);
+}
+
 /*
  *	Setup Commands
  * * 
@@ -139,7 +155,7 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
  *	#SD00 Set Servo direction forward
  *	#SD01 Set servo direction reversed
  *
- *  // OLD, unsupported:
+ *  // deprecated, will be removed in future
  *	#SRxxy Set individual servo to either forward or reversed xx=servo number y=direction
  *		Must be a 2 digit Servo number i.e. Servo 4 is 04
  *		Must be either 0 or 1 to set the direction (0 normal, 1 reversed)
@@ -167,12 +183,14 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
  *  #SQnn Set chatty mode
  *	    #SQ00 : Default Chatty Mode
  *  	#SQ01 : Silent on startup
- *      #SQ02 : Heavy Chatty Mode
  *
  *  #SMxx - Disable Random Sounds   (deprecated, will be removed in future)
  *      #SM00 : Random Sound on
  *      #SM01 : No Random Sound + Volume off
  *      #SM02 ; No Random Sound
+ * 
+ *  #SXxx - Set Max Random Pause in seconds
+ *  #SYxx - Set Min Random Pause in seconds
  *
  *	//// PANEL SEQUENCER CONTROLS
  *	#STxx Setup Delay time between Master and Slave Panel Sequences.
@@ -191,6 +209,8 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
  *      #MP01 : DFPlayer
  *      #MP02 : Vocalizer
  * 
+ *  #MSxyy Set max Sounds per Bank. x=1-9, y=0-25
+ * 
  *  //// SYSTEM FUNCTIONS
  *  #DMxx Dump EEPROM at address xx
  *  #RSET Reboot MarcDuino
@@ -199,17 +219,89 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
 void MarcDuinoBase::processSetupCommand(const char* command)
 {
     char cmd[3];
-    unsigned int param_num = 0;
+    char param[4];
+    char param_ext[4];
+
+    unsigned int param_num      = 0;
+    unsigned int param_num_ext  = 0;
 
     memset(cmd, 0x00, 3);
+    memset(param, 0x00, 4);
+    memset(param_ext, 0x00, 4);
 
     #ifdef DEBUG
     Serial.print("SetupCommand(Base): ");
     Serial.println((const char*)command);
     #endif
 
-    if (!separateCommand(command, cmd, param_num))
-        return;
+    // Command Parsing
+
+    if (strlen(command) == 5)   // Standard #CCxx
+    {
+        if (!separateCommand(command, cmd, param_num))
+            return; // Invalid Command
+    }
+    else if (strlen(command) == 6)   // #SRxxy and #MSxyy
+    {
+        memcpy(cmd, command+1, 2);
+
+        if (strcmp(cmd, "SR") == 0)
+        {
+            memcpy(param, command+3, 2);
+            memcpy(param_ext, command+5, 1);
+        } 
+        else if (strcmp(cmd, "MS") == 0)
+        {
+            memcpy(param, command+3, 1);
+            memcpy(param_ext, command+4, 2);
+        }
+        else
+        {
+            Serial.println("Invalid Extended Command");            
+            return; // Invalid Command
+        }
+
+        param_num       = atoi(param);
+        param_num_ext   = atoi(param_ext);
+
+        #ifdef DEBUG
+        Serial.print("Cmd:   ");
+        Serial.println(cmd);
+        Serial.print("Param: ");
+        Serial.println(param);
+        Serial.print("Param Ext: ");
+        Serial.println(param_ext);
+        #endif        
+    }
+    else if (strlen(command) == 8)   // #SOxxyyy, #SCxxyyy and #SPxxyyy
+    {
+        memcpy(cmd, command+1, 2);
+
+        if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) && (strcmp(cmd, "SP") != 0))
+        {
+            Serial.println("Invalid Extended Command");            
+            return; // Invalid Command
+        }
+        else
+        {
+            memcpy(param, command+3, 2);
+            memcpy(param_ext, command+5, 3);
+
+            param_num       = atoi(param);
+            param_num_ext   = atoi(param_ext);
+
+            #ifdef DEBUG
+            Serial.print("Cmd:   ");
+            Serial.println(cmd);
+            Serial.print("Param: ");
+            Serial.println(param);
+            Serial.print("Param Ext: ");
+            Serial.println(param_ext);
+            #endif   
+        }
+    }
+
+    // Command Actions
 
     if (strcmp(cmd, "SD") == 0)            // Servo Direction
     {
@@ -243,6 +335,12 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "SQ") == 0)       // Chatty Mode
     {
+        if (param_num == 0)
+            Storage.setChattyMode();
+        else if (param_num == 1)
+            Storage.setChattyMode(false);
+        else
+            Storage.setChattyMode();       // Default on
     }
     else if (strcmp(cmd, "SM") == 0)       // Disable Random Mode
     {
@@ -262,6 +360,14 @@ void MarcDuinoBase::processSetupCommand(const char* command)
             break;
         }
     }    
+    else if (strcmp(cmd, "SX") == 0)       // Max Random Pause
+    {
+        Storage.setMaxRandomPause(param_num);
+    }
+    else if (strcmp(cmd, "SY") == 0)       // Min Random Pause
+    {
+        Storage.setMinRandomPause(param_num);
+    }
     else if (strcmp(cmd, "ST") == 0)       // Delay Time Master/Slave
     {
     }
@@ -304,6 +410,15 @@ void MarcDuinoBase::processSetupCommand(const char* command)
             default:
             break;
         }
+    }
+    else if (strcmp(cmd, "MS") == 0)
+    {
+        if ((param_num < 1) || (param_num) > MAX_SOUND_BANK)    // Bank must be 1-9
+            return;
+        if (param_num_ext > MAX_BANK_SOUND)                    // Sound must be 0-25
+            return;
+
+        Storage.setMaxSound(param_num, param_num_ext);
     }
     else if (strcmp(cmd, "DM") == 0)             // Dump EEPROM
     {

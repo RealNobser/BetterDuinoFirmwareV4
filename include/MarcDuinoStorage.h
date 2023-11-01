@@ -5,16 +5,29 @@
 * 
 * Address   Content
 * =========|=========
-*  0        SW-Version (40 = 4.0,41 = 4.1 ...=
-*  1        MarcDuinoType (0-DomeMaster, 1-DomeSlave, 2-BodyMaster)
-*  2        Startup Sound (0-none, 1-File255, 2-File254, 3-File253) // depricated, see Startup Sound Nr
-*  3        Chatty/Silent Mode (0-Chatty, 1-Silent)
-*  4        MP3-Player-Type (0-SparkFun, 1-DF-Mini)
-*  5        Disable Random Sound (0-Random Sound, 1-No Random Sound + Volume off, 2-No Random Sound)
-*  6        Slave Delay Byte 1 (Delay in ms)
-*  7        Slave Deley Byte 2 (Delay in ms, 0-65535)
-*  8        Number of Servos
-*  9        Startup Sound Nr (obsoletes Startup Sound mapping)
+*  0x00     SW-/Config-Version (40 = 4.0,41 = 4.1 ...=
+*  0x01     MarcDuinoType (0-DomeMaster, 1-DomeSlave, 2-BodyMaster)
+*  0x02     Startup Sound (0-none, 1-File255, 2-File254, 3-File253) // depricated, see Startup Sound Nr
+*  0x03     Chatty/Silent Mode (0-Chatty, 1-Silent)
+*  0x04     MP3-Player-Type (0-SparkFun, 1-DF-Mini)
+*  0x05     Disable Random Sound (0-Random Sound, 1-No Random Sound + Volume off, 2-No Random Sound)
+*  0x06     Slave Delay Byte 1 (Delay in ms)
+*  0x07     Slave Deley Byte 2 (Delay in ms, 0-65535)
+*  0x08     Number of Servos
+*  0x09     Startup Sound Nr (obsoletes Startup Sound mapping)
+*  0x0a     MinRandomPause in seconds (default 6s)
+*  0x0b     MaxRandomPause in seconds (default 12s)
+
+*  0x10
+*  0x11     Max Sounds Bank 1 (1-25)
+*  0x12     Max Sounds Bank 2 (1-25)
+*  0x13     Max Sounds Bank 3 (1-25)
+*  0x14     Max Sounds Bank 4 (1-25)
+*  0x15     Max Sounds Bank 5 (1-25)
+*  0x16     Max Sounds Bank 6 (1-25)
+*  0x17     Max Sounds Bank 7 (1-25)
+*  0x18     Max Sounds Bank 8 (1-25)
+*  0x19     Max Sounds Bank 9 (1-25)
 
 *  10       Global Servo Direction (0-Normal, 1-Reverse)
 *  11       Servo1 Servo Direction (0-Normal, 1-Reverse)
@@ -73,10 +86,15 @@
 #define ADDR_MARCDUINOVERSION   0x00
 #define ADDR_MARCDUINOTYPE      0x01
 #define ADDR_STARTUPSOUND       0x02
-
+#define ADDR_CHATTYMODE         0x03
 #define ADDR_MARCDUINOMP3PLAYER 0x04
 #define ADDR_DISABLERANDOMSOUND 0x05
 #define ADDR_STARTUPSOUNDNR     0x06
+
+#define ADDR_MINRANDOMPAUSE     0x0a
+#define ADDR_MAXRANDOMPAUSE     0x0b
+
+#define ADDR_MAXSONGSBASE       0x10
 
 class MarcDuinoStorage
 {
@@ -99,6 +117,9 @@ class MarcDuinoStorage
     public:
         MarcDuinoStorage();
 
+        byte getConfigVersion();
+        void setConfigVersion(const byte version);
+
         MarcDuinoType getType();
         void setType(const MarcDuinoType type);
 
@@ -112,8 +133,20 @@ class MarcDuinoStorage
         byte getStartupSoundNr();
         void setStartupSoundNr(const byte SoundNr);
 
+        bool getChattyMode();
+        void setChattyMode(const bool on = true);
+
         byte getDisableRandomSound();
         void setDisableRandomSound(const byte DisableRandomSound);
+
+        byte getMaxSound(const byte bank);
+        void setMaxSound(const byte bank, const byte SongNr);
+
+        byte getMaxRandomPause();
+        void setMaxRandomPause(const byte seconds);
+
+        byte getMinRandomPause();
+        void setMinRandomPause(const byte seconds);
 
         void dumpToSerial();
 };

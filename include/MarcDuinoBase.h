@@ -17,11 +17,7 @@ class MarcDuinoBase
         virtual void init();
         virtual void run();
 
-        virtual void parseCommand(const char* command) = 0;
-
         virtual const char* getProductName() = 0;
-
-        void toggleHeartBeat();
 
     protected:
         unsigned long HeartBeatMillis = 0;
@@ -29,6 +25,8 @@ class MarcDuinoBase
 
         char SerialBuffer[SERIALBUFFERSIZE];
         int BufferIndex = 0;
+
+        unsigned int MaxSoundsPerBank[10];
 
         MarcDuinoStorage Storage;
 
@@ -44,8 +42,14 @@ class MarcDuinoBase
         VarSpeedServo& Servo10;
         VarSpeedServo& Servo11;
 
+        virtual void checkEEPROM() = 0;
+        virtual void parseCommand(const char* command) = 0;
+
+        void toggleHeartBeat();
+
         bool separateCommand(const char* command, char* cmd, unsigned int & param_num);
         bool separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound);
+        void getRandomSound(unsigned int & bank, unsigned int & sound);
 
         void processSetupCommand(const char* command);
 

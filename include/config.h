@@ -13,9 +13,11 @@
 
 #define HEARTBEAT_MILLIS    1000
 
-#define RANDOMSOUNDINTERVAL_MID         20000
-#define RANDOMSOUNDINTERVAL_FULL        10000
-#define RANDOMSOUNDINTERVAL_FULLPLUS    5000
+#define MINRANDOMPAUSE 6        // In Seconds!
+#define MAXRANDOMPAUSE 12       // In Seconds!
+
+#define MAX_SOUND_BANK  9
+#define MAX_BANK_SOUND  25
 
 // DO NOT EDIT BELOW THIS LINE
 // ------------------------------------------------
@@ -23,8 +25,9 @@
 //
 // Module Specific stuff
 //
-#define VERSION     "4.0.0"
-#define HW_VERSION  "1.5.3"
+#define VERSION         "4.0.0"
+#define HW_VERSION      "1.5.3"
+#define CONFIG_VERSION  40
 
 // Generic GPIOs
 #define P_I2C_SCL   19

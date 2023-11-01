@@ -3,10 +3,21 @@
 #include <stdio.h>
 
 #include "MarcDuinoStorage.h"
+#include "config.h"
 
 MarcDuinoStorage::MarcDuinoStorage()
 {
 
+}
+
+byte MarcDuinoStorage::getConfigVersion()
+{
+    return EEPROM.read(ADDR_MARCDUINOVERSION);
+}
+
+void MarcDuinoStorage::setConfigVersion(const byte version)
+{
+    EEPROM.update(ADDR_MARCDUINOVERSION, version);
 }
 
 MarcDuinoStorage::MarcDuinoType MarcDuinoStorage::getType()
@@ -95,6 +106,28 @@ void MarcDuinoStorage::setStartupSoundNr(const byte SoundNr)
     EEPROM.update(ADDR_STARTUPSOUNDNR, SoundNr);
 }
 
+bool MarcDuinoStorage::getChattyMode()
+{
+    uint8_t value = EEPROM.read(ADDR_CHATTYMODE);
+    if (value == 0)
+        return true;
+    else if (value == 1)
+        return false;
+    else
+    {
+        setChattyMode();
+        return true;
+    }
+}
+
+void MarcDuinoStorage::setChattyMode(const bool on/* = true*/)
+{
+    if (on)
+        EEPROM.update(ADDR_CHATTYMODE, 0x00);
+    else
+        EEPROM.update(ADDR_CHATTYMODE, 0x01);
+}
+
 byte MarcDuinoStorage::getDisableRandomSound()
 {
     uint8_t value = EEPROM.read(ADDR_DISABLERANDOMSOUND);
@@ -104,6 +137,51 @@ byte MarcDuinoStorage::getDisableRandomSound()
 void MarcDuinoStorage::setDisableRandomSound(const byte DisableRandomSound)
 {
     EEPROM.update(ADDR_DISABLERANDOMSOUND, DisableRandomSound);
+}
+
+byte MarcDuinoStorage::getMaxSound(const byte bank)
+{
+    uint8_t value = 0;
+    
+    if (bank > MAX_SOUND_BANK)
+        return 1;   // Invalid Bank, but one will be there
+
+    value = EEPROM.read(ADDR_MAXSONGSBASE + bank);
+
+    // One bank has the maximum of 25 Songs
+    if (value > MAX_BANK_SOUND)
+        return 1;   // Invalid Sound, but one will be there
+    else
+        return value;
+}
+
+void MarcDuinoStorage::setMaxSound(const byte bank, const byte SongNr)
+{
+    EEPROM.update(ADDR_MAXSONGSBASE + bank, SongNr);
+}
+
+byte MarcDuinoStorage::getMaxRandomPause()
+{
+    uint8_t value = 0;
+    value = EEPROM.read(ADDR_MAXRANDOMPAUSE);
+    return value;
+}
+
+void MarcDuinoStorage::setMaxRandomPause(const byte seconds)
+{
+    EEPROM.update(ADDR_MAXRANDOMPAUSE, seconds);
+}
+
+byte MarcDuinoStorage::getMinRandomPause()
+{
+    uint8_t value = 0;
+    value = EEPROM.read(ADDR_MINRANDOMPAUSE);
+    return value;
+}
+
+void MarcDuinoStorage::setMinRandomPause(const byte seconds)
+{
+    EEPROM.update(ADDR_MINRANDOMPAUSE, seconds);
 }
 
 void MarcDuinoStorage::dumpToSerial()

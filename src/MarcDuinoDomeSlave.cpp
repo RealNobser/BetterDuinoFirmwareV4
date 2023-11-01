@@ -32,6 +32,11 @@ void MarcDuinoDomeSlave::run()
     MarcDuinoBase::run();
 }
 
+void MarcDuinoDomeSlave::checkEEPROM()
+{
+    
+}
+
 /*
  *  Valid start characters recognized in main()
  *  ':' panel command, ignored (see parse_panel_command). This should not be received by this slaved module anyhow
