@@ -22,8 +22,8 @@ void MarcDuinoDomeSlave::init()
 
     // Soft Serials
     #ifdef DEBUG_MSG
-    Serial_Magic.println("To Magic");
-    Serial_Teeces.println("To Teeces");
+    Serial_Magic.println(F("To Magic"));
+    Serial_Teeces.println(F("To Teeces"));
     #endif    
 }
 
@@ -52,7 +52,7 @@ void MarcDuinoDomeSlave::checkEEPROM()
 void MarcDuinoDomeSlave::parseCommand(const char* command)
 {
     #ifdef DEBUG_MSG
-    Serial.printf("Command(Salve): %s\r\n", command);
+    Serial.printf(F("Command(Salve): %s\r\n"), command);
     #endif
 
     switch (command[0])
@@ -86,28 +86,27 @@ void MarcDuinoDomeSlave::parseCommand(const char* command)
 void MarcDuinoDomeSlave::processHoloCommand(const char* command)
 {
     #ifdef DEBUG_MSG
-    Serial.printf("HoloCommand(Slave): %s\r\n", command);
+    Serial.printf(F("HoloCommand(Slave): %s\r\n"), command);
     #endif
 }
 
 void MarcDuinoDomeSlave::processDisplayCommand(const char* command)
 {
     #ifdef DEBUG_MSG
-    Serial.printf("DisplayCommand(Slave): %s\r\n", command);
-    Serial.println((char*)command);
+    Serial.printf(F("DisplayCommand(Slave): %s\r\n"), command);
     #endif
 }
 
 void MarcDuinoDomeSlave::processAltDisplayCommand(const char* command)
 {
     #ifdef DEBUG_MSG
-    Serial.printf("AltDisplayCommand(Slave): %s\r\n", command);
+    Serial.printf(F("AltDisplayCommand(Slave): %s\r\n"), command);
     #endif
 }
 
 void MarcDuinoDomeSlave::processExpansionCommand(const char* command)
 {
     #ifdef DEBUG_MSG
-    Serial.printf("ExpansionCommand(Slave): %s\r\n", command);
+    Serial.printf(F("ExpansionCommand(Slave): %s\r\n"), command);
     #endif
 }

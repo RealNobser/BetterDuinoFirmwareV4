@@ -1,7 +1,7 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-// #define DEBUG_MSG   // Additional Log Messages to Serial
+#define DEBUG_MSG   // Additional Log Messages to Serial
 
 #define SERIAL_BAUD         9600
 #define SERIAL_SLAVE_BAUD   9600

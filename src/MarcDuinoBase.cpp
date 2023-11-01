@@ -75,7 +75,7 @@ bool MarcDuinoBase::separateCommand(const char* command, char* cmd, unsigned int
 
     if (strlen(command) != 5)
     {
-        Serial.printf("Invalid Size: %i\r\n", strlen(command));
+        Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
         return false;
     }
     
@@ -83,7 +83,7 @@ bool MarcDuinoBase::separateCommand(const char* command, char* cmd, unsigned int
     memcpy(param, command+3, 2);
 
     #ifdef DEBUG_MSG
-    Serial.printf("Cmd: %s, Param: %s\r\n", cmd, param);
+    Serial.printf(F("Cmd: %s, Param: %s\r\n"), cmd, param);
     #endif
 
     param_num = atoi(param);    
@@ -98,7 +98,7 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
 
     if ((strlen(command) != 4) && (strlen(command) != 2))
     {
-        Serial.printf("Invalid Size: %i\r\n", strlen(command));
+        Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
         return false;
     }
     
@@ -107,7 +107,7 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
         memcpy(cmd, command+1, 1);
 
         #ifdef DEBUG_MSG
-        Serial.printf("Cmd: %s\r\n", cmd);
+        Serial.printf(F("Cmd: %s\r\n"), cmd);
         #endif
     }
     else if (strlen(command) == 4)
@@ -125,7 +125,7 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
         sound=atoi(sound_char);
 
         #ifdef DEBUG_MSG
-        Serial.printf("Cmd: %s, Bank: %i, Sound %i\r\n", cmd, bank, sound);
+        Serial.printf(F("Cmd: %s, Bank: %i, Sound %i\r\n"), cmd, bank, sound);
         #endif
     }
     return true;
@@ -219,7 +219,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     memset(param_ext, 0x00, 4);
 
     #ifdef DEBUG_MSG
-    Serial.printf("SetupCommand(Base): %s\r\n", command);
+    Serial.printf(F("SetupCommand(Base): %s\r\n"), command);
     #endif
 
     // Command Parsing
@@ -245,7 +245,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         }
         else
         {
-            Serial.println("Invalid Extended Command");
+            Serial.println(F("Invalid Extended Command"));
             return; // Invalid Command
         }
 
@@ -253,7 +253,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         param_num_ext   = atoi(param_ext);
 
         #ifdef DEBUG_MSG
-        Serial.printf("Cmd: %s, Param: %i, Param Ext: %i\r\n", cmd, param_num, param_num_ext);
+        Serial.printf(F("Cmd: %s, Param: %i, Param Ext: %i\r\n"), cmd, param_num, param_num_ext);
         #endif        
     }
     else if (strlen(command) == 8)   // #SOxxyyy, #SCxxyyy and #SPxxyyy
@@ -262,7 +262,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
 
         if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) && (strcmp(cmd, "SP") != 0))
         {
-            Serial.println("Invalid Extended Command");            
+            Serial.println(F("Invalid Extended Command"));
             return; // Invalid Command
         }
         else
@@ -274,7 +274,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
             param_num_ext   = atoi(param_ext);
 
             #ifdef DEBUG_MSG
-            Serial.printf("Cmd: %s, Param: %i, Param Ext: %i\r\n", cmd, param_num, param_num_ext);
+            Serial.printf(F("Cmd: %s, Param: %i, Param Ext: %i\r\n"), cmd, param_num, param_num_ext);
             #endif   
         }
     }
