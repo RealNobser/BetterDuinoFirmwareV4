@@ -12,8 +12,8 @@
 class MarcDuinoBase
 {
     public:
-        MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
-                      VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11);
+        MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
+                      VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13);
 
         virtual void init();
         virtual void run();
@@ -43,8 +43,10 @@ class MarcDuinoBase
         VarSpeedServo& Servo9;
         VarSpeedServo& Servo10;
         VarSpeedServo& Servo11;
+        VarSpeedServo& Servo12;
+        VarSpeedServo& Servo13;
 
-        virtual void checkEEPROM() = 0;
+        virtual void checkEEPROM();
         virtual void parseCommand(const char* command) = 0;
 
         void toggleHeartBeat();

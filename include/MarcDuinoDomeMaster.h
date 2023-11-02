@@ -13,7 +13,7 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
-            VarSpeedServo& Servo11);
+            VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13);
 
         virtual void init() override;
         virtual void run() override;
@@ -24,7 +24,10 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         SendOnlySoftwareSerial& Serial_Slave;
         SendOnlySoftwareSerial& Serial_MP3;
 
-        Panel* Panels[MAX_PANELS+1];
+        static const unsigned int MinPanel =  1;   // Master Board has 11 Panel Connectors
+        static const unsigned int MaxPanel = 11;   // Master Board has 11 Panel Connectors
+
+        Panel* Panels[MaxPanel + 1];               // +1 for index 0 dummy
 
         MarcDuinoSound* Sound = nullptr;
 
@@ -34,7 +37,6 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         unsigned long MinRandomPause        = 6000;
         unsigned long MaxRandomPause        = 12000;
 
-        virtual void checkEEPROM() override;        
         virtual void parseCommand(const char* command) override;
 
         void setStandardRandomSoundIntervall();
@@ -47,7 +49,6 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         void processAltHoloCommand(const char* command);
 
         void playSequence(const unsigned int SeqNr);
-        void playSlaveSequence(const unsigned int SeqNr);
 };
 
 #endif // __MARCDUINODOMEMASTER_H__

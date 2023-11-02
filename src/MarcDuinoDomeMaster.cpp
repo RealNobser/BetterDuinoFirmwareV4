@@ -5,8 +5,8 @@
 MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
-            VarSpeedServo& Servo11) :
-    MarcDuinoBase(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11),
+            VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
+    MarcDuinoBase(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
     Serial_Slave(Serial_Slave),
     Serial_MP3(Serial_MP3)
 {
@@ -16,7 +16,7 @@ MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, S
     Serial_MP3.begin(SERIAL_MP3_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
     while(!Serial_MP3);
 
-    for(int i=0; i <= MAX_PANELS; ++i)
+    for(unsigned int i=0; i <= MaxPanel; ++i)
     {
         Panels[i] = nullptr;
     }
@@ -67,7 +67,8 @@ void MarcDuinoDomeMaster::init()
     Panels[10] = new Panel(Servo10, P_SERVO_10, 0,180);
     Panels[11] = new Panel(Servo11, P_SERVO_11, 0,180);
 
-    Sequencer.setPanels(Panels, MAX_PANELS+1);
+    Sequencer.setPanels(Panels, MaxPanel+1);
+    Sequencer.setPanelRange(MinPanel, MaxPanel);
 
     // Random Sound
     MinRandomPause = Storage.getMinRandomPause();
@@ -111,50 +112,6 @@ void MarcDuinoDomeMaster::run()
             Serial.printf(F("Random Sound, Bank %i, Sound %i\r\n"), bank, sound);
             #endif
         }
-    }
-}
-
-void MarcDuinoDomeMaster::checkEEPROM()
-{
-    byte ConfigVersion = Storage.getConfigVersion();
-    if (ConfigVersion != CONFIG_VERSION)
-    {
-        #ifdef DEBUG_MSG
-        Serial.println(F("Invalid Config Version. Storing defaults in EEPROM and restart."));
-        #endif
-        Storage.setType(MarcDuinoStorage::DomeMaster);
-        Storage.setMP3Player(MarcDuinoStorage::MP3Trigger);
-        Storage.setStartupSound(1);
-        Storage.setStartupSoundNr(255);
-        Storage.setChattyMode();
-        Storage.setDisableRandomSound(0);
-
-        // check SD-Card and edit sound banks!
-        Storage.setMaxSound(1, 19);
-        Storage.setMaxSound(2, 18);
-        Storage.setMaxSound(3,  7);
-        Storage.setMaxSound(4,  4);
-        Storage.setMaxSound(5,  3);
-        Storage.setMaxSound(6,  3);
-        Storage.setMaxSound(7,  3);
-        Storage.setMaxSound(8,  6);
-        Storage.setMaxSound(9,  8);
-        // check SD-Card and edit sound banks!
-
-        Storage.setMinRandomPause(MINRANDOMPAUSE);
-        Storage.setMaxRandomPause(MAXRANDOMPAUSE);
-
-        for (int i=0; i <= MAX_MARCUDINOSERVOS; i++)
-        {
-            Storage.setServoDirection(i, 0);        // Direction normal, Global Setting plus each individual
-            Storage.setServoSpeed(i, 255);          // Full Speed, Global Setting plus each individual
-            Storage.setServoOpenPosDeg(i, 0);       // 0 deg open
-            Storage.setServoClosedPosDeg(i, 180);   // 180 deg open
-            Storage.setServoMidPosDeg(i, 90);       // 180 deg open
-        }
-        Storage.setConfigVersion(CONFIG_VERSION);   // Final step before restart
-        delay(500);
-        resetFunc();
     }
 }
 
@@ -278,34 +235,36 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
 
         if (param_num == 0)         // open all
         {
-            for(int i=1; i<=MAX_PANELS; i++)
+            for(unsigned int i=MinPanel; i<=MaxPanel; i++)
                 Panels[i]->open();
             
             // Open Slave, too
             Serial_Slave.print(F(":OP00\r"));
         }
-        else if ((param_num > 0) && (param_num <=MAX_PANELS))
+        else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
         {
             Panels[param_num]->open();
         }
         else if (param_num == 12)   // Send commands to slave to open slave panels
         {
-            Serial_Slave.print(F(":OP07\r"));
+            // Serial_Slave.print(F(":OP07\r")); // OLD
+            Serial_Slave.print(F(":OP12\r")); // OLD
         }
         else if (param_num == 13)   // Send commands to slave to open slave panels
         {
-            Serial_Slave.print(F(":OP08\r"));
+            //Serial_Slave.print(F(":OP08\r")); // OLD
+            Serial_Slave.print(F(":OP13\r")); // OLD
         }
         else if (param_num == 14)    // Open Top Panels
         {
-            for (int i=7; i<=MAX_PANELS; i++)
+            for (unsigned int i=7; i<=MaxPanel; i++)
             {
                 Panels[i]->open();
             }
         }
         else if (param_num == 15)    // Open Bottom Panels
         {
-            for (int i=1; i<=6; i++)
+            for (int i=MinPanel; i<=6; i++)
             {
                 Panels[i]->open();
             }
@@ -320,34 +279,36 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
 
         if (param_num == 0)         // close all
         {
-            for(int i=1; i<=MAX_PANELS; i++)
+            for(unsigned int i=MinPanel; i<= MaxPanel; i++)
                 Panels[i]->close();
             
             // Open Slave, too
             Serial_Slave.print(F(":CL00\r"));
         }
-        else if ((param_num > 0) && (param_num <=MAX_PANELS))
+        else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
         {
             Panels[param_num]->close();
         }
         else if (param_num == 12)   // Send commands to slave to open slave panels
         {
-            Serial_Slave.print(F(":CL07\r"));
+            // Serial_Slave.print(F(":CL07\r")); // OLD
+            Serial_Slave.print(F(":CL12\r"));
         }
         else if (param_num == 13)   // Send commands to slave to open slave panels
         {
-            Serial_Slave.print(F(":CL08\r"));
+            // Serial_Slave.print(F(":CL08\r"));  // OLD
+            Serial_Slave.print(F(":CL13\r"));
         }
         else if (param_num == 14)    // Open Top Panels
         {
-            for (int i=7; i<=MAX_PANELS; i++)
+            for (unsigned int i=7; i<=MaxPanel; i++)
             {
                 Panels[i]->close();
             }
         }
         else if (param_num == 15)    // Open Bottom Panels
         {
-            for (int i=1; i<=6; i++)
+            for (int i=MinPanel; i<=6; i++)
             {
                 Panels[i]->close();
             }
@@ -361,29 +322,28 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
     {
         if (param_num == 0)    // Alle panels
         {
-            for(int i=1; i <= MAX_PANELS; i++)
+            for(unsigned int i=MinPanel; i <= MaxPanel; i++)
                 Panels[i]->detach();
 
             Serial_Slave.print(F(":ST00\r"));
         }
-        else if ((param_num > 0) && (param_num <=MAX_PANELS))
+        else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
         {
             Panels[param_num]->detach();
+        }
+        else if (param_num == 12)
+        {
+            Serial_Slave.print(F(":ST12\r"));
+        }
+        else if (param_num == 13)
+        {
+            Serial_Slave.print(F(":ST13\r"));
         }
     }
     else if (strcmp(cmd, "HD")==0)
     {
 
     }
-    // NEW
-    else if (strcmp(cmd, "DT")==0)  // Detach servo from pin / Check if identical to ST
-    {
-        if ((param_num > 0) && (param_num <=MAX_PANELS))
-        {
-            Panels[param_num]->detach();
-        }       
-    }
-
 }
 
 void MarcDuinoDomeMaster::processHoloCommand(const char* command)
@@ -562,7 +522,7 @@ void MarcDuinoDomeMaster::playSequence(const unsigned int SeqNr)
     Sequencer.clearSequence();
 
     // Also forward to Slave
-    playSlaveSequence(SeqNr);
+    Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
 
     switch (SeqNr)
     {
@@ -678,11 +638,5 @@ void MarcDuinoDomeMaster::playSequence(const unsigned int SeqNr)
     default:
         break;
     }
-}
-
-void MarcDuinoDomeMaster::playSlaveSequence(const unsigned int SeqNr)
-{
-    // Todo: Delay for Slave Sequence
-    Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
 }
 

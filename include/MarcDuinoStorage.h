@@ -41,6 +41,8 @@
 *  0x29     Servo9 Servo Direction (0-Normal, 1-Reverse)
 *  0x2a     Servo10 Servo Direction (0-Normal, 1-Reverse)
 *  0x2b     Servo11 Servo Direction (0-Normal, 1-Reverse)
+*  0x2c     Servo12 Servo Direction (0-Normal, 1-Reverse)
+*  0x2d     Servo13 Servo Direction (0-Normal, 1-Reverse)
 
 *  0x30     Global Servo Speed (0-255)
 *  0x31     Servo1 Servo Speed (0-255)
@@ -54,6 +56,8 @@
 *  0x39     Servo9 Servo Speed (0-255)
 *  0x3a     Servo10 Servo Speed (0-255)
 *  0x3b     Servo11 Servo Speed (0-255)
+*  0x3c     Servo12 Servo Speed (0-255)
+*  0x3d     Servo13 Servo Speed (0-255)
 
 *  0x40     Global Servo Open Position Degree (0-180)
 *  0x41     Servo1 Servo Open Position Degree (0-180)
@@ -67,6 +71,8 @@
 *  0x49     Servo9 Servo Open Position Degree (0-180)
 *  0x4a     Servo10 Servo Open Position Degree (0-180)
 *  0x4b     Servo11 Servo Open Position Degree (0-180)
+*  0x4c     Servo12 Servo Open Position Degree (0-180)
+*  0x4d     Servo13 Servo Open Position Degree (0-180)
 
 *  0x50     Global Servo Close Position Degree (0-180)
 *  0x51     Servo1 Servo Close Position Degree (0-180)
@@ -80,6 +86,8 @@
 *  0x59     Servo9 Servo Close Position Degree (0-180)
 *  0x5a     Servo10 Servo Close Position Degree (0-180)
 *  0x5b     Servo11 Servo Close Position Degree (0-180)
+*  0x5c     Servo12 Servo Close Position Degree (0-180)
+*  0x5d     Servo13 Servo Close Position Degree (0-180)
 
 *  0x60     Global Servo Mid Position Degree (0-180)
 *  0x61     Servo1 Servo Mid Position Degree (0-180)
@@ -93,6 +101,8 @@
 *  0x69     Servo9 Servo Mid Position Degree (0-180)
 *  0x6a     Servo10 Servo Mid Position Degree (0-180)
 *  0x6b     Servo11 Servo Mid Position Degree (0-180)
+*  0x6c     Servo11 Servo Mid Position Degree (0-180)
+*  0x6d     Servo11 Servo Mid Position Degree (0-180)
 */
 
 #define ADDR_MARCDUINOVERSION   0x00

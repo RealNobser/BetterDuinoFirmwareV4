@@ -3,8 +3,8 @@
 MarcDuinoBodyMaster::MarcDuinoBodyMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
-            VarSpeedServo& Servo11):
-    MarcDuinoBase(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11),
+            VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13):
+    MarcDuinoBase(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
     Serial_Slave(Serial_Slave),
     Serial_MP3(Serial_MP3)
 {
@@ -29,11 +29,6 @@ void MarcDuinoBodyMaster::init()
 void MarcDuinoBodyMaster::run()
 {
     MarcDuinoBase::run();
-}
-
-void MarcDuinoBodyMaster::checkEEPROM()
-{
-    
 }
 
 void MarcDuinoBodyMaster::parseCommand(const char* command)

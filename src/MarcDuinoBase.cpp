@@ -1,10 +1,10 @@
 
 #include "MarcDuinoBase.h"
 
-MarcDuinoBase::MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
-                             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11) :
-    Servo1(Servo1), Servo2(Servo2), Servo3(Servo3), Servo4(Servo4), Servo5(Servo5), 
-    Servo6(Servo6), Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11) 
+MarcDuinoBase::MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
+                             VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
+    Servo1(Servo1), Servo2(Servo2), Servo3(Servo3), Servo4(Servo4), Servo5(Servo5), Servo6(Servo6),
+    Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11), Servo12(Servo12), Servo13(Servo13)
 {
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
 
@@ -55,6 +55,50 @@ void MarcDuinoBase::run()
     {
         toggleHeartBeat();
         HeartBeatMillis = millis();
+    }
+}
+
+void MarcDuinoBase::checkEEPROM()
+{
+    byte ConfigVersion = Storage.getConfigVersion();
+    if (ConfigVersion != CONFIG_VERSION)
+    {
+        #ifdef DEBUG_MSG
+        Serial.println(F("Invalid Config Version. Storing defaults in EEPROM and restart."));
+        #endif
+        Storage.setType(MarcDuinoStorage::DomeMaster);
+        Storage.setMP3Player(MarcDuinoStorage::MP3Trigger);
+        Storage.setStartupSound(1);
+        Storage.setStartupSoundNr(255);
+        Storage.setChattyMode();
+        Storage.setDisableRandomSound(0);
+
+        // check SD-Card and edit sound banks!
+        Storage.setMaxSound(1, 19);
+        Storage.setMaxSound(2, 18);
+        Storage.setMaxSound(3,  7);
+        Storage.setMaxSound(4,  4);
+        Storage.setMaxSound(5,  3);
+        Storage.setMaxSound(6,  3);
+        Storage.setMaxSound(7,  3);
+        Storage.setMaxSound(8,  6);
+        Storage.setMaxSound(9,  8);
+        // check SD-Card and edit sound banks!
+
+        Storage.setMinRandomPause(MINRANDOMPAUSE);
+        Storage.setMaxRandomPause(MAXRANDOMPAUSE);
+
+        for (int i=0; i <= MAX_MARCUDINOSERVOS; i++)
+        {
+            Storage.setServoDirection(i, 0);        // Direction normal, Global Setting plus each individual
+            Storage.setServoSpeed(i, 255);          // Full Speed, Global Setting plus each individual
+            Storage.setServoOpenPosDeg(i, 0);       // 0 deg open
+            Storage.setServoClosedPosDeg(i, 180);   // 180 deg open
+            Storage.setServoMidPosDeg(i, 90);       // 180 deg open
+        }
+        Storage.setConfigVersion(CONFIG_VERSION);   // Final step before restart
+        delay(500);
+        resetFunc();
     }
 }
 

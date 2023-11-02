@@ -16,7 +16,8 @@ class MarcDuinoSequencer
         MarcDuinoSequencer();
         void init();
         void run();
-        void setPanels(Panel** Panels, const unsigned int PanelNr);
+        void setPanels(Panel** Panels, const unsigned int PanelCount);
+        void setPanelRange(const unsigned int MinPanel, const unsigned int MaxPanel);
         void loadSequence(sequence_t_ptr Seq, const unsigned int Steps);
         void clearSequence();
         void startSequence();
@@ -25,8 +26,10 @@ class MarcDuinoSequencer
         void resumeSequence();
 
     protected:
-        Panel**         Panels;
-        unsigned int    PanelNr;
+        Panel**         Panels      = nullptr;
+        unsigned int    PanelCount  = 0;
+        unsigned int    MinPanel    = 0;
+        unsigned int    MaxPanel    = 0;
 
         unsigned int    currentStep = 0;
         sequence_t_ptr  currentSequence = nullptr;

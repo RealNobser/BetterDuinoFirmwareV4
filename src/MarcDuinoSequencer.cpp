@@ -22,10 +22,16 @@ void MarcDuinoSequencer::run()
     }
 }
 
-void MarcDuinoSequencer::setPanels(Panel** Panels, const unsigned int PanelNr)
+void MarcDuinoSequencer::setPanels(Panel** Panels, const unsigned int PanelCount)
 {
-    this->Panels = Panels;
-    this->PanelNr = PanelNr;
+    this->Panels    = Panels;
+    this->PanelCount= PanelCount;
+}
+
+void MarcDuinoSequencer::setPanelRange(const unsigned int MinPanel, const unsigned int MaxPanel)
+{
+    this->MinPanel = MinPanel;
+    this->MaxPanel = MaxPanel;
 }
 
 void MarcDuinoSequencer::loadSequence(sequence_t_ptr Seq, const unsigned int Steps)
@@ -104,6 +110,13 @@ void MarcDuinoSequencer::movePanels()
 
     firstPanel  = (unsigned int)pgm_read_word(&currentSequence[currentStep][SEQUENCE_SIZE-2]);
     lastPanel   = (unsigned int)pgm_read_word(&currentSequence[currentStep][SEQUENCE_SIZE-1]);
+
+    // Limit to Panels, that can be accessed
+    if (firstPanel < MinPanel)
+        firstPanel = MinPanel;
+    
+    if (lastPanel > MaxPanel)
+        lastPanel = MaxPanel;
 
     for(unsigned int panel = firstPanel; panel <= lastPanel; panel++)
     {

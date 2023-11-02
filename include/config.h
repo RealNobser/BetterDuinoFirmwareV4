@@ -34,7 +34,7 @@
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  40
 
-#define MAX_MARCUDINOSERVOS 11
+#define MAX_MARCUDINOSERVOS 13
 
 // Panel Sequence Position. No PWM value any more! Don't touch here!
 #define _NP     0
@@ -63,7 +63,6 @@
 #define P_SERVO_09  12
 #define P_SERVO_10  13
 #define P_SERVO_11  7
-#define MAX_PANELS  11
 #define I2C_DOME_MASTER
 
 // Dome Slave

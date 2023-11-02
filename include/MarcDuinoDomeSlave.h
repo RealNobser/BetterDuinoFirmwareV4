@@ -77,7 +77,7 @@ class MarcDuinoDomeSlave : public MarcDuinoBase
         MarcDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
-            VarSpeedServo& Servo11);
+            VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13);
             
         virtual void init() override;
         virtual void run() override;
@@ -88,14 +88,20 @@ class MarcDuinoDomeSlave : public MarcDuinoBase
         SendOnlySoftwareSerial& Serial_Magic;
         SendOnlySoftwareSerial& Serial_Teeces;
 
-        virtual void checkEEPROM() override;
+        static const unsigned int MinPanel = 12;   // Master Board has 11 Panel Connectors
+        static const unsigned int MaxPanel = 13;   // Master Board has 11 Panel Connectors
+        
+        Panel* Panels[MaxPanel + 1];               // +1 for index 0 dummy
+
         virtual void parseCommand(const char* command);
 
+        void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);
         void processDisplayCommand(const char* command);
         void processAltDisplayCommand(const char* command);
         void processExpansionCommand(const char* command);
 
+        void playSequence(const unsigned int SeqNr);
 };
 
 #endif // __MARCDUINODOMESLAVE_H__
