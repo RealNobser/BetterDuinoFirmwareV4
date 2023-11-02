@@ -1,6 +1,5 @@
 
 #include"MarcDuinoDomeMaster.h"
-#include "PanelSequences.h"
 
 MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
@@ -85,8 +84,7 @@ void MarcDuinoDomeMaster::init()
             RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
     }
 
-    Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-    Sequencer.startSequence();
+    parseCommand(":SE00\r");    // Close Panels
 }
 
 void MarcDuinoDomeMaster::run()
@@ -190,6 +188,9 @@ void MarcDuinoDomeMaster::parseCommand(const char* command)
         break;
     case '#':
         processSetupCommand(command);
+        // Forwarding all but #MD to Slave to be in sync
+        if (strncmp(command, "#MD", 3) != 0)
+            Serial_Slave.printf("%s\r", command);
         break;    
     default:
         break;
@@ -512,14 +513,11 @@ void MarcDuinoDomeMaster::processAltHoloCommand(const char* command)
     Serial_Slave.printf(F("%s\r"), command);
 }
 
-void MarcDuinoDomeMaster::playSequence(const unsigned int SeqNr)
+void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
 {
     #ifdef DEBUG_MSG
-    Serial.printf(F("PlaySequence(Master): %i\r\n"), SeqNr);
+    Serial.printf(F("PlaySequenceAddons(Master): %i\r\n"), SeqNr);
     #endif
-
-    Sequencer.stopSequence();
-    Sequencer.clearSequence();
 
     // Also forward to Slave
     Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
@@ -527,55 +525,36 @@ void MarcDuinoDomeMaster::playSequence(const unsigned int SeqNr)
     switch (SeqNr)
     {
     case 0: // CLOSE ALL PANELS
-        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        Sequencer.startSequence();
         break;
     case 1:  // SCREAM
-        Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
-        //seq_loadspeed(panel_slow_speed);	// slow open
         parseCommand("$S");         // Scream Sound
         parseCommand("@0T5");       // Scream Display
         parseCommand("*MF04");      // Magic Flicker for 4 seconds
         parseCommand("*F004");      // HP Flicker for 4 seconds
-        Sequencer.startSequence();
         break;
     case 2: // WAVE
-        Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
-        //seq_resetspeed();
         parseCommand("*H004");      // flash holos for 4 seconds
         parseCommand("$213");		// happy sound
-        Sequencer.startSequence();
         break;
     case 3: // MOODY FAST WAVE
-        Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
-        //seq_resetspeed();
         parseCommand("@0T2");       // flash display ...
         parseCommand("@0W4");       // ... for 4 seconds
         parseCommand("*F004");      // HP Flicker for 4 seconds
         parseCommand("$34");		// moody sound
-        Sequencer.startSequence();
         break;
     case 4: // OPEN WAVE
-        Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
-        //seq_resetspeed();
         parseCommand("*H005");      // flash holos for 5 seconds
         parseCommand("$36");		// long happy sound
-        Sequencer.startSequence();
         break;
     case 5: // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
-        Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
-        //seq_loadspeed(panel_slow_speed);					// slow speed marching ants
         parseCommand("@0T92");      // spectrum display
         parseCommand("*HP17");      // HPs flash for 17 seconds
         parseCommand("$c");         // beeping cantina sound
         parseCommand("%T52");	    // Magic Panel in VU Mode
         //seq_add_completion_callback(resetJEDIcallback);   // callback to reset displays at end of sequence
         //seq_add_completion_callback(resetMPcallback);     // callback to reset Magic Panel at end of sequence
-        Sequencer.startSequence();
         break;
     case 6: // SHORT CIRCUIT / FAINT
-        Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
-        //seq_loadspeed(panel_super_slow_speed);	// very slow speed open
         //EXT1On(4); // Turn on Smoke for 4 seconds  Do first so there's smoke when the panels open.
         parseCommand("$F");         // Faint sound
         parseCommand("@0T4");       // short circuit display ...
@@ -583,32 +562,23 @@ void MarcDuinoDomeMaster::playSequence(const unsigned int SeqNr)
         parseCommand("*MF10");      // Magic Panel Flicker for 10 seconds
         parseCommand("*F010");      // HPs flicker 10 seconds
         // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
-        Sequencer.startSequence();
         break;
     case 7: // Cantina (Orchestral Cantina, Rhythmic Panels)
-        Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
-        // seq_resetspeed();
         parseCommand("$C");         // Cantina sound        
         parseCommand("@0T92");      // spectrum display
         parseCommand("*F046");      // HPs flicker 46 seconds        
         parseCommand("%T52");	    // Magic Panel in VU Mode        
         // seq_add_completion_callback(resetJEDIcallback); 	// callback to reset displays at end of sequence
         // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
-        Sequencer.startSequence();       
         break;
     case 8: // LEIA
-        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));	// Close panels
-        // seq_loadspeed(panel_slow_speed);	// Go slow
         parseCommand("*RC01"); 	    // HP 01 in RC mode
         parseCommand("$L");         // Leia message sound  
         parseCommand("*F134");      // front holos flicker for 34 sec 
         parseCommand("@0T6");       // Leia display
         parseCommand("%T22");	    // HP in Cylon Row Scan mode       
-        Sequencer.startSequence();       
         break;
     case 9:	// DISCO
-        Sequencer.loadSequence(panel_long_disco, SEQ_SIZE(panel_long_disco)); // 6:26 seconds sequence
-        // seq_resetspeed();
         // message on the logics
         // parseCommand("@1MR2 D2   "); // message is top front is R2
         // parseCommand("@2M  D2  ");	// message is lower front is D2
@@ -621,19 +591,89 @@ void MarcDuinoDomeMaster::playSequence(const unsigned int SeqNr)
         parseCommand("%T52");	    // Magic Panel in VU Mode        
         // seq_add_completion_callback(resetJEDIcallback); // callback to reset displays at end of sequence
         // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
-        Sequencer.startSequence();       
         break;
-
     case 10: // QUIET   sounds off, holo stop, panel closed
-        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        //seq_loadspeed(panel_slow_speed);	// go slow
         parseCommand("*H000");  // quick way to turn off holos if connected to MarcDuino  
         parseCommand("@0T1");   // abort test routine, reset all to normal
         parseCommand("*ST00");  // all holos to stop
         parseCommand("$s");		// stop sounds
         // seq_resetspeed();					// sequence speed to fast
         // stop_command(0);					// all panels off RC        
-        Sequencer.startSequence();       
+        break;
+    case 11: // WIDE AWAKE	random sounds, holos on random, panels closed
+        // init_jedi();						// JEDI back to default
+        parseCommand("*RD00\r");			// all HPs to random
+        parseCommand("$R");					// random sounds mode
+        //seq_resetspeed();					// sequence speed to fast
+        //stop_command(0);					// all panels off RC and closed
+        break;
+    case 12: // TOP PIE PANELS RC
+        /*
+        rc_command(7);
+        rc_command(8);
+        rc_command(9);
+        rc_command(10);
+        */
+        break;
+    case 13: // AWAKE	random sounds, holos off, panels closed
+        //init_jedi();						// JEDI back to default
+        parseCommand("*ST00\r");			// all HPs to stop
+        parseCommand("$R");					// random sounds mode
+        // seq_resetspeed();				// sequence speed to fast
+        // stop_command(0);					// all panels off RC and closed
+        break;
+    case 14: // EXCITED	random sounds, holos movement, holo lights on, panels closed
+        // init_jedi();						// JEDI back to default
+        parseCommand("*RD00\r");			// all HPs to random
+        parseCommand("*ON00\r");			// all HPs lights on
+        parseCommand("$R");					// random sounds mode
+        //seq_resetspeed();					// sequence speed to fast
+        //stop_command(0);					// all panels off RC and closed
+        break;
+
+    case 15: // SCREAM no panels: sound + lights but no panels
+        // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
+        parseCommand("$S");	 				// code for scream sound
+        parseCommand("@0T5\r");				// scream display
+        parseCommand("*F003\r");			// holos flicker for 4 seconds
+        parseCommand("*MF04\r");			// magic panel on for 4 seconds
+        break;
+    case 16: // Panel Wiggle
+        parseCommand("@0T5\r");				// scream display
+        break;
+
+    ///////////////////////////////////////////
+    //	sequences of panels only, no sounds or light effects
+    //
+    //	:SE51 Scream, with all panels open
+    //	:SE52 Wave, one panel at a time
+    //	:SE53 Fast (Smirk) back and forth wave
+    //	:SE54 Wave 2 (open progressively all panels, then close one by one)
+    //	:SE55 Marching ants
+    //	:SE56 Faint/Short Circuit
+    //	:SE57 Rythmic panel dance
+    //  :SE58 Bye Bye Wave
+    //	:SE59 Open Panels half way
+    //////////////////////////////////////////
+
+    case 51: // SCREAM
+        break;
+    case 52: // WAVE1
+        break;
+    case 53: // MOODY FAST WAVE
+        break;
+    case 54: // WAVE2
+        break;
+    case 55: // Marching ant
+        break;
+    case 56: // SHORT CIRCUIT / FAINT
+        // EXT1On(4); // Turn on Smoke for 4 seconds
+        break;
+    case 57: // Rhythmic Panels
+        break;
+    case 58: // Panel Wave Bye Bye
+        break;
+    case 59: // Panel all open Middle - Neil's test sequence to check partial panel opening.
         break;
     default:
         break;

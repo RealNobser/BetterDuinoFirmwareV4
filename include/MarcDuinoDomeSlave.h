@@ -101,7 +101,7 @@ class MarcDuinoDomeSlave : public MarcDuinoBase
         void processAltDisplayCommand(const char* command);
         void processExpansionCommand(const char* command);
 
-        void playSequence(const unsigned int SeqNr);
+        void playSequenceAddons(const unsigned int SeqNr) override;
 };
 
 #endif // __MARCDUINODOMESLAVE_H__

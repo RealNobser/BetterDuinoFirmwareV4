@@ -1,5 +1,6 @@
 
 #include "MarcDuinoBase.h"
+#include "PanelSequences.h"
 
 MarcDuinoBase::MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                              VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
@@ -243,7 +244,7 @@ void MarcDuinoBase::getRandomSound(unsigned int & bank, unsigned int & sound)
  *  #SMxx - Disable Random Sounds   (deprecated, will be removed in future)
  *      #SM00 : Random Sound on
  *      #SM01 : No Random Sound + Volume off
- *      #SM02 ; No Random Sound
+ *      #SM02 : No Random Sound
  * 
  *  #SXxx - Set Max Random Pause in seconds
  *  #SYxx - Set Min Random Pause in seconds
@@ -345,8 +346,6 @@ void MarcDuinoBase::processSetupCommand(const char* command)
             #endif   
         }
     }
-
-    // Command Actions
 
     if (strcmp(cmd, "SD") == 0)            // Servo Direction
     {
@@ -480,4 +479,177 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         delay(500);
         resetFunc();
     }
+}
+
+void MarcDuinoBase::playSequence(const unsigned int SeqNr)
+{
+    #ifdef DEBUG_MSG
+    Serial.printf(F("PlaySequence(Base): %i\r\n"), SeqNr);
+    #endif
+
+    Sequencer.stopSequence();
+    Sequencer.clearSequence();
+    
+    switch (SeqNr)
+    {
+    case 0: // CLOSE ALL PANELS
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
+        Sequencer.startSequence();
+        break;
+    case 1:  // SCREAM
+        Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
+        //seq_loadspeed(panel_slow_speed);	// slow open
+        Sequencer.startSequence();
+        break;
+    case 2: // WAVE
+        Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
+        //seq_resetspeed();
+        Sequencer.startSequence();
+        break;
+    case 3: // MOODY FAST WAVE
+        Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
+        //seq_resetspeed();
+        Sequencer.startSequence();
+        break;
+    case 4: // OPEN WAVE
+        Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
+        //seq_resetspeed();
+        Sequencer.startSequence();
+        break;
+    case 5: // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
+        Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
+        //seq_loadspeed(panel_slow_speed);					// slow speed marching ants
+        Sequencer.startSequence();
+        break;
+    case 6: // SHORT CIRCUIT / FAINT
+        Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
+        //seq_loadspeed(panel_super_slow_speed);	// very slow speed open
+        //EXT1On(4); // Turn on Smoke for 4 seconds  Do first so there's smoke when the panels open.
+        Sequencer.startSequence();
+        break;
+    case 7: // Cantina (Orchestral Cantina, Rhythmic Panels)
+        Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
+        // seq_resetspeed();
+        Sequencer.startSequence();
+        break;
+    case 8: // LEIA
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));	// Close panels
+        // seq_loadspeed(panel_slow_speed);	// Go slow
+        Sequencer.startSequence();       
+        break;
+    case 9:	// DISCO
+        Sequencer.loadSequence(panel_long_disco, SEQ_SIZE(panel_long_disco)); // 6:26 seconds sequence
+        // seq_resetspeed();
+        Sequencer.startSequence();       
+        break;
+    case 10: // QUIET   sounds off, holo stop, panel closed
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
+        //seq_loadspeed(panel_slow_speed);	// go slow
+        // seq_resetspeed();				// sequence speed to fast
+        // stop_command(0);					// all panels off RC        
+        Sequencer.startSequence();       
+        break;
+    case 11: // WIDE AWAKE	random sounds, holos on random, panels closed
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
+        //seq_loadspeed(panel_slow_speed);	// go slow
+        //seq_resetspeed();					// sequence speed to fast
+        //stop_command(0);					// all panels off RC and closed
+        Sequencer.startSequence();
+        break;
+    case 12: // TOP PIE PANELS RC
+        /*
+        rc_command(7);
+        rc_command(8);
+        rc_command(9);
+        rc_command(10);
+        */
+        break;
+    case 13: // AWAKE	random sounds, holos off, panels closed
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
+        //seq_loadspeed(panel_slow_speed);	// go slow
+        // seq_resetspeed();				// sequence speed to fast
+        // stop_command(0);					// all panels off RC and closed
+        Sequencer.startSequence();
+        break;
+    case 14: // EXCITED	random sounds, holos movement, holo lights on, panels closed
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
+        // seq_loadspeed(panel_slow_speed);	// go slow
+        //seq_resetspeed();					// sequence speed to fast
+        //stop_command(0);					// all panels off RC and closed
+        Sequencer.startSequence();
+        break;
+
+    case 15: // SCREAM no panels: sound + lights but no panels
+        break;
+    case 16: // Panel Wiggle
+        Sequencer.loadSequence(panel_wiggle, SEQ_SIZE(panel_wiggle));
+        //seq_loadspeed(panel_medium_speed);
+        Sequencer.startSequence();
+        break;
+
+    ///////////////////////////////////////////
+    //	sequences of panels only, no sounds or light effects
+    //
+    //	:SE51 Scream, with all panels open
+    //	:SE52 Wave, one panel at a time
+    //	:SE53 Fast (Smirk) back and forth wave
+    //	:SE54 Wave 2 (open progressively all panels, then close one by one)
+    //	:SE55 Marching ants
+    //	:SE56 Faint/Short Circuit
+    //	:SE57 Rythmic panel dance
+    //  :SE58 Bye Bye Wave
+    //	:SE59 Open Panels half way
+    //////////////////////////////////////////
+
+    case 51: // SCREAM
+        Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
+        // seq_loadspeed(panel_slow_speed);	// softer close
+        Sequencer.startSequence();
+        break;
+    case 52: // WAVE1
+        Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
+        // seq_resetspeed();
+        Sequencer.startSequence();
+        break;
+    case 53: // MOODY FAST WAVE
+        Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
+        // seq_resetspeed();
+        Sequencer.startSequence();
+        break;
+    case 54: // WAVE2
+        Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
+        // seq_resetspeed();
+        Sequencer.startSequence();
+        break;
+    case 55: // Marching ant
+        Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
+        // seq_loadspeed(panel_slow_speed);	// softer close
+        Sequencer.startSequence();
+        break;
+    case 56: // SHORT CIRCUIT / FAINT
+        Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
+        // seq_loadspeed(panel_super_slow_speed);	// very slow close
+        // EXT1On(4); // Turn on Smoke for 4 seconds
+        Sequencer.startSequence();
+        break;
+    case 57: // Rhythmic Panels
+        Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
+        // seq_resetspeed();
+        Sequencer.startSequence();
+        break;
+    case 58: // Panel Wave Bye Bye
+        Sequencer.loadSequence(panel_bye_bye_wave, SEQ_SIZE(panel_bye_bye_wave));
+        // seq_loadspeed(panel_slow_speed);
+        Sequencer.startSequence();
+        break;
+    case 59: // Panel all open Middle - Neil's test sequence to check partial panel opening.
+        Sequencer.loadSequence(panel_all_open_mid, SEQ_SIZE(panel_all_open_mid));
+        // seq_loadspeed(panel_slow_speed);
+        Sequencer.startSequence();
+        break;
+    default:
+        break;         
+    }
+
+    playSequenceAddons(SeqNr);
 }

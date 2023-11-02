@@ -48,7 +48,7 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         void processAltSoundCommand(const char* command);
         void processAltHoloCommand(const char* command);
 
-        void playSequence(const unsigned int SeqNr);
+        void playSequenceAddons(const unsigned int SeqNr) override;
 };
 
 #endif // __MARCDUINODOMEMASTER_H__

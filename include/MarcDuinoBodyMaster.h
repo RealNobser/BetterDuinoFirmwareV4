@@ -119,6 +119,8 @@ class MarcDuinoBodyMaster : public MarcDuinoBase
         SendOnlySoftwareSerial& Serial_MP3;
 
         virtual void parseCommand(const char* command) override;
+
+        void playSequenceAddons(const unsigned int SeqNr) override;
         
 };
 

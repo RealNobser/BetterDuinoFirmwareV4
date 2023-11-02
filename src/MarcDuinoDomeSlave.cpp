@@ -202,20 +202,9 @@ void MarcDuinoDomeSlave::processExpansionCommand(const char* command)
     #endif
 }
 
-void MarcDuinoDomeSlave::playSequence(const unsigned int SeqNr)
+void MarcDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)
 {
     #ifdef DEBUG_MSG
-    Serial.printf(F("PlaySequence(Slave): %i\r\n"), SeqNr);
+    Serial.printf(F("PlaySequenceAddons(Slave): %i\r\n"), SeqNr);
     #endif
-
-    Sequencer.stopSequence();
-    Sequencer.clearSequence();
-    
-    switch (SeqNr)
-    {
-        case 0: // CLOSE ALL PANELS    
-        break;
-        default:
-        break;
-    }
 }

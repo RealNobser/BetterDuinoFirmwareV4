@@ -57,3 +57,10 @@ void MarcDuinoBodyMaster::parseCommand(const char* command)
         break;
     }        
 }
+
+void MarcDuinoBodyMaster::playSequenceAddons(const unsigned int SeqNr)
+{
+    #ifdef DEBUG_MSG
+    Serial.printf(F("PlaySequenceAddons(Body): %i\r\n"), SeqNr);
+    #endif
+}
