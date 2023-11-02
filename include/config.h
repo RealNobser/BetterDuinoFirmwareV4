@@ -36,6 +36,12 @@
 
 #define MAX_MARCUDINOSERVOS 11
 
+// Panel Sequence Position. No PWM value any more! Don't touch here!
+#define _NP     0
+#define _CLS    1
+#define _OPN    2
+#define _MID    3
+
 // Generic GPIOs
 #define P_I2C_SCL   19
 #define P_I2C_SDA   18

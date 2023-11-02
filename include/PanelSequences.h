@@ -6,11 +6,6 @@
 
 #include <avr/pgmspace.h>
 
-#define _NP     0
-#define _CLS    1
-#define _OPN    2
-#define _MID    3
-
 /************ example of how to use the sequencer
 * define a sequence matrix like this
 * make sure to follow exactly this declaration to put the array in program memory

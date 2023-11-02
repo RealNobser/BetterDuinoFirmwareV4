@@ -67,6 +67,8 @@ void MarcDuinoDomeMaster::init()
     Panels[10] = new Panel(Servo10, P_SERVO_10, 0,180);
     Panels[11] = new Panel(Servo11, P_SERVO_11, 0,180);
 
+    Sequencer.setPanels(Panels, MAX_PANELS+1);
+
     // Random Sound
     MinRandomPause = Storage.getMinRandomPause();
     MaxRandomPause = Storage.getMaxRandomPause();

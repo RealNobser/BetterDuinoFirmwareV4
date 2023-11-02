@@ -1,4 +1,4 @@
-
+#include <Arduino.h>
 #include "Panel.h"
 
 Panel::Panel(VarSpeedServo& Servo, const int Pin) :
@@ -14,7 +14,7 @@ Panel::Panel(VarSpeedServo& Servo, const int Pin, const int OpenPos, const int C
     OpenPos(OpenPos),
     ClosedPos(ClosedPos)
 {
-    //attach();    
+    // attach();    
 }
 
 void Panel::attach()
@@ -30,21 +30,30 @@ void Panel::detach()
 void Panel::open()
 {
     if(!Servo.attached())
+    {
+        Servo.write(OpenPos);
         Servo.attach(Pin);
+    }
     Servo.write(OpenPos, 255);
 }
 
 void Panel::close()
 {
     if(!Servo.attached())
+    {
+        Servo.write(ClosedPos);
         Servo.attach(Pin);
+    }
     Servo.write(ClosedPos, 255);
 }
 
 void Panel::angle(const int angle)
 {
     if(!Servo.attached())
+    {
+        Servo.write(angle);
         Servo.attach(Pin);
+    }
     Servo.write(angle, 255);
 }
 
