@@ -17,7 +17,12 @@ void MarcDuinoSound::Play(const byte BankNr, const byte SoundNr)
 MarcDuinoSoundMP3Trigger::MarcDuinoSoundMP3Trigger(SendOnlySoftwareSerial& SoundSerial) :
     SoundSerial(SoundSerial)
 {
-    CurrentVolume = 0x20;   // Medium Volume   
+    CurrentVolume = 0x20;   // Medium Volume
+}
+
+void MarcDuinoSoundMP3Trigger::init()
+{
+    VolumeMid();
 }
 
 void MarcDuinoSoundMP3Trigger::SetVolume(const byte Volume)
@@ -109,11 +114,22 @@ MarcDuinoSoundDFPlayer::MarcDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSeri
     CurrentVolume = 15;   // Medium Volume
 }
 
+void MarcDuinoSoundDFPlayer::init()
+{
+    SoundSerial.flush();
+    
+    sendCommand(0x09, 0x00, 0x01);  // Playback Source TF
+    delay(500);
+    sendCommand(0x07, 0x00, 0x01);  // EQ pop
+    delay(100);
+    VolumeMid();
+    delay(100);
+}
+
 void MarcDuinoSoundDFPlayer::SetVolume(const byte Volume)
 {
-
     CurrentVolume = Volume;
-
+    sendCommand(0x06, 0x00, Volume);    // Specify Volume (0-30)
 }
 
 void MarcDuinoSoundDFPlayer::VolumeUp()
@@ -156,12 +172,12 @@ void MarcDuinoSoundDFPlayer::VolumeOff()
 
 void MarcDuinoSoundDFPlayer::Play(const byte SoundNr)
 {
-
+    sendCommand(0x12, 0x00, SoundNr);      // Playback
 }
 
 void MarcDuinoSoundDFPlayer::Stop()
 {
-    
+    sendCommand(0x16, 0x00, 0x00);  
 }
 
 void MarcDuinoSoundDFPlayer::Quiet(const bool on/* = true*/)
@@ -169,6 +185,21 @@ void MarcDuinoSoundDFPlayer::Quiet(const bool on/* = true*/)
 
 }
 
+void MarcDuinoSoundDFPlayer::sendCommand(const byte Command, const byte Param1, const byte Param2) 
+{
+
+	// Calculate the checksum
+	unsigned int checkSum = -(0xFF + 0x06 + Command + 0x00 + Param1 + Param2);
+
+	// Construct the command line
+	byte commandBuffer[10] = { 0x7E, 0xFF, 0x06, Command, 0x00, Param1, Param2,
+			highByte(checkSum), lowByte(checkSum), 0xEF };
+
+    SoundSerial.write(commandBuffer, 10);
+
+	// Delay needed between successive commands
+	// delay(30);
+}
 
 //////////
 
@@ -176,7 +207,12 @@ void MarcDuinoSoundDFPlayer::Quiet(const bool on/* = true*/)
 MarcDuinoSoundVocalizer::MarcDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSerial) :
     SoundSerial(SoundSerial)
 {
+    // Init 
+}
 
+void MarcDuinoSoundVocalizer::init()
+{
+    VolumeMid();
 }
 
 void MarcDuinoSoundVocalizer::SetVolume(const byte Volume)

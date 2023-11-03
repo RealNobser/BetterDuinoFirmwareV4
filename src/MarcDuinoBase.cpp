@@ -24,6 +24,10 @@ void MarcDuinoBase::init()
     pinMode(P_LED2, OUTPUT);
     digitalWrite(P_LED2, HeartBeatStatus);
 
+    // AUX1 Port
+    pinMode(P_AUX1, OUTPUT);
+    digitalWrite(P_AUX1, LOW);
+
     HeartBeatMillis = millis();
 
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
@@ -48,6 +52,19 @@ void MarcDuinoBase::run()
             parseCommand(SerialBuffer);
             memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
             BufferIndex = 0;
+        }
+    }
+
+    // AUX1
+    if ((AUX1Duration != 0) && (AUX1Duration != 99))
+    {
+        if ((millis() - AUX1Millis) > AUX1Duration)
+        {
+            digitalWrite(P_AUX1, LOW);
+            AUX1Duration = 0;
+            #ifdef DEBUG_MSG
+            Serial.println(F("AUX1 off"));
+            #endif
         }
     }
 
@@ -652,4 +669,33 @@ void MarcDuinoBase::playSequence(const unsigned int SeqNr)
     }
 
     playSequenceAddons(SeqNr);
+}
+
+void MarcDuinoBase::AUX1(const unsigned int Duration)
+{
+    switch (Duration)
+    {
+    case 0:
+        digitalWrite(P_AUX1, LOW);
+        AUX1Duration = 0;
+        #ifdef DEBUG_MSG
+        Serial.println(F("AUX1 off"));
+        #endif
+        break;
+    case 99:
+        digitalWrite(P_AUX1, HIGH);
+        AUX1Duration = 0;
+        #ifdef DEBUG_MSG
+        Serial.println(F("AUX1 on"));
+        #endif
+        break;
+    default:
+        AUX1Millis = millis();
+        AUX1Duration = Duration*1000;
+        digitalWrite(P_AUX1, HIGH);
+        #ifdef DEBUG_MSG
+        Serial.printf(F("AUX1 on for %i seconds.\r\n"), Duration);
+        #endif
+        break;
+    }
 }

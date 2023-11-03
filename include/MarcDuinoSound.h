@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <SendOnlySoftwareSerial.h>
 
+#define DFPLAYER_MAX_CMD    16
+
 /***********************************************************
  *  On the MP3, there are a maximum of 255 sound files
  *  They must be named NNN-xxxx.mp3
@@ -63,6 +65,8 @@ class MarcDuinoSound
     public:
         MarcDuinoSound();
 
+        virtual void init() = 0;
+
         virtual void SetVolume(const byte Volume) = 0;
         virtual void VolumeUp()     = 0;
         virtual void VolumeDown()   = 0;
@@ -86,6 +90,8 @@ class MarcDuinoSoundMP3Trigger : public MarcDuinoSound
     public:
         MarcDuinoSoundMP3Trigger(SendOnlySoftwareSerial& SoundSerial);
 
+        virtual void init() override;
+
         virtual void SetVolume(const byte Volume) override;
         virtual void VolumeUp() override;
         virtual void VolumeDown() override;
@@ -100,7 +106,6 @@ class MarcDuinoSoundMP3Trigger : public MarcDuinoSound
 
     protected:
         SendOnlySoftwareSerial& SoundSerial;
-
 };
 
 class MarcDuinoSoundDFPlayer : public MarcDuinoSound
@@ -108,6 +113,8 @@ class MarcDuinoSoundDFPlayer : public MarcDuinoSound
     public:
         MarcDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial);
 
+        virtual void init() override;
+
         virtual void SetVolume(const byte Volume) override;
         virtual void VolumeUp() override;
         virtual void VolumeDown() override;
@@ -122,12 +129,15 @@ class MarcDuinoSoundDFPlayer : public MarcDuinoSound
 
     protected:
         SendOnlySoftwareSerial& SoundSerial;
+        void sendCommand(const byte Command, const byte Param1, const byte Param2);
 };
 
 class MarcDuinoSoundVocalizer : public MarcDuinoSound
 {
     public:
         MarcDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSerial);
+
+        virtual void init() override;
 
         virtual void SetVolume(const byte Volume) override;
         virtual void VolumeUp() override;

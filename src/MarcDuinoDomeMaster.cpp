@@ -37,20 +37,18 @@ MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, S
         break;
     }
 
-    // Medium Sound at startup
-    Sound->VolumeMid();
-
     RandomSoundMillis = millis();
 }
 
 void MarcDuinoDomeMaster::init()
 {
     MarcDuinoBase::init();
+    Sound->init();
 
     // Soft Serials
     #ifdef DEBUG_MSG
-    Serial_Slave.println(F("To Slave"));
-    Serial_MP3.println(F("To MP3"));
+    // Serial_Slave.println(F("To Slave"));
+    // Serial_MP3.println(F("To MP3"));
     #endif
 
     // TODO: Get Max/Min // Open Close from EEPROM!
@@ -84,7 +82,7 @@ void MarcDuinoDomeMaster::init()
             RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
     }
 
-    parseCommand(":SE00\r");    // Close Panels
+    parseCommand(":SE00");    // Close Panels
 }
 
 void MarcDuinoDomeMaster::run()
@@ -345,6 +343,10 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
     {
 
     }
+    else if (strcmp(cmd, "EO")==0)
+    {
+        AUX1(param_num);
+    }
 }
 
 void MarcDuinoDomeMaster::processHoloCommand(const char* command)
@@ -414,6 +416,7 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
 
     if ((bank != 0) && (sound != 0))
     {
+        RandomSoundIntervall = 0;   // Stop Random sounds
         RandomSoundMillis = millis();
         Sound->Play(bank, sound);
         return;
@@ -476,20 +479,29 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
             Sound->VolumeMin();
         break;
         case 'W':   // Star Wars music (bank 9 sound 2)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+            RandomSoundMillis    = millis();
+            RandomSoundIntervall = 335000;
             Sound->Play(9,2);
         break;
-        case 'w':   // Beep Star Wars music (bank 9 sound 2)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+        case 'w':   // Beep Star Wars music (bank 9 sound 7)
+            RandomSoundMillis    = millis();
+            RandomSoundIntervall = 15000;
             Sound->Play(9,7);
         break;
         case 'M':   // Imperial March (bank 9 sound 3)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+            RandomSoundMillis    = millis();
+            RandomSoundIntervall = 195000;
             Sound->Play(9,3);
         break;
-        case 'i':   // Beep Imperial March (bank 9 sound 3)
-            RandomSoundIntervall = 0;   // Stop Random sounds
+        case 'i':   // Beep Imperial March (bank 9 sound 8)
+            RandomSoundMillis    = millis();
+            RandomSoundIntervall = 25000;
             Sound->Play(9,8);
+        break;
+        case 'B':   // Startup Sound
+            RandomSoundMillis    = millis();
+            RandomSoundIntervall = 10000;
+            Sound->Play(Storage.getStartupSoundNr());            
         break;
         default:    // Ignore
         break;

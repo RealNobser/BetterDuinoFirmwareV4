@@ -24,6 +24,9 @@ class MarcDuinoBase
         unsigned long HeartBeatMillis = 0;
         byte HeartBeatStatus = LOW;
 
+        unsigned long AUX1Millis    = 0;
+        unsigned long AUX1Duration  = 0;
+
         char SerialBuffer[SERIALBUFFERSIZE];
         int BufferIndex = 0;
 
@@ -60,6 +63,7 @@ class MarcDuinoBase
         void playSequence(const unsigned int SeqNr);
         virtual void playSequenceAddons(const unsigned int SeqNr) = 0;
 
+        void AUX1(const unsigned int Duration);
 
         void(* resetFunc) (void) = 0;
 };

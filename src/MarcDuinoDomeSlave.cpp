@@ -28,8 +28,8 @@ void MarcDuinoDomeSlave::init()
 
     // Soft Serials
     #ifdef DEBUG_MSG
-    Serial_Magic.println(F("To Magic"));
-    Serial_Teeces.println(F("To Teeces"));
+    // Serial_Magic.println(F("To Magic"));
+    // Serial_Teeces.println(F("To Teeces"));
     #endif
 
     // TODO: Get Max/Min // Open Close from EEPROM!
@@ -176,9 +176,73 @@ void MarcDuinoDomeSlave::processPanelCommand(const char* command)
 
 void MarcDuinoDomeSlave::processHoloCommand(const char* command)
 {
+    char cmd[3];
+    unsigned int param_num = 0;
+
+    memset(cmd, 0x00, 3);
     #ifdef DEBUG_MSG
     Serial.printf(F("HoloCommand(Slave): %s\r\n"), command);
     #endif
+
+    if (!separateCommand(command, cmd, param_num))
+        return;
+
+    if (strcmp(cmd, "RD")==0)       // Random Holo Movement
+    {
+
+    }
+    else if (strcmp(cmd, "ON")==0)  // Holo Lights on
+    {
+    }    
+    else if (strcmp(cmd, "OF")==0)  // Holo Lights off
+    {
+    }    
+    else if (strcmp(cmd, "RC")==0)  // Holo vertical movement under RC
+    {
+    }    
+    else if (strcmp(cmd, "TE")==0)  // Holo Movement Test
+    {
+    }    
+    else if (strcmp(cmd, "ST")==0)  // Stop movement, lights off
+    {
+    }    
+    else if (strcmp(cmd, "HD")==0)  // Stop movement, no light change
+    {
+    }    
+    else if (strcmp(cmd, "MO")==0)  // Magic Panel On
+    {
+    }    
+    else if (strcmp(cmd, "MF")==0)  // Magic Panel Flicker
+    {
+    }    
+    else if (strcmp(cmd, "H0")==0)  // Holo On for xx seconds
+    {
+    }    
+    else if (strcmp(cmd, "H1")==0)
+    {
+    }    
+    else if (strcmp(cmd, "H2")==0)
+    {
+    }    
+    else if (strcmp(cmd, "H3")==0)
+    {
+    }    
+    else if (strcmp(cmd, "F0")==0)  // Holo Flicker for xx seconds
+    {
+    }    
+    else if (strcmp(cmd, "F1")==0)
+    {
+    }    
+    else if (strcmp(cmd, "F2")==0)
+    {
+    }    
+    else if (strcmp(cmd, "F3")==0)
+    {
+    }    
+    else if (strcmp(cmd, "EO")==0)  // AUX1 on
+    {
+        AUX1(param_num);
+    }    
 }
 
 void MarcDuinoDomeSlave::processDisplayCommand(const char* command)
@@ -186,6 +250,7 @@ void MarcDuinoDomeSlave::processDisplayCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("DisplayCommand(Slave): %s\r\n"), command);
     #endif
+    Serial_Teeces.printf("%s\r", command+1);    // stripped
 }
 
 void MarcDuinoDomeSlave::processAltDisplayCommand(const char* command)
@@ -193,6 +258,7 @@ void MarcDuinoDomeSlave::processAltDisplayCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("AltDisplayCommand(Slave): %s\r\n"), command);
     #endif
+    Serial_Teeces.printf("%s\r", command+1);    // stripped
 }
 
 void MarcDuinoDomeSlave::processExpansionCommand(const char* command)
@@ -200,6 +266,7 @@ void MarcDuinoDomeSlave::processExpansionCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("ExpansionCommand(Slave): %s\r\n"), command);
     #endif
+    Serial_Magic.printf("%s\r", command+1);    // stripped
 }
 
 void MarcDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)
