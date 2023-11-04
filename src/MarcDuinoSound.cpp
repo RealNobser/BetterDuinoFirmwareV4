@@ -117,7 +117,7 @@ MarcDuinoSoundDFPlayer::MarcDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSeri
 void MarcDuinoSoundDFPlayer::init()
 {
     SoundSerial.flush();
-    
+
     sendCommand(0x09, 0x00, 0x01);  // Playback Source TF
     delay(500);
     sendCommand(0x07, 0x00, 0x01);  // EQ pop
@@ -208,6 +208,8 @@ MarcDuinoSoundVocalizer::MarcDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSe
     SoundSerial(SoundSerial)
 {
     // Init 
+    SoundSerial.flush();
+    CurrentVolume = 50;   // Medium Volume
 }
 
 void MarcDuinoSoundVocalizer::init()
@@ -217,50 +219,70 @@ void MarcDuinoSoundVocalizer::init()
 
 void MarcDuinoSoundVocalizer::SetVolume(const byte Volume)
 {
-
+    SoundSerial.printf("<PVV%d>", Volume);  // Vocaliser
+    SoundSerial.printf("<PVA%d>", Volume);  // Wav Channel A
+    SoundSerial.printf("<PVB%d>", Volume);  // Wav Channel B
 }
 
 void MarcDuinoSoundVocalizer::VolumeUp()
 {
-
+    if (CurrentVolume < 100)
+    {
+        CurrentVolume += 5;
+        SetVolume(CurrentVolume);
+    }    
 }
 
 void MarcDuinoSoundVocalizer::VolumeDown()
 {
-
+    if (CurrentVolume >= 5)
+    {
+        CurrentVolume -= 5;
+        SetVolume(CurrentVolume);
+    }
 }
 
 void MarcDuinoSoundVocalizer::VolumeMid()
 {
-
+    SetVolume(50);
 }
 
 void MarcDuinoSoundVocalizer::VolumeMax()
 {
-
+    SetVolume(100);
 }
 
 void MarcDuinoSoundVocalizer::VolumeMin()
 {
-
+    SetVolume(10);
 }
 
 void MarcDuinoSoundVocalizer::VolumeOff()
 {
-
+    SetVolume(0);
 }
 
 void MarcDuinoSoundVocalizer::Play(const byte SoundNr)
 {
-
+    SoundSerial.printf("<CA%04d>", SoundNr);
 }
 
 void MarcDuinoSoundVocalizer::Stop()
 {
-    
+    SoundSerial.printf("<PSV>");
 }
 
 void MarcDuinoSoundVocalizer::Quiet(const bool on/* = true*/)
 {
 
+}
+
+void MarcDuinoSoundVocalizer::Muse()
+{
+    SoundSerial.print("<MM>");
+}
+
+void MarcDuinoSoundVocalizer::Overload()
+{
+    SoundSerial.print("<SE>");
 }

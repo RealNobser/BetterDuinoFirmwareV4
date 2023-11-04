@@ -77,6 +77,7 @@ void MarcDuinoDomeMaster::init()
     byte StartupSoundNr = Storage.getStartupSoundNr();
     if (StartupSoundNr != 0)
     {
+        delay(1000);    // Soundboards need time to startup
         Sound->Play(StartupSoundNr);
         if (RandomSoundIntervall != 0)
             RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
@@ -98,15 +99,30 @@ void MarcDuinoDomeMaster::run()
 
             getRandomSound(bank, sound);
 
-            if ((bank != 0) && (sound != 0))
-                Sound->Play(bank, sound);
+            if (Sound->hasVocalizer())
+            {
+                // Using Muse function of vocalizer
+                Sound->Muse();
+
+                #ifdef DEBUG_MSG
+                Serial.println(F("Vocalizer Muse"));
+                #endif
+            }
+            else
+            {
+                if ((bank != 0) && (sound != 0))
+                    Sound->Play(bank, sound);
+
+                #ifdef DEBUG_MSG
+                Serial.printf(F("Random Sound, Bank %i, Sound %i\r\n"), bank, sound);
+                #endif
+
+            }
+
 
             RandomSoundMillis = millis();
             setStandardRandomSoundIntervall();
 
-            #ifdef DEBUG_MSG
-            Serial.printf(F("Random Sound, Bank %i, Sound %i\r\n"), bank, sound);
-            #endif
         }
     }
 }
@@ -452,7 +468,12 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
         break;
         case 'F':   // Faint/Short Circuit (bank 6 sound 3)
             RandomSoundMillis    = millis();
-            Sound->Play(6,3);
+            if (Sound->hasVocalizer())
+            {
+                Sound->Overload();
+            }
+            else
+                Sound->Play(6,3);
         break;
         case 'D':   // Disco (bank 9 sound 6)
             RandomSoundMillis    = millis();

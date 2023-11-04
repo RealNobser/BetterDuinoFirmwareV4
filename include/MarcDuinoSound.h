@@ -79,6 +79,10 @@ class MarcDuinoSound
         virtual void Stop() = 0;
         virtual void Quiet(const bool on = true) = 0;
 
+        virtual bool hasVocalizer() = 0;
+        virtual void Muse() {}; // empty, but not pure virtual by design
+        virtual void Overload() {}; // empty, but not pure virtual by design
+
         void Play(const byte BankNr, const byte SoundNr);
 
     protected:
@@ -104,6 +108,8 @@ class MarcDuinoSoundMP3Trigger : public MarcDuinoSound
         virtual void Stop() override;
         virtual void Quiet(const bool on = true) override;
 
+        virtual bool hasVocalizer() override { return false; }
+
     protected:
         SendOnlySoftwareSerial& SoundSerial;
 };
@@ -126,6 +132,8 @@ class MarcDuinoSoundDFPlayer : public MarcDuinoSound
         virtual void Play(const byte SoundNr) override;
         virtual void Stop() override;
         virtual void Quiet(const bool on = true) override;
+
+        virtual bool hasVocalizer() override { return false; }
 
     protected:
         SendOnlySoftwareSerial& SoundSerial;
@@ -150,6 +158,11 @@ class MarcDuinoSoundVocalizer : public MarcDuinoSound
         virtual void Play(const byte SoundNr) override;
         virtual void Stop() override;
         virtual void Quiet(const bool on = true) override;
+
+        virtual bool hasVocalizer() override { return true; }
+
+        virtual void Muse() override;
+        virtual void Overload() override;
 
     protected:
         SendOnlySoftwareSerial& SoundSerial;
