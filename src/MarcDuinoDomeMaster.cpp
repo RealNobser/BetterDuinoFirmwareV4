@@ -57,40 +57,7 @@ void MarcDuinoDomeMaster::init()
     Panels[10]= new Panel(Servo10, P_SERVO_10);
     Panels[11]= new Panel(Servo11, P_SERVO_11);
 
-    word OpenPos = 0;
-    word ClosedPos = 0;
-
-    if (Storage.getServoDirection(0) == 0)
-    {
-        OpenPos     = Storage.getServoOpenPos(0);
-        ClosedPos   = Storage.getServoClosedPos(0);
-    }
-    else
-    {
-        OpenPos     = Storage.getServoClosedPos(0);
-        ClosedPos   = Storage.getServoOpenPos(0);
-    }
-
-    for (unsigned int i=MinPanel; i<= MaxPanel; i++)
-        Panels[i]->setEndPositions(OpenPos, ClosedPos);
-
-    if (Storage.getIndividualSettings() == 0x01)
-    {
-        for (unsigned int i=MinPanel; i<= MaxPanel; i++)
-        {
-            if (Storage.getServoDirection(i) == 0)
-            {
-                OpenPos     = Storage.getServoOpenPos(i);
-                ClosedPos   = Storage.getServoClosedPos(i);
-            }
-            else
-            {
-                OpenPos     = Storage.getServoClosedPos(i);
-                ClosedPos   = Storage.getServoOpenPos(i);
-            }           
-            Panels[i]->setEndPositions(OpenPos, ClosedPos);
-        }            
-    }
+    adjustPanelEndPositions();
 
     Sequencer.setPanels(Panels, MaxPanel+1);
     Sequencer.setPanelRange(MinPanel, MaxPanel);
@@ -182,6 +149,45 @@ void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
     }
 }
 
+
+void MarcDuinoDomeMaster::adjustPanelEndPositions()
+{
+    word OpenPos = 0;
+    word ClosedPos = 0;
+
+    if (Storage.getServoDirection(0) == 0)
+    {
+        OpenPos     = Storage.getServoOpenPos(0);
+        ClosedPos   = Storage.getServoClosedPos(0);
+    }
+    else
+    {
+        OpenPos     = Storage.getServoClosedPos(0);
+        ClosedPos   = Storage.getServoOpenPos(0);
+    }
+
+    for (unsigned int i=MinPanel; i<= MaxPanel; i++)
+        Panels[i]->setEndPositions(OpenPos, ClosedPos);
+
+    if (Storage.getIndividualSettings() == 0x01)
+    {
+        for (unsigned int i=MinPanel; i<= MaxPanel; i++)
+        {
+            if (Storage.getServoDirection(i) == 0)
+            {
+                OpenPos     = Storage.getServoOpenPos(i);
+                ClosedPos   = Storage.getServoClosedPos(i);
+            }
+            else
+            {
+                OpenPos     = Storage.getServoClosedPos(i);
+                ClosedPos   = Storage.getServoOpenPos(i);
+            }           
+            Panels[i]->setEndPositions(OpenPos, ClosedPos);
+        }            
+    }
+}
+
 /*
  * ':' Pie panel command, parsed and treated by this controller in the "process_command" routine
  * '*' HP commands, passed on to the HoloController board daisy chained to suart1, see "parse_hp_command"
@@ -197,6 +203,7 @@ void MarcDuinoDomeMaster::parseCommand(const char* command)
     switch (command[0])
     {
     case ':':
+        adjustPanelEndPositions();
         processPanelCommand(command);
         break;
     case '*':
@@ -586,7 +593,7 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         parseCommand("*HP17");      // HPs flash for 17 seconds
         parseCommand("$c");         // beeping cantina sound
         parseCommand("%T52");	    // Magic Panel in VU Mode
-        //seq_add_completion_callback(resetJEDIcallback);   // callback to reset displays at end of sequence
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
         //seq_add_completion_callback(resetMPcallback);     // callback to reset Magic Panel at end of sequence
         break;
     case 6: // SHORT CIRCUIT / FAINT
@@ -715,3 +722,31 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
     }
 }
 
+
+void MarcDuinoDomeMaster::initJedi()
+{
+ 	parseCommand("*H000\r");	// quick way to turn off holos if connected to MarcDuino
+	parseCommand("@0T1\r");	// abort test routine, reset all to normal
+#ifdef DIGITALJEDI
+	/**** initialize JEDI display for digital output on HPs and PSI ******/
+	// I connected Mike Velchecks rear PSI to the JEDI, which requires output to be turned to digital
+	// My holo lights are the older version and also require HPs to be set to digital
+	parseCommand("@6P91\r");	// change front holo (6) parameter 9 (P9) to digital (1)
+	parseCommand("@5P91\r");   // change rear PSI (5) parameter 9 (P9) to digital (1)
+#endif
+}
+
+// callback to reset JEDI to normal after a sequence, works only once
+void MarcDuinoDomeMaster::sequenceCallbackJedi(MarcDuinoBase* object)
+{
+    object->parseCommand("*H000\r"); // quick way to turn off holos if connected to MarcDuino
+	object->parseCommand("@0T1\r");  // abort test routine, reset all to normal
+	object->parseCommand("%T00\r");  // MP Off
+	//object->parseCommand("%T00\r");  	// Logics reset to default
+}
+
+// callback to reset JEDI to normal after a sequence, works only once
+void MarcDuinoDomeMaster::sequenceCallbackResetMP(MarcDuinoBase* object)
+{
+	object->parseCommand("%T00\r");  	// Off
+}

@@ -9,7 +9,7 @@
 #define SERIAL_TEECES_BAUD  9600
 #define SERIAL_MAGIC_BAUD   9600
 
-#define SERIALBUFFERSIZE    256
+#define SERIALBUFFERSIZE    16
 
 #define HEARTBEAT_MILLIS    1000
 
@@ -30,6 +30,8 @@
 #define SERVO_SPEED_SLOW        100
 #define SERVO_SPEED_SUPER_SLOW  50
 
+// #define DIGITAL_JEDI
+
 // DO NOT EDIT BELOW THIS LINE UNLESS YOU REALLY KNOW WHAT YOU ARE DOING
 // ------------------------------------------------
 
@@ -41,6 +43,7 @@
 #define CONFIG_VERSION  40
 
 #define MAX_MARCUDINOSERVOS 13
+#define MAX_SEQUENCE_COMPLETION_CALLBACKS 3
 
 // Panel Sequence Position. No PWM value any more! Don't touch here!
 #define _NP     0

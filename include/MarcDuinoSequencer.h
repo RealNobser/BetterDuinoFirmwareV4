@@ -10,6 +10,9 @@
 typedef const unsigned int sequence_t[][SEQUENCE_SIZE];
 typedef const unsigned int (*sequence_t_ptr)[SEQUENCE_SIZE];
 
+// Forward Declaration for Callbacks
+class MarcDuinoBase;
+
 class MarcDuinoSequencer
 {
     public:
@@ -22,7 +25,7 @@ class MarcDuinoSequencer
             super_slow
         };
 
-        MarcDuinoSequencer();
+        MarcDuinoSequencer(MarcDuinoBase* instance);
         
         void init();
         void run();
@@ -36,8 +39,11 @@ class MarcDuinoSequencer
         void resumeSequence();
 
         void setServoSpeed(speed_t speed);
+        void addSequenceCompletionCallback(void(*usercallback)(MarcDuinoBase*));
+        void clearSequenceCompletionCallbacks();
 
     protected:
+        MarcDuinoBase*  instance    = nullptr;
         Panel**         Panels      = nullptr;
         unsigned int    PanelCount  = 0;
         unsigned int    MinPanel    = 0;
@@ -55,6 +61,10 @@ class MarcDuinoSequencer
         void movePanels();
 
         byte servoSpeed[SEQUENCE_SIZE];
+
+        void(*seq_completion_callback[MAX_SEQUENCE_COMPLETION_CALLBACKS])(MarcDuinoBase*); // Maximum 5 Sequence Completion Callbacks
+        unsigned int CompletionCallbacksNr = 0;
+
 };
 
 #endif // __MARCDUINOSEQUENCER_H__

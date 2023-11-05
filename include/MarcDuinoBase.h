@@ -19,6 +19,7 @@ class MarcDuinoBase
         virtual void run();
 
         virtual const char* getProductName() = 0;
+        virtual void parseCommand(const char* command) = 0;
 
     protected:
         unsigned long HeartBeatMillis = 0;
@@ -50,7 +51,6 @@ class MarcDuinoBase
         VarSpeedServo& Servo13;
 
         virtual void checkEEPROM();
-        virtual void parseCommand(const char* command) = 0;
 
         void toggleHeartBeat();
 

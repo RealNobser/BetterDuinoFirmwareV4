@@ -83,6 +83,7 @@ class MarcDuinoDomeSlave : public MarcDuinoBase
         virtual void run() override;
 
         virtual const char* getProductName() override { return "MarcDuino Dome Slave"; }
+        virtual void parseCommand(const char* command);
 
     protected:
         SendOnlySoftwareSerial& Serial_Magic;
@@ -92,8 +93,6 @@ class MarcDuinoDomeSlave : public MarcDuinoBase
         static const unsigned int MaxPanel = 13;   // Master Board has 11 Panel Connectors
         
         Panel* Panels[MaxPanel + 1];               // +1 for index 0 dummy
-
-        virtual void parseCommand(const char* command);
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);

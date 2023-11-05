@@ -4,6 +4,7 @@
 
 MarcDuinoBase::MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                              VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
+    Sequencer(this),
     Servo1(Servo1), Servo2(Servo2), Servo3(Servo3), Servo4(Servo4), Servo5(Servo5), Servo6(Servo6),
     Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11), Servo12(Servo12), Servo13(Servo13)
 {
@@ -327,11 +328,11 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         param_num       = atoi(param);
         param_num_ext   = atoi(param_ext);
     }
-    else if (strlen(command) == 8)   // #SOxxyyy, #SCxxyyy and #SPxxyyy
+    else if (strlen(command) == 9)   // #SOxxyyyy, #SCxxyyyy and #SPxxyyyy
     {
         memcpy(cmd, command+1, 2);
 
-        if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) && (strcmp(cmd, "SP") != 0))
+        if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) && (strcmp(cmd, "SI") != 0))
         {
             Serial.println(F("Invalid Extended Command"));
             return; // Invalid Command
@@ -339,7 +340,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         else
         {
             memcpy(param, command+3, 2);
-            memcpy(param_ext, command+5, 3);
+            memcpy(param_ext, command+5, 4);
 
             param_num       = atoi(param);
             param_num_ext   = atoi(param_ext);
@@ -352,30 +353,31 @@ void MarcDuinoBase::processSetupCommand(const char* command)
 
     if (strcmp(cmd, "SD") == 0)            // Servo Direction
     {
+        Storage.setServoDirection(0, param_num);
     }
     else if (strcmp(cmd, "SR") == 0)       // Individual Servo Reverse
     {
+        Storage.setServoDirection(param_num, 1);
     }
     else if (strcmp(cmd, "SN") == 0)       // Individual Servo Normal
     {
+        Storage.setServoDirection(param_num, 0);
     }
-    else if (strcmp(cmd, "IO") == 0)       // Use individual open settings (0 = no, 1 = yes)
+    else if (strcmp(cmd, "SV") == 0)       // Use individual servo settings (0 = no, 1 = yes)
     {
-    }
-    else if (strcmp(cmd, "IC") == 0)       // Use individual close settings (0 = no, 1 = yes)
-    {
-    }
-    else if (strcmp(cmd, "IM") == 0)       // Use individual mid settings (0 = no, 1 = yes)
-    {
+        Storage.setIndividualSettings(param_num);
     }
     else if (strcmp(cmd, "SO") == 0)       // Set Servo Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
+        Storage.setServoOpenPos(param_num, param_num_ext);
     }
     else if (strcmp(cmd, "SC") == 0)       // Set Servo Degrees/Microseconds for Panel Close,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
+        Storage.setServoClosedPos(param_num, param_num_ext);
     }
     else if (strcmp(cmd, "SP") == 0)       // Set Servo Degrees/Microseconds for Panel Mid,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
+        Storage.setServoMidPos(param_num, param_num_ext);
     }
     else if (strcmp(cmd, "SS") == 0)       // Sound Control
     {
@@ -502,6 +504,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         delay(500);
         resetFunc();
     }
+    Serial.printf(F("%s OK\r\n"), cmd);
 }
 
 void MarcDuinoBase::playSequence(const unsigned int SeqNr)

@@ -3,9 +3,10 @@
 #include "MarcDuinoSequencer.h"
 #include "config.h"
 
-MarcDuinoSequencer::MarcDuinoSequencer()
+MarcDuinoSequencer::MarcDuinoSequencer(MarcDuinoBase* instance)
+    : instance(instance)
 {
-
+    clearSequenceCompletionCallbacks();
 }
 
 void MarcDuinoSequencer::init()
@@ -38,8 +39,6 @@ void MarcDuinoSequencer::loadSequence(sequence_t_ptr Seq, const unsigned int Ste
 {   
     clearSequence();
 
-    Serial.println(Steps);
-
     currentSequence         = Seq;
     currentSequenceSteps    = Steps;
     currentStep             = 0;
@@ -53,6 +52,10 @@ void MarcDuinoSequencer::clearSequence()
 
     currentStepTime     = 0;
     currentStepDuration = 0;
+
+    CompletionCallbacksNr = 0;
+
+    clearSequenceCompletionCallbacks();    
 }
 
 void MarcDuinoSequencer::startSequence()
@@ -91,6 +94,10 @@ void MarcDuinoSequencer::nextStep()
         currentStep++;
     else
     {
+        // End Sequence Callbacks
+        for(unsigned int i=0; i < CompletionCallbacksNr; i++)
+            seq_completion_callback[i](instance);
+        
         clearSequence();
         return;
     }
@@ -143,16 +150,6 @@ void MarcDuinoSequencer::movePanels()
             break;
         }
     }
-    #ifdef DEBUG_MSG
-    Serial.println();
-    for(int i=0; i < SEQUENCE_SIZE; i++)
-    {
-        Serial.print((unsigned int)pgm_read_word(&currentSequence[currentStep][i]));
-        Serial.print(F(" "));
-    }
-    Serial.println();
-    #endif
-
 }
 
 void MarcDuinoSequencer::setServoSpeed(speed_t speed)
@@ -190,4 +187,20 @@ void MarcDuinoSequencer::setServoSpeed(speed_t speed)
     {
         servoSpeed[i] = set_speed;
     }
+}
+
+
+void MarcDuinoSequencer::addSequenceCompletionCallback(void(*usercallback)(MarcDuinoBase*))
+{
+    if (CompletionCallbacksNr >= MAX_SEQUENCE_COMPLETION_CALLBACKS)
+        return; // Ignore additional Callbacks
+
+    seq_completion_callback[CompletionCallbacksNr] = usercallback;
+    CompletionCallbacksNr++;
+}
+
+void MarcDuinoSequencer::clearSequenceCompletionCallbacks()
+{
+    for (unsigned int i = 0; i < MAX_SEQUENCE_COMPLETION_CALLBACKS; i++)
+        seq_completion_callback[CompletionCallbacksNr] = nullptr;
 }

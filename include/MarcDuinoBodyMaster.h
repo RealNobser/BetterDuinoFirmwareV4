@@ -113,12 +113,12 @@ class MarcDuinoBodyMaster : public MarcDuinoBase
         virtual void run() override;
 
         virtual const char* getProductName() override { return "MarcDuino Body Master"; }
+        virtual void parseCommand(const char* command) override;
 
     protected:
         SendOnlySoftwareSerial& Serial_Slave;
         SendOnlySoftwareSerial& Serial_MP3;
 
-        virtual void parseCommand(const char* command) override;
 
         void playSequenceAddons(const unsigned int SeqNr) override;
         

@@ -19,6 +19,7 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         virtual void run() override;
 
         virtual const char* getProductName() override  { return "MarcDuino Dome Master"; }
+        virtual void parseCommand(const char* command) override;
 
     protected:
         SendOnlySoftwareSerial& Serial_Slave;
@@ -37,9 +38,8 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         unsigned long MinRandomPause        = 6000;
         unsigned long MaxRandomPause        = 12000;
 
-        virtual void parseCommand(const char* command) override;
-
         void setStandardRandomSoundIntervall();
+        void adjustPanelEndPositions();
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);
@@ -49,6 +49,10 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         void processAltHoloCommand(const char* command);
 
         void playSequenceAddons(const unsigned int SeqNr) override;
+
+        void initJedi();
+        static void sequenceCallbackJedi(MarcDuinoBase* object);
+        static void sequenceCallbackResetMP(MarcDuinoBase* object);
 };
 
 #endif // __MARCDUINODOMEMASTER_H__
