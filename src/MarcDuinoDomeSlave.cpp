@@ -26,12 +26,6 @@ void MarcDuinoDomeSlave::init()
 {
     MarcDuinoBase::init();
 
-    // Soft Serials
-    #ifdef DEBUG_MSG
-    // Serial_Magic.println(F("To Magic"));
-    // Serial_Teeces.println(F("To Teeces"));
-    #endif
-
     // TODO: Get Max/Min // Open Close from EEPROM!
     Panels[12] = new Panel(Servo10, P_SERVO_12, 0,180);
     Panels[13] = new Panel(Servo11, P_SERVO_13, 0,180);

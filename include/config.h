@@ -1,7 +1,7 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-#define DEBUG_MSG   // Additional Log Messages to Serial
+// #define DEBUG_MSG   // Additional Log Messages to Serial
 
 #define SERIAL_BAUD         9600
 #define SERIAL_SLAVE_BAUD   9600
@@ -24,7 +24,13 @@
 #define PANEL_MID 1750 // Mid Open
 #define PANEL_CLS 2000 // Closed
 
-// DO NOT EDIT BELOW THIS LINE
+#define SERVO_SPEED_FULL        0
+#define SERVO_SPEED_FAST        255
+#define SERVO_SPEED_MEDIUM      175
+#define SERVO_SPEED_SLOW        100
+#define SERVO_SPEED_SUPER_SLOW  50
+
+// DO NOT EDIT BELOW THIS LINE UNLESS YOU REALLY KNOW WHAT YOU ARE DOING
 // ------------------------------------------------
 
 //

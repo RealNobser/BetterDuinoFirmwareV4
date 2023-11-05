@@ -13,7 +13,17 @@ typedef const unsigned int (*sequence_t_ptr)[SEQUENCE_SIZE];
 class MarcDuinoSequencer
 {
     public:
+        enum speed_t {
+            custom = 0,
+            full,
+            fast,
+            medium,
+            slow,
+            super_slow
+        };
+
         MarcDuinoSequencer();
+        
         void init();
         void run();
         void setPanels(Panel** Panels, const unsigned int PanelCount);
@@ -24,6 +34,8 @@ class MarcDuinoSequencer
         void stopSequence();
         void pauseSequence();
         void resumeSequence();
+
+        void setServoSpeed(speed_t speed);
 
     protected:
         Panel**         Panels      = nullptr;
@@ -41,6 +53,8 @@ class MarcDuinoSequencer
 
         void nextStep();
         void movePanels();
+
+        byte servoSpeed[SEQUENCE_SIZE];
 };
 
 #endif // __MARCDUINOSEQUENCER_H__

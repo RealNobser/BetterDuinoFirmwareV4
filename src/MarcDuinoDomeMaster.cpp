@@ -45,24 +45,52 @@ void MarcDuinoDomeMaster::init()
     MarcDuinoBase::init();
     Sound->init();
 
-    // Soft Serials
-    #ifdef DEBUG_MSG
-    // Serial_Slave.println(F("To Slave"));
-    // Serial_MP3.println(F("To MP3"));
-    #endif
+    Panels[1] = new Panel(Servo1, P_SERVO_01);
+    Panels[2] = new Panel(Servo2, P_SERVO_02);
+    Panels[3] = new Panel(Servo3, P_SERVO_03);
+    Panels[4] = new Panel(Servo4, P_SERVO_04);
+    Panels[5] = new Panel(Servo5, P_SERVO_05);
+    Panels[6] = new Panel(Servo6, P_SERVO_06);
+    Panels[7] = new Panel(Servo7, P_SERVO_07);
+    Panels[8] = new Panel(Servo8, P_SERVO_08);
+    Panels[9] = new Panel(Servo9, P_SERVO_09);
+    Panels[10]= new Panel(Servo10, P_SERVO_10);
+    Panels[11]= new Panel(Servo11, P_SERVO_11);
 
-    // TODO: Get Max/Min // Open Close from EEPROM!
-    Panels[1] = new Panel(Servo1, P_SERVO_01, 90,180);
-    Panels[2] = new Panel(Servo2, P_SERVO_02, 90,180);
-    Panels[3] = new Panel(Servo3, P_SERVO_03, 90,180);
-    Panels[4] = new Panel(Servo4, P_SERVO_04, 90,180);
-    Panels[5] = new Panel(Servo5, P_SERVO_05, 90,180);
-    Panels[6] = new Panel(Servo6, P_SERVO_06, 90,180);
-    Panels[7] = new Panel(Servo7, P_SERVO_07, 90,180);
-    Panels[8] = new Panel(Servo8, P_SERVO_08, 90,180);
-    Panels[9] = new Panel(Servo9, P_SERVO_09, 90,180);
-    Panels[10] = new Panel(Servo10, P_SERVO_10, 0,180);
-    Panels[11] = new Panel(Servo11, P_SERVO_11, 0,180);
+    word OpenPos = 0;
+    word ClosedPos = 0;
+
+    if (Storage.getServoDirection(0) == 0)
+    {
+        OpenPos     = Storage.getServoOpenPos(0);
+        ClosedPos   = Storage.getServoClosedPos(0);
+    }
+    else
+    {
+        OpenPos     = Storage.getServoClosedPos(0);
+        ClosedPos   = Storage.getServoOpenPos(0);
+    }
+
+    for (unsigned int i=MinPanel; i<= MaxPanel; i++)
+        Panels[i]->setEndPositions(OpenPos, ClosedPos);
+
+    if (Storage.getIndividualSettings() == 0x01)
+    {
+        for (unsigned int i=MinPanel; i<= MaxPanel; i++)
+        {
+            if (Storage.getServoDirection(i) == 0)
+            {
+                OpenPos     = Storage.getServoOpenPos(i);
+                ClosedPos   = Storage.getServoClosedPos(i);
+            }
+            else
+            {
+                OpenPos     = Storage.getServoClosedPos(i);
+                ClosedPos   = Storage.getServoOpenPos(i);
+            }           
+            Panels[i]->setEndPositions(OpenPos, ClosedPos);
+        }            
+    }
 
     Sequencer.setPanels(Panels, MaxPanel+1);
     Sequencer.setPanelRange(MinPanel, MaxPanel);
@@ -103,22 +131,12 @@ void MarcDuinoDomeMaster::run()
             {
                 // Using Muse function of vocalizer
                 Sound->Muse();
-
-                #ifdef DEBUG_MSG
-                Serial.println(F("Vocalizer Muse"));
-                #endif
             }
             else
             {
                 if ((bank != 0) && (sound != 0))
                     Sound->Play(bank, sound);
-
-                #ifdef DEBUG_MSG
-                Serial.printf(F("Random Sound, Bank %i, Sound %i\r\n"), bank, sound);
-                #endif
-
             }
-
 
             RandomSoundMillis = millis();
             setStandardRandomSoundIntervall();
@@ -176,10 +194,6 @@ void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
 */
 void MarcDuinoDomeMaster::parseCommand(const char* command)
 {
-    #ifdef DEBUG_MSG
-    Serial.printf(F("Command(Master): %s\r\n"), command);
-    #endif
-
     switch (command[0])
     {
     case ':':
@@ -244,10 +258,6 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
     } 
     else if (strcmp(cmd, "OP")==0)  // Open Panel
     {
-        #ifdef DEBUG_MSG
-        Serial.printf(F("Open Panel %i\r\n"), param_num);
-        #endif        
-
         if (param_num == 0)         // open all
         {
             for(unsigned int i=MinPanel; i<=MaxPanel; i++)
@@ -288,10 +298,6 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
     }
     else if (strcmp(cmd, "CL")==0)  // Close Panel
     {
-        #ifdef DEBUG_MSG
-        Serial.printf(F("Close Panel %i\r\n"), param_num);
-        #endif        
-
         if (param_num == 0)         // close all
         {
             for(unsigned int i=MinPanel; i<= MaxPanel; i++)
@@ -534,7 +540,7 @@ void MarcDuinoDomeMaster::processAltSoundCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("AltSoundCommand(Master): %s\r\n"), command);
     #endif
-
+    RandomSoundMillis = millis();
     Serial_MP3.printf(F("%s\r"), command+1);
 }
 
@@ -548,10 +554,6 @@ void MarcDuinoDomeMaster::processAltHoloCommand(const char* command)
 
 void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
 {
-    #ifdef DEBUG_MSG
-    Serial.printf(F("PlaySequenceAddons(Master): %i\r\n"), SeqNr);
-    #endif
-
     // Also forward to Slave
     Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
 

@@ -18,12 +18,6 @@ MarcDuinoBodyMaster::MarcDuinoBodyMaster(SendOnlySoftwareSerial& Serial_Slave, S
 void MarcDuinoBodyMaster::init()
 {
     MarcDuinoBase::init();
-
-    // Soft Serials
-    #ifdef DEBUG_MSG
-    Serial_Slave.println(F("To Slave"));
-    Serial_MP3.println(F("To MP3"));
-    #endif
 }
 
 void MarcDuinoBodyMaster::run()
@@ -33,10 +27,6 @@ void MarcDuinoBodyMaster::run()
 
 void MarcDuinoBodyMaster::parseCommand(const char* command)
 {
-    #ifdef DEBUG_MSG
-    Serial.printf(F("Command(Body): %s\r\n"), command);
-    #endif
-
     switch (command[0])
     {
     case ':':
@@ -60,7 +50,4 @@ void MarcDuinoBodyMaster::parseCommand(const char* command)
 
 void MarcDuinoBodyMaster::playSequenceAddons(const unsigned int SeqNr)
 {
-    #ifdef DEBUG_MSG
-    Serial.printf(F("PlaySequenceAddons(Body): %i\r\n"), SeqNr);
-    #endif
 }

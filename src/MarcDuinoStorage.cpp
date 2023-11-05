@@ -97,8 +97,7 @@ void MarcDuinoStorage::setStartupSound(const byte SoundNr)
 
 byte MarcDuinoStorage::getStartupSoundNr()
 {
-    uint8_t value = EEPROM.read(ADDR_STARTUPSOUNDNR);
-    return value;
+    return EEPROM.read(ADDR_STARTUPSOUNDNR);
 }
 
 void MarcDuinoStorage::setStartupSoundNr(const byte SoundNr)
@@ -130,8 +129,7 @@ void MarcDuinoStorage::setChattyMode(const bool on/* = true*/)
 
 byte MarcDuinoStorage::getDisableRandomSound()
 {
-    uint8_t value = EEPROM.read(ADDR_DISABLERANDOMSOUND);
-    return value;
+    return EEPROM.read(ADDR_DISABLERANDOMSOUND);
 }
 
 void MarcDuinoStorage::setDisableRandomSound(const byte DisableRandomSound)
@@ -162,9 +160,7 @@ void MarcDuinoStorage::setMaxSound(const byte bank, const byte SongNr)
 
 byte MarcDuinoStorage::getMaxRandomPause()
 {
-    uint8_t value = 0;
-    value = EEPROM.read(ADDR_MAXRANDOMPAUSE);
-    return value;
+    return EEPROM.read(ADDR_MAXRANDOMPAUSE);
 }
 
 void MarcDuinoStorage::setMaxRandomPause(const byte seconds)
@@ -174,14 +170,24 @@ void MarcDuinoStorage::setMaxRandomPause(const byte seconds)
 
 byte MarcDuinoStorage::getMinRandomPause()
 {
-    uint8_t value = 0;
-    value = EEPROM.read(ADDR_MINRANDOMPAUSE);
-    return value;
+    return EEPROM.read(ADDR_MINRANDOMPAUSE);
 }
 
 void MarcDuinoStorage::setMinRandomPause(const byte seconds)
 {
     EEPROM.update(ADDR_MINRANDOMPAUSE, seconds);
+}
+
+void MarcDuinoStorage::setIndividualSettings(const byte choice)
+{
+    if (choice > 1)
+        return;
+    EEPROM.update(ADDR_INDIVIDUALS, choice);
+}
+
+byte MarcDuinoStorage::getIndividualSettings()
+{
+    return EEPROM.read(ADDR_INDIVIDUALS);
 }
 
 byte MarcDuinoStorage::getServoDirection(const byte ServoNr)
@@ -216,52 +222,55 @@ void MarcDuinoStorage::setServoSpeed(const byte ServoNr, const byte Speed)
     EEPROM.update(ADDR_SERVOSPEEDBASE+ServoNr, Speed);
 }
 
-byte MarcDuinoStorage::getServoOpenPosDeg(const byte ServoNr)
+word MarcDuinoStorage::getServoOpenPos(const byte ServoNr)
 {
-    uint8_t value = 0;
+    word value = 0;
     if (ServoNr > MAX_MARCUDINOSERVOS)
         return 0;
-    value = EEPROM.read(ADDR_SERVOOPENBASE+ServoNr);
+    EEPROM.get(ADDR_SERVOOPENBASE+(ServoNr*2), value);
     return value;
 }
 
-void MarcDuinoStorage::setServoOpenPosDeg(const byte ServoNr, const byte Position)
+void MarcDuinoStorage::setServoOpenPos(const byte ServoNr, const word Position)
 {
-    if ((ServoNr > MAX_MARCUDINOSERVOS) || (Position > 180))
+    if (ServoNr > MAX_MARCUDINOSERVOS)
         return;
-    EEPROM.update(ADDR_SERVOOPENBASE+ServoNr, Position);
+
+    EEPROM.put(ADDR_SERVOOPENBASE+(ServoNr*2), Position);
 }
 
-byte MarcDuinoStorage::getServoCosedPosDeg(const byte ServoNr)
+word MarcDuinoStorage::getServoClosedPos(const byte ServoNr)
 {
-    uint8_t value = 0;
+    word value = 0;
     if (ServoNr > MAX_MARCUDINOSERVOS)
         return 0;
-    value = EEPROM.read(ADDR_SERVOCLOSEDBASE+ServoNr);
+    EEPROM.get(ADDR_SERVOCLOSEDBASE+(ServoNr*2), value);
     return value;
 }
 
-void MarcDuinoStorage::setServoClosedPosDeg(const byte ServoNr, const byte Position)
+void MarcDuinoStorage::setServoClosedPos(const byte ServoNr, const word Position)
 {
-    if ((ServoNr > MAX_MARCUDINOSERVOS) || (Position > 180))
+    if (ServoNr > MAX_MARCUDINOSERVOS)
         return;
-    EEPROM.update(ADDR_SERVOCLOSEDBASE+ServoNr, Position);
+
+    EEPROM.put(ADDR_SERVOCLOSEDBASE+(ServoNr*2), Position);
 }
 
-byte MarcDuinoStorage::getServoMidPosDeg(const byte ServoNr)
+word MarcDuinoStorage::getServoMidPos(const byte ServoNr)
 {
-    uint8_t value = 0;
+    word value = 0;
     if (ServoNr > MAX_MARCUDINOSERVOS)
         return 0;
-    value = EEPROM.read(ADDR_SERVOMIDBASE+ServoNr);
+    EEPROM.get(ADDR_SERVOMIDBASE+(ServoNr*2), value);
     return value;
 }
 
-void MarcDuinoStorage::setServoMidPosDeg(const byte ServoNr, const byte Position)
+void MarcDuinoStorage::setServoMidPos(const byte ServoNr, const word Position)
 {
-    if ((ServoNr > MAX_MARCUDINOSERVOS) || (Position > 180))
+    if (ServoNr > MAX_MARCUDINOSERVOS)
         return;
-    EEPROM.update(ADDR_SERVOMIDBASE+ServoNr, Position);
+
+    EEPROM.put(ADDR_SERVOMIDBASE+(ServoNr*2), Position);
 }
 
 void MarcDuinoStorage::dumpToSerial()

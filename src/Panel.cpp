@@ -27,34 +27,40 @@ void Panel::detach()
     Servo.detach();
 }
 
-void Panel::open()
+void Panel::open(const int speed)
 {
     if(!Servo.attached())
     {
-        Servo.write(OpenPos);
+        if (firstAttach) 
+            Servo.write(OpenPos);
+        firstAttach = false;
         Servo.attach(Pin);
     }
-    Servo.write(OpenPos, 255);
+    Servo.write(OpenPos, speed);
 }
 
-void Panel::close()
+void Panel::close(const int speed)
 {
     if(!Servo.attached())
     {
-        Servo.write(ClosedPos);
+        if (firstAttach) 
+            Servo.write(ClosedPos);
+        firstAttach = false;
         Servo.attach(Pin);
     }
-    Servo.write(ClosedPos, 255);
+    Servo.write(ClosedPos, speed);
 }
 
-void Panel::angle(const int angle)
+void Panel::angle(const int angle, const int speed)
 {
     if(!Servo.attached())
     {
-        Servo.write(angle);
+        if (firstAttach) 
+            Servo.write(angle);
+        firstAttach = false;
         Servo.attach(Pin);
     }
-    Servo.write(angle, 255);
+    Servo.write(angle, speed);
 }
 
 void Panel::setEndPositions(const int OpenPos, const int ClosedPos)

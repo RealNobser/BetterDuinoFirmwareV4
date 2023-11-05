@@ -62,9 +62,6 @@ void MarcDuinoBase::run()
         {
             digitalWrite(P_AUX1, LOW);
             AUX1Duration = 0;
-            #ifdef DEBUG_MSG
-            Serial.println(F("AUX1 off"));
-            #endif
         }
     }
 
@@ -106,13 +103,15 @@ void MarcDuinoBase::checkEEPROM()
         Storage.setMinRandomPause(MINRANDOMPAUSE);
         Storage.setMaxRandomPause(MAXRANDOMPAUSE);
 
+        Storage.setIndividualSettings(0);
+
         for (int i=0; i <= MAX_MARCUDINOSERVOS; i++)
         {
             Storage.setServoDirection(i, 0);        // Direction normal, Global Setting plus each individual
             Storage.setServoSpeed(i, 255);          // Full Speed, Global Setting plus each individual
-            Storage.setServoOpenPosDeg(i, 0);       // 0 deg open
-            Storage.setServoClosedPosDeg(i, 180);   // 180 deg open
-            Storage.setServoMidPosDeg(i, 90);       // 180 deg open
+            Storage.setServoOpenPos(i, PANEL_OPN);  // see config.h, original MarcDuino Default Values
+            Storage.setServoClosedPos(i, PANEL_CLS);// see config.h, original MarcDuino Default Values
+            Storage.setServoMidPos(i, PANEL_MID);   // see config.h, original MarcDuino Default Values
         }
         Storage.setConfigVersion(CONFIG_VERSION);   // Final step before restart
         delay(500);
@@ -168,10 +167,6 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
     if (strlen(command) == 2)
     {
         memcpy(cmd, command+1, 1);
-
-        #ifdef DEBUG_MSG
-        Serial.printf(F("Cmd: %s\r\n"), cmd);
-        #endif
     }
     else if (strlen(command) == 3)
     {
@@ -188,10 +183,6 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
 
         bank=atoi(bank_char);
         sound=atoi(sound_char);
-
-        #ifdef DEBUG_MSG
-        Serial.printf(F("Cmd: %s, Bank: %i, Sound %i\r\n"), cmd, bank, sound);
-        #endif
     }
     else if (strlen(command) == 4)
     {
@@ -208,10 +199,6 @@ bool MarcDuinoBase::separateSoundCommand(const char* command, char* cmd, unsigne
 
         bank=atoi(bank_char);
         sound=atoi(sound_char);
-
-        #ifdef DEBUG_MSG
-        Serial.printf(F("Cmd: %s, Bank: %i, Sound %i\r\n"), cmd, bank, sound);
-        #endif
     }
     return true;
 }
@@ -242,9 +229,13 @@ void MarcDuinoBase::getRandomSound(unsigned int & bank, unsigned int & sound)
  *		Must be a 2 digit Servo number i.e. Servo 4 is 04
  *		Use SDxx to globally set the Servo direction, then SRxxy to change individual servos.
  *
- *  #SOxxddd Set Servo Degrees for Panel Open,  ddd=000-180 (90deg, Servo1: SO01090)
- *  #SCxxddd Set Servo Degrees for Panel Closed ddd=000-180 (180deg, Servo1: SO01180)
- *  #SPxxddd Set Servo Speed, ddd=0-255
+ *  #IOxx - Use individual open settings (0 = no, 1 = yes)
+ *  #ICxx - Use individual close settings (0 = no, 1 = yes)
+ *  #IMxx - Use individual mid settings (0 = no, 1 = yes)
+ *
+ *  #SOxxdddd Set Servo Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+ *  #SCxxdddd Set Servo Degrees/Microseconds for Panel Close,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+ *  #SPxxdddd Set Servo Degrees/Microseconds for Panel Mid,  dddd=0000-0180  deg, dddd > 0544 Microseconds
  * 
  *  //// STARTUP SOUND CONTROLS
  *  #SSxx Set startup sound
@@ -330,16 +321,11 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         }
         else
         {
-            Serial.println(F("Invalid Extended Command"));
             return; // Invalid Command
         }
 
         param_num       = atoi(param);
         param_num_ext   = atoi(param_ext);
-
-        #ifdef DEBUG_MSG
-        Serial.printf(F("Cmd: %s, Param: %i, Param Ext: %i\r\n"), cmd, param_num, param_num_ext);
-        #endif        
     }
     else if (strlen(command) == 8)   // #SOxxyyy, #SCxxyyy and #SPxxyyy
     {
@@ -357,12 +343,12 @@ void MarcDuinoBase::processSetupCommand(const char* command)
 
             param_num       = atoi(param);
             param_num_ext   = atoi(param_ext);
-
-            #ifdef DEBUG_MSG
-            Serial.printf(F("Cmd: %s, Param: %i, Param Ext: %i\r\n"), cmd, param_num, param_num_ext);
-            #endif   
         }
     }
+
+    #ifdef DEBUG_MSG
+    Serial.printf(F("Cmd: %s, Param: %i, Param Ext: %i\r\n"), cmd, param_num, param_num_ext);
+    #endif        
 
     if (strcmp(cmd, "SD") == 0)            // Servo Direction
     {
@@ -371,6 +357,24 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     {
     }
     else if (strcmp(cmd, "SN") == 0)       // Individual Servo Normal
+    {
+    }
+    else if (strcmp(cmd, "IO") == 0)       // Use individual open settings (0 = no, 1 = yes)
+    {
+    }
+    else if (strcmp(cmd, "IC") == 0)       // Use individual close settings (0 = no, 1 = yes)
+    {
+    }
+    else if (strcmp(cmd, "IM") == 0)       // Use individual mid settings (0 = no, 1 = yes)
+    {
+    }
+    else if (strcmp(cmd, "SO") == 0)       // Set Servo Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+    {
+    }
+    else if (strcmp(cmd, "SC") == 0)       // Set Servo Degrees/Microseconds for Panel Close,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+    {
+    }
+    else if (strcmp(cmd, "SP") == 0)       // Set Servo Degrees/Microseconds for Panel Mid,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
     }
     else if (strcmp(cmd, "SS") == 0)       // Sound Control
@@ -414,13 +418,9 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         switch(param_num)
         {
             case 0:
-                Storage.setDisableRandomSound(0);
-            break;
             case 1:
-                Storage.setDisableRandomSound(1);
-            break;
             case 2:
-                Storage.setDisableRandomSound(2);
+                Storage.setDisableRandomSound(param_num);
             break;
             default:
                 Storage.setDisableRandomSound(0);
@@ -467,12 +467,18 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         {
             case 0:
                 Storage.setMP3Player(MarcDuinoStorage::MP3Trigger);
+                delay(500);
+                resetFunc();
             break;
             case 1:
                 Storage.setMP3Player(MarcDuinoStorage::DFPlayer);
+                delay(500);
+                resetFunc();
             break;
             case 2:
                 Storage.setMP3Player(MarcDuinoStorage::Vocalizer);
+                delay(500);
+                resetFunc();
             break;
             default:
             break;
@@ -500,10 +506,6 @@ void MarcDuinoBase::processSetupCommand(const char* command)
 
 void MarcDuinoBase::playSequence(const unsigned int SeqNr)
 {
-    #ifdef DEBUG_MSG
-    Serial.printf(F("PlaySequence(Base): %i\r\n"), SeqNr);
-    #endif
-
     Sequencer.stopSequence();
     Sequencer.clearSequence();
     
@@ -511,67 +513,53 @@ void MarcDuinoBase::playSequence(const unsigned int SeqNr)
     {
     case 0: // CLOSE ALL PANELS
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 1:  // SCREAM
         Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
-        //seq_loadspeed(panel_slow_speed);	// slow open
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 2: // WAVE
         Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
-        //seq_resetspeed();
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 3: // MOODY FAST WAVE
         Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
-        //seq_resetspeed();
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 4: // OPEN WAVE
         Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
-        //seq_resetspeed();
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 5: // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
         Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
-        //seq_loadspeed(panel_slow_speed);					// slow speed marching ants
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 6: // SHORT CIRCUIT / FAINT
         Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
-        //seq_loadspeed(panel_super_slow_speed);	// very slow speed open
-        //EXT1On(4); // Turn on Smoke for 4 seconds  Do first so there's smoke when the panels open.
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::super_slow);
         break;
     case 7: // Cantina (Orchestral Cantina, Rhythmic Panels)
         Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
-        // seq_resetspeed();
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 8: // LEIA
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));	// Close panels
-        // seq_loadspeed(panel_slow_speed);	// Go slow
-        Sequencer.startSequence();       
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 9:	// DISCO
         Sequencer.loadSequence(panel_long_disco, SEQ_SIZE(panel_long_disco)); // 6:26 seconds sequence
-        // seq_resetspeed();
-        Sequencer.startSequence();       
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 10: // QUIET   sounds off, holo stop, panel closed
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        //seq_loadspeed(panel_slow_speed);	// go slow
-        // seq_resetspeed();				// sequence speed to fast
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         // stop_command(0);					// all panels off RC        
-        Sequencer.startSequence();       
         break;
     case 11: // WIDE AWAKE	random sounds, holos on random, panels closed
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        //seq_loadspeed(panel_slow_speed);	// go slow
-        //seq_resetspeed();					// sequence speed to fast
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         //stop_command(0);					// all panels off RC and closed
-        Sequencer.startSequence();
         break;
     case 12: // TOP PIE PANELS RC
         /*
@@ -583,25 +571,20 @@ void MarcDuinoBase::playSequence(const unsigned int SeqNr)
         break;
     case 13: // AWAKE	random sounds, holos off, panels closed
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        //seq_loadspeed(panel_slow_speed);	// go slow
-        // seq_resetspeed();				// sequence speed to fast
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         // stop_command(0);					// all panels off RC and closed
-        Sequencer.startSequence();
         break;
     case 14: // EXCITED	random sounds, holos movement, holo lights on, panels closed
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        // seq_loadspeed(panel_slow_speed);	// go slow
-        //seq_resetspeed();					// sequence speed to fast
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         //stop_command(0);					// all panels off RC and closed
-        Sequencer.startSequence();
         break;
 
     case 15: // SCREAM no panels: sound + lights but no panels
         break;
     case 16: // Panel Wiggle
         Sequencer.loadSequence(panel_wiggle, SEQ_SIZE(panel_wiggle));
-        //seq_loadspeed(panel_medium_speed);
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::medium);
         break;
 
     ///////////////////////////////////////////
@@ -620,54 +603,45 @@ void MarcDuinoBase::playSequence(const unsigned int SeqNr)
 
     case 51: // SCREAM
         Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
-        // seq_loadspeed(panel_slow_speed);	// softer close
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 52: // WAVE1
         Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
-        // seq_resetspeed();
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 53: // MOODY FAST WAVE
         Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
-        // seq_resetspeed();
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 54: // WAVE2
         Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
-        // seq_resetspeed();
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 55: // Marching ant
         Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
-        // seq_loadspeed(panel_slow_speed);	// softer close
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 56: // SHORT CIRCUIT / FAINT
         Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
-        // seq_loadspeed(panel_super_slow_speed);	// very slow close
+        Sequencer.setServoSpeed(MarcDuinoSequencer::super_slow);
         // EXT1On(4); // Turn on Smoke for 4 seconds
-        Sequencer.startSequence();
         break;
     case 57: // Rhythmic Panels
         Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
-        // seq_resetspeed();
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 58: // Panel Wave Bye Bye
         Sequencer.loadSequence(panel_bye_bye_wave, SEQ_SIZE(panel_bye_bye_wave));
-        // seq_loadspeed(panel_slow_speed);
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 59: // Panel all open Middle - Neil's test sequence to check partial panel opening.
         Sequencer.loadSequence(panel_all_open_mid, SEQ_SIZE(panel_all_open_mid));
-        // seq_loadspeed(panel_slow_speed);
-        Sequencer.startSequence();
+        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     default:
         break;         
     }
-
+    Sequencer.startSequence();
     playSequenceAddons(SeqNr);
 }
 
@@ -678,24 +652,15 @@ void MarcDuinoBase::AUX1(const unsigned int Duration)
     case 0:
         digitalWrite(P_AUX1, LOW);
         AUX1Duration = 0;
-        #ifdef DEBUG_MSG
-        Serial.println(F("AUX1 off"));
-        #endif
         break;
     case 99:
         digitalWrite(P_AUX1, HIGH);
         AUX1Duration = 0;
-        #ifdef DEBUG_MSG
-        Serial.println(F("AUX1 on"));
-        #endif
         break;
     default:
         AUX1Millis = millis();
         AUX1Duration = Duration*1000;
         digitalWrite(P_AUX1, HIGH);
-        #ifdef DEBUG_MSG
-        Serial.printf(F("AUX1 on for %i seconds.\r\n"), Duration);
-        #endif
         break;
     }
 }

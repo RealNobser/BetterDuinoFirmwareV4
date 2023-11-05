@@ -10,7 +10,7 @@ MarcDuinoSequencer::MarcDuinoSequencer()
 
 void MarcDuinoSequencer::init()
 {
-
+    setServoSpeed(fast);    // filling array
 }
 
 void MarcDuinoSequencer::run()
@@ -57,6 +57,9 @@ void MarcDuinoSequencer::clearSequence()
 
 void MarcDuinoSequencer::startSequence()
 {
+    if (currentSequence == nullptr)
+        return;
+
     currentStep         = 0;
 
     currentStepDuration = (int)pgm_read_word(&currentSequence[currentStep][0]);
@@ -125,10 +128,10 @@ void MarcDuinoSequencer::movePanels()
         switch (Position)
         {
         case _OPN:
-            Panels[panel]->open();
+            Panels[panel]->open(servoSpeed[panel]);
             break;
         case _CLS:
-            Panels[panel]->close();
+            Panels[panel]->close(servoSpeed[panel]);
             break;
         case _MID:
             // TODO:!
@@ -150,4 +153,41 @@ void MarcDuinoSequencer::movePanels()
     Serial.println();
     #endif
 
+}
+
+void MarcDuinoSequencer::setServoSpeed(speed_t speed)
+{
+    byte set_speed = SERVO_SPEED_FULL;
+
+    if (speed == custom)
+    {
+        // Need Storage access
+    }
+
+    switch (speed)
+    {
+    case full:
+        set_speed = SERVO_SPEED_FULL;
+        break;
+    case fast:
+        set_speed = SERVO_SPEED_FAST;
+        break;
+    case medium:
+        set_speed = SERVO_SPEED_MEDIUM;
+        break;
+    case slow:
+        set_speed = SERVO_SPEED_SLOW;
+        break;
+    case super_slow:
+        set_speed = SERVO_SPEED_SUPER_SLOW;
+        break;
+    default:
+        set_speed = SERVO_SPEED_FULL;
+        break;
+    }
+
+    for(int i=0; i < SEQUENCE_SIZE; i++)
+    {
+        servoSpeed[i] = set_speed;
+    }
 }
