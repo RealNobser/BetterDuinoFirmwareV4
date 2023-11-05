@@ -27,6 +27,7 @@
 *  0x0a     MinRandomPause in seconds (default 6s)
 *  0x0b     MaxRandomPause in seconds (default 12s)
 *  0x0c     Use Global or Individual Servo values (0 - global, 1 - individual)
+*  0x0d     Set Adjustment Mode (panels will move to new position after individual Open/Mid/Closed Settings are changed)
 
 *  0x10
 *  0x11     Max Sounds Bank 1 (1-25)
@@ -153,6 +154,7 @@
 #define ADDR_MINRANDOMPAUSE     0x0a
 #define ADDR_MAXRANDOMPAUSE     0x0b
 #define ADDR_INDIVIDUALS        0x0c
+#define ADDR_ADJUSTMENT         0x0d
 
 #define ADDR_MAXSONGSBASE       0x10
 
@@ -232,7 +234,10 @@ class MarcDuinoStorage
         word getServoMidPos(const byte ServoNr);                         // ServoNr 1-1, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
         void setServoMidPos(const byte ServoNr, const word Position);    // ServoNr 1-1, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
 
-        void dumpToSerial();
+        bool getAdjustmentMode();
+        void setAdjustmentMode(const bool on);
+
+        void dumpToSerial(const byte Address);
 };
 
 #endif // __MARCDUINOSTORAGE_H__

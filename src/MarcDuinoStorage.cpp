@@ -273,12 +273,28 @@ void MarcDuinoStorage::setServoMidPos(const byte ServoNr, const word Position)
     EEPROM.put(ADDR_SERVOMIDBASE+(ServoNr*2), Position);
 }
 
-void MarcDuinoStorage::dumpToSerial()
+bool MarcDuinoStorage::getAdjustmentMode()
 {
+    return (EEPROM.read(ADDR_ADJUSTMENT) == 0x01);
+}
+
+void MarcDuinoStorage::setAdjustmentMode(const bool on)
+{
+    if (on)
+        EEPROM.write(ADDR_ADJUSTMENT, 0x01);
+    else
+        EEPROM.write(ADDR_ADJUSTMENT, 0x00);
+}
+
+void MarcDuinoStorage::dumpToSerial(const byte Address)
+{
+    Serial.printf(F("%04X: %02X\r\n"), Address, EEPROM.read(Address));
+    /*
     for (unsigned int uiAddress=0; uiAddress < EEPROM.length(); uiAddress+=8)
     {
         char content[128];
         sprintf(content, "%04X: %02X %02X %02X %02X %02X %02X %02X %02X", uiAddress, EEPROM.read(uiAddress), EEPROM.read(uiAddress+1), EEPROM.read(uiAddress+2), EEPROM.read(uiAddress+3), EEPROM.read(uiAddress+4), EEPROM.read(uiAddress+5), EEPROM.read(uiAddress+6), EEPROM.read(uiAddress+7));
       	Serial.println(content);
     }
+    */
 }

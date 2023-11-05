@@ -25,8 +25,8 @@ class MarcDuinoBase
         unsigned long HeartBeatMillis = 0;
         byte HeartBeatStatus = LOW;
 
-        unsigned long AUX1Millis    = 0;
-        unsigned long AUX1Duration  = 0;
+        unsigned long AUX1Millis        = 0;
+        unsigned long AUX1Duration      = 0;
 
         char SerialBuffer[SERIALBUFFERSIZE];
         int BufferIndex = 0;

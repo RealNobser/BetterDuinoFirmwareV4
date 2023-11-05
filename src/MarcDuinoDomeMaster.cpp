@@ -37,7 +37,9 @@ MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, S
         break;
     }
 
-    RandomSoundMillis = millis();
+    RandomSoundMillis   = millis();
+    ServoBuzzMillis     = millis();
+    ServoBuzzIntervall  = SERVO_BUZZ_MILLIS;    // TODO Make EEPROM setting
 }
 
 void MarcDuinoDomeMaster::init()
@@ -85,6 +87,20 @@ void MarcDuinoDomeMaster::run()
 {
     MarcDuinoBase::run();
 
+    // Servos
+    if (ServoBuzzIntervall != 0)
+    {
+        if ((millis() - ServoBuzzMillis) > ServoBuzzIntervall)
+        {
+            for (unsigned int i = MinPanel; i <= MaxPanel; i++)
+            {
+                Panels[i]->detach();
+            }
+            ServoBuzzMillis = millis();
+        }
+    }
+
+    // Random Sounds
     if (RandomSoundIntervall != 0)
     {
         if ((millis()-RandomSoundMillis) > RandomSoundIntervall)
@@ -110,6 +126,11 @@ void MarcDuinoDomeMaster::run()
 
         }
     }
+}
+
+void MarcDuinoDomeMaster::resetServoBuzz()
+{
+    ServoBuzzIntervall = SERVO_BUZZ_MILLIS;
 }
 
 void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
@@ -152,39 +173,29 @@ void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
 
 void MarcDuinoDomeMaster::adjustPanelEndPositions()
 {
-    word OpenPos = 0;
-    word ClosedPos = 0;
-
-    if (Storage.getServoDirection(0) == 0)
-    {
-        OpenPos     = Storage.getServoOpenPos(0);
-        ClosedPos   = Storage.getServoClosedPos(0);
-    }
-    else
-    {
-        OpenPos     = Storage.getServoClosedPos(0);
-        ClosedPos   = Storage.getServoOpenPos(0);
-    }
+    word OpenPos        = 0;
+    word ClosedPos      = 0;
+    unsigned int Index  = 0;
 
     for (unsigned int i=MinPanel; i<= MaxPanel; i++)
-        Panels[i]->setEndPositions(OpenPos, ClosedPos);
-
-    if (Storage.getIndividualSettings() == 0x01)
     {
-        for (unsigned int i=MinPanel; i<= MaxPanel; i++)
+        if (Storage.getIndividualSettings() == 0x01)
+            Index = i;
+        else
+            Index = 0;
+
+        // Set Direction
+        if ((Storage.getServoDirection(0) == 1) || (Storage.getServoDirection(i) == 1)) // Reverse Servo
         {
-            if (Storage.getServoDirection(i) == 0)
-            {
-                OpenPos     = Storage.getServoOpenPos(i);
-                ClosedPos   = Storage.getServoClosedPos(i);
-            }
-            else
-            {
-                OpenPos     = Storage.getServoClosedPos(i);
-                ClosedPos   = Storage.getServoOpenPos(i);
-            }           
-            Panels[i]->setEndPositions(OpenPos, ClosedPos);
-        }            
+            OpenPos     = Storage.getServoClosedPos(Index);
+            ClosedPos   = Storage.getServoOpenPos(Index);
+        }
+        else    // Normal
+        {
+            OpenPos     = Storage.getServoOpenPos(Index);
+            ClosedPos   = Storage.getServoClosedPos(Index);
+        }
+        Panels[i]->setEndPositions(OpenPos, ClosedPos);
     }
 }
 
@@ -564,6 +575,10 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
     // Also forward to Slave
     Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
 
+    // Disable Servo detach during Animations
+    ServoBuzzIntervall = 0;
+    Sequencer.addSequenceCompletionCallback(sequenceCallbackBuzz);
+
     switch (SeqNr)
     {
     case 0: // CLOSE ALL PANELS
@@ -589,29 +604,29 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         parseCommand("$36");		// long happy sound
         break;
     case 5: // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         parseCommand("@0T92");      // spectrum display
         parseCommand("*HP17");      // HPs flash for 17 seconds
         parseCommand("$c");         // beeping cantina sound
         parseCommand("%T52");	    // Magic Panel in VU Mode
-        Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
-        //seq_add_completion_callback(resetMPcallback);     // callback to reset Magic Panel at end of sequence
         break;
     case 6: // SHORT CIRCUIT / FAINT
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         //EXT1On(4); // Turn on Smoke for 4 seconds  Do first so there's smoke when the panels open.
         parseCommand("$F");         // Faint sound
         parseCommand("@0T4");       // short circuit display ...
         parseCommand("@0W10");      // ... for 10 seconds 
         parseCommand("*MF10");      // Magic Panel Flicker for 10 seconds
         parseCommand("*F010");      // HPs flicker 10 seconds
-        // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
         break;
     case 7: // Cantina (Orchestral Cantina, Rhythmic Panels)
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         parseCommand("$C");         // Cantina sound        
         parseCommand("@0T92");      // spectrum display
         parseCommand("*F046");      // HPs flicker 46 seconds        
         parseCommand("%T52");	    // Magic Panel in VU Mode        
-        // seq_add_completion_callback(resetJEDIcallback); 	// callback to reset displays at end of sequence
-        // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
         break;
     case 8: // LEIA
         parseCommand("*RC01"); 	    // HP 01 in RC mode
@@ -621,6 +636,8 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         parseCommand("%T22");	    // HP in Cylon Row Scan mode       
         break;
     case 9:	// DISCO
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         // message on the logics
         // parseCommand("@1MR2 D2   "); // message is top front is R2
         // parseCommand("@2M  D2  ");	// message is lower front is D2
@@ -631,10 +648,10 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         parseCommand("$D");         // disco music
         parseCommand("*F099");      // HPs flicker as long as possible   
         parseCommand("%T52");	    // Magic Panel in VU Mode        
-        // seq_add_completion_callback(resetJEDIcallback); // callback to reset displays at end of sequence
-        // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
         break;
     case 10: // QUIET   sounds off, holo stop, panel closed
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         parseCommand("*H000");  // quick way to turn off holos if connected to MarcDuino  
         parseCommand("@0T1");   // abort test routine, reset all to normal
         parseCommand("*ST00");  // all holos to stop
@@ -674,7 +691,7 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         break;
 
     case 15: // SCREAM no panels: sound + lights but no panels
-        // seq_add_completion_callback(resetMPcallback); 	    // callback to reset Magic Panel at end of sequence
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         parseCommand("$S");	 				// code for scream sound
         parseCommand("@0T5\r");				// scream display
         parseCommand("*F003\r");			// holos flicker for 4 seconds
@@ -720,6 +737,8 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
     default:
         break;
     }
+    // Finally GOOOOO
+    Sequencer.startSequence();
 }
 
 
@@ -734,6 +753,11 @@ void MarcDuinoDomeMaster::initJedi()
 	parseCommand("@6P91\r");	// change front holo (6) parameter 9 (P9) to digital (1)
 	parseCommand("@5P91\r");   // change rear PSI (5) parameter 9 (P9) to digital (1)
 #endif
+}
+
+void MarcDuinoDomeMaster::sequenceCallbackBuzz(MarcDuinoBase* object)
+{
+    ((MarcDuinoDomeMaster*)object)->resetServoBuzz();
 }
 
 // callback to reset JEDI to normal after a sequence, works only once

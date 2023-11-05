@@ -21,6 +21,8 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         virtual const char* getProductName() override  { return "MarcDuino Dome Master"; }
         virtual void parseCommand(const char* command) override;
 
+        void resetServoBuzz();
+
     protected:
         SendOnlySoftwareSerial& Serial_Slave;
         SendOnlySoftwareSerial& Serial_MP3;
@@ -34,6 +36,9 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
 
         unsigned long RandomSoundIntervall  = 0;
         unsigned long RandomSoundMillis     = 0;
+
+        unsigned long ServoBuzzIntervall    = 0;
+        unsigned long ServoBuzzMillis       = 0;
 
         unsigned long MinRandomPause        = 6000;
         unsigned long MaxRandomPause        = 12000;
@@ -51,6 +56,7 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         void playSequenceAddons(const unsigned int SeqNr) override;
 
         void initJedi();
+        static void sequenceCallbackBuzz(MarcDuinoBase* object);
         static void sequenceCallbackJedi(MarcDuinoBase* object);
         static void sequenceCallbackResetMP(MarcDuinoBase* object);
 };

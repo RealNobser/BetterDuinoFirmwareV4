@@ -14,6 +14,8 @@ MarcDuinoBase::MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSp
     MaxSoundsPerBank[0] = 0;
     for (int i = 1; i <= MAX_SOUND_BANK; i++)
         MaxSoundsPerBank[i] = Storage.getMaxSound(i);    
+
+    HeartBeatMillis = millis();
 }
 
 void MarcDuinoBase::init()
@@ -28,8 +30,6 @@ void MarcDuinoBase::init()
     // AUX1 Port
     pinMode(P_AUX1, OUTPUT);
     digitalWrite(P_AUX1, LOW);
-
-    HeartBeatMillis = millis();
 
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
 
@@ -369,11 +369,41 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "SO") == 0)       // Set Servo Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
-        Storage.setServoOpenPos(param_num, param_num_ext);
+        if (Storage.getServoDirection(param_num) == 0x01)
+        {
+            Storage.setServoClosedPos(param_num, param_num_ext);
+            Serial.println("#SO: R-Servo");
+        }
+        else
+            Storage.setServoOpenPos(param_num, param_num_ext);
+
+        if (Storage.getAdjustmentMode())
+        {
+            char ServoCommand[6];
+            memset(ServoCommand, 0x00, 6);
+            sprintf(ServoCommand, ":OP%02d", param_num);
+            delay(250);
+            parseCommand(ServoCommand);
+        }
     }
     else if (strcmp(cmd, "SC") == 0)       // Set Servo Degrees/Microseconds for Panel Close,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
-        Storage.setServoClosedPos(param_num, param_num_ext);
+        if (Storage.getServoDirection(param_num) == 0x01)
+        {
+            Storage.setServoOpenPos(param_num, param_num_ext);
+            Serial.println("#SC: R-Servo");
+        }
+        else
+            Storage.setServoClosedPos(param_num, param_num_ext);
+
+        if (Storage.getAdjustmentMode())
+        {
+            char ServoCommand[6];
+            memset(ServoCommand, 0x00, 6);
+            sprintf(ServoCommand, ":CL%02d", param_num);
+            delay(250);
+            parseCommand(ServoCommand);            
+        }
     }
     else if (strcmp(cmd, "SP") == 0)       // Set Servo Degrees/Microseconds for Panel Mid,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
@@ -497,14 +527,21 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "DM") == 0)             // Dump EEPROM
     {
-        Storage.dumpToSerial();
+        Storage.dumpToSerial(param_num);
     }
     else if (strcmp(cmd, "RS") == 0)             // Reboot MarcDuino
     {
         delay(500);
         resetFunc();
     }
-    Serial.printf(F("%s OK\r\n"), cmd);
+    else if (strcmp(cmd, "AD") == 0)             // Reboot MarcDuino
+    {
+        Storage.setAdjustmentMode(param_num == 0x01);
+    }
+    else
+        Serial.print(F("NOT "));
+
+    Serial.printf(F("valid %s\r\n"), cmd);
 }
 
 void MarcDuinoBase::playSequence(const unsigned int SeqNr)
@@ -644,7 +681,6 @@ void MarcDuinoBase::playSequence(const unsigned int SeqNr)
     default:
         break;         
     }
-    Sequencer.startSequence();
     playSequenceAddons(SeqNr);
 }
 
