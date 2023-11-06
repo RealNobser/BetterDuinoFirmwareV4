@@ -54,10 +54,8 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         void processAltHoloCommand(const char* command);
         void processI2CCommand(const char* command);
 
-
         void playSequenceAddons(const unsigned int SeqNr) override;
 
-        void initJedi();
         static void sequenceCallbackBuzz(MarcDuinoBase* object);
         static void sequenceCallbackJedi(MarcDuinoBase* object);
         static void sequenceCallbackResetMP(MarcDuinoBase* object);

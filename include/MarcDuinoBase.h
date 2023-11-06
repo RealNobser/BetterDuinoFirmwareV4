@@ -60,7 +60,7 @@ class MarcDuinoBase
 
         void processSetupCommand(const char* command);
 
-        void playSequence(const unsigned int SeqNr);
+        virtual void playSequence(const unsigned int SeqNr);
         virtual void playSequenceAddons(const unsigned int SeqNr) = 0;
 
         void AUX1(const unsigned int Duration);

@@ -6,7 +6,7 @@
 class Holo
 {
     public:
-        Holo(int VerticalServo, int HorizonatlServo, int LightPin);
+        Holo(const int VerticalServo, const int HorizonatlServo, const int LightPin);
         void on();
         void off();
 

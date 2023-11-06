@@ -556,30 +556,37 @@ void MarcDuinoBase::playSequence(const unsigned int SeqNr)
         Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 1:  // SCREAM
+    case 51: // Panel only Version
         Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
         Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 2: // WAVE
+    case 52:// Panel only Version
         Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
         Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 3: // MOODY FAST WAVE
+    case 53:// Panel only Version
         Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
         Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 4: // OPEN WAVE
+    case 54:// Panel only Version
         Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
         Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
     case 5: // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
+    case 55:// Panel only Version
         Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
         Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
     case 6: // SHORT CIRCUIT / FAINT
+    case 56:// Panel only Version
         Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
         Sequencer.setServoSpeed(MarcDuinoSequencer::super_slow);
         break;
     case 7: // Cantina (Orchestral Cantina, Rhythmic Panels)
+    case 57:// Panel only Version
         Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
         Sequencer.setServoSpeed(MarcDuinoSequencer::full);
         break;
@@ -627,92 +634,11 @@ void MarcDuinoBase::playSequence(const unsigned int SeqNr)
         Sequencer.setServoSpeed(MarcDuinoSequencer::medium);
         break;
 
-    // 
-    // 16 - 29 reserved for dome reagrding Eebel
-    //
-
-    //
-    // BODY SEQUENCES ONLY BEGIN
-    //
-    case 30: // Utility ARM open and close sequence
-        Sequencer.loadSequence(body_utility_arms_open, SEQ_SIZE(body_utility_arms_open));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::medium);
-        break;
-    case 31: // All Body Panels open and close sequence
-        Sequencer.loadSequence(body_panel_all_test, SEQ_SIZE(body_panel_all_test));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::medium);
-        break;
-    case 32: // All Body Doors open and wiggle close sequence
-        Sequencer.loadSequence(body_panel_spook, SEQ_SIZE(body_panel_spook));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
-        break;
-    case 33: //Body - Use Gripper
-        Sequencer.loadSequence(body_panel_use_gripper, SEQ_SIZE(body_panel_use_gripper));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
-        break;
-    case 34: //Body - Use Interface Tool
-        Sequencer.loadSequence(body_panel_use_interface_tool, SEQ_SIZE(body_panel_use_interface_tool));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
-        break;
-    case 35: //Body - Ping Pong Body Doors
-        Sequencer.loadSequence(body_panel_pingpong_Doors, SEQ_SIZE(body_panel_pingpong_Doors));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
-        break;
-    //
-    // BODY SEQUENCES ONLY END
-    //
-
-    ///////////////////////////////////////////
-    //	sequences of panels only, no sounds or light effects
-    //
-    //	:SE51 Scream, with all panels open
-    //	:SE52 Wave, one panel at a time
-    //	:SE53 Fast (Smirk) back and forth wave
-    //	:SE54 Wave 2 (open progressively all panels, then close one by one)
-    //	:SE55 Marching ants
-    //	:SE56 Faint/Short Circuit
-    //	:SE57 Rythmic panel dance
-    //  :SE58 Bye Bye Wave
-    //	:SE59 Open Panels half way
-    //////////////////////////////////////////
-
-    case 51: // SCREAM
-        Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
-        break;
-    case 52: // WAVE1
-        Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
-        break;
-    case 53: // MOODY FAST WAVE
-        Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
-        break;
-    case 54: // WAVE2
-        Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
-        break;
-    case 55: // Marching ant
-        Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
-        break;
-    case 56: // SHORT CIRCUIT / FAINT
-        Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::super_slow);
-        // EXT1On(4); // Turn on Smoke for 4 seconds
-        break;
-    case 57: // Rhythmic Panels
-        Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
-        break;
     case 58: // Panel Wave Bye Bye
         Sequencer.loadSequence(panel_bye_bye_wave, SEQ_SIZE(panel_bye_bye_wave));
         Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
         break;
-    case 59: // Panel all open Middle - Neil's test sequence to check partial panel opening.
-        Sequencer.loadSequence(panel_all_open_mid, SEQ_SIZE(panel_all_open_mid));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
-        break;
+
     default:
         break;         
     }

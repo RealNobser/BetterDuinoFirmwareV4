@@ -244,7 +244,7 @@ void MarcDuinoDomeSlave::processDisplayCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("DisplayCommand(Slave): %s\r\n"), command);
     #endif
-    Serial_Teeces.printf("%s\r", command+1);    // stripped
+    Serial_Teeces.printf(F("%s\r"), command+1);    // stripped
 }
 
 void MarcDuinoDomeSlave::processAltDisplayCommand(const char* command)
@@ -252,7 +252,7 @@ void MarcDuinoDomeSlave::processAltDisplayCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("AltDisplayCommand(Slave): %s\r\n"), command);
     #endif
-    Serial_Teeces.printf("%s\r", command+1);    // stripped
+    Serial_Teeces.printf(F("%s\r"), command+1);    // stripped
 }
 
 void MarcDuinoDomeSlave::processExpansionCommand(const char* command)
@@ -260,7 +260,7 @@ void MarcDuinoDomeSlave::processExpansionCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("ExpansionCommand(Slave): %s\r\n"), command);
     #endif
-    Serial_Magic.printf("%s\r", command+1);    // stripped
+    Serial_Magic.printf(F("%s\r"), command+1);    // stripped
 }
 
 void MarcDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)

@@ -11,12 +11,12 @@
  *
  *	Sequences details (see sequence_command, panel sequence matrices defined in panel_sequences.h)
  *
- *	:SE30
- *	:SE31
- *	:SE32
- *	:SE33
- *	:SE34
- *	:SE35
+ *	:SE30 Utility Arm open and close sequence
+ *	:SE31 All Body Panels open and close sequence
+ *	:SE32 All Body Doors open and wiggle close sequence
+ *	:SE33 Body - Use Gripper
+ *	:SE34 Body - Use Interface Tool
+ *	:SE35 Body - Ping Pong Body Doors
  
  */
 
@@ -32,9 +32,9 @@ class MarcDuinoBodyMaster : public MarcDuinoDomeMaster
         virtual void run() override;
 
         virtual const char* getProductName() override { return "MarcDuino Body Master"; }
-        // virtual void parseCommand(const char* command) override;
 
     protected:
+        void playSequence(const unsigned int SeqNr) override;
         void playSequenceAddons(const unsigned int SeqNr) override;
         
 };

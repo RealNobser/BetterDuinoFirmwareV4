@@ -239,7 +239,7 @@ void MarcDuinoDomeMaster::parseCommand(const char* command)
         processSetupCommand(command);
         // Forwarding all but #MD to Slave to be in sync
         if (strncmp(command, "#MD", 3) != 0)
-            Serial_Slave.printf("%s\r", command);
+            Serial_Slave.printf(F("%s\r"), command);
         break;    
     default:
         break;
@@ -710,59 +710,11 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
     case 16: // Panel Wiggle
         parseCommand("@0T5\r");				// scream display
         break;
-
-    ///////////////////////////////////////////
-    //	sequences of panels only, no sounds or light effects
-    //
-    //	:SE51 Scream, with all panels open
-    //	:SE52 Wave, one panel at a time
-    //	:SE53 Fast (Smirk) back and forth wave
-    //	:SE54 Wave 2 (open progressively all panels, then close one by one)
-    //	:SE55 Marching ants
-    //	:SE56 Faint/Short Circuit
-    //	:SE57 Rythmic panel dance
-    //  :SE58 Bye Bye Wave
-    //	:SE59 Open Panels half way
-    //////////////////////////////////////////
-
-    case 51: // SCREAM
-        break;
-    case 52: // WAVE1
-        break;
-    case 53: // MOODY FAST WAVE
-        break;
-    case 54: // WAVE2
-        break;
-    case 55: // Marching ant
-        break;
-    case 56: // SHORT CIRCUIT / FAINT
-        // EXT1On(4); // Turn on Smoke for 4 seconds
-        break;
-    case 57: // Rhythmic Panels
-        break;
-    case 58: // Panel Wave Bye Bye
-        break;
-    case 59: // Panel all open Middle - Neil's test sequence to check partial panel opening.
-        break;
     default:
         break;
     }
     // Finally GOOOOO
     Sequencer.startSequence();
-}
-
-
-void MarcDuinoDomeMaster::initJedi()
-{
- 	parseCommand("*H000\r");	// quick way to turn off holos if connected to MarcDuino
-	parseCommand("@0T1\r");	// abort test routine, reset all to normal
-#ifdef DIGITALJEDI
-	/**** initialize JEDI display for digital output on HPs and PSI ******/
-	// I connected Mike Velchecks rear PSI to the JEDI, which requires output to be turned to digital
-	// My holo lights are the older version and also require HPs to be set to digital
-	parseCommand("@6P91\r");	// change front holo (6) parameter 9 (P9) to digital (1)
-	parseCommand("@5P91\r");   // change rear PSI (5) parameter 9 (P9) to digital (1)
-#endif
 }
 
 void MarcDuinoDomeMaster::sequenceCallbackBuzz(MarcDuinoBase* object)

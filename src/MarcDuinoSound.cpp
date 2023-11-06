@@ -219,9 +219,9 @@ void MarcDuinoSoundVocalizer::init()
 
 void MarcDuinoSoundVocalizer::SetVolume(const byte Volume)
 {
-    SoundSerial.printf("<PVV%d>", Volume);  // Vocaliser
-    SoundSerial.printf("<PVA%d>", Volume);  // Wav Channel A
-    SoundSerial.printf("<PVB%d>", Volume);  // Wav Channel B
+    SoundSerial.printf(F("<PVV%d>"), Volume);  // Vocaliser
+    SoundSerial.printf(F("<PVA%d>"), Volume);  // Wav Channel A
+    SoundSerial.printf(F("<PVB%d>"), Volume);  // Wav Channel B
 }
 
 void MarcDuinoSoundVocalizer::VolumeUp()
@@ -264,12 +264,12 @@ void MarcDuinoSoundVocalizer::VolumeOff()
 
 void MarcDuinoSoundVocalizer::Play(const byte SoundNr)
 {
-    SoundSerial.printf("<CA%04d>", SoundNr);
+    SoundSerial.printf(F("<CA%04d>"), SoundNr);
 }
 
 void MarcDuinoSoundVocalizer::Stop()
 {
-    SoundSerial.printf("<PSV>");
+    SoundSerial.print(F("<PSV>"));
 }
 
 void MarcDuinoSoundVocalizer::Quiet(const bool on/* = true*/)
@@ -279,10 +279,10 @@ void MarcDuinoSoundVocalizer::Quiet(const bool on/* = true*/)
 
 void MarcDuinoSoundVocalizer::Muse()
 {
-    SoundSerial.print("<MM>");
+    SoundSerial.print(F("<MM>"));
 }
 
 void MarcDuinoSoundVocalizer::Overload()
 {
-    SoundSerial.print("<SE>");
+    SoundSerial.print(F("<SE>"));
 }
