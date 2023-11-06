@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "MarcDuinoBase.h"
+#include "MarcDuinoDome.h"
 #include "MarcDuinoDomeMaster.h"
 #include "MarcDuinoDomeSlave.h"
 #include "MarcDuinoBodyMaster.h"
@@ -49,7 +50,8 @@ void setup() {
       break;
     case MarcDuinoStorage::DomeSlave:
       MarcDuino = new MarcDuinoDomeSlave(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
-      break;/*
+      break;
+    /*
     case MarcDuinoStorage::BodyMaster:
       MarcDuino = new MarcDuinoBodyMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
       break;*/
@@ -58,6 +60,8 @@ void setup() {
       Storage.setType(MarcDuinoStorage::DomeMaster);
       break;    
     default:
+      MarcDuino = new MarcDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+      Storage.setType(MarcDuinoStorage::DomeMaster);    
       break;
   }
 

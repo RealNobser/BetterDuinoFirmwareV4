@@ -1,7 +1,7 @@
 #ifndef __MARCDUINODOMESLAVE_H__
 #define __MARCDUINODOMESLAVE_H__
 
-#include "MarcDuinoBase.h"
+#include "MarcDuinoDome.h"
 #include "Panel.h"
 #include <SendOnlySoftwareSerial.h>
 
@@ -71,7 +71,7 @@
  *		Use SDxx to globally set the Servo direction, then SRxxy to change individual servos.*
  */
 
-class MarcDuinoDomeSlave : public MarcDuinoBase
+class MarcDuinoDomeSlave : public MarcDuinoDome
 {
     public:
         MarcDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
@@ -99,6 +99,7 @@ class MarcDuinoDomeSlave : public MarcDuinoBase
         void processDisplayCommand(const char* command);
         void processAltDisplayCommand(const char* command);
         void processExpansionCommand(const char* command);
+        void processI2CCommand(const char* command);
 
         void playSequenceAddons(const unsigned int SeqNr) override;
 };

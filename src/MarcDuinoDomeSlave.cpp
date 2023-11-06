@@ -6,7 +6,7 @@ MarcDuinoDomeSlave::MarcDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, Sen
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
-    MarcDuinoBase(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
+    MarcDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
     Serial_Magic(Serial_Magic),
     Serial_Teeces(Serial_Teeces)
 {
@@ -19,16 +19,21 @@ MarcDuinoDomeSlave::MarcDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, Sen
     for(unsigned int i=0; i <= MaxPanel; ++i)
     {
         Panels[i] = nullptr;
-    }    
+    }   
 }
 
 void MarcDuinoDomeSlave::init()
 {
-    MarcDuinoBase::init();
+    MarcDuinoDome::init();
 
-    // TODO: Get Max/Min // Open Close from EEPROM!
-    Panels[12] = new Panel(Servo10, P_SERVO_12, 0,180);
-    Panels[13] = new Panel(Servo11, P_SERVO_13, 0,180);
+    // 3 Holos
+
+    // 2 Panels
+    Panels[12] = new Panel(Servo10, P_SERVO_12);
+    Panels[13] = new Panel(Servo11, P_SERVO_13);
+
+   //  adjustHoloEndPositions();
+    adjustPanelEndPositions(Panels, MinPanel, MaxPanel);
 
     Sequencer.setPanels(Panels, MaxPanel+1);
     Sequencer.setPanelRange(MinPanel, MaxPanel);
@@ -39,7 +44,20 @@ void MarcDuinoDomeSlave::init()
 
 void MarcDuinoDomeSlave::run()
 {
-    MarcDuinoBase::run();
+    MarcDuinoDome::run();
+
+    // Servos. TODO: Double implementation, check BaseClass Idea for Dome MarcDuinos
+    if (ServoBuzzIntervall != 0)
+    {
+        if ((millis() - ServoBuzzMillis) > ServoBuzzIntervall)
+        {
+            for (unsigned int i = MinPanel; i <= MaxPanel; i++)
+            {
+                Panels[i]->detach();
+            }
+            ServoBuzzMillis = millis();
+        }
+    }    
 }
 
 /*
@@ -73,7 +91,7 @@ void MarcDuinoDomeSlave::parseCommand(const char* command)
         processDisplayCommand(command);
         break;
     case '$':
-        // Ignore
+        // Ignore Sound Commands
         break;
     case '!':
         processAltDisplayCommand(command);
@@ -81,6 +99,9 @@ void MarcDuinoDomeSlave::parseCommand(const char* command)
     case '%':
         processExpansionCommand(command);
         break;
+    case '&':
+        processI2CCommand(command);
+        break;        
     case '#':
         processSetupCommand(command);
         break;    
@@ -110,10 +131,6 @@ void MarcDuinoDomeSlave::processPanelCommand(const char* command)
     } 
     else if (strcmp(cmd, "OP")==0)  // Open Panel
     {
-        #ifdef DEBUG_MSG
-        Serial.printf(F("Open Panel %i\r\n"), param_num);
-        #endif        
-
         if (param_num == 0)         // open all
         {
             for(unsigned int i=MinPanel; i<=MaxPanel; i++)
@@ -134,10 +151,6 @@ void MarcDuinoDomeSlave::processPanelCommand(const char* command)
     }
     else if (strcmp(cmd, "CL")==0)  // Close Panel
     {
-        #ifdef DEBUG_MSG
-        Serial.printf(F("Close Panel %i\r\n"), param_num);
-        #endif        
-
         if (param_num == 0)         // close all
         {
             for(unsigned int i=MinPanel; i<=MaxPanel; i++)
@@ -183,7 +196,6 @@ void MarcDuinoDomeSlave::processHoloCommand(const char* command)
 
     if (strcmp(cmd, "RD")==0)       // Random Holo Movement
     {
-
     }
     else if (strcmp(cmd, "ON")==0)  // Holo Lights on
     {
@@ -209,28 +221,28 @@ void MarcDuinoDomeSlave::processHoloCommand(const char* command)
     else if (strcmp(cmd, "MF")==0)  // Magic Panel Flicker
     {
     }    
-    else if (strcmp(cmd, "H0")==0)  // Holo On for xx seconds
+    else if (strcmp(cmd, "H0")==0)  // Holos On for xx seconds
     {
     }    
-    else if (strcmp(cmd, "H1")==0)
+    else if (strcmp(cmd, "H1")==0)  // Holo1 On for xx seconds
     {
     }    
-    else if (strcmp(cmd, "H2")==0)
+    else if (strcmp(cmd, "H2")==0)  // Holo2 On for xx seconds
     {
     }    
-    else if (strcmp(cmd, "H3")==0)
+    else if (strcmp(cmd, "H3")==0)  // Holo3 On for xx seconds
     {
     }    
-    else if (strcmp(cmd, "F0")==0)  // Holo Flicker for xx seconds
+    else if (strcmp(cmd, "F0")==0)  // Holos Flicker for xx seconds
     {
     }    
-    else if (strcmp(cmd, "F1")==0)
+    else if (strcmp(cmd, "F1")==0)  // Holo1 Flicker for xx seconds
     {
     }    
-    else if (strcmp(cmd, "F2")==0)
+    else if (strcmp(cmd, "F2")==0)  // Holo2 Flicker for xx seconds
     {
     }    
-    else if (strcmp(cmd, "F3")==0)
+    else if (strcmp(cmd, "F3")==0)  // Holo3 Flicker for xx seconds
     {
     }    
     else if (strcmp(cmd, "EO")==0)  // AUX1 on
@@ -261,6 +273,13 @@ void MarcDuinoDomeSlave::processExpansionCommand(const char* command)
     Serial.printf(F("ExpansionCommand(Slave): %s\r\n"), command);
     #endif
     Serial_Magic.printf(F("%s\r"), command+1);    // stripped
+}
+
+void MarcDuinoDomeSlave::processI2CCommand(const char* command)
+{
+    #ifdef DEBUG_MSG
+    Serial.printf(F("I2CCommand(Master): %s\r\n"), command);
+    #endif
 }
 
 void MarcDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)

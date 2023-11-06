@@ -5,7 +5,7 @@ MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, S
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
-    MarcDuinoBase(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
+    MarcDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
     Serial_Slave(Serial_Slave),
     Serial_MP3(Serial_MP3)
 {
@@ -38,15 +38,14 @@ MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, S
     }
 
     RandomSoundMillis   = millis();
-    ServoBuzzMillis     = millis();
-    ServoBuzzIntervall  = SERVO_BUZZ_MILLIS;    // TODO Make EEPROM setting
 }
 
 void MarcDuinoDomeMaster::init()
 {
-    MarcDuinoBase::init();
+    MarcDuinoDome::init();
     Sound->init();
 
+    // 11 Panels
     Panels[1] = new Panel(Servo1, P_SERVO_01);
     Panels[2] = new Panel(Servo2, P_SERVO_02);
     Panels[3] = new Panel(Servo3, P_SERVO_03);
@@ -59,7 +58,7 @@ void MarcDuinoDomeMaster::init()
     Panels[10]= new Panel(Servo10, P_SERVO_10);
     Panels[11]= new Panel(Servo11, P_SERVO_11);
 
-    adjustPanelEndPositions();
+    adjustPanelEndPositions(Panels, MinPanel, MaxPanel);
 
     Sequencer.setPanels(Panels, MaxPanel+1);
     Sequencer.setPanelRange(MinPanel, MaxPanel);
@@ -85,9 +84,9 @@ void MarcDuinoDomeMaster::init()
 
 void MarcDuinoDomeMaster::run()
 {
-    MarcDuinoBase::run();
+    MarcDuinoDome::run();
 
-    // Servos
+    // Servos. TODO: Double implementation, check BaseClass Idea for Dome MarcDuinos
     if (ServoBuzzIntervall != 0)
     {
         if ((millis() - ServoBuzzMillis) > ServoBuzzIntervall)
@@ -170,35 +169,6 @@ void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
     }
 }
 
-
-void MarcDuinoDomeMaster::adjustPanelEndPositions()
-{
-    word OpenPos        = 0;
-    word ClosedPos      = 0;
-    unsigned int Index  = 0;
-
-    for (unsigned int i=MinPanel; i<= MaxPanel; i++)
-    {
-        if (Storage.getIndividualSettings() == 0x01)
-            Index = i;
-        else
-            Index = 0;
-
-        // Set Direction
-        if ((Storage.getServoDirection(0) == 1) || (Storage.getServoDirection(i) == 1)) // Reverse Servo
-        {
-            OpenPos     = Storage.getServoClosedPos(Index);
-            ClosedPos   = Storage.getServoOpenPos(Index);
-        }
-        else    // Normal
-        {
-            OpenPos     = Storage.getServoOpenPos(Index);
-            ClosedPos   = Storage.getServoClosedPos(Index);
-        }
-        Panels[i]->setEndPositions(OpenPos, ClosedPos);
-    }
-}
-
 /*
  * ':' Pie panel command, parsed and treated by this controller in the "process_command" routine
  * '*' HP commands, passed on to the HoloController board daisy chained to suart1, see "parse_hp_command"
@@ -214,7 +184,7 @@ void MarcDuinoDomeMaster::parseCommand(const char* command)
     switch (command[0])
     {
     case ':':
-        adjustPanelEndPositions();
+        adjustPanelEndPositions(Panels, MinPanel, MaxPanel);
         processPanelCommand(command);
         break;
     case '*':
@@ -356,10 +326,6 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
             }
         }        
     }
-    else if (strcmp(cmd, "RC")==0)
-    {
-
-    }
     else if (strcmp(cmd, "ST")==0)
     {
         if (param_num == 0)    // Alle panels
@@ -382,6 +348,10 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
             Serial_Slave.print(F(":ST13\r"));
         }
     }
+    else if (strcmp(cmd, "RC")==0)
+    {
+
+    } 
     else if (strcmp(cmd, "HD")==0)
     {
 

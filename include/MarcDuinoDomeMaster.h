@@ -1,13 +1,13 @@
 #ifndef __MARCDUINODOMEMASTER_H__
 #define __MARCDUINODOMEMASTER_H__
 
-#include "MarcDuinoBase.h"
+#include "MarcDuinoDome.h"
 #include "MarcDuinoStorage.h"
 #include "MarcDuinoSound.h"
 #include "Panel.h"
 #include <SendOnlySoftwareSerial.h>
 
-class MarcDuinoDomeMaster : public MarcDuinoBase
+class MarcDuinoDomeMaster : public MarcDuinoDome
 {
     public:
         MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
@@ -37,14 +37,10 @@ class MarcDuinoDomeMaster : public MarcDuinoBase
         unsigned long RandomSoundIntervall  = 0;
         unsigned long RandomSoundMillis     = 0;
 
-        unsigned long ServoBuzzIntervall    = 0;
-        unsigned long ServoBuzzMillis       = 0;
-
         unsigned long MinRandomPause        = 6000;
         unsigned long MaxRandomPause        = 12000;
 
         void setStandardRandomSoundIntervall();
-        void adjustPanelEndPositions();
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);

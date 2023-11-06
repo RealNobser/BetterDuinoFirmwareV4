@@ -3,11 +3,9 @@
 
 #include <Arduino.h>
 #include <config.h>
-#include <SendOnlySoftwareSerial.h>
 #include <VarSpeedServo.h>
 
 #include "MarcDuinoStorage.h"
-#include "MarcDuinoSequencer.h"
 
 class MarcDuinoBase
 {
@@ -22,19 +20,14 @@ class MarcDuinoBase
         virtual void parseCommand(const char* command) = 0;
 
     protected:
-        unsigned long HeartBeatMillis = 0;
+        unsigned long HeartBeatMillis       = 0;
+        unsigned long HeartBeatIntervall    = 0;    // Variable to enable blinking codes if necessary
         byte HeartBeatStatus = LOW;
-
-        unsigned long AUX1Millis        = 0;
-        unsigned long AUX1Duration      = 0;
 
         char SerialBuffer[SERIALBUFFERSIZE];
         int BufferIndex = 0;
 
-        unsigned int MaxSoundsPerBank[10];
-
         MarcDuinoStorage    Storage;
-        MarcDuinoSequencer  Sequencer;
 
         VarSpeedServo& Servo1;
         VarSpeedServo& Servo2;
@@ -55,15 +48,7 @@ class MarcDuinoBase
         void toggleHeartBeat();
 
         bool separateCommand(const char* command, char* cmd, unsigned int & param_num);
-        bool separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound);
-        void getRandomSound(unsigned int & bank, unsigned int & sound);
-
         void processSetupCommand(const char* command);
-
-        virtual void playSequence(const unsigned int SeqNr);
-        virtual void playSequenceAddons(const unsigned int SeqNr) = 0;
-
-        void AUX1(const unsigned int Duration);
 
         void(* resetFunc) (void) = 0;
 };
