@@ -627,6 +627,41 @@ void MarcDuinoBase::playSequence(const unsigned int SeqNr)
         Sequencer.setServoSpeed(MarcDuinoSequencer::medium);
         break;
 
+    // 
+    // 16 - 29 reserved for dome reagrding Eebel
+    //
+
+    //
+    // BODY SEQUENCES ONLY BEGIN
+    //
+    case 30: // Utility ARM open and close sequence
+        Sequencer.loadSequence(body_utility_arms_open, SEQ_SIZE(body_utility_arms_open));
+        Sequencer.setServoSpeed(MarcDuinoSequencer::medium);
+        break;
+    case 31: // All Body Panels open and close sequence
+        Sequencer.loadSequence(body_panel_all_test, SEQ_SIZE(body_panel_all_test));
+        Sequencer.setServoSpeed(MarcDuinoSequencer::medium);
+        break;
+    case 32: // All Body Doors open and wiggle close sequence
+        Sequencer.loadSequence(body_panel_spook, SEQ_SIZE(body_panel_spook));
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        break;
+    case 33: //Body - Use Gripper
+        Sequencer.loadSequence(body_panel_use_gripper, SEQ_SIZE(body_panel_use_gripper));
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        break;
+    case 34: //Body - Use Interface Tool
+        Sequencer.loadSequence(body_panel_use_interface_tool, SEQ_SIZE(body_panel_use_interface_tool));
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        break;
+    case 35: //Body - Ping Pong Body Doors
+        Sequencer.loadSequence(body_panel_pingpong_Doors, SEQ_SIZE(body_panel_pingpong_Doors));
+        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        break;
+    //
+    // BODY SEQUENCES ONLY END
+    //
+
     ///////////////////////////////////////////
     //	sequences of panels only, no sounds or light effects
     //

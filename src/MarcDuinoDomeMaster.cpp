@@ -232,6 +232,9 @@ void MarcDuinoDomeMaster::parseCommand(const char* command)
     case '%':
         processAltHoloCommand(command);
         break;
+    case '&':
+        processI2CCommand(command);
+        break;
     case '#':
         processSetupCommand(command);
         // Forwarding all but #MD to Slave to be in sync
@@ -570,6 +573,13 @@ void MarcDuinoDomeMaster::processAltHoloCommand(const char* command)
     Serial_Slave.printf(F("%s\r"), command);
 }
 
+void MarcDuinoDomeMaster::processI2CCommand(const char* command)
+{
+    #ifdef DEBUG_MSG
+    Serial.printf(F("I2CCommand(Master): %s\r\n"), command);
+    #endif
+}
+
 void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
 {
     // Also forward to Slave
@@ -766,7 +776,6 @@ void MarcDuinoDomeMaster::sequenceCallbackJedi(MarcDuinoBase* object)
     object->parseCommand("*H000\r"); // quick way to turn off holos if connected to MarcDuino
 	object->parseCommand("@0T1\r");  // abort test routine, reset all to normal
 	object->parseCommand("%T00\r");  // MP Off
-	//object->parseCommand("%T00\r");  	// Logics reset to default
 }
 
 // callback to reset JEDI to normal after a sequence, works only once

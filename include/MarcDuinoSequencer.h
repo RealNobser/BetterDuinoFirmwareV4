@@ -5,7 +5,7 @@
 #include "Panel.h"
 
 #define SEQ_SIZE(A) (sizeof(A) / sizeof(A[0]))
-#define SEQUENCE_SIZE (MAX_MARCUDINOSERVOS + 4)
+#define SEQUENCE_SIZE (MAX_MARCUDINOSERVOS + 1) // 13 Servos plus Timer
 
 typedef const unsigned int sequence_t[][SEQUENCE_SIZE];
 typedef const unsigned int (*sequence_t_ptr)[SEQUENCE_SIZE];

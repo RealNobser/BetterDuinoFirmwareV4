@@ -19,12 +19,14 @@ Panel::Panel(VarSpeedServo& Servo, const int Pin, const int OpenPos, const int C
 
 void Panel::attach()
 {
-    Servo.attach(Pin);
+    if(!Servo.attached())
+        Servo.attach(Pin);
 }
 
 void Panel::detach()
 {
-    Servo.detach();
+    if(Servo.attached())
+        Servo.detach();
 }
 
 void Panel::open(const int speed)

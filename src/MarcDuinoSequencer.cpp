@@ -112,23 +112,10 @@ void MarcDuinoSequencer::nextStep()
 
 void MarcDuinoSequencer::movePanels()
 {
-    unsigned int firstPanel = 0;
-    unsigned int lastPanel = 0;
-
     if (currentSequence == nullptr)
         return;
 
-    firstPanel  = (unsigned int)pgm_read_word(&currentSequence[currentStep][SEQUENCE_SIZE-2]);
-    lastPanel   = (unsigned int)pgm_read_word(&currentSequence[currentStep][SEQUENCE_SIZE-1]);
-
-    // Limit to Panels, that can be accessed
-    if (firstPanel < MinPanel)
-        firstPanel = MinPanel;
-    
-    if (lastPanel > MaxPanel)
-        lastPanel = MaxPanel;
-
-    for(unsigned int panel = firstPanel; panel <= lastPanel; panel++)
+    for(unsigned int panel = MinPanel; panel <= MaxPanel; panel++)
     {
         unsigned int Position = _NP;
         Position = (unsigned int)pgm_read_word(&currentSequence[currentStep][panel]);

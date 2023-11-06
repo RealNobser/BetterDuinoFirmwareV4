@@ -5,8 +5,6 @@
 * IDEAS / ToDos
 * - Configure AUX1 as input or output
 * - consolidate unnecessary settings
-* - Switch for generic or custom servo setting
-* - Switch for deg or PWM open/close settings
 * - modify Body mode
 */
 /*
