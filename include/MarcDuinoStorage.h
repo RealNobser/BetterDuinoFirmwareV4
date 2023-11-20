@@ -112,33 +112,37 @@
 *  0x96     Servo11 Panel-Servo Mid Position Degree (0-180) / Microseconds (>=544)
 *  0x98     Servo11 Panel-Servo Mid Position Degree (0-180) / Microseconds (>=544)
 *  0x9a     Servo11 Panel-Servo Mid Position Degree (0-180) / Microseconds (>=544)
-
-*  0xa0     Global Holo1-Servo-V Direction (0-Normal, 1-Reverse)
-*  0xa1     Global Holo1-Servo-H Direction (0-Normal, 1-Reverse)
-*  0xa2     Servo1 Holo1-Servo-V Direction (0-Normal, 1-Reverse)
-*  0xa3     Servo2 Holo1-Servo-H Direction (0-Normal, 1-Reverse)
-*  0xa4     Servo3 Holo2-Servo-V Direction (0-Normal, 1-Reverse)
-*  0xa5     Servo4 Holo2-Servo-H Direction (0-Normal, 1-Reverse)
-*  0xa6     Servo5 Holo3-Servo-V Direction (0-Normal, 1-Reverse)
-*  0xa7     Servo6 Holo3-Servo-H Direction (0-Normal, 1-Reverse)
-
-*  0xb0     Global Holo1-Servo-V Min Position Degree (0-180) / Microseconds (>=544)
-*  0xb2     Global Holo1-Servo-H Min Position Degree (0-180) / Microseconds (>=544)
-*  0xb4     Servo1 Holo1-Servo-V Min Position Degree (0-180) / Microseconds (>=544)
-*  0xb6     Servo2 Holo1-Servo-H Min Position Degree (0-180) / Microseconds (>=544)
-*  0xb8     Servo3 Holo2-Servo-V Min Position Degree (0-180) / Microseconds (>=544)
-*  0xba     Servo4 Holo2-Servo-H Min Position Degree (0-180) / Microseconds (>=544)
-*  0xbc     Servo5 Holo3-Servo-V Min Position Degree (0-180) / Microseconds (>=544)
-*  0xbe     Servo6 Holo3-Servo-H Min Position Degree (0-180) / Microseconds (>=544)
-
-*  0xc0     Global Holo1-Servo-V Max Position Degree (0-180) / Microseconds (>=544)
-*  0xc2     Global Holo1-Servo-H Max Position Degree (0-180) / Microseconds (>=544)
-*  0xc4     Servo1 Holo1-Servo-V Max Position Degree (0-180) / Microseconds (>=544)
-*  0xc6     Servo2 Holo1-Servo-H Max Position Degree (0-180) / Microseconds (>=544)
-*  0xc8     Servo3 Holo2-Servo-V Max Position Degree (0-180) / Microseconds (>=544)
-*  0xca     Servo4 Holo2-Servo-H Max Position Degree (0-180) / Microseconds (>=544)
-*  0xcc     Servo5 Holo3-Servo-V Max Position Degree (0-180) / Microseconds (>=544)
-*  0xce     Servo6 Holo3-Servo-H Max Position Degree (0-180) / Microseconds (>=544)
+*
+*  0xa0     Global Holo1-Servo-H Direction (0-Normal, 1-Reverse)
+*  0xa1     Global Holo1-Servo-V Direction (0-Normal, 1-Reverse)
+*  0xa2     Servo1 Holo1-Servo-H Direction (0-Normal, 1-Reverse)
+*  0xa3     Servo2 Holo1-Servo-V Direction (0-Normal, 1-Reverse)
+*  0xa4     Servo3 Holo2-Servo-H Direction (0-Normal, 1-Reverse)
+*  0xa5     Servo4 Holo2-Servo-V Direction (0-Normal, 1-Reverse)
+*  0xa6     Servo5 Holo3-Servo-H Direction (0-Normal, 1-Reverse)
+*  0xa7     Servo6 Holo3-Servo-V Direction (0-Normal, 1-Reverse)
+*
+*  0xb0     Global Holo1-Servo-H Min Position Degree (0-180) / Microseconds (>=544)
+*  0xb2     Global Holo1-Servo-V Min Position Degree (0-180) / Microseconds (>=544)
+*  0xb4     Servo1 Holo1-Servo-H Min Position Degree (0-180) / Microseconds (>=544)
+*  0xb6     Servo2 Holo1-Servo-V Min Position Degree (0-180) / Microseconds (>=544)
+*  0xb8     Servo3 Holo2-Servo-H Min Position Degree (0-180) / Microseconds (>=544)
+*  0xba     Servo4 Holo2-Servo-V Min Position Degree (0-180) / Microseconds (>=544)
+*  0xbc     Servo5 Holo3-Servo-H Min Position Degree (0-180) / Microseconds (>=544)
+*  0xbe     Servo6 Holo3-Servo-V Min Position Degree (0-180) / Microseconds (>=544)
+*
+*  0xc0     Global Holo1-Servo-H Max Position Degree (0-180) / Microseconds (>=544)
+*  0xc2     Global Holo1-Servo-V Max Position Degree (0-180) / Microseconds (>=544)
+*  0xc4     Servo1 Holo1-Servo-H Max Position Degree (0-180) / Microseconds (>=544)
+*  0xc6     Servo2 Holo1-Servo-V Max Position Degree (0-180) / Microseconds (>=544)
+*  0xc8     Servo3 Holo2-Servo-H Max Position Degree (0-180) / Microseconds (>=544)
+*  0xca     Servo4 Holo2-Servo-V Max Position Degree (0-180) / Microseconds (>=544)
+*  0xcc     Servo5 Holo3-Servo-H Max Position Degree (0-180) / Microseconds (>=544)
+*  0xce     Servo6 Holo3-Servo-V Max Position Degree (0-180) / Microseconds (>=544)
+*
+*  0xd1     Holo1 Light High Active (=1) or Low Active (=0)
+*  0xd2     Holo2 Light High Active (=1) or Low Active (=0)
+*  0xd3     Holo3 Light High Active (=1) or Low Active (=0)
 */
 
 #define ADDR_MARCDUINOVERSION   0x00
@@ -161,6 +165,11 @@
 #define ADDR_SERVOOPENBASE      0x40
 #define ADDR_SERVOCLOSEDBASE    0x60
 #define ADDR_SERVOMIDBASE       0x80
+
+#define ADDR_HOLODIRBASE        0xa0
+#define ADDR_HOLOMINBASE        0xb0
+#define ADDR_HOLOMAXBASE        0xc0
+#define ADDR_HOLOLIGHTBASE      0xd0
 
 class MarcDuinoStorage
 {
@@ -217,20 +226,42 @@ class MarcDuinoStorage
         void setIndividualSettings(const byte choice);
         byte getIndividualSettings();
 
-        byte getServoDirection(const byte ServoNr);                         // ServoNr 1-1, ServoNr=0 - Global, Direction 0-Normal / 1- Reverse
-        void setServoDirection(const byte ServoNr, const byte Direction);   // ServoNr 1-1, ServoNr=0 - Global, Direction 0-Normal / 1- Reverse
+        byte getServoDirection(const byte ServoNr);                         // ServoNr 1-11, ServoNr=0 - Global, Direction 0-Normal / 1- Reverse
+        void setServoDirection(const byte ServoNr, const byte Direction);   // ServoNr 1-11, ServoNr=0 - Global, Direction 0-Normal / 1- Reverse
 
-        byte getServoSpeed(const byte ServoNr);                             // ServoNr 1-1, ServoNr=0 - Global, Speed 0-255
-        void setServoSpeed(const byte ServoNr, const byte Speed);           // ServoNr 1-1, ServoNr=0 - Global, Speed 0-255
+        byte getServoSpeed(const byte ServoNr);                             // ServoNr 1-11, ServoNr=0 - Global, Speed 0-255
+        void setServoSpeed(const byte ServoNr, const byte Speed);           // ServoNr 1-11, ServoNr=0 - Global, Speed 0-255
 
-        word getServoOpenPos(const byte ServoNr);                        // ServoNr 1-1, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
-        void setServoOpenPos(const byte ServoNr, const word Position);   // ServoNr 1-1, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
+        word getServoOpenPos(const byte ServoNr);                        // ServoNr 1-11, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
+        void setServoOpenPos(const byte ServoNr, const word Position);   // ServoNr 1-11, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
 
-        word getServoClosedPos(const byte ServoNr);                       // ServoNr 1-1, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
-        void setServoClosedPos(const byte ServoNr, const word Position); // ServoNr 1-1, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
+        word getServoClosedPos(const byte ServoNr);                       // ServoNr 1-11, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
+        void setServoClosedPos(const byte ServoNr, const word Position); // ServoNr 1-11, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
 
-        word getServoMidPos(const byte ServoNr);                         // ServoNr 1-1, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
-        void setServoMidPos(const byte ServoNr, const word Position);    // ServoNr 1-1, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
+        word getServoMidPos(const byte ServoNr);                         // ServoNr 1-11, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
+        void setServoMidPos(const byte ServoNr, const word Position);    // ServoNr 1-11, ServoNr=0 - Global, Position 0-180 deg / >544 Microseconds
+
+
+        byte getHoloHDirection(const byte HoloNr);
+        void setHoloHDirection(const byte HoloNr, const byte Direction);
+
+        byte getHoloVDirection(const byte HoloNr);
+        void setHoloVDirection(const byte HoloNr, const byte Direction);
+
+        word getHoloHMinPos(const byte HoloNr);
+        void setHoloHMinPos(const byte HoloNr, const word Position);
+
+        word getHoloHMaxPos(const byte HoloNr);
+        void setHoloHMaxPos(const byte HoloNr, const word Position);
+
+        word getHoloVMinPos(const byte HoloNr);
+        void setHoloVMinPos(const byte HoloNr, const word Position);
+
+        word getHoloVMaxPos(const byte HoloNr);
+        void setHoloVMaxPos(const byte HoloNr, const word Position);
+
+        bool getHoloLightHighActive(const byte HoloNr);
+        void setHoloLightHighActive(const byte HoloNr, const bool HighActive);
 
         bool getAdjustmentMode();
         void setAdjustmentMode(const bool on);

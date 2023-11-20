@@ -79,7 +79,8 @@ void MarcDuinoDomeMaster::init()
             RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
     }
 
-    parseCommand(":SE00");    // Close Panels
+    parseCommand(":SE00");          // Close Panels
+    Serial_Slave.print("#MD01\r");  // Force Slave board to be in Slave Mode
 }
 
 void MarcDuinoDomeMaster::run()
@@ -609,6 +610,7 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         parseCommand("%T52");	    // Magic Panel in VU Mode        
         break;
     case 8: // LEIA
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         parseCommand("*RC01"); 	    // HP 01 in RC mode
         parseCommand("$L");         // Leia message sound  
         parseCommand("*F134");      // front holos flicker for 34 sec 
@@ -636,14 +638,12 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         parseCommand("@0T1");   // abort test routine, reset all to normal
         parseCommand("*ST00");  // all holos to stop
         parseCommand("$s");		// stop sounds
-        // seq_resetspeed();					// sequence speed to fast
         // stop_command(0);					// all panels off RC        
         break;
     case 11: // WIDE AWAKE	random sounds, holos on random, panels closed
         // init_jedi();						// JEDI back to default
         parseCommand("*RD00\r");			// all HPs to random
         parseCommand("$R");					// random sounds mode
-        //seq_resetspeed();					// sequence speed to fast
         //stop_command(0);					// all panels off RC and closed
         break;
     case 12: // TOP PIE PANELS RC
@@ -658,7 +658,6 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         //init_jedi();						// JEDI back to default
         parseCommand("*ST00\r");			// all HPs to stop
         parseCommand("$R");					// random sounds mode
-        // seq_resetspeed();				// sequence speed to fast
         // stop_command(0);					// all panels off RC and closed
         break;
     case 14: // EXCITED	random sounds, holos movement, holo lights on, panels closed
@@ -666,7 +665,6 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         parseCommand("*RD00\r");			// all HPs to random
         parseCommand("*ON00\r");			// all HPs lights on
         parseCommand("$R");					// random sounds mode
-        //seq_resetspeed();					// sequence speed to fast
         //stop_command(0);					// all panels off RC and closed
         break;
 

@@ -43,7 +43,40 @@ void MarcDuinoDome::run()
     }    
 }
 
-void MarcDuinoDome::adjustPanelEndPositions(Panel* Panels[], unsigned int MinPanel, unsigned int MaxPanel)
+void MarcDuinoDome::adjustHoloEndPositions(Holo* Holos[], const unsigned int MinHolo, const unsigned int MaxHolo)
+{
+    word MinHValue   = 0;
+    word MaxHValue   = 0;
+    word MinVValue   = 0;
+    word MaxVValue   = 0;
+    unsigned int Index  = 0;
+
+    for (unsigned int i=MinHolo; i<= MaxHolo; i++)
+    {
+        if (Storage.getIndividualSettings() == 0x01)
+            Index = i;
+        else
+            Index = 0;
+
+        MinHValue = Storage.getHoloHMinPos(Index);
+        MaxHValue = Storage.getHoloHMaxPos(Index);
+        MinVValue = Storage.getHoloVMinPos(Index);
+        MaxVValue = Storage.getHoloVMaxPos(Index);
+
+        // Set Direction
+        if ((Storage.getHoloHDirection(0) == 1) || (Storage.getHoloHDirection(i) == 1)) // Reverse Servo
+            Holos[i]->setHorizontalEndPositions(MaxHValue, MinHValue);
+        else    // Normal
+            Holos[i]->setHorizontalEndPositions(MinHValue, MaxHValue);
+
+        if ((Storage.getHoloVDirection(0) == 1) || (Storage.getHoloVDirection(i) == 1)) // Reverse Servo
+            Holos[i]->setVerticalEndPositions(MaxVValue, MinVValue);
+        else    // Normal
+            Holos[i]->setVerticalEndPositions(MinVValue, MaxVValue);
+    }
+}
+
+void MarcDuinoDome::adjustPanelEndPositions(Panel* Panels[], const unsigned int MinPanel, const unsigned int MaxPanel)
 {
     word OpenPos        = 0;
     word ClosedPos      = 0;

@@ -2,7 +2,9 @@
 #define __MARCDUINODOMESLAVE_H__
 
 #include "MarcDuinoDome.h"
+#include "Holo.h"
 #include "Panel.h"
+
 #include <SendOnlySoftwareSerial.h>
 
 /** Commands implemented in v1.2
@@ -89,10 +91,16 @@ class MarcDuinoDomeSlave : public MarcDuinoDome
         SendOnlySoftwareSerial& Serial_Magic;
         SendOnlySoftwareSerial& Serial_Teeces;
 
-        static const unsigned int MinPanel = 12;   // Master Board has 11 Panel Connectors
-        static const unsigned int MaxPanel = 13;   // Master Board has 11 Panel Connectors
-        
-        Panel* Panels[MaxPanel + 1];               // +1 for index 0 dummy
+        unsigned long MagicPanelMillis  = 0;
+        unsigned long MagicPanelInterval= 0;
+
+        static const unsigned int MinPanel = 12;    // Master Board has 11 Panel Connectors
+        static const unsigned int MaxPanel = 13;    // Master Board has 11 Panel Connectors
+        static const unsigned int MinHolo  = 1;     // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
+        static const unsigned int MaxHolo  = 3;     // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
+
+        Holo* Holos[MaxHolo + 1];       // +1 for index 0 dummy
+        Panel* Panels[MaxPanel + 1];    // +1 for index 0 dummy
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);
@@ -102,6 +110,12 @@ class MarcDuinoDomeSlave : public MarcDuinoDome
         void processI2CCommand(const char* command);
 
         void playSequenceAddons(const unsigned int SeqNr) override;
+
+        void HolosOn(const byte HoloNr);
+        void HolosOff(const byte HoloNr);
+
+        void MagicPanelCtrl(const unsigned int param_num);
+
 };
 
 #endif // __MARCDUINODOMESLAVE_H__

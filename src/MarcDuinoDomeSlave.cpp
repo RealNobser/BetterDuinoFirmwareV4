@@ -16,6 +16,11 @@ MarcDuinoDomeSlave::MarcDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, Sen
     Serial_Teeces.begin(SERIAL_TEECES_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
     while(!Serial_Teeces);
 
+    for(unsigned int i=0; i <= MaxHolo; ++i)
+    {
+        Holos[i] = nullptr;
+    }   
+
     for(unsigned int i=0; i <= MaxPanel; ++i)
     {
         Panels[i] = nullptr;
@@ -27,24 +32,30 @@ void MarcDuinoDomeSlave::init()
     MarcDuinoDome::init();
 
     // 3 Holos
+    Holos[1] = new Holo(P_FL, Storage.getHoloLightHighActive(1), Servo1, P_HPF_H, Servo2, P_HPF_V);    // Front
+    Holos[2] = new Holo(P_RL, Storage.getHoloLightHighActive(2), Servo3, P_HPR_H, Servo4, P_HPR_V);    // Rear
+    Holos[3] = new Holo(P_TL, Storage.getHoloLightHighActive(3), Servo5, P_HPT_H, Servo6, P_HPT_V);    // Top
 
     // 2 Panels
-    Panels[12] = new Panel(Servo10, P_SERVO_12);
+    Panels[12] = new Panel(Servo11, P_SERVO_12);
     Panels[13] = new Panel(Servo11, P_SERVO_13);
 
-   //  adjustHoloEndPositions();
+    adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
     adjustPanelEndPositions(Panels, MinPanel, MaxPanel);
 
     Sequencer.setPanels(Panels, MaxPanel+1);
     Sequencer.setPanelRange(MinPanel, MaxPanel);
 
-    Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-    Sequencer.startSequence();    
+    parseCommand(":SE00");    // Close Panels
 }
 
 void MarcDuinoDomeSlave::run()
 {
     MarcDuinoDome::run();
+
+    // Holos
+    for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+        Holos[i]->run();
 
     // Servos. TODO: Double implementation, check BaseClass Idea for Dome MarcDuinos
     if (ServoBuzzIntervall != 0)
@@ -57,7 +68,21 @@ void MarcDuinoDomeSlave::run()
             }
             ServoBuzzMillis = millis();
         }
-    }    
+    } 
+
+    // Holos Timer 
+    // (moved to Holo-Run-Code)
+
+    // Magic Panel Timer
+    if (MagicPanelInterval != 0)
+    {
+        if ((millis() - MagicPanelMillis) > MagicPanelInterval)
+        {
+            MagicPanelCtrl(0); // 0 = off
+        }                               
+    }
+
+    // TODO: Holo Servos Buzz?
 }
 
 /*
@@ -196,54 +221,86 @@ void MarcDuinoDomeSlave::processHoloCommand(const char* command)
 
     if (strcmp(cmd, "RD")==0)       // Random Holo Movement
     {
+        // HoloMovementOn(param_num):
     }
     else if (strcmp(cmd, "ON")==0)  // Holo Lights on
     {
+        HolosOn(param_num);
     }    
     else if (strcmp(cmd, "OF")==0)  // Holo Lights off
     {
+        HolosOff(param_num);
     }    
     else if (strcmp(cmd, "RC")==0)  // Holo vertical movement under RC
     {
     }    
     else if (strcmp(cmd, "TE")==0)  // Holo Movement Test
     {
+        // HoloMovementTest(param_num):
     }    
     else if (strcmp(cmd, "ST")==0)  // Stop movement, lights off
     {
+        // HoloMovementOff(param_num):
+        HolosOff(param_num);
     }    
     else if (strcmp(cmd, "HD")==0)  // Stop movement, no light change
     {
+        // HoloMovementOff(param_num):
     }    
     else if (strcmp(cmd, "MO")==0)  // Magic Panel On
     {
+        MagicPanelCtrl(param_num);
     }    
     else if (strcmp(cmd, "MF")==0)  // Magic Panel Flicker
     {
+        MagicPanelInterval = 0;
+
+        if(param_num == 0)
+            Serial_Magic.print(F("T0\r"));
+        else
+        {
+            MagicPanelInterval = param_num * 1000;
+            MagicPanelMillis = millis();
+            Serial_Magic.print(F("T42\r"));
+        }
     }    
     else if (strcmp(cmd, "H0")==0)  // Holos On for xx seconds
     {
+        for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+        {
+            Holos[i]->on(param_num);
+        }
     }    
     else if (strcmp(cmd, "H1")==0)  // Holo1 On for xx seconds
     {
+        Holos[1]->on(param_num);
     }    
     else if (strcmp(cmd, "H2")==0)  // Holo2 On for xx seconds
     {
+        Holos[2]->on(param_num);
     }    
     else if (strcmp(cmd, "H3")==0)  // Holo3 On for xx seconds
     {
+        Holos[3]->on(param_num);
     }    
     else if (strcmp(cmd, "F0")==0)  // Holos Flicker for xx seconds
-    {
+    {        
+        for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+        {
+            Holos[i]->flickerOn(param_num);
+        }
     }    
     else if (strcmp(cmd, "F1")==0)  // Holo1 Flicker for xx seconds
     {
+        Holos[1]->flickerOn(param_num);
     }    
     else if (strcmp(cmd, "F2")==0)  // Holo2 Flicker for xx seconds
     {
+        Holos[2]->flickerOn(param_num);
     }    
     else if (strcmp(cmd, "F3")==0)  // Holo3 Flicker for xx seconds
     {
+        Holos[3]->flickerOn(param_num);
     }    
     else if (strcmp(cmd, "EO")==0)  // AUX1 on
     {
@@ -287,4 +344,49 @@ void MarcDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)
     #ifdef DEBUG_MSG
     Serial.printf(F("PlaySequenceAddons(Slave): %i\r\n"), SeqNr);
     #endif
+}
+
+
+void MarcDuinoDomeSlave::HolosOn(const byte HoloNr)
+{
+    if (HoloNr > (MAX_MARCDUINOHOLOS + 1)) // Parameter = 4
+        return;
+
+    if((HoloNr == 0) || (HoloNr == 4))  // All Holos
+    {
+        for(unsigned int i=1; i<= MAX_MARCDUINOHOLOS; i++)
+            Holos[i]->on();
+    }
+    else
+        Holos[HoloNr]->on();
+}
+
+void MarcDuinoDomeSlave::HolosOff(const byte HoloNr)
+{
+    if (HoloNr > (MAX_MARCDUINOHOLOS + 1))    // Parameter = 4
+        return;
+
+    if((HoloNr == 0) || (HoloNr == 4))  // All Holos
+    {
+        for(unsigned int i=1; i<= MAX_MARCDUINOHOLOS; i++)
+            Holos[i]->off();
+    }
+    else
+        Holos[HoloNr]->off();
+}
+
+void MarcDuinoDomeSlave::MagicPanelCtrl(const unsigned int param_num)
+{
+    MagicPanelInterval = 0;
+
+    if(param_num == 0)
+        Serial_Magic.print(F("T0\r"));   // OFF
+    else if (param_num == 99)
+        Serial_Magic.print(F("T1\r"));   // ON
+    else
+    {
+        MagicPanelInterval = param_num * 1000;
+        MagicPanelMillis = millis();
+        Serial_Magic.print(F("T1\r"));   // Timer
+    }
 }

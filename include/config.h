@@ -46,6 +46,7 @@
 
 #define MAX_MARCUDINOSERVOS 13
 #define MAX_SEQUENCE_COMPLETION_CALLBACKS 5
+#define MAX_MARCDUINOHOLOS  3
 
 // Panel Sequence Position. No PWM value any more! Don't touch here!
 #define _NP     0
@@ -85,7 +86,7 @@
 #define P_HPT_H     9
 #define P_FL        10
 #define P_RL        11
-#define P_TL
+#define P_TL        12
 #define P_SERVO_12  13
 #define P_SERVO_13  7
 #define I2C_DOME_SLAVE

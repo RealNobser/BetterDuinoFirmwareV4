@@ -10,9 +10,11 @@ class Panel
         Panel(VarSpeedServo& Servo, const int Pin, const int OpenPos, const int ClosedPos);
         void attach();
         void detach();
+
         void open(const int speed=0);
         void close(const int speed=0);
         void angle(const int angle, const int speed=0);
+        
         void setEndPositions(const int OpenPos, const int ClosedPos);
         void setOpenPos(const int Pos);
         void setClosedPos(const int Pos);

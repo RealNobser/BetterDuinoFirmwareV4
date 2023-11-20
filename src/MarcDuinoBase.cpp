@@ -443,6 +443,21 @@ void MarcDuinoBase::processSetupCommand(const char* command)
 
         Storage.setMaxSound(param_num, param_num_ext);
     }
+    else if (strcmp(cmd, "HL") == 0)
+    {
+        switch(param_num)
+        {
+            case 00:    // All Holos LOW Active
+                Storage.setHoloLightHighActive(0, false);
+            break;
+            case 01:    // All Holos HIGH Active
+                Storage.setHoloLightHighActive(0, true);
+            break;
+            default:
+                // TODO
+            break;
+        }
+    }
     else if (strcmp(cmd, "DM") == 0)             // Dump EEPROM
     {
         Storage.dumpToSerial(param_num);

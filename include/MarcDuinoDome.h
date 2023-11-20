@@ -4,6 +4,8 @@
 #include "MarcDuinoBase.h"
 #include "MarcDuinoSequencer.h"
 
+#include "Holo.h"
+
 class MarcDuinoDome : public MarcDuinoBase
 {
     public:
@@ -27,7 +29,8 @@ class MarcDuinoDome : public MarcDuinoBase
 
         unsigned int MaxSoundsPerBank[10];
 
-        void adjustPanelEndPositions(Panel* Panels[], unsigned int MinPanel, unsigned int MaxPanel);
+        void adjustHoloEndPositions(Holo* Holos[], const unsigned int MinHolo, const unsigned int MaxHolo);
+        void adjustPanelEndPositions(Panel* Panels[], const unsigned int MinPanel, const unsigned int MaxPanel);
 
         bool separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound);
         void getRandomSound(unsigned int & bank, unsigned int & sound);
