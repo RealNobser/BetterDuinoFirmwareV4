@@ -17,38 +17,10 @@ Holo::Holo(const int LightPin, const bool HighActive, VarSpeedServo& HServo, con
 
 void Holo::run()
 {
-    if (HoloIntervall != 0)
-    {
-        if ((millis() - HoloMillis) > HoloIntervall)
-        {
-            off();
-        }
-    }
-
-    if (HoloFlickerIntervall != 0)
-    {
-        if ((millis() - HoloFlickerMillis) > HoloFlickerIntervall)
-        {
-            flickerToggle();
-        }
-    }
-
-    if (HoloMoveIntervall != 0)
-    {
-        if ((millis() - HoloMoveMillis) > HoloMoveIntervall)
-        {
-            moveTrigger();
-        }
-    }
-
-    if (HoloTestIntervall != 0)
-    {
-        if ((millis() - HoloTestMillis) > HoloTestIntervall)
-        {
-            testTrigger();
-        }
-    }
-
+    checkTimer(HoloIntervall, HoloMillis, static_Off);
+    checkTimer(HoloFlickerIntervall, HoloFlickerMillis, static_flickerTrigger);
+    checkTimer(HoloMoveIntervall, HoloMoveMillis, static_moveTrigger);
+    checkTimer(HoloTestIntervall, HoloTestMillis, static_testTrigger);
 }
 
 void Holo::setHighActive(const bool HighActive /*= true*/)
@@ -96,14 +68,14 @@ void Holo::flickerOn(const unsigned long duration/* = 0*/)
 {
     HoloIntervall = duration*1000;
     HoloMillis = millis();
-    flickerToggle();
+    flickerTrigger();
 }
 
 void Holo::off()
 {
     digitalWrite(LightPin, LightStateOff);
 
-    LightOn                     = false;
+    LightOn                    = false;
     HoloIntervall              = 0;
     HoloFlickerIntervall       = 0;
 }
@@ -151,7 +123,7 @@ void Holo::setEndPositions(const int HMin, const int HMax, const int VMin, const
     VMaxPos = VMax;
 }
 
-void Holo::flickerToggle()
+void Holo::flickerTrigger()
 {
     // 3-10 off, 5-20 on
     if (LightOn)
@@ -233,10 +205,40 @@ void Holo::testTrigger()
     default:
         break;
     }
-    Serial.printf("%d %d %d\r\n", HPos, VPos, Speed);
     move(HPos, VPos, Speed);
     testStep++;
 
     if (testStep > 10)
         testStep = 0;
+}
+
+void Holo::checkTimer(const unsigned long intervall, const unsigned long milli, void (*func)(Holo*))
+{
+    if (intervall != 0)
+    {
+        if ((millis() - milli) > intervall)
+        {
+            func(this);
+        }
+    }
+}
+
+void Holo::static_Off(Holo* object)
+{
+    object->off();
+}
+
+void Holo::static_flickerTrigger(Holo* object)
+{
+    object->flickerTrigger();
+}
+
+void Holo::static_moveTrigger(Holo* object)
+{
+    object->moveTrigger();
+}
+
+void Holo::static_testTrigger(Holo* object)
+{
+    object->testTrigger();
 }

@@ -17,16 +17,20 @@ class Holo
         void on(const unsigned long duration = 0);
         void flickerOn(const unsigned long duration = 0);
         void off();
-        void move(const int HPos, const int VPos, const int speed = 0);
-        void randomMove(const bool moving=true);
 
-        void testTrigger();
+        void move(const int HPos, const int VPos, const int speed = 0);
+               
+        void randomMove(const bool moving=true);
 
         bool isOn() { return LightOn; }
 
         void setEndPositions(const int HMin, const int HMax, const int VMin, const int VMax);
 
         void run();
+
+        void flickerTrigger();
+        void moveTrigger();
+        void testTrigger();
 
     protected:
         int LightPin            = 0;
@@ -63,7 +67,11 @@ class Holo
         unsigned long HoloTestMillis      = 0;
         unsigned long HoloTestIntervall   = 0;
 
-        void flickerToggle();
-        void moveTrigger();
+        void checkTimer(const unsigned long intervall, const unsigned long milli, void (*func)(Holo*));
+
+        static void static_Off(Holo* object);
+        static void static_flickerTrigger(Holo* object);
+        static void static_moveTrigger(Holo* object);
+        static void static_testTrigger(Holo* object);
 };
 #endif

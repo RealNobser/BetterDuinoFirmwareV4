@@ -199,9 +199,11 @@ class MarcDuinoStorage
         MarcDuinoMP3PlayerType getMP3Player();
         void setMP3Player(const MarcDuinoMP3PlayerType Type);
 
+        /*
         byte getStartupSound();
         void setStartupSound(const byte SoundNr);
-
+        */
+       
         // NEW: store SoundNr directly without old mapping
         byte getStartupSoundNr();
         void setStartupSoundNr(const byte SoundNr);
@@ -255,7 +257,9 @@ class MarcDuinoStorage
         bool getAdjustmentMode();
         void setAdjustmentMode(const bool on);
 
+        #ifdef DEBUG_MSG
         void dumpToSerial(const byte Address);
+        #endif
 };
 
 #endif // __MARCDUINOSTORAGE_H__

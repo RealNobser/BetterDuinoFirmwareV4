@@ -243,7 +243,13 @@ void MarcDuinoDomeSlave::processHoloCommand(const char* command)
     else if (strcmp(cmd, "CH")==0)  // Center Holo
     {
         adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
-        HoloCenter(param_num);
+        if(param_num == 0)
+        {
+            for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+                HoloCenter(i);
+        }
+        else
+            HoloCenter(param_num);
     }    
    else if (strcmp(cmd, "ST")==0)  // Stop movement, lights off
     {

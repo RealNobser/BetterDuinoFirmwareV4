@@ -60,7 +60,7 @@ void MarcDuinoBase::checkEEPROM()
         #endif
         Storage.setType(MarcDuinoStorage::DomeMaster);
         Storage.setMP3Player(MarcDuinoStorage::MP3Trigger);
-        Storage.setStartupSound(1);
+        // Storage.setStartupSound(1);
         Storage.setStartupSoundNr(255);
         Storage.setChattyMode();
         Storage.setDisableRandomSound(0);
@@ -118,7 +118,9 @@ bool MarcDuinoBase::separateCommand(const char* command, char* cmd, unsigned int
 
     if (strlen(command) != 5)
     {
+        #ifdef DEBUG_MSG
         Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
+        #endif
         return false;
     }
     
@@ -247,7 +249,6 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         {
             return; // Invalid Command
         }
-
         param_num       = atoi(param);
         param_num_ext   = atoi(param_ext);
     }
@@ -255,24 +256,28 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     {
         memcpy(cmd, command+1, 2);
 
-        if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) && (strcmp(cmd, "SI") != 0) &&
+        if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) &&
             (strcmp(cmd, "HO") != 0) && (strcmp(cmd, "HC") != 0) &&
             (strcmp(cmd, "VO") != 0) && (strcmp(cmd, "VC") != 0) )
         {
+            #ifdef DEBUG_MSG
             Serial.println(F("Invalid Extended Command"));
+            #endif
+            
             return; // Invalid Command
         }
         else
         {
             memcpy(param, command+3, 2);
             memcpy(param_ext, command+5, 4);
-
-            param_num       = atoi(param);
-            param_num_ext   = atoi(param_ext);
-
-            // Serial.printf("cmd: %s, param_num: %d, param_num_ext: %d\r\n", cmd, param_num, param_num_ext);
         }
+        param_num       = atoi(param);
+        param_num_ext   = atoi(param_ext);
     }
+
+    #ifdef DEBUG_MSG
+    Serial.printf(F("cmd: %s, param_num: %d, param_num_ext: %d\r\n"), cmd, param_num, param_num_ext);
+    #endif
 
     if (strcmp(cmd, "SD") == 0)            // Servo Direction
     {
@@ -431,22 +436,19 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         {
             case 0:
                 Storage.setType(MarcDuinoStorage::DomeMaster);
-                delay(500);
-                resetFunc();
             break;
             case 1:
                 Storage.setType(MarcDuinoStorage::DomeSlave);
-                delay(500);
-                resetFunc();
             break;
             case 2:
                 Storage.setType(MarcDuinoStorage::BodyMaster);
-                delay(500);
-                resetFunc();
             break;
             default:
-            break;
+                return;
+            break;            
         }
+        delay(500);
+        resetFunc();
     }
     else if (strcmp(cmd, "MP") == 0)       // Set MarcDuinoMP3Player Type
     {
@@ -454,22 +456,19 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         {
             case 0:
                 Storage.setMP3Player(MarcDuinoStorage::MP3Trigger);
-                delay(500);
-                resetFunc();
             break;
             case 1:
                 Storage.setMP3Player(MarcDuinoStorage::DFPlayer);
-                delay(500);
-                resetFunc();
             break;
             case 2:
                 Storage.setMP3Player(MarcDuinoStorage::Vocalizer);
-                delay(500);
-                resetFunc();
             break;
             default:
+                return;
             break;
         }
+        delay(500);
+        resetFunc();
     }
     else if (strcmp(cmd, "MS") == 0)
     {
@@ -495,10 +494,12 @@ void MarcDuinoBase::processSetupCommand(const char* command)
             break;
         }
     }
+    #ifdef DEBUG_MSG
     else if (strcmp(cmd, "DM") == 0)             // Dump EEPROM
     {
         Storage.dumpToSerial(param_num);
     }
+    #endif
     else if (strcmp(cmd, "RS") == 0)             // Reboot MarcDuino
     {
         delay(500);
@@ -509,7 +510,13 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         Storage.setAdjustmentMode(param_num == 0x01);
     }
     else
+    {
+        #ifdef DEBUG_MSG
         Serial.print(F("NOT "));
+        #endif
+    }
 
+    #ifdef DEBUG_MSG
     Serial.printf(F("valid %s\r\n"), cmd);
+    #endif
 }

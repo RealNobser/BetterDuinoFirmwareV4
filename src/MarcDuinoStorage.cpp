@@ -51,7 +51,7 @@ void MarcDuinoStorage::setMP3Player(const MarcDuinoMP3PlayerType type)
     EEPROM.update(ADDR_MARCDUINOMP3PLAYER, type);
 }
 
-
+/*
 byte MarcDuinoStorage::getStartupSound()
 {
     uint8_t value = EEPROM.read(ADDR_STARTUPSOUND);
@@ -96,6 +96,7 @@ void MarcDuinoStorage::setStartupSound(const byte SoundNr)
         break;
     }
 }
+*/
 
 byte MarcDuinoStorage::getStartupSoundNr()
 {
@@ -336,6 +337,7 @@ void MarcDuinoStorage::setAdjustmentMode(const bool on)
         EEPROM.write(ADDR_ADJUSTMENT, 0x00);
 }
 
+#ifdef DEBUG_MSG
 void MarcDuinoStorage::dumpToSerial(const byte Address)
 {
     Serial.printf(F("%04X: %02X\r\n"), Address, EEPROM.read(Address));
@@ -348,3 +350,4 @@ void MarcDuinoStorage::dumpToSerial(const byte Address)
     }
     */
 }
+#endif

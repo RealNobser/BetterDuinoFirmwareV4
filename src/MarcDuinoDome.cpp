@@ -118,7 +118,9 @@ bool MarcDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigne
     //if ((strlen(command) != 4) && (strlen(command) != 2))
     if ((strlen(command) <2) || (strlen(command) >4))
     {
-        // Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
+        #ifdef DEBUG_MSG
+        Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
+        #endif
         return false;
     }
     
