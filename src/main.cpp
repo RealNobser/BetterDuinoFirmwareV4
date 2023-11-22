@@ -43,6 +43,9 @@ void setup() {
   MarcDuinoStorage::MarcDuinoType type;
 
   type = Storage.getType();
+  MarcDuino = new MarcDuinoDomeSlave(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+
+  /*
   switch (type)
   {
     case MarcDuinoStorage::DomeMaster:
@@ -50,11 +53,10 @@ void setup() {
       break;
     case MarcDuinoStorage::DomeSlave:
       MarcDuino = new MarcDuinoDomeSlave(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
-      break;
-    /*
+      break;    
     case MarcDuinoStorage::BodyMaster:
       MarcDuino = new MarcDuinoBodyMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
-      break;*/
+      break;
     case MarcDuinoStorage::UnknownMarcDuino:
       MarcDuino = new MarcDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
       Storage.setType(MarcDuinoStorage::DomeMaster);
@@ -64,7 +66,7 @@ void setup() {
       Storage.setType(MarcDuinoStorage::DomeMaster);    
       break;
   }
-
+  */
   MarcDuino->init();
 
   Serial.printf(F("%s\r\nVersion %s\r\n\r\n"), MarcDuino->getProductName(), VERSION);

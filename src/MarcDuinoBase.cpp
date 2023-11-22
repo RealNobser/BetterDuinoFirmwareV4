@@ -84,12 +84,17 @@ void MarcDuinoBase::checkEEPROM()
 
         for (int i=0; i <= MAX_MARCUDINOSERVOS; i++)
         {
-            Storage.setServoDirection(i, 0);        // Direction normal, Global Setting plus each individual
-            Storage.setServoSpeed(i, 255);          // Full Speed, Global Setting plus each individual
-            Storage.setServoOpenPos(i, PANEL_OPN);  // see config.h, original MarcDuino Default Values
-            Storage.setServoClosedPos(i, PANEL_CLS);// see config.h, original MarcDuino Default Values
-            Storage.setServoMidPos(i, PANEL_MID);   // see config.h, original MarcDuino Default Values
+            Storage.setServoDirection(i, 0);                    // Direction normal, Global Setting plus each individual
+            Storage.setServoSpeed(i, 255);                      // Full Speed, Global Setting plus each individual
+            Storage.setServoPositions(i, PANEL_OPN, PANEL_CLS); // see config.h, original MarcDuino Default Values
         }
+        for (int i=0; i <= MAX_MARCDUINOHOLOS; i++)
+        {
+            Storage.setHoloDirection(i, 0, 0);
+            Storage.setHoloPositions(i, HOLO_MIN, HOLO_MAX, HOLO_MIN, HOLO_MAX);
+            Storage.setHoloLightHighActive(i, true);
+        }
+
         Storage.setConfigVersion(CONFIG_VERSION);   // Final step before restart
         delay(500);
         resetFunc();
@@ -119,10 +124,6 @@ bool MarcDuinoBase::separateCommand(const char* command, char* cmd, unsigned int
     
     memcpy(cmd, command+1, 2);
     memcpy(param, command+3, 2);
-
-    #ifdef DEBUG_MSG
-    Serial.printf(F("Cmd: %s, Param: %s\r\n"), cmd, param);
-    #endif
 
     param_num = atoi(param);    
 
@@ -204,18 +205,22 @@ void MarcDuinoBase::processSetupCommand(const char* command)
 {
     char cmd[3];
     char param[4];
-    char param_ext[4];
+    char param_ext[5];
 
     unsigned int param_num      = 0;
     unsigned int param_num_ext  = 0;
 
+    word OpenPos    = 0;
+    word ClosedPos  = 0;
+
+    word HMinPos    = 0;
+    word HMaxPos    = 0;
+    word VMinPos    = 0;
+    word VMaxPos    = 0;
+
     memset(cmd, 0x00, 3);
     memset(param, 0x00, 4);
-    memset(param_ext, 0x00, 4);
-
-    #ifdef DEBUG_MSG
-    Serial.printf(F("SetupCommand(Base): %s\r\n"), command);
-    #endif
+    memset(param_ext, 0x00, 5);
 
     // Command Parsing
 
@@ -246,11 +251,13 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         param_num       = atoi(param);
         param_num_ext   = atoi(param_ext);
     }
-    else if (strlen(command) == 9)   // #SOxxyyyy, #SCxxyyyy and #SPxxyyyy
+    else if (strlen(command) == 9)   // #SOxxyyyy, #SCxxyyyy / #HOxxyyyy, #HCxxyyyy / #VOxxyyyy, #VCxxyyyy
     {
         memcpy(cmd, command+1, 2);
 
-        if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) && (strcmp(cmd, "SI") != 0))
+        if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) && (strcmp(cmd, "SI") != 0) &&
+            (strcmp(cmd, "HO") != 0) && (strcmp(cmd, "HC") != 0) &&
+            (strcmp(cmd, "VO") != 0) && (strcmp(cmd, "VC") != 0) )
         {
             Serial.println(F("Invalid Extended Command"));
             return; // Invalid Command
@@ -262,12 +269,10 @@ void MarcDuinoBase::processSetupCommand(const char* command)
 
             param_num       = atoi(param);
             param_num_ext   = atoi(param_ext);
+
+            // Serial.printf("cmd: %s, param_num: %d, param_num_ext: %d\r\n", cmd, param_num, param_num_ext);
         }
     }
-
-    #ifdef DEBUG_MSG
-    Serial.printf(F("Cmd: %s, Param: %i, Param Ext: %i\r\n"), cmd, param_num, param_num_ext);
-    #endif        
 
     if (strcmp(cmd, "SD") == 0)            // Servo Direction
     {
@@ -287,13 +292,14 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "SO") == 0)       // Set Servo Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
+        Storage.getServoPositions(param_num, OpenPos, ClosedPos);
+
         if (Storage.getServoDirection(param_num) == 0x01)
-        {
-            Storage.setServoClosedPos(param_num, param_num_ext);
-            Serial.println("#SO: R-Servo");
-        }
+            ClosedPos = param_num_ext;
         else
-            Storage.setServoOpenPos(param_num, param_num_ext);
+            OpenPos = param_num_ext;
+
+        Storage.setServoPositions(param_num, OpenPos, ClosedPos);
 
         if (Storage.getAdjustmentMode())
         {
@@ -306,13 +312,14 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "SC") == 0)       // Set Servo Degrees/Microseconds for Panel Close,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
+        Storage.getServoPositions(param_num, OpenPos, ClosedPos);
+
         if (Storage.getServoDirection(param_num) == 0x01)
-        {
-            Storage.setServoOpenPos(param_num, param_num_ext);
-            Serial.println("#SC: R-Servo");
-        }
+            OpenPos = param_num_ext;
         else
-            Storage.setServoClosedPos(param_num, param_num_ext);
+            ClosedPos = param_num_ext;
+
+        Storage.setServoPositions(param_num, OpenPos, ClosedPos);
 
         if (Storage.getAdjustmentMode())
         {
@@ -325,7 +332,37 @@ void MarcDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "SP") == 0)       // Set Servo Degrees/Microseconds for Panel Mid,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
-        Storage.setServoMidPos(param_num, param_num_ext);
+        Storage.setServoSpeed(param_num, param_num_ext);
+    }
+    else if (strcmp(cmd, "HO") == 0)       // Set Holo HServo Degrees/Microseconds Max Pos,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+    {
+        Storage.getHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
+        HMaxPos = param_num_ext;
+        Storage.setHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
+    }    
+    else if (strcmp(cmd, "HC") == 0)       // Set Holo HServo Degrees/Microseconds Min Pos,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+    {
+        Storage.getHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
+        HMinPos = param_num_ext;
+        Storage.setHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
+    }    
+    else if (strcmp(cmd, "HP") == 0)       // Set Holo HServo Speed (0-255)
+    {
+    }    
+    else if (strcmp(cmd, "VO") == 0)       // Set Holo VServo Degrees/Microseconds Max Pos,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+    {
+        Storage.getHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
+        VMaxPos = param_num_ext;
+        Storage.setHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
+    }    
+    else if (strcmp(cmd, "VC") == 0)       // Set Holo VServo Degrees/Microseconds Min Pos,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+    {
+        Storage.getHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
+        VMinPos = param_num_ext;
+        Storage.setHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
+    }    
+    else if (strcmp(cmd, "VP") == 0)       // Set Holo VServo Speed (0-255)
+    {
     }
     else if (strcmp(cmd, "SS") == 0)       // Sound Control
     {

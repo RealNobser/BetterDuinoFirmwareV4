@@ -212,6 +212,7 @@ void MarcDuinoDomeSlave::processHoloCommand(const char* command)
     unsigned int param_num = 0;
 
     memset(cmd, 0x00, 3);
+    
     #ifdef DEBUG_MSG
     Serial.printf(F("HoloCommand(Slave): %s\r\n"), command);
     #endif
@@ -221,7 +222,7 @@ void MarcDuinoDomeSlave::processHoloCommand(const char* command)
 
     if (strcmp(cmd, "RD")==0)       // Random Holo Movement
     {
-        // HoloMovementOn(param_num):
+        HoloMovementCtrl(param_num, true);
     }
     else if (strcmp(cmd, "ON")==0)  // Holo Lights on
     {
@@ -236,16 +237,22 @@ void MarcDuinoDomeSlave::processHoloCommand(const char* command)
     }    
     else if (strcmp(cmd, "TE")==0)  // Holo Movement Test
     {
-        // HoloMovementTest(param_num):
+        adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
+        Holos[param_num]->testTrigger();
     }    
-    else if (strcmp(cmd, "ST")==0)  // Stop movement, lights off
+    else if (strcmp(cmd, "CH")==0)  // Center Holo
     {
-        // HoloMovementOff(param_num):
+        adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
+        HoloCenter(param_num);
+    }    
+   else if (strcmp(cmd, "ST")==0)  // Stop movement, lights off
+    {
+        HoloMovementCtrl(param_num, false);
         HolosOff(param_num);
     }    
     else if (strcmp(cmd, "HD")==0)  // Stop movement, no light change
     {
-        // HoloMovementOff(param_num):
+        HoloMovementCtrl(param_num, false);
     }    
     else if (strcmp(cmd, "MO")==0)  // Magic Panel On
     {
@@ -375,6 +382,21 @@ void MarcDuinoDomeSlave::HolosOff(const byte HoloNr)
         Holos[HoloNr]->off();
 }
 
+void MarcDuinoDomeSlave::HoloCenter(const byte HoloNr)
+{
+    word HMin, HMax, VMin, VMax, HCenter, VCenter = 0;
+
+    if (HoloNr > MAX_MARCDUINOHOLOS)
+        return;
+    
+    Storage.getHoloPositions(HoloNr, HMin, HMax, VMin, VMax);
+
+    HCenter = abs(HMax-HMin)/2+HMin;
+    VCenter = abs(VMax-VMin)/2+VMin;
+
+    Holos[HoloNr]->move(HCenter, VCenter);
+}
+
 void MarcDuinoDomeSlave::MagicPanelCtrl(const unsigned int param_num)
 {
     MagicPanelInterval = 0;
@@ -389,4 +411,15 @@ void MarcDuinoDomeSlave::MagicPanelCtrl(const unsigned int param_num)
         MagicPanelMillis = millis();
         Serial_Magic.print(F("T1\r"));   // Timer
     }
+}
+
+void MarcDuinoDomeSlave::HoloMovementCtrl(const unsigned int param_num, const bool moving)
+{
+    if ((param_num == 0) || (param_num >3))
+    {
+        for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+            Holos[i]->randomMove(moving);
+    }
+    else
+        Holos[param_num]->randomMove(moving);
 }

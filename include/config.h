@@ -20,9 +20,12 @@
 #define MAX_BANK_SOUND  25
 
 // Original Marcduino Default Values
-#define PANEL_OPN 1000 // Open
-#define PANEL_MID 1750 // Mid Open
-#define PANEL_CLS 2000 // Closed
+#define PANEL_OPN   1000 // Open
+#define PANEL_MID   1750 // Mid Open
+#define PANEL_CLS   2000 // Closed
+
+#define HOLO_MIN    1000
+#define HOLO_MAX    2000
 
 #define SERVO_SPEED_FULL        0
 #define SERVO_SPEED_FAST        255
@@ -104,9 +107,5 @@
 #define P_CHRG_BAY_DR    13
 #define P_RFU            7
 #define I2C_BODY_MASTER
-
-
-// #define P_MP3            15  // Same as above
-// #define P_SLAVE          14  // Same as above
 
 #endif // __CONFIG_H__

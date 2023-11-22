@@ -45,10 +45,17 @@ void MarcDuinoDome::run()
 
 void MarcDuinoDome::adjustHoloEndPositions(Holo* Holos[], const unsigned int MinHolo, const unsigned int MaxHolo)
 {
-    word MinHValue   = 0;
-    word MaxHValue   = 0;
-    word MinVValue   = 0;
-    word MaxVValue   = 0;
+    word HMin          = 0;
+    word HMax          = 0;
+    word VMin          = 0;
+    word VMax          = 0;
+    /*
+    byte GlobalHDirection   = 0;
+    byte GlobalVDirection   = 0;
+    byte ServoHDirection    = 0;
+    byte ServoVDirection    = 0;
+    */
+
     unsigned int Index  = 0;
 
     for (unsigned int i=MinHolo; i<= MaxHolo; i++)
@@ -58,21 +65,25 @@ void MarcDuinoDome::adjustHoloEndPositions(Holo* Holos[], const unsigned int Min
         else
             Index = 0;
 
-        MinHValue = Storage.getHoloHMinPos(Index);
-        MaxHValue = Storage.getHoloHMaxPos(Index);
-        MinVValue = Storage.getHoloVMinPos(Index);
-        MaxVValue = Storage.getHoloVMaxPos(Index);
+        Storage.getHoloPositions(Index, HMin, HMax, VMin, VMax);
+        Holos[i]->setEndPositions(HMin, HMax, VMin, VMax);
 
         // Set Direction
-        if ((Storage.getHoloHDirection(0) == 1) || (Storage.getHoloHDirection(i) == 1)) // Reverse Servo
+        // erstmal ohne Drehung
+        /*
+        Storage.getHoloDirection(0, GlobalHDirection, GlobalVDirection);
+        Storage.getHoloDirection(i, ServoHDirection, ServoVDirection);
+
+        if ((GlobalHDirection == 1) || (ServoHDirection == 1)) // Reverse Servo
             Holos[i]->setHorizontalEndPositions(MaxHValue, MinHValue);
         else    // Normal
             Holos[i]->setHorizontalEndPositions(MinHValue, MaxHValue);
 
-        if ((Storage.getHoloVDirection(0) == 1) || (Storage.getHoloVDirection(i) == 1)) // Reverse Servo
+        if ((GlobalVDirection == 1) || (ServoVDirection == 1)) // Reverse Servo
             Holos[i]->setVerticalEndPositions(MaxVValue, MinVValue);
         else    // Normal
             Holos[i]->setVerticalEndPositions(MinVValue, MaxVValue);
+        */
     }
 }
 
@@ -91,15 +102,10 @@ void MarcDuinoDome::adjustPanelEndPositions(Panel* Panels[], const unsigned int 
 
         // Set Direction
         if ((Storage.getServoDirection(0) == 1) || (Storage.getServoDirection(i) == 1)) // Reverse Servo
-        {
-            OpenPos     = Storage.getServoClosedPos(Index);
-            ClosedPos   = Storage.getServoOpenPos(Index);
-        }
+            Storage.getServoPositions(Index, ClosedPos, OpenPos);
         else    // Normal
-        {
-            OpenPos     = Storage.getServoOpenPos(Index);
-            ClosedPos   = Storage.getServoClosedPos(Index);
-        }
+            Storage.getServoPositions(Index, OpenPos, ClosedPos);
+
         Panels[i]->setEndPositions(OpenPos, ClosedPos);
     }
 }
@@ -112,7 +118,7 @@ bool MarcDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigne
     //if ((strlen(command) != 4) && (strlen(command) != 2))
     if ((strlen(command) <2) || (strlen(command) >4))
     {
-        Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
+        // Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
         return false;
     }
     

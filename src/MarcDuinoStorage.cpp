@@ -193,6 +193,9 @@ byte MarcDuinoStorage::getIndividualSettings()
     return EEPROM.read(ADDR_INDIVIDUALS);
 }
 
+//
+// Panels / Servos
+// 
 byte MarcDuinoStorage::getServoDirection(const byte ServoNr)
 {
     if (ServoNr > MAX_MARCUDINOSERVOS)
@@ -219,174 +222,95 @@ void MarcDuinoStorage::setServoSpeed(const byte ServoNr, const byte Speed)
     EEPROM.update(ADDR_SERVOSPEEDBASE+ServoNr, Speed);
 }
 
-word MarcDuinoStorage::getServoOpenPos(const byte ServoNr)
-{
-    word value = 0;
-    if (ServoNr > MAX_MARCUDINOSERVOS)
-        return value;
-    EEPROM.get(ADDR_SERVOOPENBASE+(ServoNr*2), value);
-    return value;
-}
-void MarcDuinoStorage::setServoOpenPos(const byte ServoNr, const word Position)
+void MarcDuinoStorage::getServoPositions(const byte ServoNr, word & OpenPosition, word & ClosedPosition)
 {
     if (ServoNr > MAX_MARCUDINOSERVOS)
         return;
 
-    EEPROM.put(ADDR_SERVOOPENBASE+(ServoNr*2), Position);
+    EEPROM.get(ADDR_SERVOOPENBASE+(ServoNr*2), OpenPosition);
+    EEPROM.get(ADDR_SERVOCLOSEDBASE+(ServoNr*2), ClosedPosition);
 }
-
-word MarcDuinoStorage::getServoClosedPos(const byte ServoNr)
-{
-    word value = 0;
-    if (ServoNr > MAX_MARCUDINOSERVOS)
-        return value;
-    EEPROM.get(ADDR_SERVOCLOSEDBASE+(ServoNr*2), value);
-    return value;
-}
-void MarcDuinoStorage::setServoClosedPos(const byte ServoNr, const word Position)
+void MarcDuinoStorage::setServoPositions(const byte ServoNr, const word OpenPosition, const word ClosedPosition)
 {
     if (ServoNr > MAX_MARCUDINOSERVOS)
         return;
 
-    EEPROM.put(ADDR_SERVOCLOSEDBASE+(ServoNr*2), Position);
+    EEPROM.put(ADDR_SERVOOPENBASE+(ServoNr*2), OpenPosition);
+    EEPROM.put(ADDR_SERVOCLOSEDBASE+(ServoNr*2), ClosedPosition);
 }
 
-word MarcDuinoStorage::getServoMidPos(const byte ServoNr)
-{
-    word value = 0;
-    if (ServoNr > MAX_MARCUDINOSERVOS)
-        return value;
-    EEPROM.get(ADDR_SERVOMIDBASE+(ServoNr*2), value);
-    return value;
-}
-void MarcDuinoStorage::setServoMidPos(const byte ServoNr, const word Position)
-{
-    if (ServoNr > MAX_MARCUDINOSERVOS)
-        return;
-
-    EEPROM.put(ADDR_SERVOMIDBASE+(ServoNr*2), Position);
-}
-
-
-
-byte MarcDuinoStorage::getHoloHDirection(const byte HoloNr)
-{
-    if (HoloNr > MAX_MARCDUINOHOLOS)
-        return 0;
-
-    return EEPROM.read(ADDR_HOLODIRBASE+(HoloNr*2));        
-
-}
-void MarcDuinoStorage::setHoloHDirection(const byte HoloNr, const byte Direction)
+//
+// Holos / Servos
+//
+void MarcDuinoStorage::getHoloDirection(const byte HoloNr, byte & HDirection, byte & VDirection)
 {
     if (HoloNr > MAX_MARCDUINOHOLOS)
         return;
 
-    EEPROM.update(ADDR_HOLODIRBASE+(HoloNr*2), Direction);
+    EEPROM.get(ADDR_HOLODIRBASE+(HoloNr*2), HDirection);
+    EEPROM.get(ADDR_HOLODIRBASE+1+(HoloNr*2), VDirection);
 }
-
-byte MarcDuinoStorage::getHoloVDirection(const byte HoloNr)
-{
-    if (HoloNr > MAX_MARCDUINOHOLOS)
-        return 0;
-
-    return EEPROM.read((ADDR_HOLODIRBASE+1)+(HoloNr*2));        
-}
-void MarcDuinoStorage::setHoloVDirection(const byte HoloNr, const byte Direction)
+void MarcDuinoStorage::setHoloDirection(const byte HoloNr, const byte HDirection, const byte VDirection)
 {
     if (HoloNr > MAX_MARCDUINOHOLOS)
         return;
 
-    EEPROM.update((ADDR_HOLODIRBASE+1)+(HoloNr*2), Direction);
+    EEPROM.put(ADDR_HOLODIRBASE+(HoloNr*2), HDirection);
+    EEPROM.put(ADDR_HOLODIRBASE+1+(HoloNr*2), VDirection);
 }
 
-word MarcDuinoStorage::getHoloHMinPos(const byte HoloNr)
-{
-    word value = 0;
-
-    if (HoloNr > MAX_MARCDUINOHOLOS)
-        return value;
-
-    EEPROM.get(ADDR_HOLOMINBASE+(HoloNr*2), value);
-
-    return value;
-
-}
-void MarcDuinoStorage::setHoloHMinPos(const byte HoloNr, const word Position)
+void MarcDuinoStorage::getHoloServoSpeed(const byte HoloNr, byte & HSpeed, byte & VSpeed)
 {
     if (HoloNr > MAX_MARCDUINOHOLOS)
         return;
 
-    EEPROM.put(ADDR_HOLOMINBASE+(HoloNr*2), Position);
+    EEPROM.get(ADDR_HOLOSPEEDBASE+(HoloNr*2), HSpeed);
+    EEPROM.get(ADDR_HOLOSPEEDBASE+1+(HoloNr*2), VSpeed);
 }
-
-word MarcDuinoStorage::getHoloHMaxPos(const byte HoloNr)
-{
-    word value = 0;
-
-    if (HoloNr > MAX_MARCDUINOHOLOS)
-        return value;
-
-    EEPROM.get(ADDR_HOLOMAXBASE+(HoloNr*2), value);
-
-    return value;  
-}
-void MarcDuinoStorage::setHoloHMaxPos(const byte HoloNr, const word Position)
+void MarcDuinoStorage::setHoloServoSpeed(const byte HoloNr, const byte HSpeed, const byte VSpeed)
 {
     if (HoloNr > MAX_MARCDUINOHOLOS)
         return;
 
-    EEPROM.put(ADDR_HOLOMAXBASE+(HoloNr*2), Position);
+    EEPROM.put(ADDR_HOLOSPEEDBASE+(HoloNr*2), HSpeed);
+    EEPROM.put(ADDR_HOLOSPEEDBASE+1+(HoloNr*2), VSpeed);
 }
 
-word MarcDuinoStorage::getHoloVMinPos(const byte HoloNr)
-{
-    word value = 0;
-
-    if (HoloNr > MAX_MARCDUINOHOLOS)
-        return value;
-
-    EEPROM.get((ADDR_HOLOMINBASE+1)+(HoloNr*2), value);
-
-    return value;
-}
-void MarcDuinoStorage::setHoloVMinPos(const byte HoloNr, const word Position)
+void MarcDuinoStorage::getHoloPositions(const byte HoloNr, word & HMin, word & HMax, word & VMin, word & VMax)
 {
     if (HoloNr > MAX_MARCDUINOHOLOS)
         return;
 
-    EEPROM.put((ADDR_HOLOMINBASE+1)+(HoloNr*2), Position);
+    EEPROM.get(ADDR_HOLOMINBASE+(HoloNr*4), HMin);
+    EEPROM.get(ADDR_HOLOMINBASE+2+(HoloNr*4), VMin);
+    EEPROM.get(ADDR_HOLOMAXBASE+(HoloNr*4), HMax);
+    EEPROM.get(ADDR_HOLOMAXBASE+2+(HoloNr*4), VMax);
 }
-
-word MarcDuinoStorage::getHoloVMaxPos(const byte HoloNr)
-{
-    word value = 0;
-
-    if (HoloNr > MAX_MARCDUINOHOLOS)
-        return value;
-
-    EEPROM.get((ADDR_HOLOMAXBASE+1)+(HoloNr*2), value);
-
-    return value;
-}
-void MarcDuinoStorage::setHoloVMaxPos(const byte HoloNr, const word Position)
+void MarcDuinoStorage::setHoloPositions(const byte HoloNr, const word HMin, const word HMax, const word VMin, const word VMax)
 {
     if (HoloNr > MAX_MARCDUINOHOLOS)
         return;
 
-    EEPROM.put((ADDR_HOLOMAXBASE+1)+(HoloNr*2), Position);
+    EEPROM.put(ADDR_HOLOMINBASE+(HoloNr*4), HMin);
+    EEPROM.put(ADDR_HOLOMINBASE+2+(HoloNr*4), VMin);
+    EEPROM.put(ADDR_HOLOMAXBASE+(HoloNr*4), HMax);
+    EEPROM.put(ADDR_HOLOMAXBASE+2+(HoloNr*4), VMax);
 }
 
 bool MarcDuinoStorage::getHoloLightHighActive(const byte HoloNr)
 {
     bool HighActive = true;
+
+    if (HoloNr > MAX_MARCDUINOHOLOS)
+        return HighActive;
+
     EEPROM.get(ADDR_HOLOLIGHTBASE+HoloNr, HighActive);
     return HighActive;
 }
 
 void MarcDuinoStorage::setHoloLightHighActive(const byte HoloNr, const bool HighActive)
 {
-    if (HoloNr > 3)
+    if (HoloNr > MAX_MARCDUINOHOLOS)
         return;
         
     if (HoloNr == 0)
@@ -398,7 +322,6 @@ void MarcDuinoStorage::setHoloLightHighActive(const byte HoloNr, const bool High
     else
         EEPROM.put(ADDR_HOLOLIGHTBASE+HoloNr, HighActive);
 }
-
 
 bool MarcDuinoStorage::getAdjustmentMode()
 {

@@ -17,21 +17,38 @@ Holo::Holo(const int LightPin, const bool HighActive, VarSpeedServo& HServo, con
 
 void Holo::run()
 {
-    if (HolosIntervall != 0)
+    if (HoloIntervall != 0)
     {
-        if ((millis() - HolosMillis) > HolosIntervall)
+        if ((millis() - HoloMillis) > HoloIntervall)
         {
             off();
         }
     }
 
-    if (HolosFlickerIntervall != 0)
+    if (HoloFlickerIntervall != 0)
     {
-        if ((millis() - HolosFlickerMillis) > HolosFlickerIntervall)
+        if ((millis() - HoloFlickerMillis) > HoloFlickerIntervall)
         {
             flickerToggle();
         }
     }
+
+    if (HoloMoveIntervall != 0)
+    {
+        if ((millis() - HoloMoveMillis) > HoloMoveIntervall)
+        {
+            moveTrigger();
+        }
+    }
+
+    if (HoloTestIntervall != 0)
+    {
+        if ((millis() - HoloTestMillis) > HoloTestIntervall)
+        {
+            testTrigger();
+        }
+    }
+
 }
 
 void Holo::setHighActive(const bool HighActive /*= true*/)
@@ -71,14 +88,14 @@ void Holo::on(const unsigned long duration/* = 0*/)
     digitalWrite(LightPin, LightStateOn);
     LightOn = true;
 
-    HolosIntervall  = duration*1000;
-    HolosMillis     = millis();
+    HoloIntervall  = duration*1000;
+    HoloMillis     = millis();
 }
 
 void Holo::flickerOn(const unsigned long duration/* = 0*/)
 {
-    HolosIntervall = duration*1000;
-    HolosMillis = millis();
+    HoloIntervall = duration*1000;
+    HoloMillis = millis();
     flickerToggle();
 }
 
@@ -87,8 +104,8 @@ void Holo::off()
     digitalWrite(LightPin, LightStateOff);
 
     LightOn                     = false;
-    HolosIntervall              = 0;
-    HolosFlickerIntervall       = 0;
+    HoloIntervall              = 0;
+    HoloFlickerIntervall       = 0;
 }
 
 void Holo::move(const int HPos, const int VPos, const int speed /*=0*/)
@@ -112,17 +129,26 @@ void Holo::move(const int HPos, const int VPos, const int speed /*=0*/)
     VServo.write(VPos, speed);
 }
 
-
-void Holo::setHorizontalEndPositions(const int MinPos, const int MaxPos)
+void Holo::randomMove(const bool moving /*=true*/)
 {
-    HMinPos = MinPos;
-    HMaxPos = MaxPos;
+    HoloMoveIntervall = 0;
+    HoloTestIntervall = 0;
+    
+    if (!moving)
+    {
+        HServo.detach();
+        VServo.detach();
+        return;
+    }
+    moveTrigger();
 }
 
-void Holo::setVerticalEndPositions(const int MinPos, const int MaxPos)
+void Holo::setEndPositions(const int HMin, const int HMax, const int VMin, const int VMax)
 {
-    VMinPos = MinPos;
-    VMaxPos = MaxPos;
+    HMinPos = HMin;
+    HMaxPos = HMax;
+    VMinPos = VMin;
+    VMaxPos = VMax;
 }
 
 void Holo::flickerToggle()
@@ -130,15 +156,87 @@ void Holo::flickerToggle()
     // 3-10 off, 5-20 on
     if (LightOn)
     {
-        HolosFlickerIntervall = random(30,100);
+        HoloFlickerIntervall = random(30,100);
         digitalWrite(LightPin, LightStateOff);
         LightOn = false;
     }
     else
     {
-        HolosFlickerIntervall = random(50,200);
+        HoloFlickerIntervall = random(50,200);
         digitalWrite(LightPin, LightStateOn);
         LightOn = true;
     }
-    HolosFlickerMillis = millis();
+    HoloFlickerMillis = millis();
+}
+
+void Holo::moveTrigger()
+{
+    int HPos = 0;
+    int VPos = 0;
+    int Speed = 0;
+
+    HPos = random(HMinPos, HMaxPos);
+    VPos = random(VMinPos, VMaxPos);
+    Speed= random(0,255);
+    
+    move(HPos, VPos, Speed);
+
+    HoloMoveIntervall   = random(200, 2000);
+    HoloMoveMillis      = millis();
+}
+
+void Holo::testTrigger()
+{
+    int HPos    = 0;
+    int VPos    = 0;
+    int Speed   = 0;
+
+    // Center
+    HPos = (HMaxPos-HMinPos)/2 + HMinPos;
+    VPos = (VMaxPos-VMinPos)/2 + VMinPos;
+
+    HoloTestMillis      = millis();
+    HoloTestIntervall   = 1000;
+
+    switch (testStep)
+    {
+    case 0: // Center
+        break;
+    case 1: // HMin
+        HPos = HMinPos;
+        break;
+    case 2: // HMax
+        HPos = HMaxPos;
+        break;
+    case 3: // VMin
+        VPos = VMinPos;
+        break;
+    case 4: // VMax
+        VPos = VMaxPos;
+        break;
+    case 5: // VMax
+        HPos = HMinPos;
+        VPos = VMinPos;
+        break;
+    case 6: // VMax
+        HPos = HMaxPos;
+        VPos = VMinPos;
+        break;
+    case 7: // VMax
+        HPos = HMinPos;
+        VPos = VMaxPos;
+        break;
+    case 8: // VMax
+        HPos = HMaxPos;
+        VPos = VMaxPos;
+        break;
+    default:
+        break;
+    }
+    Serial.printf("%d %d %d\r\n", HPos, VPos, Speed);
+    move(HPos, VPos, Speed);
+    testStep++;
+
+    if (testStep > 10)
+        testStep = 0;
 }

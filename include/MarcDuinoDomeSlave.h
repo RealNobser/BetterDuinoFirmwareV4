@@ -114,8 +114,10 @@ class MarcDuinoDomeSlave : public MarcDuinoDome
         void HolosOn(const byte HoloNr);
         void HolosOff(const byte HoloNr);
 
-        void MagicPanelCtrl(const unsigned int param_num);
+        void HoloCenter(const byte HoloNr);
 
+        void MagicPanelCtrl(const unsigned int param_num);
+        void HoloMovementCtrl(const unsigned int param_num, const bool moving);
 };
 
 #endif // __MARCDUINODOMESLAVE_H__
