@@ -39,13 +39,14 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 * Visual Studio Code: https://code.visualstudio.com/download
 * PlatformIO Extension: https://platformio.org/install/ide?install=vscode
 ### Building firmware
-- Clone the GitHub repository using Visual Studio Code
+- Clone the GitHub repository using Visual Studio Code (Source Control / Clone Repository)
 - Open local folder
 - Edit the file "platformio.ini" to match the serial port of your programmer:
-`upload_port = /dev/cu.usbmodem141201`
+`upload_port = /dev/cu.usbmodem141201` (example)
+- build the code (PlatformIO / ATmega328P / Gen
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMjM0OTk5MjEsLTEwNjQ0NTE0NzQsNT
+eyJoaXN0b3J5IjpbLTEyMjkzMjI3NTcsLTEwNjQ0NTE0NzQsNT
 g2MzgwODI5LC0xODcwNzMwNTA3LC0yMTMzODAzNjkyLDcyMDA0
 MDk5NCwtMjE5NzM5MjE4XX0=
 -->
