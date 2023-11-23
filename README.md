@@ -40,6 +40,9 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 * PlatformIO Extension: https://platformio.org/install/ide?install=vscode
 ### Building firmware
 - clone the github repository
+![enter image description here](https://photos.google.com/share/AF1QipOTZtSUDT5yCtmzAmR6BvQUVw3jLklmMTIwhaC8DXlRI34lWpt2rYFC4HsUSnnvoA/photo/AF1QipNZe_wooEMTyGUPdRv1C910t-aAkdDj6UuWcvF6?key=NlZZNG1tVHl1ZXVBWENZVy1KSUZyN3VzaUtFeHlB)
+
+
 - open local folder
 - 
 
@@ -47,7 +50,7 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC0xOD
-cwNzMwNTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5
-MjE4XX0=
+eyJoaXN0b3J5IjpbMTc2MjI1NDgxNCwtMTA2NDQ1MTQ3NCw1OD
+YzODA4MjksLTE4NzA3MzA1MDcsLTIxMzM4MDM2OTIsNzIwMDQw
+OTk0LC0yMTk3MzkyMThdfQ==
 -->
