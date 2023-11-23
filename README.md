@@ -22,8 +22,11 @@ https://github.com/nhutchison/MarcDuinoClient
 
 ***MarcDuinoV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil! So if you have any questions about MarcDuinoV4 don't ask any of them!***
 
-Nevertheless: Read and understand, how the boards work, why there is a master and a slave board, how the boards are connected -> https://www.curiousmarc.com/r2-d2/marcduino-system
-This firmware 
+Nevertheless: Read and understand, how the boards work, why there is a master and a slave board, how the boards are connected ->
+
+ https://www.curiousmarc.com/r2-d2/marcduino-system
+
+As soon as you are familiar with MarcDuino, come back here and proceed!
 
 ## Why MarcDuinoV4?
 The last update to the original firmware was in 2018. Neil's last update was a minor change in mid-2022. His V3 software has about 80% of the original source in common, adding some features for the latest MarcDuino boards (servo controllers and EXT/AUX pin controllers). He also added the nice feature of saving settings to EEPROM at runtime. But the code also has some glitches and bugs and is based on outdated Arduino libraries. I started 2023 after the whole Arduino framework and community has made really great progress in the last 5 years.
@@ -85,8 +88,7 @@ Every command must start with one of these special characters (defined in the he
 | ! | Alt1 alternate display command, passed to suart after stripping | TO TEECES via Serial\_Teeces / light\_suart / suart suart1 | In normal use the Master MarcDuino catches these, so we don't see them |
 | % | Alt2 expansion command, passed to suart2 after stripping | TO MAGIC via Serial\_Magic / slave\_suart / suart2 | |
 | # | MarcDuino Setup commands used to configure various settings on the MarcDuino | YES | |
-
-  
+ 
 
 ## Panel Commands
 
@@ -434,7 +436,7 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAwMzU4MTM1NSwtMjAwMDkxNzc2MywxNj
+eyJoaXN0b3J5IjpbLTkyNjA4Mzc0OCwtMjAwMDkxNzc2MywxNj
 MyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMw
 NTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX
 0=
