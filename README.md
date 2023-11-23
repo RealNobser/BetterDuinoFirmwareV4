@@ -50,11 +50,14 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 `upload_port = /dev/cu.usbmodem141201` (example)
 - build the code (PlatformIO / ATmega328P / General / Build)
 - upload the code (PlatformIO / ATmega328P / General / Upload)
-## MArc
+
+## MarcDuino Commands
+
+
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgxODcxMjY2LDE2MzI0MzgyMSwtMTA2ND
-Q1MTQ3NCw1ODYzODA4MjksLTE4NzA3MzA1MDcsLTIxMzM4MDM2
-OTIsNzIwMDQwOTk0LC0yMTk3MzkyMThdfQ==
+eyJoaXN0b3J5IjpbLTIwMDA5MTc3NjMsMTYzMjQzODIxLC0xMD
+Y0NDUxNDc0LDU4NjM4MDgyOSwtMTg3MDczMDUwNywtMjEzMzgw
+MzY5Miw3MjAwNDA5OTQsLTIxOTczOTIxOF19
 -->
