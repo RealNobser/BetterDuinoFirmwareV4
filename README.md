@@ -1,6 +1,9 @@
 # MarcDuinoV4
 
-The MarcDuino system controls the animatronics of an R2 (dome panels, light and sound) from an iPhone. It currently controls 10 dome panels, an "MP3 Trigger" sound board, dome "Teeces" lights and holoprojectors light and movements, and I2C gizmos you can add-in yourself. It has lots of pre-programmed effects making all these act together. Here is the info on how it works, how to build or order the parts, and customize it to your liking.
+#What is the MarcDuino system?
+The MarcDuino system controls the animatronics of an R2 (dome panels, light and sound). It currently controls 10 dome panels, an "MP3 Trigger" sound board, dome "Teeces" lights and holoprojectors light and movements, and I2C gizmos you can add-in yourself. It has lots of pre-programmed effects making all these act together.
+
+ Here is the info on how it works, how to build or order the parts, and customize it to your liking.
 
 ### 
 
@@ -16,5 +19,5 @@ MarcDuino Master Board
 
 MarcDuino Slave Board
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NDM0Mzc3NTVdfQ==
+eyJoaXN0b3J5IjpbLTU4NTA1Mzk5N119
 -->
