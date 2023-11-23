@@ -33,11 +33,13 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 |--|--|
 |MarcDuino V1.5 Rev3|YES|
 |MarcDuino V1.5 Rev2|not yet, tests  pending|
+|MarcDuino V1 | NO |
+|MarcDuino V2 | NO |
 
 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxMzM4MDM2OTIsNzIwMDQwOTk0LC0yMT
-k3MzkyMThdfQ==
+eyJoaXN0b3J5IjpbLTE4NzA3MzA1MDcsLTIxMzM4MDM2OTIsNz
+IwMDQwOTk0LC0yMTk3MzkyMThdfQ==
 -->
