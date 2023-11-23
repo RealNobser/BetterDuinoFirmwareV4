@@ -185,111 +185,56 @@ These commands are only processed by the MarcDuino Master module
 | **Command** | **Function** | **Remark** |
 | --- | --- | --- |
 | \*EOxx<br><br>TO SLAVE | Pull pin high/low on AUX1. Can be used to trigger a smoke machine as an example.<br><br>xx is the time in seconds.<br><br>* 00 - off<br> <br>* 01-98 is the time in seconds (don't use values >10 for smoke machines!)<br> <br>* 99 on permanently (again don't use for smoke machines) | will be executed on SLAVE only |
-
 | :EOxx | Pull pin high/low on AUX1. Can be used to trigger a smoke machine as an example.<br><br>xx is the time in seconds.<br><br>* 00 - off<br> <br>* 01-98 is the time in seconds (don't use values >10 for smoke machines!)<br> <br>* 99 on permanently (again don't use for smoke machines) | will be executed on MASTER only<br><br>MarcDuino V4 and greater |
 
-  
-
-## Setup Commands
-
-  
-
+### Setup Commands
 | **Command** | **Function** | **Remark** |
-
 | --- | --- | --- |
-
 | | **Servo Controls** | |
-
 | #SD00 | Set global servo direction forward | |
-
 | #SD01 | Set global servo direction reversed | |
-
 | #SRxxy | Set individual servo to either forward or reversed xx=servo number y=direction<br><br>* Must be a 2 digit Servo number i.e. Servo 4 is 04<br> <br>* Must be either 0 or 1 to set the direction (0 normal, 1 reversed)<br> <br>* Use SDxx to globally set the Servo direction, then SRxxy to change individual servos. | depricated, removed in future releases |
-
 | #SRxx | Set individual servo to reversed, xx=servo number<br><br>* Must be a 2 digit Servo number i.e. Servo 4 is 04<br> <br>* Use SDxx to globally set the Servo direction, then SRxxy to change individual servos. | MarcDuino V4 and greater |
-
 | #SNxx | Set individual servo to normal, xx=servo number<br><br>* Must be a 2 digit Servo number i.e. Servo 4 is 04<br> <br>* Use SDxx to globally set the Servo direction, then SRxxy to change individual servos. | MarcDuino V4 and greater |
-
 | #SVxx | Use individual servo settings (0 = no, 1 = yes) | MarcDuino V4 and greater |
-
 | #SOxxdddd | Set Servo Degrees/Microseconds for Panel Open, dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino V4 and greater |
-
 | #SCxxdddd | Set Servo Degrees/Microseconds for Panel Closed dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino V4 and greater |
-
 | ~#SIxxdddd~ | ~Set Servo Degrees/Microseconds for Panel Mid dddd=0000-0180 deg, dddd > 0544 Microseconds~ | ~MarcDuino V4 and greater~ |
-
 | #SPxxddd | Set Servo Speed, ddd=0-255 | MarcDuino V4 and greater |
-
 | | **Startup Sound Controls** | |
-
 | #SSxx | Set startup sound<br><br>* #SS00 : Disable Startup Sound, and remove startup sound delay for fast boot of R2<br> <br>* #SS01 : Default Startup Sound in file 255<br> <br>* #SS02 : Alternate Startup Sound in file 254<br> <br>* #SS03 : Second Alternate Startup Sound in file 253 | depricated, removed in future releases |
-
 | #SSxxx | Set startup sound<br><br>* #SS000 : Disable Startup Sound, and remove startup sound delay for fast boot of R2<br> <br>* #SSxxx : Set Startup Sound in file xxx | MarcDuino V4 and greater |
-
 | #SQxx | Chatty / Silent mode<br><br>* #SQ00 : Default Chatty Mode<br> <br>* #SQ01 : Silent on startup | |
-
 | #SMxx | Disable Random Sound<br><br>* #SM00 : Random Sound on <br> #SM01 : No Random Sound + Volume off <br> #SM02 : No Random Sound | What’s the difference between Chatty and Random Sounds (#SQxx)?<br><br>maybe depricated |
-
 | #SXxx | Set Max Random Pause in seconds. - Maximum timespan between two random sounds | MarcDuino V4 and greater |
-
 | #SYxx | Set Min Random Pause in seconds - Minimum timespan between two random sounds | MarcDuino V4 and greater |
-
 | | **Panel Sequencer Controls** | |
-
 | #STxx | Setup Delay time between Master and Slave Panel Sequence. Use this if the Slave panels are starting too soon. Values up to 250 are supported. Values are in ms. | maybe depricated |
-
 | | **System Configuration and Management** | |
-
 | #MDxx | Set MarcDuino Mode<br><br>* #MD00 : MarcDuino Dome Master<br> <br>* #MD01 : MarcDuino Dome Slave<br> <br>* #MD02 : MarcDuino Body Master<br> <br><br>MarcDuino will reboot immediately after setup and start up in new mode. | MarcDuino V4 and greater |
-
 | #MPxx | Set MP3-Player Type<br><br>* #MP00 : SparkFun MP3 Trigger<br> <br>* #MP01 : DFPlayer<br> <br>* #MP02 : Vocalizer | MarcDuino V4 and greater |
-
 | #MSxyy | Set maximum sounds per soundbank. x=1-9 (Soundbank), y=0-25 (max. Sounds) | MarcDuino V4 and greater |
-
 | #HLxy | Set HoloLight x to High Active (y=1) or Low Active (y=0). x=0 → All Holo Lights | |
-
 | #HOxxdddd | Set Holo HServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino V4 and greater |
-
 | #HCxxdddd | Set Holo HServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino V4 and greater |
-
 | #HPxxddd | Set Holo HServo Speed, ddd=0-255 | MarcDuino V4 and greater |
-
 | #VOxxdddd | Set Holo VServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino V4 and greater |
-
 | #VCxxdddd | Set Holo VServo Degrees/Microseconds Min dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino V4 and greater |
-
 | #VPxxddd | Set Holo VServo Speed, ddd=0-255 | MarcDuino V4 and greater |
-
 | #DUxx | Dump EEPORM to serial<br><br>* #DUxx : value at address xx<br> <br>* #DUMP : dump complete EEPROM content | MarcDuino V4 and greater |
-
 | #RSET | Restart MarcDuino | MarcDuino V4 and greater |
-
 | #ADxx | Adjustment Mode: When setting up individual Servo settings, servo will positioned immediately<br><br>* #AD00 : Adjustment Mode Off<br> <br>* #AD01 : Adjustment Mode On | MarcDuino V4 and greater |
 
-  
-
-# EEPROM Memory Map
-
-  
-
+## EEPROM Memory Map
 All the settings of the “Setup Commands” are stored in EEPROM. The corresponding Memory Map is described here. Default settings when EEPROM is empty are written in **bold** letter.
 
-  
-
 | **Address** | **Type** | **Content** | **Description** |
-
 | --- | --- | --- | --- |
-
 | 0x00 | byte | SW-/Config-Version | Version 4.0.x = 40, Version 4.1.x = 41, … |
-
 | 0x01 | byte | MarcDuinoType | **0 = DomeMaster**<br><br>1 = DomeSlave<br><br>2 = BodyMaster |
-
 | 0x02 | byte | Startup Sound | 0 = none<br><br>**1 = File255**<br><br>2 = File254<br><br>3 = File253<br><br>DEPRICATED by Startup Sound Nr |
-
 | 0x03 | byte | Chatty/Silent Mode | **0 = Chatty**<br><br>1 = Silent |
-
 | 0x04 | byte | MP3-Player-Type | **0 = SparkFun MP3-Trigger**<br><br>1 = DF-Mini Player |
-
 | 0x05 | byte | Disable Random Sound | **0 = Random Sound**<br><br>1 = No Random Sound + Volume off<br><br>2 = No Random Sound<br><br>DEPRICATED, collision with Chatty/Silent mode switch |
 
 | 0x06 | word | Slave Delay | Sequence Delay for Slave Sequence Start in ms |
@@ -328,7 +273,7 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA4NzAwOTQ0MSwtMjAwMDkxNzc2MywxNj
+eyJoaXN0b3J5IjpbMTg1NzgyNDUxNywtMjAwMDkxNzc2MywxNj
 MyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMw
 NTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX
 0=
