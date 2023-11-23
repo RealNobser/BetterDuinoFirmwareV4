@@ -11,13 +11,17 @@ The system is centered around the MarcDuino boards which sit in the R2. There ar
 The MarcDuinoV4 software is a **firmware replacement** for the original MarcDuino V1.5Rev3 boards. 
 
 Details about the **boards** can be found here:
+
 https://www.curiousmarc.com/r2-d2/marcduino-system/marcduino-boards/marcduino-v1-5
 
 The **original firmware** can be found here:
+
 https://www.curiousmarc.com/r2-d2/marcduino-system/marcduino-software-reference
 
 There also is a **spinoff** of Marcs firmware also known as **MarcDuinoMain V3** and **MarcDuinoClient V3**:
+
 https://github.com/nhutchison/MarcDuinoMain
+
 https://github.com/nhutchison/MarcDuinoClient
 
 ***MarcDuinoV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil! So if you have any questions about MarcDuinoV4 don't ask any of them!***
