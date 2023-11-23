@@ -5,8 +5,10 @@
 
 "The MarcDuino system controls the animatronics of an R2 (dome panels, light and sound). It currently controls 10 dome panels, an "MP3 Trigger" sound board, dome "Teeces" lights and holoprojectors light and movements, and I2C gizmos you can add-in yourself. It has lots of pre-programmed effects making all these act together.
 
-The system is centered around the MarcDuino boards which sit in the R2. There are two kinds, the Master and the Slave board, which are very similar to each other." - Cu
+The system is centered around the MarcDuino boards which sit in the R2. There are two kinds, the Master and the Slave board, which are very similar to each other." - CuriousMarc
+## What is MarcDuinoV4
+The MarcDuinoV4 software is a firmware for the original MarcDuino V1.5Rev3 boards. 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYwOTA1NTkxOF19
+eyJoaXN0b3J5IjpbMTY4OTMwNjA4MV19
 -->
