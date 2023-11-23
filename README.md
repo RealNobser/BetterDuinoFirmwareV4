@@ -36,8 +36,9 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 |MarcDuino V1 | NO |
 |MarcDuino V2 | NO |
 ### Uploading firmware using *.hex files
-- Download the latest hex-Files from the GitHub Repository
-- 
+- Download the latest hex-Files from the GitHub Repository: https://github.com/RealNobser/MarcDuinoV4/releases
+- ... (to be defined)
+
 ### Development Environment
 * Visual Studio Code: https://code.visualstudio.com/download
 * PlatformIO Extension: https://platformio.org/install/ide?install=vscode
@@ -51,7 +52,7 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 - upload the code (PlatformIO / ATmega328P / General / Upload)
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA0ODQ2NjA1OSwxNjMyNDM4MjEsLTEwNj
+eyJoaXN0b3J5IjpbLTM0MTc3MjIzOCwxNjMyNDM4MjEsLTEwNj
 Q0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMwNTA3LC0yMTMzODAz
 NjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX0=
 -->
