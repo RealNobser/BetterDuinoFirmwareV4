@@ -236,44 +236,26 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x03 | byte | Chatty/Silent Mode | **0 = Chatty**<br><br>1 = Silent |
 | 0x04 | byte | MP3-Player-Type | **0 = SparkFun MP3-Trigger**<br><br>1 = DF-Mini Player |
 | 0x05 | byte | Disable Random Sound | **0 = Random Sound**<br><br>1 = No Random Sound + Volume off<br><br>2 = No Random Sound<br><br>DEPRICATED, collision with Chatty/Silent mode switch |
-
 | 0x06 | word | Slave Delay | Sequence Delay for Slave Sequence Start in ms |
-
 | 0x07 | | Slave Delay | |
-
 | 0x08 | | Number of Servos | |
-
 | 0x09 | | Startup Sound Nr | obsoletes “Startup Sound”, **default 255** |
-
 | 0x0a | | MinRandomPause in seconds | Minimal Pause between two Random sounds played, **default 6s** |
-
 | 0x0b | | MaxRandomPause in seconds | MAximal Pause between two Random sounds played, **default 12s** |
-
 | | | | |
-
 | 0x11 - 0x19 | bytes | Max Sound Bank 1-9 | 1-25 Songs per Bank, default standard SD-Card-Layout (Bank-Sounds): **1-19, 2-18, 3-7, 4-4, 5-3, 6-3, 7-3, 8-6, 9-8** |
-
 | 0x20 | byte | Global Servo Direction | **0 = Normal**<br><br>1 = Reverse |
-
 | 0x21-0x2d | bytes | Servo1-Servo13 Servo Direction | **0 = Normal**<br><br>1 = Reverse |
-
 | 0x30 | byte | Global Servo Speed | 0 = Minumum<br><br>**255 = Maximum** |
-
 | 0x31-0x3d | bytes | Servo1-Servo13 Servo Speed | 0 = Minumum<br><br>**255 = Maximum** |
-
 | 0x40 | word | Global Servo Open Position Degrees / Microseconds | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
-
 | 0x42-0x5a | words | Servo1-Servo13 Servo Open Position Degrees | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
-
 | 0x60 | word | Global Servo Closed Position Degrees | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
-
 | 0x62-0x7a | words | Servo1-Servo13 Servo Close Position Degrees | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
-
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
-
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg1NzgyNDUxNywtMjAwMDkxNzc2MywxNj
+eyJoaXN0b3J5IjpbMTM3ODc4NTU0OSwtMjAwMDkxNzc2MywxNj
 MyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMw
 NTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX
 0=
