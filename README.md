@@ -22,10 +22,10 @@ https://github.com/nhutchison/MarcDuinoClient
 ***MarcDuinoV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil! So if you have any questions about MarcDuinoV4 don't ask any of them!***
 
 ## Why MarcDuinoV4?
-The last update of the original firmware was made in 2018.
+The last update of the original firmware was made in 2018. Neils latest update was a minor change in mid 2022. His V3 software has about 80% of the original source in common
 ## Supported Board
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3OTMxNjc1NDUsLTIxOTczOTIxOF19
+eyJoaXN0b3J5IjpbLTExMzc2ODQ2MTYsLTIxOTczOTIxOF19
 -->
