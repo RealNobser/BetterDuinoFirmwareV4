@@ -7,7 +7,7 @@
 
 The system is centered around the MarcDuino boards which sit in the R2. There are two kinds, the Master and the Slave board, which are very similar to each other." - CuriousMarc
 
-## What is MarcDuinoV4
+## What is MarcDuinoV4?
 The MarcDuinoV4 software is a **firmware replacement** for the original MarcDuino V1.5Rev3 boards. 
 
 Details about the **boards** can be found here:
@@ -50,9 +50,11 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 `upload_port = /dev/cu.usbmodem141201` (example)
 - build the code (PlatformIO / ATmega328P / General / Build)
 - upload the code (PlatformIO / ATmega328P / General / Upload)
+## MArc
+
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM0MTc3MjIzOCwxNjMyNDM4MjEsLTEwNj
-Q0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMwNTA3LC0yMTMzODAz
-NjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX0=
+eyJoaXN0b3J5IjpbLTgxODcxMjY2LDE2MzI0MzgyMSwtMTA2ND
+Q1MTQ3NCw1ODYzODA4MjksLTE4NzA3MzA1MDcsLTIxMzM4MDM2
+OTIsNzIwMDQwOTk0LC0yMTk3MzkyMThdfQ==
 -->
