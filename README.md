@@ -61,47 +61,26 @@ Every command must start with one of these special characters (defined in the he
 #### Master
 
 | **Start Command** | **Function** | **Master** | **Remark** |
-
 | --- | --- | --- | --- |
-
 | : | Pie panel command | YES | Slave only Subset and for Panel 12/13 |
-
 | \* | Holo Projector (HP) commands | TO SLAVE via Serial\_Slave / suart | |
-
 | @ | Display commands | TO SLAVE via Serial\_Slave / suart | |
-
 | $ | Sound commands | YES | |
-
 | ! | Alt1 alternate sound command, passed to suart2 after stripping | TO MP3 via Serial\_MP3 / suart2 | |
-
 | % | Alt2 alternate HP board command, passed to suart without stripping | TO SLAVEvia Serial\_Slave / suart | |
-
 | # | MarcDuino Setup commands used to configure various settings on the MarcDuino | YES / TO SLAVE(to keep EEPROM in sync) | No sync for MarcDuino Type to Slave |
-
 | & | I2C-Command | YES / TO I2C | |
 
-  
-
-### Slave
-
-  
+#### Slave
 
 | **Start Command** | **Function** | **Slave** | **Remark** |
-
 | --- | --- | --- | --- |
-
 | : | Pie panel command | YES | Slave only Subset and for Panel 12/13 |
-
 | \* | Holo Projector (HP) commands | YES | |
-
 | @ | Display commands, forwarded to JEDI controller on suart1 after stripping the '@' control character | TO TEECES via Serial\_Teeces / light\_suart / suart / suart1 | |
-
 | $ | Sound commands | NO | |
-
 | ! | Alt1 alternate display command, passed to suart after stripping | TO TEECES via Serial\_Teeces / light\_suart / suart suart1 | In normal use the Master MarcDuino catches these, so we don't see them |
-
 | % | Alt2 expansion command, passed to suart2 after stripping | TO MAGIC via Serial\_Magic / slave\_suart / suart2 | |
-
 | # | MarcDuino Setup commands used to configure various settings on the MarcDuino | YES | |
 
   
@@ -452,8 +431,8 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0MzY0NTUzODIsLTIwMDA5MTc3NjMsMT
-YzMjQzODIxLC0xMDY0NDUxNDc0LDU4NjM4MDgyOSwtMTg3MDcz
-MDUwNywtMjEzMzgwMzY5Miw3MjAwNDA5OTQsLTIxOTczOTIxOF
-19
+eyJoaXN0b3J5IjpbMjAyMjA2NTQ5NSwtMjAwMDkxNzc2MywxNj
+MyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMw
+NTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX
+0=
 -->
