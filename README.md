@@ -19,9 +19,13 @@ There also is a **spinoff** of Marcs firmware also known as **MarcDuinoMain V3**
 https://github.com/nhutchison/MarcDuinoMain
 https://github.com/nhutchison/MarcDuinoClient
 
-***MarcDuinoV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil! So if you have any questions about MarcDuinoV4 don't ask any of them, but contact me (**RealNobser**) here on GitHub.***
+***MarcDuinoV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil! So if you have any questions about MarcDuinoV4 don't ask any of them!***
+
+## Why MarcDuinoV4?
+
+## Supported Board
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxOTczOTIxOF19
+eyJoaXN0b3J5IjpbNjYxNDkxNTQzLC0yMTk3MzkyMThdfQ==
 -->
