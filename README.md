@@ -36,12 +36,14 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 |MarcDuino V1 | NO |
 |MarcDuino V2 | NO |
 ### Development Environment
-
+* Visual Studio Code: https://code.visualstudio.com/download
+* PlatformIO Extension: https://platformio.org/install/ide?install=vscode
+###Building code
 
 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkzNzc1NTU0LC0xODcwNzMwNTA3LC0yMT
-MzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX0=
+eyJoaXN0b3J5IjpbLTk0MDEyMTIwMywtMTg3MDczMDUwNywtMj
+EzMzgwMzY5Miw3MjAwNDA5OTQsLTIxOTczOTIxOF19
 -->
