@@ -54,41 +54,11 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 
 ## MarcDuino Commands
 
-
-
-# Marcduino
-
-  
-
-* [Marcduino V4 (ATMega328p)](https://nobser.atlassian.net/wiki/spaces/Astromech/pages/13369345)
-
-* [Marduino Dome Master](https://nobser.atlassian.net/wiki/spaces/Astromech/pages/1310796/Marduino+Dome+Master)
-
-* [Marduino Dome Slave](https://nobser.atlassian.net/wiki/spaces/Astromech/pages/1278056/Marduino+Dome+Slave)
-
-* [Marcduino Body](https://nobser.atlassian.net/wiki/spaces/Astromech/pages/1409105/Marcduino+Body)
-
-  
-
-# Kommandos
-
-  
-
-**HINT: Already updated for MarcDuino V4**
-
-  
-
-## Format
-
-  
+### Format
 
 Every command must start with one of these special characters (defined in the header file). The start character is recognized in the main loop:
 
-  
-
-### Master
-
-  
+#### Master
 
 | **Start Command** | **Function** | **Master** | **Remark** |
 
@@ -482,7 +452,7 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwNDg5NzQzOTUsLTIwMDA5MTc3NjMsMT
+eyJoaXN0b3J5IjpbLTE0MzY0NTUzODIsLTIwMDA5MTc3NjMsMT
 YzMjQzODIxLC0xMDY0NDUxNDc0LDU4NjM4MDgyOSwtMTg3MDcz
 MDUwNywtMjEzMzgwMzY5Miw3MjAwNDA5OTQsLTIxOTczOTIxOF
 19
