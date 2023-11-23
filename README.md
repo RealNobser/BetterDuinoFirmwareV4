@@ -14,8 +14,9 @@ https://www.curiousmarc.com/r2-d2/marcduino-system/marcduino-software-reference
 There also is a **spinoff** of Marcs firmware also known as **MarcDuinoMain V3** and **MarcDuinoClient V3**:
 https://github.com/nhutchison/MarcDuinoMain
 https://github.com/nhutchison/MarcDuinoClient
+MarcDuinoV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil!
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTkwMjUxNjYwXX0=
+eyJoaXN0b3J5IjpbLTcwNjE0NzI4N119
 -->
