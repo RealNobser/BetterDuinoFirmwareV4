@@ -59,13 +59,10 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 - upload the code (PlatformIO / ATmega328P / General / Upload)
 
 ## MarcDuino Commands
-
 ### Format
-
 Every command must start with one of these special characters (defined in the header file). The start character is recognized in the main loop:
 
 #### Master
-
 | **Start Command** | **Function** | **Master** | **Remark** |
 | --- | --- | --- | --- |
 | : | Pie panel command | YES | Slave only Subset and for Panel 12/13 |
@@ -78,7 +75,6 @@ Every command must start with one of these special characters (defined in the he
 | & | I2C-Command | YES / TO I2C | |
 
 #### Slave
-
 | **Start Command** | **Function** | **Slave** | **Remark** |
 | --- | --- | --- | --- |
 | : | Pie panel command | YES | Slave only Subset and for Panel 12/13 |
@@ -91,7 +87,6 @@ Every command must start with one of these special characters (defined in the he
  
 
 ### Panel Commands
-
 They must follow the syntax ":CCxx\\r" where CC=command , xx= two digit decimal number, \\r is carriage return.
 
 | **Command** | **Function** | **Master** | **Slave** | **Remark** |
@@ -106,7 +101,6 @@ They must follow the syntax ":CCxx\\r" where CC=command , xx= two digit decimal 
 | :HDxx | RC hold: removes from RC, but does not turn servo off, keeps at last position. xx=00 all panels hold. | YES | NO | |
 
 ### Sequence Command Details
-
 See sequence\_command, panel sequence matrices defined in panel\_sequences.h
 
 | **Command** | **Function** | **Remark** |
@@ -142,103 +136,54 @@ See sequence\_command, panel sequence matrices defined in panel\_sequences.h
 | :SE59 | Open panels half way | |
 
 ### Holo Projector Commands
-
 These commands are only processed by the MarcDuino Slave module
 
-  
-
 | **Command** | **Function** | **Remark** |
-
 | --- | --- | --- |
-
 | \*RDxx | Random Holo movement (xx=01 to 03). xx=00 and >3 all random. | |
-
 | \*ONxx | Turns Holo Light on (xx=01 to 03). xx=00 or >3 all lights on | |
-
 | \*OFxx | Turns Holo Lights off (xx=01 to 03). xx=00 turns all lights off | |
-
 | \*RCxx | Holo vertical movement under RC control, horizontal centered (xx=01-03). 00 or >3 all RC | |
-
 | \*TExx | Holo movement test (xx=01-03). Goes through a loop of holo movements to assist in adjusting holo servos mechanical setup. 00 or >3 all HPs to test | |
-
 | \*STxx | stop/reset Holos random movement, turns lights off, and RC off. 00=all off | |
-
 | \*HDxx | hold: stop holo, do not change light level. 00=all stopped | |
-
 | \*MOxx | magic panel on. xx=01 to 98, on from 1 to 98 seconds.<br><br>* xx = 99 is on permanently<br> <br>* xx = 00 is off | |
-
 | \*MFxx | magic panel flicker xx=1 to 99 flicker for 1 to 99 seconds. 00= off. | |
-
 | \*H1xx<br><br>\*H2xx<br><br>\*H3xx<br><br>\*H0xx | Will turn on-board HP1, 2, 3, and all (HP0xx) for xx seconds.<br><br>* xx = 99 is on permanently<br> <br>* xx = 00 is off | |
-
 | \*F1xx<br><br>\*F2xx<br><br>\*F3xx<br><br>\*F0xx | Will flicker on-board HP1, 2, 3, and all (F0xx) for xx seconds.<br><br>* xx = 99 is on permanently<br> <br>* xx = 00 is off | |
 
-  
-
-## Sound Commands
-
-  
+### Sound Commands
 
 These commands are only processed by the MarcDuino Master module
 
-  
-
 | **Command** | **Function** | **Remark** |
-
 | --- | --- | --- |
-
 | $xyy | Play sound command by bank/sound numbers<br><br>* x=bank number<br> <br>* yy=sound number. If none, next sound is played in. | |
-
 | $xy | Play sound command by bank/sound numbers, short version<br><br>* x=bank number<br> <br>* y=sound number. If none, next sound is played in. | |
-
 | $C | random from 4 first banks | |
-
 | $O | sound off | |
-
 | $L | Leia message (bank 7 sound 1) | |
-
 | $C | Cantina music (bank 9 sound 5) | |
-
 | $c | Beep cantina (bank 9 sound 1) | |
-
 | $S | Scream (bank 6 sound 1) | |
-
 | $F | Faint/Short Circuit (bank 6 sound 3) | |
-
 | $D | Disco (bank 9 sound 6) | |
-
 | $s | stop sounds | |
-
 | $+ | volume up | |
-
 | $- | volume down | |
-
 | $m | volume mid | |
-
 | $f | volume max | |
-
 | $p | volume min | |
-
 | $W | Star Wars music (bank 9 sound 2) | |
-
 | $w | Beep Star Wars music (bank 9 sound 7) | |
-
 | $M | Imperial March (bank 9 sound 3) | |
-
 | $i | Beep Imperial March (bank 9 sound 8) | |
-
 | $B | Startup Sound | |
 
-  
-
-## Special Features
-
-  
+### Special Features
 
 | **Command** | **Function** | **Remark** |
-
 | --- | --- | --- |
-
 | \*EOxx<br><br>TO SLAVE | Pull pin high/low on AUX1. Can be used to trigger a smoke machine as an example.<br><br>xx is the time in seconds.<br><br>* 00 - off<br> <br>* 01-98 is the time in seconds (don't use values >10 for smoke machines!)<br> <br>* 99 on permanently (again don't use for smoke machines) | will be executed on SLAVE only |
 
 | :EOxx | Pull pin high/low on AUX1. Can be used to trigger a smoke machine as an example.<br><br>xx is the time in seconds.<br><br>* 00 - off<br> <br>* 01-98 is the time in seconds (don't use values >10 for smoke machines!)<br> <br>* 99 on permanently (again don't use for smoke machines) | will be executed on MASTER only<br><br>MarcDuino V4 and greater |
@@ -383,8 +328,8 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExNzY5MjIyNDcsLTIwMDA5MTc3NjMsMT
-YzMjQzODIxLC0xMDY0NDUxNDc0LDU4NjM4MDgyOSwtMTg3MDcz
-MDUwNywtMjEzMzgwMzY5Miw3MjAwNDA5OTQsLTIxOTczOTIxOF
-19
+eyJoaXN0b3J5IjpbMjA4NzAwOTQ0MSwtMjAwMDkxNzc2MywxNj
+MyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMw
+NTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX
+0=
 -->
