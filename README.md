@@ -22,10 +22,11 @@ https://github.com/nhutchison/MarcDuinoClient
 ***MarcDuinoV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil! So if you have any questions about MarcDuinoV4 don't ask any of them!***
 
 ## Why MarcDuinoV4?
-The last update of the original firmware was made in 2018. Neils latest update was a minor change in mid 2022. His V3 software has about 80% of the original source in common, adding some features for the most recent MarcDuino boards (servo controller and EXT/AUX-Pin controls). He also added the nice feature of storing settings on runtime within the EEPROM. But the code also has some glitches and bugs and is based on outdated Arduino libraries. 
+The last update of the original firmware was made in 2018. Neils latest update was a minor change in mid 2022. His V3 software has about 80% of the original source in common, adding some features for the most recent MarcDuino boards (servo controller and EXT/AUX-Pin controls). He also added the nice feature of storing settings on runtime within the EEPROM. But the code also has some glitches and bugs and is based on outdated Arduino libraries. I started in 2023, when the whole Arduino framework and community made really large progress over the last 5 years. 
+
 ## Supported Board
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAzMDU4Nzg5MCwtMjE5NzM5MjE4XX0=
+eyJoaXN0b3J5IjpbLTM3MDM3NDIxOCwtMjE5NzM5MjE4XX0=
 -->
