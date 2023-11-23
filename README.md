@@ -90,111 +90,58 @@ Every command must start with one of these special characters (defined in the he
 | # | MarcDuino Setup commands used to configure various settings on the MarcDuino | YES | |
  
 
-## Panel Commands
-
-  
+### Panel Commands
 
 They must follow the syntax ":CCxx\\r" where CC=command , xx= two digit decimal number, \\r is carriage return.
 
-  
-
 | **Command** | **Function** | **Master** | **Slave** | **Remark** |
-
 | --- | --- | --- | --- | --- |
-
 | :SExx | launches sequences, see below | YES | YES | |
-
 | :OPxx | open panel number xx=01-13. If xx=00, opens all panels (12/13 Slave only) | YES | YES | |
-
 | :OP14 | open top panels | YES | NO | tbd |
-
 | :OP15 | open bottom panels | YES | NO | tbd |
-
 | :CLxx | close panel number xx=01-13, removes from RC if it was, stops servo. If xx=00, all panels, slow close. | YES | YES | |
-
 | :RCxx | places panel xx=01-13 under RC input control. If xx=00, all panels placed on RC. | YES | NO | |
-
 | :STxx | buzz kill/soft hold: removes panel from RC control AND shuts servo off to eliminate buzz. xx=00 all panels off RC servos off. | YES | YES | |
-
 | :HDxx | RC hold: removes from RC, but does not turn servo off, keeps at last position. xx=00 all panels hold. | YES | NO | |
 
-  
-
-## Sequence Command Details
-
-  
+### Sequence Command Details
 
 See sequence\_command, panel sequence matrices defined in panel\_sequences.h
 
-  
-
 | **Command** | **Function** | **Remark** |
-
 | --- | --- | --- |
-
 | | **Full (Move, Sound, Display…)** | |
-
 | :SE00 | Close all panels (full speed), servo off - use as init only. Use CL00 for all soft close. | |
-
 | :SE01 | Scream, with all panels open | |
-
 | :SE02 | Wave, one panel at a time | |
-
 | :SE03 | Fast (Smirk) back and forth wave | |
-
 | :SE04 | Wave 2 (open progressively all panels, then close one by one) | |
-
 | :SE05 | Beep Cantina (with marching ants panel action) | |
-
 | :SE06 | Faint/Short Circuit | |
-
 | :SE07 | Cantina dance (orchestral, rythmic panel dance) | |
-
 | :SE08 | Leia | |
-
 | :SE09 | Disco | |
-
 | :SE10 | Quite Mode reset (panel close, stop holos, stop sounds) | |
-
 | :SE11 | Full Awake Mode reset (panel close, random sound, holo movement, no holo lights) | |
-
 | :SE12 | Top Panels to RC | |
-
 | :SE13 | Mid Awake Mode reset (panel close, random sound, stop holos) | |
-
 | :SE14 | Awake+ Mode reset ((panel close, random sound, holo movement, lights on) | |
-
 | :SE15 | Screams no panels | |
-
 | :SE16 | Panel Wiggle | |
-
 | | | |
-
 | | **Move Panels only** | |
-
 | :SE51 | Scream, with all panels open | |
-
 | :SE52 | Wave, one panel at a time | |
-
 | :SE53 | Fast (Smirk) back and forth wave | |
-
 | :SE54 | Wave 2 (open progressively all panels, then close one by one) | |
-
 | :SE55 | Marching ants | |
-
 | :SE56 | Faint/Short Circuit | |
-
 | :SE57 | Rhythmic panel dance | |
-
 | :SE58 | Panel Wave Bye Bye | |
-
 | :SE59 | Open panels half way | |
 
-  
-
-## Holo Projector Commands
-
-  
+### Holo Projector Commands
 
 These commands are only processed by the MarcDuino Slave module
 
@@ -436,8 +383,8 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkyNjA4Mzc0OCwtMjAwMDkxNzc2MywxNj
-MyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMw
-NTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX
-0=
+eyJoaXN0b3J5IjpbLTExNzY5MjIyNDcsLTIwMDA5MTc3NjMsMT
+YzMjQzODIxLC0xMDY0NDUxNDc0LDU4NjM4MDgyOSwtMTg3MDcz
+MDUwNywtMjEzMzgwMzY5Miw3MjAwNDA5OTQsLTIxOTczOTIxOF
+19
 -->
