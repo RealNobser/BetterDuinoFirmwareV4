@@ -7,11 +7,13 @@
 
 The system is centered around the MarcDuino boards which sit in the R2. There are two kinds, the Master and the Slave board, which are very similar to each other." - CuriousMarc
 ## What is MarcDuinoV4
-The MarcDuinoV4 software is a **firmware replacement** for the original MarcDuino V1.5Rev3 boards. Details about the boards can be found here:
+The MarcDuinoV4 software is a **firmware replacement** for the original MarcDuino V1.5Rev3 boards. Details about the **boards** can be found here:
 https://www.curiousmarc.com/r2-d2/marcduino-system/marcduino-boards/marcduino-v1-5
-The original firmware ca
+The **original firmware** can be found here:
+https://www.curiousmarc.com/r2-d2/marcduino-system/marcduino-software-reference
+There also is a spinoff of Marcs firmware also known as 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5MzM5ODgzNDVdfQ==
+eyJoaXN0b3J5IjpbLTExMjcyODc4MDddfQ==
 -->
