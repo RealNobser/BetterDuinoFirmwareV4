@@ -38,12 +38,13 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 ### Development Environment
 * Visual Studio Code: https://code.visualstudio.com/download
 * PlatformIO Extension: https://platformio.org/install/ide?install=vscode
-###Building code
+### Building firmware
+- clone the github repository
 
 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk0MDEyMTIwMywtMTg3MDczMDUwNywtMj
-EzMzgwMzY5Miw3MjAwNDA5OTQsLTIxOTczOTIxOF19
+eyJoaXN0b3J5IjpbNTg2MzgwODI5LC0xODcwNzMwNTA3LC0yMT
+MzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX0=
 -->
