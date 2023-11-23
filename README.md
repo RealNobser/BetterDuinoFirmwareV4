@@ -29,10 +29,13 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 
 ## Lets get started
 ### Supported Boards
+|Board|Support|
+|--|--|
+|MarcDuino V1.5 Rev3  |YES  |
 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2Njg1Njc5MzAsNzIwMDQwOTk0LC0yMT
-k3MzkyMThdfQ==
+eyJoaXN0b3J5IjpbLTEzMDIzMzAsNzIwMDQwOTk0LC0yMTk3Mz
+kyMThdfQ==
 -->
