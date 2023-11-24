@@ -138,6 +138,12 @@ See sequence\_command, panel sequence matrices defined in panel\_sequences.h
 | :SE16 | Panel Wiggle | |
 | | | |
 | | **Body Sequencesonly** | |
+| :SE30 | Utility ARM open and close sequence | |
+| :SE31 | All Body Panels open and close sequence | |
+| :SE32 | // All Body Doors open and wiggle close sequence | |
+| :SE33 | Panel Wiggle | |
+| :SE34 | Panel Wiggle | |
+| :SE35 | Panel Wiggle | |
 | | | |
 | | **Move Panels only** | |
 | :SE51 | Scream, with all panels open | |
@@ -270,8 +276,9 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg3MjQyNTYwOCwtMTczMjc2MzA0MiwxMz
-Q5NTk4MjY1LDEzNzg3ODU1NDksLTIwMDA5MTc3NjMsMTYzMjQz
-ODIxLC0xMDY0NDUxNDc0LDU4NjM4MDgyOSwtMTg3MDczMDUwNy
-wtMjEzMzgwMzY5Miw3MjAwNDA5OTQsLTIxOTczOTIxOF19
+eyJoaXN0b3J5IjpbLTE0NDM1MzM3NzksLTE3MzI3NjMwNDIsMT
+M0OTU5ODI2NSwxMzc4Nzg1NTQ5LC0yMDAwOTE3NzYzLDE2MzI0
+MzgyMSwtMTA2NDQ1MTQ3NCw1ODYzODA4MjksLTE4NzA3MzA1MD
+csLTIxMzM4MDM2OTIsNzIwMDQwOTk0LC0yMTk3MzkyMThdfQ==
+
 -->
