@@ -38,6 +38,10 @@ The last update to the original firmware was in 2018. Neil's last update was a m
 The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils idea of the EEPROM storage a step further, so nearly ***any*** setting is stored there. Including per-servo position settings. I also added the new panel animation of Tim Hebel who is also using a modified MarcDuino V3 firmware (https://github.com/Eebel/SHADOW_MD_EEBEL),
 
 ## Lets get started
+### Revision History
+| Date | Rev | Description |
+|--|--|--
+| 2023-10-23|V0.9.0 RC1
 ### Supported Boards
 |Board|Support|
 |--|--|
@@ -263,8 +267,8 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzg2ODE4MTg3LDEzNDk1OTgyNjUsMTM3OD
-c4NTU0OSwtMjAwMDkxNzc2MywxNjMyNDM4MjEsLTEwNjQ0NTE0
-NzQsNTg2MzgwODI5LC0xODcwNzMwNTA3LC0yMTMzODAzNjkyLD
-cyMDA0MDk5NCwtMjE5NzM5MjE4XX0=
+eyJoaXN0b3J5IjpbMTg2MDQwMjg2OCwxMzQ5NTk4MjY1LDEzNz
+g3ODU1NDksLTIwMDA5MTc3NjMsMTYzMjQzODIxLC0xMDY0NDUx
+NDc0LDU4NjM4MDgyOSwtMTg3MDczMDUwNywtMjEzMzgwMzY5Mi
+w3MjAwNDA5OTQsLTIxOTczOTIxOF19
 -->
