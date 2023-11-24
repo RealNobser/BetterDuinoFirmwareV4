@@ -41,7 +41,8 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 ### Revision History
 | Date | Rev | Description |
 |--|--|--
-| 2023-10-23|V0.9.0 RC1
+| 2023-10-23|V0.9.0 RC1|First version for closed beta test group|
+
 ### Supported Boards
 |Board|Support|
 |--|--|
@@ -267,8 +268,8 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg2MDQwMjg2OCwxMzQ5NTk4MjY1LDEzNz
-g3ODU1NDksLTIwMDA5MTc3NjMsMTYzMjQzODIxLC0xMDY0NDUx
-NDc0LDU4NjM4MDgyOSwtMTg3MDczMDUwNywtMjEzMzgwMzY5Mi
-w3MjAwNDA5OTQsLTIxOTczOTIxOF19
+eyJoaXN0b3J5IjpbLTE3MzI3NjMwNDIsMTM0OTU5ODI2NSwxMz
+c4Nzg1NTQ5LC0yMDAwOTE3NzYzLDE2MzI0MzgyMSwtMTA2NDQ1
+MTQ3NCw1ODYzODA4MjksLTE4NzA3MzA1MDcsLTIxMzM4MDM2OT
+IsNzIwMDQwOTk0LC0yMTk3MzkyMThdfQ==
 -->
