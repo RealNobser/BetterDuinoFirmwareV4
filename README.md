@@ -259,8 +259,8 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM3ODc4NTU0OSwtMjAwMDkxNzc2MywxNj
-MyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMw
-NTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX
-0=
+eyJoaXN0b3J5IjpbMjMyNzIyODAxLDEzNzg3ODU1NDksLTIwMD
+A5MTc3NjMsMTYzMjQzODIxLC0xMDY0NDUxNDc0LDU4NjM4MDgy
+OSwtMTg3MDczMDUwNywtMjEzMzgwMzY5Miw3MjAwNDA5OTQsLT
+IxOTczOTIxOF19
 -->
