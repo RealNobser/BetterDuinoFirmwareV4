@@ -137,13 +137,13 @@ See sequence\_command, panel sequence matrices defined in panel\_sequences.h
 | :SE15 | Screams no panels | |
 | :SE16 | Panel Wiggle | |
 | | | |
-| | **Body Sequencesonly** | |
+| | **Body Sequences** | |
 | :SE30 | Utility ARM open and close sequence | |
 | :SE31 | All Body Panels open and close sequence | |
-| :SE32 | // All Body Doors open and wiggle close sequence | |
-| :SE33 | Panel Wiggle | |
-| :SE34 | Panel Wiggle | |
-| :SE35 | Panel Wiggle | |
+| :SE32 | All Body Doors open and wiggle close sequence | |
+| :SE33 | Body - Use Gripper | |
+| :SE34 | Body - Use Interface Tool| |
+| :SE35 | Body - Ping Pong Body Doors| |
 | | | |
 | | **Move Panels only** | |
 | :SE51 | Scream, with all panels open | |
@@ -168,7 +168,7 @@ These commands are only processed by the MarcDuino Slave module
 | \*TExx | Holo movement test (xx=01-03). Goes through a loop of holo movements to assist in adjusting holo servos mechanical setup. 00 or >3 all HPs to test | |
 | \*STxx | stop/reset Holos random movement, turns lights off, and RC off. 00=all off | |
 | \*HDxx | hold: stop holo, do not change light level. 00=all stopped | |
-| \*MOxx | magic panel on. xx=01 to 98, on from 1 to 98 seconds.<br><br>* xx = 99 is on permanently<br> <br>* xx = 00 is off | |
+| \*MOxx | magic panel on. xx=01 to 98, on from 1 to 98 seconds.r>* xx = 99 is on permanently<br> <br>* xx = 00 is off | |
 | \*MFxx | magic panel flicker xx=1 to 99 flicker for 1 to 99 seconds. 00= off. | |
 | \*H1xx<br><br>\*H2xx<br><br>\*H3xx<br><br>\*H0xx | Will turn on-board HP1, 2, 3, and all (HP0xx) for xx seconds.<br><br>* xx = 99 is on permanently<br> <br>* xx = 00 is off | |
 | \*F1xx<br><br>\*F2xx<br><br>\*F3xx<br><br>\*F0xx | Will flicker on-board HP1, 2, 3, and all (F0xx) for xx seconds.<br><br>* xx = 99 is on permanently<br> <br>* xx = 00 is off | |
@@ -276,9 +276,8 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0NDM1MzM3NzksLTE3MzI3NjMwNDIsMT
-M0OTU5ODI2NSwxMzc4Nzg1NTQ5LC0yMDAwOTE3NzYzLDE2MzI0
-MzgyMSwtMTA2NDQ1MTQ3NCw1ODYzODA4MjksLTE4NzA3MzA1MD
-csLTIxMzM4MDM2OTIsNzIwMDQwOTk0LC0yMTk3MzkyMThdfQ==
-
+eyJoaXN0b3J5IjpbLTU1MDM3NTcxOCwtMTczMjc2MzA0MiwxMz
+Q5NTk4MjY1LDEzNzg3ODU1NDksLTIwMDA5MTc3NjMsMTYzMjQz
+ODIxLC0xMDY0NDUxNDc0LDU4NjM4MDgyOSwtMTg3MDczMDUwNy
+wtMjEzMzgwMzY5Miw3MjAwNDA5OTQsLTIxOTczOTIxOF19
 -->
