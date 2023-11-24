@@ -48,7 +48,10 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 
 ### Uploading firmware using *.hex files
 - Download the latest hex-Files from the GitHub Repository: https://github.com/RealNobser/MarcDuinoV4/releases
-- ... (to be defined)
+- Flash hex file with the following fuses:
+	* efuse: 0x07
+hfuse:w:0xD7:m -U lfuse:w:0xFF
+- ... (more details will follow)
 
 ### Development Environment
 * Visual Studio Code: https://code.visualstudio.com/download
@@ -259,8 +262,8 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjMyNzIyODAxLDEzNzg3ODU1NDksLTIwMD
-A5MTc3NjMsMTYzMjQzODIxLC0xMDY0NDUxNDc0LDU4NjM4MDgy
-OSwtMTg3MDczMDUwNywtMjEzMzgwMzY5Miw3MjAwNDA5OTQsLT
-IxOTczOTIxOF19
+eyJoaXN0b3J5IjpbLTIwOTI1OTAxMjUsMTM3ODc4NTU0OSwtMj
+AwMDkxNzc2MywxNjMyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2Mzgw
+ODI5LC0xODcwNzMwNTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NC
+wtMjE5NzM5MjE4XX0=
 -->
