@@ -220,7 +220,6 @@ These commands are only processed by the MarcDuino Master module
 | #SVxx | Use individual servo settings (0 = no, 1 = yes) | MarcDuino V4 and greater |
 | #SOxxdddd | Set Servo Degrees/Microseconds for Panel Open, dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino V4 and greater |
 | #SCxxdddd | Set Servo Degrees/Microseconds for Panel Closed dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino V4 and greater |
-| ~#SIxxdddd~ | ~Set Servo Degrees/Microseconds for Panel Mid dddd=0000-0180 deg, dddd > 0544 Microseconds~ | ~MarcDuino V4 and greater~ |
 | #SPxxddd | Set Servo Speed, ddd=0-255 | MarcDuino V4 and greater |
 | | **Startup Sound Controls** | |
 | #SSxx | Set startup sound<br><br>* #SS00 : Disable Startup Sound, and remove startup sound delay for fast boot of R2<br> <br>* #SS01 : Default Startup Sound in file 255<br> <br>* #SS02 : Alternate Startup Sound in file 254<br> <br>* #SS03 : Second Alternate Startup Sound in file 253 | depricated, removed in future releases |
@@ -276,8 +275,9 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzc1OTczOTM4LC0xNzMyNzYzMDQyLDEzND
-k1OTgyNjUsMTM3ODc4NTU0OSwtMjAwMDkxNzc2MywxNjMyNDM4
-MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC0xODcwNzMwNTA3LC
-0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5NzM5MjE4XX0=
+eyJoaXN0b3J5IjpbLTExNzgwMDM3OTYsMzc1OTczOTM4LC0xNz
+MyNzYzMDQyLDEzNDk1OTgyNjUsMTM3ODc4NTU0OSwtMjAwMDkx
+Nzc2MywxNjMyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC
+0xODcwNzMwNTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5
+NzM5MjE4XX0=
 -->
