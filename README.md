@@ -78,8 +78,8 @@ Every command must start with one of these special characters (defined in the he
 | @ | Display commands | TO SLAVE via Serial\_Slave / suart | |
 | $ | Sound commands | YES | |
 | ! | Alt1 alternate sound command, passed to suart2 after stripping | TO MP3 via Serial\_MP3 / suart2 | |
-| % | Alt2 alternate HP board command, passed to suart without stripping | TO SLAVEvia Serial\_Slave / suart | |
-| # | MarcDuino Setup commands used to configure various settings on the MarcDuino | YES / TO SLAVE(to keep EEPROM in sync) | No sync for MarcDuino Type to Slave |
+| % | Alt2 alternate HP board command, passed to suart without stripping | TO SLAVE via Serial\_Slave / suart | |
+| # | MarcDuino Setup commands used to configure various settings on the MarcDuino | YES / TO SLAVE (to keep EEPROM in sync) | No sync of MarcDuino Type to Slave |
 | & | I2C-Command | YES / TO I2C | |
 
 #### Slave
@@ -263,8 +263,8 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM0OTU5ODI2NSwxMzc4Nzg1NTQ5LC0yMD
-AwOTE3NzYzLDE2MzI0MzgyMSwtMTA2NDQ1MTQ3NCw1ODYzODA4
-MjksLTE4NzA3MzA1MDcsLTIxMzM4MDM2OTIsNzIwMDQwOTk0LC
-0yMTk3MzkyMThdfQ==
+eyJoaXN0b3J5IjpbMzg2ODE4MTg3LDEzNDk1OTgyNjUsMTM3OD
+c4NTU0OSwtMjAwMDkxNzc2MywxNjMyNDM4MjEsLTEwNjQ0NTE0
+NzQsNTg2MzgwODI5LC0xODcwNzMwNTA3LC0yMTMzODAzNjkyLD
+cyMDA0MDk5NCwtMjE5NzM5MjE4XX0=
 -->
