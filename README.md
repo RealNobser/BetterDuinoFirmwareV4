@@ -43,6 +43,10 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 |--|--|--
 | 2023-10-23|V0.9.0 RC1|First version for closed beta test group|
 
+### Known missing functionality (will be released in the future)
+- I2C command support
+- RC-IN support
+
 ### Supported Boards
 |Board|Support|
 |--|--|
