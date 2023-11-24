@@ -71,6 +71,7 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 - Edit the file "platformio.ini" to match the serial port of your programmer:
 `upload_port = /dev/cu.usbmodem141201` (example)
 - build the code (PlatformIO / ATmega328P / General / Build)
+- 
 - upload the code (PlatformIO / ATmega328P / General / Upload)
 
 ## MarcDuino Commands
@@ -277,9 +278,9 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjc1OTM3MjU3LC0xMTc4MDAzNzk2LDM3NT
-k3MzkzOCwtMTczMjc2MzA0MiwxMzQ5NTk4MjY1LDEzNzg3ODU1
-NDksLTIwMDA5MTc3NjMsMTYzMjQzODIxLC0xMDY0NDUxNDc0LD
-U4NjM4MDgyOSwtMTg3MDczMDUwNywtMjEzMzgwMzY5Miw3MjAw
-NDA5OTQsLTIxOTczOTIxOF19
+eyJoaXN0b3J5IjpbNjE3Mjk4Nzg4LDI3NTkzNzI1NywtMTE3OD
+AwMzc5NiwzNzU5NzM5MzgsLTE3MzI3NjMwNDIsMTM0OTU5ODI2
+NSwxMzc4Nzg1NTQ5LC0yMDAwOTE3NzYzLDE2MzI0MzgyMSwtMT
+A2NDQ1MTQ3NCw1ODYzODA4MjksLTE4NzA3MzA1MDcsLTIxMzM4
+MDM2OTIsNzIwMDQwOTk0LC0yMTk3MzkyMThdfQ==
 -->
