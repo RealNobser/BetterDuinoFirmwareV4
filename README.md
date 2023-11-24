@@ -65,6 +65,8 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 
 ### Building and uploading firmware using Visual Studio Code
 - Clone the GitHub repository using Visual Studio Code (Source Control / Clone Repository)
+- ![enter image description here](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Clone1.png)
+- ![enter image description here](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Clone2.png)
 - Open local folder
 - Edit the file "platformio.ini" to match the serial port of your programmer:
 `upload_port = /dev/cu.usbmodem141201` (example)
@@ -275,9 +277,9 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExNzgwMDM3OTYsMzc1OTczOTM4LC0xNz
-MyNzYzMDQyLDEzNDk1OTgyNjUsMTM3ODc4NTU0OSwtMjAwMDkx
-Nzc2MywxNjMyNDM4MjEsLTEwNjQ0NTE0NzQsNTg2MzgwODI5LC
-0xODcwNzMwNTA3LC0yMTMzODAzNjkyLDcyMDA0MDk5NCwtMjE5
-NzM5MjE4XX0=
+eyJoaXN0b3J5IjpbMjc1OTM3MjU3LC0xMTc4MDAzNzk2LDM3NT
+k3MzkzOCwtMTczMjc2MzA0MiwxMzQ5NTk4MjY1LDEzNzg3ODU1
+NDksLTIwMDA5MTc3NjMsMTYzMjQzODIxLC0xMDY0NDUxNDc0LD
+U4NjM4MDgyOSwtMTg3MDczMDUwNywtMjEzMzgwMzY5Miw3MjAw
+NDA5OTQsLTIxOTczOTIxOF19
 -->
