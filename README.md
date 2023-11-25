@@ -282,45 +282,45 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0x62-0x7a | words | Servo1-Servo13 Servo Close Position Degrees | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x80 | word | Global Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
 | 0x82-0x9a | words | Servo1-Serv013 Servo Mid Position Degree | 0 = 0 deg<br><br>180 = 180 deg<br><br>treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds) |
-| 0xa0 | word | Global Holo-Servo-H Direction (0-Normal, 1-Reverse) |
-| 0xa1 | word | Global Holo-Servo-V Direction (0-Normal, 1-Reverse) |
-| 0xa2 | word | Servo1 Holo1-Servo-H Direction (0-Normal, 1-Reverse) |
-| 0xa3 | word | Servo2 Holo1-Servo-V Direction (0-Normal, 1-Reverse) |
-| 0xa4 | word | Servo3 Holo2-Servo-H Direction (0-Normal, 1-Reverse) |
-| 0xa5 | word | Servo4 Holo2-Servo-V Direction (0-Normal, 1-Reverse) |
-| 0xa6 | word | Servo5 Holo3-Servo-H Direction (0-Normal, 1-Reverse) |
-| 0xa7 | word | Servo6 Holo3-Servo-V Direction (0-Normal, 1-Reverse) |
+| 0xa0 | word | Global Holo-Servo-H Direction | (0-Normal, 1-Reverse) |
+| 0xa1 | word | Global Holo-Servo-V Direction | (0-Normal, 1-Reverse) |
+| 0xa2 | word | Servo1 Holo1-Servo-H Direction | (0-Normal, 1-Reverse) |
+| 0xa3 | word | Servo2 Holo1-Servo-V Direction | (0-Normal, 1-Reverse) |
+| 0xa4 | word | Servo3 Holo2-Servo-H Direction | (0-Normal, 1-Reverse) |
+| 0xa5 | word | Servo4 Holo2-Servo-V Direction | (0-Normal, 1-Reverse) |
+| 0xa6 | word | Servo5 Holo3-Servo-H Direction | (0-Normal, 1-Reverse) |
+| 0xa7 | word | Servo6 Holo3-Servo-V Direction | (0-Normal, 1-Reverse) |
 | | | | |
-| 0xb0 | word | Global Holo-Servo-H Min Position Degree (0-180) / Microseconds (>=544) |
-| 0xb2 | word | Global Holo-Servo-V Min Position Degree (0-180) / Microseconds (>=544) |
-| 0xb4 | word | Servo1 Holo1-Servo-H Min Position Degree (0-180) / Microseconds (>=544) |
-| 0xb6 | word | Servo2 Holo1-Servo-V Min Position Degree (0-180) / Microseconds (>=544) |
-| 0xb8 | word | Servo3 Holo2-Servo-H Min Position Degree (0-180) / Microseconds (>=544) |
-| 0xba | word | Servo4 Holo2-Servo-V Min Position Degree (0-180) / Microseconds (>=544) |
-| 0xbc | word | Servo5 Holo3-Servo-H Min Position Degree (0-180) / Microseconds (>=544) |
-| 0xbe | word | Servo6 Holo3-Servo-V Min Position Degree (0-180) / Microseconds (>=544) |
+| 0xb0 | word | Global Holo-Servo-H Min Position | Degree (0-180) / Microseconds (>=544) |
+| 0xb2 | word | Global Holo-Servo-V Min Position | Degree (0-180) / Microseconds (>=544) |
+| 0xb4 | word | Servo1 Holo1-Servo-H Min Position | Degree (0-180) / Microseconds (>=544) |
+| 0xb6 | word | Servo2 Holo1-Servo-V Min Position | Degree (0-180) / Microseconds (>=544) |
+| 0xb8 | word | Servo3 Holo2-Servo-H Min Position | Degree (0-180) / Microseconds (>=544) |
+| 0xba | word | Servo4 Holo2-Servo-V Min Position | Degree (0-180) / Microseconds (>=544) |
+| 0xbc | word | Servo5 Holo3-Servo-H Min Position | Degree (0-180) / Microseconds (>=544) |
+| 0xbe | word | Servo6 Holo3-Servo-V Min Position | Degree (0-180) / Microseconds (>=544) |
 | | | | |
-| 0xc0 | word | Global Holo-Servo-H Max Position Degree (0-180) / Microseconds (>=544) |
-| 0xc2 | word | Global Holo-Servo-V Max Position Degree (0-180) / Microseconds (>=544) |
-| 0xc4 | word | Servo1 Holo1-Servo-H Max Position Degree (0-180) / Microseconds (>=544) |
-| 0xc6 | word | Servo2 Holo1-Servo-V Max Position Degree (0-180) / Microseconds (>=544) |
-| 0xc8 | word | Servo3 Holo2-Servo-H Max Position Degree (0-180) / Microseconds (>=544) |
-| 0xca | word | Servo4 Holo2-Servo-V Max Position Degree (0-180) / Microseconds (>=544) |
-| 0xcc | word | Servo5 Holo3-Servo-H Max Position Degree (0-180) / Microseconds (>=544) |
-| 0xce | word | Servo6 Holo3-Servo-V Max Position Degree (0-180) / Microseconds (>=544) |
+| 0xc0 | word | Global Holo-Servo-H Max Position | Degree (0-180) / Microseconds (>=544) |
+| 0xc2 | word | Global Holo-Servo-V Max Position | Degree (0-180) / Microseconds (>=544) |
+| 0xc4 | word | Servo1 Holo1-Servo-H Max Position | Degree (0-180) / Microseconds (>=544) |
+| 0xc6 | word | Servo2 Holo1-Servo-V Max Position | Degree (0-180) / Microseconds (>=544) |
+| 0xc8 | word | Servo3 Holo2-Servo-H Max Position | Degree (0-180) / Microseconds (>=544) |
+| 0xca | word | Servo4 Holo2-Servo-V Max Position | Degree (0-180) / Microseconds (>=544) |
+| 0xcc | word | Servo5 Holo3-Servo-H Max Position | Degree (0-180) / Microseconds (>=544) |
+| 0xce | word | Servo6 Holo3-Servo-V Max Position | Degree (0-180) / Microseconds (>=544) |
 | | | | |
-| 0xd1 | word | Holo1 Light High Active (=1) or Low Active (=0) |
-| 0xd2 | word | Holo2 Light High Active (=1) or Low Active (=0) |
-| 0xd3 | word | Holo3 Light High Active (=1) or Low Active (=0) |
+| 0xd1 | word | Holo1 Light | High Active (=1) or Low Active (=0) |
+| 0xd2 | word | Holo2 Light | High Active (=1) or Low Active (=0) |
+| 0xd3 | word | Holo3 Light | High Active (=1) or Low Active (=0) |
 | | | | |
-| 0xe0 | word | Global Holo-Servo-H Speed (0-255) |
-| 0xe1 | word | Global Holo-Servo-V Speed (0-255) |
-| 0xe2 | word | Servo1 Holo1-Servo-H Speed (0-255) |
-| 0xe3 | word | Servo2 Holo1-Servo-V Speed (0-255) |
-| 0xe4 | word | Servo3 Holo2-Servo-H Speed (0-255) |
-| 0xe5 | word | Servo4 Holo2-Servo-V Speed (0-255) |
-| 0xe6 | word | Servo5 Holo3-Servo-H Speed (0-255) |
-| 0xe7 | word | Servo6 Holo3-Servo-V Speed (0-255) | 
+| 0xe0 | word | Global Holo-Servo-H Speed | (0-255) |
+| 0xe1 | word | Global Holo-Servo-V Speed | (0-255) |
+| 0xe2 | word | Servo1 Holo1-Servo-H Speed | (0-255) |
+| 0xe3 | word | Servo2 Holo1-Servo-V Speed | (0-255) |
+| 0xe4 | word | Servo3 Holo2-Servo-H Speed | (0-255) |
+| 0xe5 | word | Servo4 Holo2-Servo-V Speed | (0-255) |
+| 0xe6 | word | Servo5 Holo3-Servo-H Speed | (0-255) |
+| 0xe7 | word | Servo6 Holo3-Servo-V Speed | (0-255) | 
 
 
 <!--stackedit_data:
