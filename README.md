@@ -13,6 +13,7 @@ The MarcDuinoV4 software is a **firmware replacement** for the original MarcDuin
 Details about the **boards** can be found here:
 
 https://www.curiousmarc.com/r2-d2/marcduino-system/marcduino-boards/marcduino-v1-5
+https://astromech.net/forums/showthread.php?28414-Support-Thread-for-MarcDuino-v1-5-s
 
 The **original firmware** can be found here:
 
@@ -29,13 +30,23 @@ https://github.com/nhutchison/MarcDuinoClient
 Nevertheless: Read and understand, how the boards work, why there is a master and a slave board, how the boards are connected ->
 
  https://www.curiousmarc.com/r2-d2/marcduino-system
+ https://astromech.net/forums/showthread.php?28414-Support-Thread-for-MarcDuino-v1-5-s
 
 As soon as you are familiar with MarcDuino, come back here and proceed!
 
 ## Why MarcDuinoV4?
 The last update to the original firmware was in 2018. Neil's last update was a minor change in mid-2022. His V3 software has about 80% of the original source in common, adding some features for the latest MarcDuino boards (servo controllers and EXT/AUX pin controllers). He also added the nice feature of saving settings to EEPROM at runtime. But the code also has some glitches and bugs and is based on outdated Arduino libraries. I started 2023 after the whole Arduino framework and community has made really great progress in the last 5 years.
 
-The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils idea of the EEPROM storage a step further, so nearly ***any*** setting is stored there. Including per-servo position settings. I also added the new panel animation of Tim Hebel who is also using a modified MarcDuino V3 firmware (https://github.com/Eebel/SHADOW_MD_EEBEL),
+The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils idea of the EEPROM storage a step further, so nearly ***any*** setting is stored there. Including per-servo position settings. I also added the new panel animation of Tim Hebel who is also using a modified MarcDuino V3 firmware (https://github.com/Eebel/SHADOW_MD_EEBEL).
+
+### New Features (excerpt)
+- Support for MP3 Trigger, DF Mini Player and R2-D2 / Astromech Vocalizer (https://humancyborgrelations.com/)
+- Identical firmware for Master and Slave
+- Automatic configuration of Master and Slave at first startup
+- per servo runtime settings for min/max and open/close positions
+- switch to modern OOP software design and use of most recent common Arduino libraries
+- fixed a lot of bugs at least of the V3 spinoff
+- ...
 
 ## Lets get started
 ### Revision History
@@ -43,7 +54,7 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 |--|--|--
 | 2023-10-23|V0.9.0 RC1|First version for closed beta test group|
 
-### Known missing functionality (will be released in the future)
+### Known MISSING functionality compared to the original source (will be released in the future)
 - I2C command support
 - RC-IN support
 
@@ -54,30 +65,37 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 |MarcDuino V1.5 Rev2|not yet, but planned, tests  pending|
 |MarcDuino V1 | NO |
 |MarcDuino V2 | NO |
+|BenDuino boards (https://www.printed-droid.com/kb/benduino-system/) | not yet, but planned, tests pending|
 
 ### Uploading firmware using *.hex files
 - Download the latest hex-Files from the GitHub Repository: https://github.com/RealNobser/MarcDuinoV4/releases
-- Flash hex file with the following fuse settings:
+- Flash hex file with the following fuse settings (**incorrect fuse settings will lead to non functional boards or unintended EEPROM content reset!**):
 	* efuse: 0x07
 	* hfuse: 0xD7
 	* lfuse: 0xFF
-- ... (more details to follow)
+- **Recommended:** When not using the Arduino IDE take a look at avrdude
+	* avrdude: https://github.com/MCUdude/avrdude
+	* GUI for avrdude: https://blog.zakkemble.net/avrdudess-a-gui-for-avrdude/
+	* some instructions: https://forum.arduino.cc/t/the-simplest-way-to-upload-a-compiled-hex-file-without-the-ide/401996
 
 ### Development Environment
 * Visual Studio Code: https://code.visualstudio.com/download
 * PlatformIO Extension: https://platformio.org/install/ide?install=vscode
+* Recommended ISP programmers:
+	* https://www.diamex.de/dxshop/USB-ISP-Programmer-fuer-AVR-STM32-LPC-ESP32-8266-Prog-S
+	* https://www.diamex.de/dxshop/USB-ISP-Programmer-fuer-Atmel-AVR
 
 ### Building and uploading firmware using Visual Studio Code
 - Clone the GitHub repository using Visual Studio Code (Source Control / Clone Repository)
-- ![enter image description here](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Clone1.png)
-- ![enter image description here](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Clone2.png)
+- ![VSCode Clone 1](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Clone1.png)
+- ![VSCode Clone 2](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Clone2.png)
 - Open local folder
 - Edit the file "platformio.ini" to match the serial port of your programmer:
 `upload_port = /dev/cu.usbmodem141201` (example)
 - build the code (PlatformIO / ATmega328P / General / Build)
-- ![enter image description here](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Build.png)
+- ![VSCode Build](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Build.png)
 - upload the code (PlatformIO / ATmega328P / General / Upload)
-- ![enter image description here](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Upload.png)
+- ![VSCode Upload](https://github.com/RealNobser/MarcDuinoV4/blob/main/assets/Upload.png)
 
 ## MarcDuino Commands
 ### Format
