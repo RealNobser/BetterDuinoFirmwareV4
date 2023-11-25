@@ -112,8 +112,16 @@ void MarcDuinoDome::adjustPanelEndPositions(Panel* Panels[], const unsigned int 
 
 bool MarcDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound)
 {
+    char bank_char[2];
+    char sound_char[3];
+
     bank = 0;
     sound = 0;
+
+    memset(cmd, 0x00, 1);
+
+    memset(bank_char, 0x00, 2);
+    memset(sound_char, 0x00, 3);
 
     //if ((strlen(command) != 4) && (strlen(command) != 2))
     if ((strlen(command) <2) || (strlen(command) >4))
@@ -130,14 +138,6 @@ bool MarcDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigne
     }
     else if (strlen(command) == 3)
     {
-        char bank_char[2];
-        char sound_char[3];
-
-        memset(cmd, 0x00, 1);
-
-        memset(bank_char, 0x00, 2);
-        memset(sound_char, 0x00, 3);
-
         memcpy(bank_char, command+1, 1);
         memcpy(sound_char, command+2, 1);
 
@@ -146,14 +146,6 @@ bool MarcDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigne
     }
     else if (strlen(command) == 4)
     {
-        char bank_char[2];
-        char sound_char[3];
-
-        memset(cmd, 0x00, 1);
-
-        memset(bank_char, 0x00, 2);
-        memset(sound_char, 0x00, 3);
-
         memcpy(bank_char, command+1, 1);
         memcpy(sound_char, command+2, 2);
 

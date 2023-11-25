@@ -90,7 +90,7 @@ sequence_t panel_wave PROGMEM =  //SE02 WAVE
 		{0, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,    _NP,    _NP,	_NP}
 };
 
-sequence_t panel_fast_wave PROGMEM= //SE03 SMIRK
+sequence_t panel_fast_wave PROGMEM = //SE03 SMIRK
 {
 		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
 		// time	servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
@@ -303,7 +303,7 @@ sequence_t panel_init PROGMEM =
 };
 
 // 6min26sec disco sequence to trigger callback at the right time
-sequence_t panel_long_disco PROGMEM=  //SE09
+sequence_t panel_long_disco PROGMEM =  //SE09
 {
 		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
 		// time	servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 

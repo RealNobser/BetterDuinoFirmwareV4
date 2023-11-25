@@ -335,7 +335,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
             parseCommand(ServoCommand);            
         }
     }
-    else if (strcmp(cmd, "SP") == 0)       // Set Servo Degrees/Microseconds for Panel Mid,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+    else if (strcmp(cmd, "SP") == 0)       // Set Servo Speed (0-255)
     {
         Storage.setServoSpeed(param_num, param_num_ext);
     }
@@ -505,7 +505,7 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         delay(500);
         resetFunc();
     }
-    else if (strcmp(cmd, "AD") == 0)             // Reboot MarcDuino
+    else if (strcmp(cmd, "AD") == 0)             // Activate Adjustment Mode
     {
         Storage.setAdjustmentMode(param_num == 0x01);
     }

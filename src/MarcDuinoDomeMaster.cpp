@@ -80,7 +80,7 @@ void MarcDuinoDomeMaster::init()
     }
 
     parseCommand(":SE00");          // Close Panels
-    Serial_Slave.print("#MD01\r");  // Force Slave board to be in Slave Mode
+    Serial_Slave.print(F("#MD01\r"));  // Force Slave board to be in Slave Mode
 }
 
 void MarcDuinoDomeMaster::run()
@@ -168,6 +168,12 @@ void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
             Storage.setDisableRandomSound(0);
         break;
     }
+}
+
+void MarcDuinoDomeMaster::setSoundIntervall(const unsigned long Intervall)
+{
+    RandomSoundMillis       = millis();
+    RandomSoundIntervall    = Intervall;
 }
 
 /*
@@ -446,18 +452,15 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
             Sound->VolumeOff();
         break;
         case 'L':   // Leia message (bank 7 sound 1)
-            RandomSoundMillis    = millis();
-            RandomSoundIntervall = 44000;
+            setSoundIntervall(44000);
             Sound->Play(7,1);
         break;
         case 'C':   // Cantina music (bank 9 sound 5)
-            RandomSoundMillis    = millis();
-            RandomSoundIntervall = 56000;
+            setSoundIntervall(56000);
             Sound->Play(9,5);
         break;
         case 'c':   // Beep cantina (bank 9 sound 1)
-            RandomSoundMillis    = millis();
-            RandomSoundIntervall = 27000;
+            setSoundIntervall(27000);        
             Sound->Play(9,1);
         break;
         case 'S':   // Scream (bank 6 sound 1)
@@ -474,8 +477,7 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
                 Sound->Play(6,3);
         break;
         case 'D':   // Disco (bank 9 sound 6)
-            RandomSoundMillis    = millis();
-            RandomSoundIntervall = 396000;
+            setSoundIntervall(396000);
             Sound->Play(9,6);
         break;
         case 's':   // stop sounds
@@ -498,28 +500,23 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
             Sound->VolumeMin();
         break;
         case 'W':   // Star Wars music (bank 9 sound 2)
-            RandomSoundMillis    = millis();
-            RandomSoundIntervall = 335000;
+            setSoundIntervall(335000);
             Sound->Play(9,2);
         break;
         case 'w':   // Beep Star Wars music (bank 9 sound 7)
-            RandomSoundMillis    = millis();
-            RandomSoundIntervall = 15000;
+            setSoundIntervall(15000);
             Sound->Play(9,7);
         break;
         case 'M':   // Imperial March (bank 9 sound 3)
-            RandomSoundMillis    = millis();
-            RandomSoundIntervall = 195000;
+            setSoundIntervall(195000);
             Sound->Play(9,3);
         break;
         case 'i':   // Beep Imperial March (bank 9 sound 8)
-            RandomSoundMillis    = millis();
-            RandomSoundIntervall = 25000;
+            setSoundIntervall(25000);
             Sound->Play(9,8);
         break;
         case 'B':   // Startup Sound
-            RandomSoundMillis    = millis();
-            RandomSoundIntervall = 10000;
+            setSoundIntervall(10000);
             Sound->Play(Storage.getStartupSoundNr());            
         break;
         default:    // Ignore

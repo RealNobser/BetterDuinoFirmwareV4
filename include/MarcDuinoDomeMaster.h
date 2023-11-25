@@ -41,6 +41,7 @@ class MarcDuinoDomeMaster : public MarcDuinoDome
         unsigned long MaxRandomPause        = 12000;
 
         void setStandardRandomSoundIntervall();
+        void setSoundIntervall(const unsigned long Intervall);
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);
