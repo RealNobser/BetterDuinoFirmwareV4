@@ -1,4 +1,4 @@
-# MarcDuinoV4
+# MarcDuinoFirmwareV4
 
 ## What is the MarcDuino system?
 (from https://www.curiousmarc.com/r2-d2/marcduino-system):
