@@ -1,4 +1,5 @@
 # BetterDuino Firmware V4
+## Disclaimer
 
 ## What is the MarcDuino system?
 (from https://www.curiousmarc.com/r2-d2/marcduino-system):
@@ -25,9 +26,12 @@ https://github.com/nhutchison/MarcDuinoMain
 
 https://github.com/nhutchison/MarcDuinoClient
 
+## Important Disclaimer
 ***BetterDuinoFirmwareV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil! So if you have any questions about BetterDuino Firmware V4 don't ask any of them!***
 
 ***If you find any issues, please use the github "Issues" mechanism above. When you are an experienced software developer please feel free to submit pull requests. This is a living repository and I appreciate any community input!***
+
+***Please do not contact astromech.net or open up a discussion in the astromech.net forum. astromech.net is not in charge with BetterDuinoFirmwareV4. You will not get any support or help regarding BetterDuino. On the other side, if you have questions about the original firmware for MarcDuino boards, then you are fine in the astromech forum.***
 
 Nevertheless: Read and understand, how the boards work, why there is a master and a slave board, how the boards are connected ->
 
