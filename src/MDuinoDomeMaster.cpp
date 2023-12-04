@@ -1,11 +1,11 @@
 
-#include"MarcDuinoDomeMaster.h"
+#include "MDuinoDomeMaster.h"
 
-MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
+MDuinoDomeMaster::MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
-    MarcDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
+    MDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
     Serial_Slave(Serial_Slave),
     Serial_MP3(Serial_MP3)
 {
@@ -20,29 +20,29 @@ MarcDuinoDomeMaster::MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, S
         Panels[i] = nullptr;
     }
 
-    MarcDuinoStorage::MarcDuinoMP3PlayerType player = Storage.getMP3Player();
+    MDuinoStorage::MDuinoMP3PlayerType player = Storage.getMP3Player();
     switch (player)
     {
-        case MarcDuinoStorage::MP3Trigger:
-            Sound = new MarcDuinoSoundMP3Trigger(Serial_MP3);
+        case MDuinoStorage::MP3Trigger:
+            Sound = new MDuinoSoundMP3Trigger(Serial_MP3);
         break;
-        case MarcDuinoStorage::DFPlayer:
-            Sound = new MarcDuinoSoundDFPlayer(Serial_MP3);
+        case MDuinoStorage::DFPlayer:
+            Sound = new MDuinoSoundDFPlayer(Serial_MP3);
         break;
-        case MarcDuinoStorage::Vocalizer:
-            Sound = new MarcDuinoSoundVocalizer(Serial_MP3);
+        case MDuinoStorage::Vocalizer:
+            Sound = new MDuinoSoundVocalizer(Serial_MP3);
         break;
         default:
-            Sound = new MarcDuinoSoundMP3Trigger(Serial_MP3);
+            Sound = new MDuinoSoundMP3Trigger(Serial_MP3);
         break;
     }
 
     RandomSoundMillis   = millis();
 }
 
-void MarcDuinoDomeMaster::init()
+void MDuinoDomeMaster::init()
 {
-    MarcDuinoDome::init();
+    MDuinoDome::init();
     Sound->init();
 
     // 11 Panels
@@ -83,9 +83,9 @@ void MarcDuinoDomeMaster::init()
     Serial_Slave.print(F("#MD01\r"));  // Force Slave board to be in Slave Mode
 }
 
-void MarcDuinoDomeMaster::run()
+void MDuinoDomeMaster::run()
 {
-    MarcDuinoDome::run();
+    MDuinoDome::run();
 
     // Servos. TODO: Double implementation, check BaseClass Idea for Dome MarcDuinos
     if (ServoBuzzIntervall != 0)
@@ -128,12 +128,12 @@ void MarcDuinoDomeMaster::run()
     }
 }
 
-void MarcDuinoDomeMaster::resetServoBuzz()
+void MDuinoDomeMaster::resetServoBuzz()
 {
     ServoBuzzIntervall = SERVO_BUZZ_MILLIS;
 }
 
-void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
+void MDuinoDomeMaster::setStandardRandomSoundIntervall()
 {
     byte DisableRandomSound = Storage.getDisableRandomSound();
 
@@ -170,7 +170,7 @@ void MarcDuinoDomeMaster::setStandardRandomSoundIntervall()
     }
 }
 
-void MarcDuinoDomeMaster::setSoundIntervall(const unsigned long Intervall)
+void MDuinoDomeMaster::setSoundIntervall(const unsigned long Intervall)
 {
     RandomSoundMillis       = millis();
     RandomSoundIntervall    = Intervall;
@@ -186,7 +186,7 @@ void MarcDuinoDomeMaster::setSoundIntervall(const unsigned long Intervall)
  *		The slave HP board will output it on suart2 after stripping
  * '#' MarcDuino Setup commands used to configure various settings on the MarcDuino
 */
-void MarcDuinoDomeMaster::parseCommand(const char* command)
+void MDuinoDomeMaster::parseCommand(const char* command)
 {
     switch (command[0])
     {
@@ -236,7 +236,7 @@ void MarcDuinoDomeMaster::parseCommand(const char* command)
  * 		xx=00 all panels off RC servos off.
  * :HDxx RC hold: removes from RC, but does not turn servo off, keeps at last position. xx=00 all panels hold.
  */
-void MarcDuinoDomeMaster::processPanelCommand(const char* command)
+void MDuinoDomeMaster::processPanelCommand(const char* command)
 {
     char cmd[3];
     unsigned int param_num = 0;
@@ -369,7 +369,7 @@ void MarcDuinoDomeMaster::processPanelCommand(const char* command)
     }
 }
 
-void MarcDuinoDomeMaster::processHoloCommand(const char* command)
+void MDuinoDomeMaster::processHoloCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("HoloCommand(Master): %s\r\n"), command);
@@ -379,7 +379,7 @@ void MarcDuinoDomeMaster::processHoloCommand(const char* command)
     Serial_Slave.printf(F("%s\r"), command);
 }
 
-void MarcDuinoDomeMaster::processDisplayCommand(const char* command)
+void MDuinoDomeMaster::processDisplayCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("DisplayCommand(Master): %s\r\n"), command);
@@ -419,7 +419,7 @@ void MarcDuinoDomeMaster::processDisplayCommand(const char* command)
 	//
 	///////////////////////////////////////////////
 
-void MarcDuinoDomeMaster::processSoundCommand(const char* command)
+void MDuinoDomeMaster::processSoundCommand(const char* command)
 {
     char cmd[3];
     unsigned int bank = 0;
@@ -524,7 +524,7 @@ void MarcDuinoDomeMaster::processSoundCommand(const char* command)
     }
 }
 
-void MarcDuinoDomeMaster::processAltSoundCommand(const char* command)
+void MDuinoDomeMaster::processAltSoundCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("AltSoundCommand(Master): %s\r\n"), command);
@@ -533,7 +533,7 @@ void MarcDuinoDomeMaster::processAltSoundCommand(const char* command)
     Serial_MP3.printf(F("%s\r"), command+1);
 }
 
-void MarcDuinoDomeMaster::processAltHoloCommand(const char* command)
+void MDuinoDomeMaster::processAltHoloCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("AltHoloCommand(Master): %s\r\n"), command);
@@ -541,14 +541,14 @@ void MarcDuinoDomeMaster::processAltHoloCommand(const char* command)
     Serial_Slave.printf(F("%s\r"), command);
 }
 
-void MarcDuinoDomeMaster::processI2CCommand(const char* command)
+void MDuinoDomeMaster::processI2CCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("I2CCommand(Master): %s\r\n"), command);
     #endif
 }
 
-void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
+void MDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
 {
     // Also forward to Slave
     Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
@@ -682,13 +682,13 @@ void MarcDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
     Sequencer.startSequence();
 }
 
-void MarcDuinoDomeMaster::sequenceCallbackBuzz(MarcDuinoBase* object)
+void MDuinoDomeMaster::sequenceCallbackBuzz(MDuinoBase* object)
 {
-    ((MarcDuinoDomeMaster*)object)->resetServoBuzz();
+    ((MDuinoDomeMaster*)object)->resetServoBuzz();
 }
 
 // callback to reset JEDI to normal after a sequence, works only once
-void MarcDuinoDomeMaster::sequenceCallbackJedi(MarcDuinoBase* object)
+void MDuinoDomeMaster::sequenceCallbackJedi(MDuinoBase* object)
 {
     object->parseCommand("*H000\r"); // quick way to turn off holos if connected to MarcDuino
 	object->parseCommand("@0T1\r");  // abort test routine, reset all to normal
@@ -696,7 +696,7 @@ void MarcDuinoDomeMaster::sequenceCallbackJedi(MarcDuinoBase* object)
 }
 
 // callback to reset JEDI to normal after a sequence, works only once
-void MarcDuinoDomeMaster::sequenceCallbackResetMP(MarcDuinoBase* object)
+void MDuinoDomeMaster::sequenceCallbackResetMP(MDuinoBase* object)
 {
 	object->parseCommand("%T00\r");  	// Off
 }

@@ -1,7 +1,7 @@
 
-#include "MarcDuinoBase.h"
+#include "MDuinoBase.h"
 
-MarcDuinoBase::MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
+MDuinoBase::MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                              VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
     Servo1(Servo1), Servo2(Servo2), Servo3(Servo3), Servo4(Servo4), Servo5(Servo5), Servo6(Servo6),
     Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11), Servo12(Servo12), Servo13(Servo13)
@@ -12,7 +12,7 @@ MarcDuinoBase::MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSp
     HeartBeatIntervall  = HEARTBEAT_MILLIS;
 }
 
-void MarcDuinoBase::init()
+void MDuinoBase::init()
 {
     // Seed Random Generator
     randomSeed(analogRead(0));
@@ -26,7 +26,7 @@ void MarcDuinoBase::init()
     checkEEPROM();
 }
 
-void MarcDuinoBase::run()
+void MDuinoBase::run()
 {
     // Read Serial
     if (Serial.available())
@@ -50,7 +50,7 @@ void MarcDuinoBase::run()
     }
 }
 
-void MarcDuinoBase::checkEEPROM()
+void MDuinoBase::checkEEPROM()
 {
     byte ConfigVersion = Storage.getConfigVersion();
     if (ConfigVersion != CONFIG_VERSION)
@@ -58,8 +58,8 @@ void MarcDuinoBase::checkEEPROM()
         #ifdef DEBUG_MSG
         Serial.println(F("Invalid Config Version. Storing defaults in EEPROM and restart."));
         #endif
-        Storage.setType(MarcDuinoStorage::DomeMaster);
-        Storage.setMP3Player(MarcDuinoStorage::MP3Trigger);
+        Storage.setType(MDuinoStorage::DomeMaster);
+        Storage.setMP3Player(MDuinoStorage::MP3Trigger);
         // Storage.setStartupSound(1);
         Storage.setStartupSoundNr(255);
         Storage.setChattyMode();
@@ -101,7 +101,7 @@ void MarcDuinoBase::checkEEPROM()
     }
 }
 
-void MarcDuinoBase::toggleHeartBeat()
+void MDuinoBase::toggleHeartBeat()
 {
     if (HeartBeatStatus == LOW)
       HeartBeatStatus = HIGH;
@@ -111,7 +111,7 @@ void MarcDuinoBase::toggleHeartBeat()
     digitalWrite(P_LED2, HeartBeatStatus);
 }
 
-bool MarcDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & param_num)
+bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & param_num)
 {
     char param[3];
     memset(param, 0x00, 3);
@@ -203,7 +203,7 @@ bool MarcDuinoBase::separateCommand(const char* command, char* cmd, unsigned int
  *  #RSET Reboot MarcDuino
  */
 
-void MarcDuinoBase::processSetupCommand(const char* command)
+void MDuinoBase::processSetupCommand(const char* command)
 {
     char cmd[3];
     char param[4];
@@ -435,13 +435,13 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         switch(param_num)
         {
             case 0:
-                Storage.setType(MarcDuinoStorage::DomeMaster);
+                Storage.setType(MDuinoStorage::DomeMaster);
             break;
             case 1:
-                Storage.setType(MarcDuinoStorage::DomeSlave);
+                Storage.setType(MDuinoStorage::DomeSlave);
             break;
             case 2:
-                Storage.setType(MarcDuinoStorage::BodyMaster);
+                Storage.setType(MDuinoStorage::BodyMaster);
             break;
             default:
                 return;
@@ -455,13 +455,13 @@ void MarcDuinoBase::processSetupCommand(const char* command)
         switch(param_num)
         {
             case 0:
-                Storage.setMP3Player(MarcDuinoStorage::MP3Trigger);
+                Storage.setMP3Player(MDuinoStorage::MP3Trigger);
             break;
             case 1:
-                Storage.setMP3Player(MarcDuinoStorage::DFPlayer);
+                Storage.setMP3Player(MDuinoStorage::DFPlayer);
             break;
             case 2:
-                Storage.setMP3Player(MarcDuinoStorage::Vocalizer);
+                Storage.setMP3Player(MDuinoStorage::Vocalizer);
             break;
             default:
                 return;

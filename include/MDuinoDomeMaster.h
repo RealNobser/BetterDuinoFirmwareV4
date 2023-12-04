@@ -1,16 +1,16 @@
 #ifndef __MARCDUINODOMEMASTER_H__
 #define __MARCDUINODOMEMASTER_H__
 
-#include "MarcDuinoDome.h"
-#include "MarcDuinoStorage.h"
-#include "MarcDuinoSound.h"
+#include "MDuinoDome.h"
+#include "MDuinoStorage.h"
+#include "MDuinoSound.h"
 #include "Panel.h"
 #include <SendOnlySoftwareSerial.h>
 
-class MarcDuinoDomeMaster : public MarcDuinoDome
+class MDuinoDomeMaster : public MDuinoDome
 {
     public:
-        MarcDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
+        MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13);
@@ -32,7 +32,7 @@ class MarcDuinoDomeMaster : public MarcDuinoDome
 
         Panel* Panels[MaxPanel + 1];               // +1 for index 0 dummy
 
-        MarcDuinoSound* Sound = nullptr;
+        MDuinoSound* Sound = nullptr;
 
         unsigned long RandomSoundIntervall  = 0;
         unsigned long RandomSoundMillis     = 0;
@@ -53,9 +53,9 @@ class MarcDuinoDomeMaster : public MarcDuinoDome
 
         void playSequenceAddons(const unsigned int SeqNr) override;
 
-        static void sequenceCallbackBuzz(MarcDuinoBase* object);
-        static void sequenceCallbackJedi(MarcDuinoBase* object);
-        static void sequenceCallbackResetMP(MarcDuinoBase* object);
+        static void sequenceCallbackBuzz(MDuinoBase* object);
+        static void sequenceCallbackJedi(MDuinoBase* object);
+        static void sequenceCallbackResetMP(MDuinoBase* object);
 };
 
 #endif // __MARCDUINODOMEMASTER_H__

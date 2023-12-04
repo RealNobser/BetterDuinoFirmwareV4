@@ -1,12 +1,12 @@
 
-#include"MarcDuinoDomeSlave.h"
-#include"PanelSequences.h"
+#include "MDuinoDomeSlave.h"
+#include "PanelSequences.h"
 
-MarcDuinoDomeSlave::MarcDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
+MDuinoDomeSlave::MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
-    MarcDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
+    MDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
     Serial_Magic(Serial_Magic),
     Serial_Teeces(Serial_Teeces)
 {
@@ -27,9 +27,9 @@ MarcDuinoDomeSlave::MarcDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, Sen
     }   
 }
 
-void MarcDuinoDomeSlave::init()
+void MDuinoDomeSlave::init()
 {
-    MarcDuinoDome::init();
+    MDuinoDome::init();
 
     // 3 Holos
     Holos[1] = new Holo(P_FL, Storage.getHoloLightHighActive(1), Servo1, P_HPF_H, Servo2, P_HPF_V);    // Front
@@ -49,9 +49,9 @@ void MarcDuinoDomeSlave::init()
     parseCommand(":SE00");    // Close Panels
 }
 
-void MarcDuinoDomeSlave::run()
+void MDuinoDomeSlave::run()
 {
-    MarcDuinoDome::run();
+    MDuinoDome::run();
 
     // Holos
     for (unsigned int i=MinHolo; i <= MaxHolo; i++)
@@ -97,7 +97,7 @@ void MarcDuinoDomeSlave::run()
  *  '#' MarcDuino Setup commands used to configure various settings on the MarcDuino
  */
   
-void MarcDuinoDomeSlave::parseCommand(const char* command)
+void MDuinoDomeSlave::parseCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("Command(Salve): %s\r\n"), command);
@@ -135,7 +135,7 @@ void MarcDuinoDomeSlave::parseCommand(const char* command)
     }    
 }
 
-void MarcDuinoDomeSlave::processPanelCommand(const char* command)
+void MDuinoDomeSlave::processPanelCommand(const char* command)
 {
     // Sequence and Panel Commands will be processed
     char cmd[3];
@@ -206,7 +206,7 @@ void MarcDuinoDomeSlave::processPanelCommand(const char* command)
     }    
 }
 
-void MarcDuinoDomeSlave::processHoloCommand(const char* command)
+void MDuinoDomeSlave::processHoloCommand(const char* command)
 {
     char cmd[3];
     unsigned int param_num = 0;
@@ -321,7 +321,7 @@ void MarcDuinoDomeSlave::processHoloCommand(const char* command)
     }    
 }
 
-void MarcDuinoDomeSlave::processDisplayCommand(const char* command)
+void MDuinoDomeSlave::processDisplayCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("DisplayCommand(Slave): %s\r\n"), command);
@@ -329,7 +329,7 @@ void MarcDuinoDomeSlave::processDisplayCommand(const char* command)
     Serial_Teeces.printf(F("%s\r"), command+1);    // stripped
 }
 
-void MarcDuinoDomeSlave::processAltDisplayCommand(const char* command)
+void MDuinoDomeSlave::processAltDisplayCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("AltDisplayCommand(Slave): %s\r\n"), command);
@@ -337,7 +337,7 @@ void MarcDuinoDomeSlave::processAltDisplayCommand(const char* command)
     Serial_Teeces.printf(F("%s\r"), command+1);    // stripped
 }
 
-void MarcDuinoDomeSlave::processExpansionCommand(const char* command)
+void MDuinoDomeSlave::processExpansionCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("ExpansionCommand(Slave): %s\r\n"), command);
@@ -345,14 +345,14 @@ void MarcDuinoDomeSlave::processExpansionCommand(const char* command)
     Serial_Magic.printf(F("%s\r"), command+1);    // stripped
 }
 
-void MarcDuinoDomeSlave::processI2CCommand(const char* command)
+void MDuinoDomeSlave::processI2CCommand(const char* command)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("I2CCommand(Master): %s\r\n"), command);
     #endif
 }
 
-void MarcDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)
+void MDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("PlaySequenceAddons(Slave): %i\r\n"), SeqNr);
@@ -360,7 +360,7 @@ void MarcDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)
 }
 
 
-void MarcDuinoDomeSlave::HolosOn(const byte HoloNr)
+void MDuinoDomeSlave::HolosOn(const byte HoloNr)
 {
     if (HoloNr > (MAX_MARCDUINOHOLOS + 1)) // Parameter = 4
         return;
@@ -374,7 +374,7 @@ void MarcDuinoDomeSlave::HolosOn(const byte HoloNr)
         Holos[HoloNr]->on();
 }
 
-void MarcDuinoDomeSlave::HolosOff(const byte HoloNr)
+void MDuinoDomeSlave::HolosOff(const byte HoloNr)
 {
     if (HoloNr > (MAX_MARCDUINOHOLOS + 1))    // Parameter = 4
         return;
@@ -388,7 +388,7 @@ void MarcDuinoDomeSlave::HolosOff(const byte HoloNr)
         Holos[HoloNr]->off();
 }
 
-void MarcDuinoDomeSlave::HoloCenter(const byte HoloNr)
+void MDuinoDomeSlave::HoloCenter(const byte HoloNr)
 {
     word HMin, HMax, VMin, VMax, HCenter, VCenter = 0;
 
@@ -403,7 +403,7 @@ void MarcDuinoDomeSlave::HoloCenter(const byte HoloNr)
     Holos[HoloNr]->move(HCenter, VCenter);
 }
 
-void MarcDuinoDomeSlave::MagicPanelCtrl(const unsigned int param_num)
+void MDuinoDomeSlave::MagicPanelCtrl(const unsigned int param_num)
 {
     MagicPanelInterval = 0;
 
@@ -419,7 +419,7 @@ void MarcDuinoDomeSlave::MagicPanelCtrl(const unsigned int param_num)
     }
 }
 
-void MarcDuinoDomeSlave::HoloMovementCtrl(const unsigned int param_num, const bool moving)
+void MDuinoDomeSlave::HoloMovementCtrl(const unsigned int param_num, const bool moving)
 {
     if ((param_num == 0) || (param_num >3))
     {

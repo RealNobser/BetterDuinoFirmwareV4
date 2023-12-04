@@ -1,15 +1,15 @@
 #ifndef __MARCDUINODOME_H__
 #define __MARCDUINODOME_H__
 
-#include "MarcDuinoBase.h"
-#include "MarcDuinoSequencer.h"
+#include "MDuinoBase.h"
+#include "MDuinoSequencer.h"
 
 #include "Holo.h"
 
-class MarcDuinoDome : public MarcDuinoBase
+class MDuinoDome : public MDuinoBase
 {
     public:
-        MarcDuinoDome(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
+        MDuinoDome(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                     VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13);
 
         virtual void init();
@@ -25,7 +25,7 @@ class MarcDuinoDome : public MarcDuinoBase
         unsigned long ServoBuzzMillis       = 0;
         unsigned long ServoBuzzIntervall    = 0;
 
-        MarcDuinoSequencer  Sequencer;
+        MDuinoSequencer  Sequencer;
 
         unsigned int MaxSoundsPerBank[10];
 

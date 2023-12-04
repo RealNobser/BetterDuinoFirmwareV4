@@ -5,12 +5,12 @@
 #include <config.h>
 #include <VarSpeedServo.h>
 
-#include "MarcDuinoStorage.h"
+#include "MDuinoStorage.h"
 
-class MarcDuinoBase
+class MDuinoBase
 {
     public:
-        MarcDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
+        MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                       VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13);
 
         virtual void init();
@@ -27,7 +27,7 @@ class MarcDuinoBase
         char SerialBuffer[SERIALBUFFERSIZE];
         int BufferIndex = 0;
 
-        MarcDuinoStorage    Storage;
+        MDuinoStorage    Storage;
 
         VarSpeedServo& Servo1;
         VarSpeedServo& Servo2;

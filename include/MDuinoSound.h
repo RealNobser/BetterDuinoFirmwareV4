@@ -60,10 +60,10 @@
 	///////////////////////////////////////////////
 
 
-class MarcDuinoSound
+class MDuinoSound
 {
     public:
-        MarcDuinoSound();
+        MDuinoSound();
 
         virtual void init() = 0;
 
@@ -89,10 +89,10 @@ class MarcDuinoSound
         byte CurrentVolume = 0;
 };
 
-class MarcDuinoSoundMP3Trigger : public MarcDuinoSound
+class MDuinoSoundMP3Trigger : public MDuinoSound
 {
     public:
-        MarcDuinoSoundMP3Trigger(SendOnlySoftwareSerial& SoundSerial);
+        MDuinoSoundMP3Trigger(SendOnlySoftwareSerial& SoundSerial);
 
         virtual void init() override;
 
@@ -114,10 +114,10 @@ class MarcDuinoSoundMP3Trigger : public MarcDuinoSound
         SendOnlySoftwareSerial& SoundSerial;
 };
 
-class MarcDuinoSoundDFPlayer : public MarcDuinoSound
+class MDuinoSoundDFPlayer : public MDuinoSound
 {
     public:
-        MarcDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial);
+        MDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial);
 
         virtual void init() override;
 
@@ -140,10 +140,10 @@ class MarcDuinoSoundDFPlayer : public MarcDuinoSound
         void sendCommand(const byte Command, const byte Param1, const byte Param2);
 };
 
-class MarcDuinoSoundVocalizer : public MarcDuinoSound
+class MDuinoSoundVocalizer : public MDuinoSound
 {
     public:
-        MarcDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSerial);
+        MDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSerial);
 
         virtual void init() override;
 

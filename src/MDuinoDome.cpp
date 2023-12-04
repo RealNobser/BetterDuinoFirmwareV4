@@ -1,10 +1,10 @@
-#include "MarcDuinoDome.h"
+#include "MDuinoDome.h"
 #include "PanelSequences.h"
 
-MarcDuinoDome::MarcDuinoDome(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
+MDuinoDome::MDuinoDome(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
     VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
     VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
-    MarcDuinoBase(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
+    MDuinoBase(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
     Sequencer(this)
 {
      // Initilize Sound Bank Overview for Random Songs
@@ -17,9 +17,9 @@ MarcDuinoDome::MarcDuinoDome(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSp
   
 }
 
-void MarcDuinoDome::init()
+void MDuinoDome::init()
 {
-    MarcDuinoBase::init();
+    MDuinoBase::init();
     Sequencer.init();
 
     // AUX1 Port
@@ -27,9 +27,9 @@ void MarcDuinoDome::init()
     digitalWrite(P_AUX1, LOW);    
 }
 
-void MarcDuinoDome::run()
+void MDuinoDome::run()
 {
-    MarcDuinoBase::run();
+    MDuinoBase::run();
     Sequencer.run();
 
     // AUX1
@@ -43,7 +43,7 @@ void MarcDuinoDome::run()
     }    
 }
 
-void MarcDuinoDome::adjustHoloEndPositions(Holo* Holos[], const unsigned int MinHolo, const unsigned int MaxHolo)
+void MDuinoDome::adjustHoloEndPositions(Holo* Holos[], const unsigned int MinHolo, const unsigned int MaxHolo)
 {
     word HMin          = 0;
     word HMax          = 0;
@@ -87,7 +87,7 @@ void MarcDuinoDome::adjustHoloEndPositions(Holo* Holos[], const unsigned int Min
     }
 }
 
-void MarcDuinoDome::adjustPanelEndPositions(Panel* Panels[], const unsigned int MinPanel, const unsigned int MaxPanel)
+void MDuinoDome::adjustPanelEndPositions(Panel* Panels[], const unsigned int MinPanel, const unsigned int MaxPanel)
 {
     word OpenPos        = 0;
     word ClosedPos      = 0;
@@ -110,7 +110,7 @@ void MarcDuinoDome::adjustPanelEndPositions(Panel* Panels[], const unsigned int 
     }
 }
 
-bool MarcDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound)
+bool MDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound)
 {
     char bank_char[2];
     char sound_char[3];
@@ -155,13 +155,13 @@ bool MarcDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigne
     return true;
 }
 
-void MarcDuinoDome::getRandomSound(unsigned int & bank, unsigned int & sound)
+void MDuinoDome::getRandomSound(unsigned int & bank, unsigned int & sound)
 {
     bank = random(1,6);
     sound = random(1, MaxSoundsPerBank[bank]+1);
 }
 
-void MarcDuinoDome::AUX1(const unsigned int Duration)
+void MDuinoDome::AUX1(const unsigned int Duration)
 {
     switch (Duration)
     {
@@ -181,7 +181,7 @@ void MarcDuinoDome::AUX1(const unsigned int Duration)
     }
 }
 
-void MarcDuinoDome::playSequence(const unsigned int SeqNr)
+void MDuinoDome::playSequence(const unsigned int SeqNr)
 {
     Sequencer.stopSequence();
     Sequencer.clearSequence();
@@ -190,59 +190,59 @@ void MarcDuinoDome::playSequence(const unsigned int SeqNr)
     {
     case 0: // CLOSE ALL PANELS
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
         break;
     case 1:  // SCREAM
     case 51: // Panel only Version
         Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
         break;
     case 2: // WAVE
     case 52:// Panel only Version
         Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
         break;
     case 3: // MOODY FAST WAVE
     case 53:// Panel only Version
         Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
         break;
     case 4: // OPEN WAVE
     case 54:// Panel only Version
         Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
         break;
     case 5: // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
     case 55:// Panel only Version
         Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
         break;
     case 6: // SHORT CIRCUIT / FAINT
     case 56:// Panel only Version
         Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::super_slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::super_slow);
         break;
     case 7: // Cantina (Orchestral Cantina, Rhythmic Panels)
     case 57:// Panel only Version
         Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
         break;
     case 8: // LEIA
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));	// Close panels
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
         break;
     case 9:	// DISCO
         Sequencer.loadSequence(panel_long_disco, SEQ_SIZE(panel_long_disco)); // 6:26 seconds sequence
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
         break;
     case 10: // QUIET   sounds off, holo stop, panel closed
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
         // stop_command(0);					// all panels off RC        
         break;
     case 11: // WIDE AWAKE	random sounds, holos on random, panels closed
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::full);
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
         //stop_command(0);					// all panels off RC and closed
         break;
     case 12: // TOP PIE PANELS RC
@@ -255,12 +255,12 @@ void MarcDuinoDome::playSequence(const unsigned int SeqNr)
         break;
     case 13: // AWAKE	random sounds, holos off, panels closed
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
         // stop_command(0);					// all panels off RC and closed
         break;
     case 14: // EXCITED	random sounds, holos movement, holo lights on, panels closed
         Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
         //stop_command(0);					// all panels off RC and closed
         break;
 
@@ -268,12 +268,12 @@ void MarcDuinoDome::playSequence(const unsigned int SeqNr)
         break;
     case 16: // Panel Wiggle
         Sequencer.loadSequence(panel_wiggle, SEQ_SIZE(panel_wiggle));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::medium);
+        Sequencer.setServoSpeed(MDuinoSequencer::medium);
         break;
 
     case 58: // Panel Wave Bye Bye
         Sequencer.loadSequence(panel_bye_bye_wave, SEQ_SIZE(panel_bye_bye_wave));
-        Sequencer.setServoSpeed(MarcDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
         break;
 
     default:

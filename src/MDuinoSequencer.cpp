@@ -1,20 +1,20 @@
 #include<Arduino.h>
 
-#include "MarcDuinoSequencer.h"
+#include "MDuinoSequencer.h"
 #include "config.h"
 
-MarcDuinoSequencer::MarcDuinoSequencer(MarcDuinoBase* instance)
+MDuinoSequencer::MDuinoSequencer(MDuinoBase* instance)
     : instance(instance)
 {
     clearSequenceCompletionCallbacks();
 }
 
-void MarcDuinoSequencer::init()
+void MDuinoSequencer::init()
 {
     setServoSpeed(fast);    // filling array
 }
 
-void MarcDuinoSequencer::run()
+void MDuinoSequencer::run()
 {
     if (currentSequence != nullptr)
     {
@@ -23,19 +23,19 @@ void MarcDuinoSequencer::run()
     }
 }
 
-void MarcDuinoSequencer::setPanels(Panel** Panels, const unsigned int PanelCount)
+void MDuinoSequencer::setPanels(Panel** Panels, const unsigned int PanelCount)
 {
     this->Panels    = Panels;
     this->PanelCount= PanelCount;
 }
 
-void MarcDuinoSequencer::setPanelRange(const unsigned int MinPanel, const unsigned int MaxPanel)
+void MDuinoSequencer::setPanelRange(const unsigned int MinPanel, const unsigned int MaxPanel)
 {
     this->MinPanel = MinPanel;
     this->MaxPanel = MaxPanel;
 }
 
-void MarcDuinoSequencer::loadSequence(sequence_t_ptr Seq, const unsigned int Steps)
+void MDuinoSequencer::loadSequence(sequence_t_ptr Seq, const unsigned int Steps)
 {   
     clearSequence();
 
@@ -44,7 +44,7 @@ void MarcDuinoSequencer::loadSequence(sequence_t_ptr Seq, const unsigned int Ste
     currentStep             = 0;
 }
 
-void MarcDuinoSequencer::clearSequence()
+void MDuinoSequencer::clearSequence()
 {
     currentStep         = 0;
     currentSequence     = nullptr;
@@ -58,7 +58,7 @@ void MarcDuinoSequencer::clearSequence()
     clearSequenceCompletionCallbacks();    
 }
 
-void MarcDuinoSequencer::startSequence()
+void MDuinoSequencer::startSequence()
 {
     if (currentSequence == nullptr)
         return;
@@ -73,22 +73,22 @@ void MarcDuinoSequencer::startSequence()
     movePanels();
 }
 
-void MarcDuinoSequencer::stopSequence()
+void MDuinoSequencer::stopSequence()
 {
 
 }
 
-void MarcDuinoSequencer::pauseSequence()
+void MDuinoSequencer::pauseSequence()
 {
 
 }
 
-void MarcDuinoSequencer::resumeSequence()
+void MDuinoSequencer::resumeSequence()
 {
 
 }
 
-void MarcDuinoSequencer::nextStep()
+void MDuinoSequencer::nextStep()
 {
     if (currentStep < (currentSequenceSteps-1))
         currentStep++;
@@ -110,7 +110,7 @@ void MarcDuinoSequencer::nextStep()
     movePanels();
 }
 
-void MarcDuinoSequencer::movePanels()
+void MDuinoSequencer::movePanels()
 {
     if (currentSequence == nullptr)
         return;
@@ -139,7 +139,7 @@ void MarcDuinoSequencer::movePanels()
     }
 }
 
-void MarcDuinoSequencer::setServoSpeed(speed_t speed)
+void MDuinoSequencer::setServoSpeed(speed_t speed)
 {
     byte set_speed = SERVO_SPEED_FULL;
 
@@ -177,7 +177,7 @@ void MarcDuinoSequencer::setServoSpeed(speed_t speed)
 }
 
 
-void MarcDuinoSequencer::addSequenceCompletionCallback(void(*usercallback)(MarcDuinoBase*))
+void MDuinoSequencer::addSequenceCompletionCallback(void(*usercallback)(MDuinoBase*))
 {
     if (CompletionCallbacksNr >= MAX_SEQUENCE_COMPLETION_CALLBACKS)
         return; // Ignore additional Callbacks
@@ -186,7 +186,7 @@ void MarcDuinoSequencer::addSequenceCompletionCallback(void(*usercallback)(MarcD
     CompletionCallbacksNr++;
 }
 
-void MarcDuinoSequencer::clearSequenceCompletionCallbacks()
+void MDuinoSequencer::clearSequenceCompletionCallbacks()
 {
     for (unsigned int i = 0; i < MAX_SEQUENCE_COMPLETION_CALLBACKS; i++)
         seq_completion_callback[CompletionCallbacksNr] = nullptr;

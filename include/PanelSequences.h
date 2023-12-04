@@ -2,7 +2,7 @@
 #define __PANELSEQUENCES_H__
 
 #include "config.h"
-#include "MarcDuinoSequencer.h"
+#include "MDuinoSequencer.h"
 
 #include <avr/pgmspace.h>
 

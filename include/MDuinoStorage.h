@@ -13,7 +13,7 @@
 * Address   Content
 * =========|=========
 *  0x00     SW-/Config-Version (40 = 4.0,41 = 4.1 ...=
-*  0x01     MarcDuinoType (0-DomeMaster, 1-DomeSlave, 2-BodyMaster)
+*  0x01     MDuinoType (0-DomeMaster, 1-DomeSlave, 2-BodyMaster)
 *  0x02     Startup Sound (0-none, 1-File255, 2-File254, 3-File253) // depricated, see Startup Sound Nr
 *  0x03     Chatty/Silent Mode (0-Chatty, 1-Silent)
 *  0x04     MP3-Player-Type (0-SparkFun, 1-DF-Mini)
@@ -169,10 +169,10 @@
 #define ADDR_HOLOLIGHTBASE      0xd0
 #define ADDR_HOLOSPEEDBASE      0xe0
 
-class MarcDuinoStorage
+class MDuinoStorage
 {
     public:
-        enum MarcDuinoType
+        enum MDuinoType
         {
             DomeMaster          = 0,
             DomeSlave           = 1,
@@ -180,7 +180,7 @@ class MarcDuinoStorage
             UnknownMarcDuino    = 3
         };
 
-        enum MarcDuinoMP3PlayerType
+        enum MDuinoMP3PlayerType
         {
             MP3Trigger      = 0,
             DFPlayer        = 1,
@@ -188,16 +188,16 @@ class MarcDuinoStorage
             UnknownPlayer   = 3
         };
     public:
-        MarcDuinoStorage();
+        MDuinoStorage();
 
         byte getConfigVersion();
         void setConfigVersion(const byte Version);
 
-        MarcDuinoType getType();
-        void setType(const MarcDuinoType Type);
+        MDuinoType getType();
+        void setType(const MDuinoType Type);
 
-        MarcDuinoMP3PlayerType getMP3Player();
-        void setMP3Player(const MarcDuinoMP3PlayerType Type);
+        MDuinoMP3PlayerType getMP3Player();
+        void setMP3Player(const MDuinoMP3PlayerType Type);
 
         /*
         byte getStartupSound();

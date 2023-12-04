@@ -1,7 +1,7 @@
 #ifndef __MARCDUINODOMESLAVE_H__
 #define __MARCDUINODOMESLAVE_H__
 
-#include "MarcDuinoDome.h"
+#include "MDuinoDome.h"
 #include "Holo.h"
 #include "Panel.h"
 
@@ -73,10 +73,10 @@
  *		Use SDxx to globally set the Servo direction, then SRxxy to change individual servos.*
  */
 
-class MarcDuinoDomeSlave : public MarcDuinoDome
+class MDuinoDomeSlave : public MDuinoDome
 {
     public:
-        MarcDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
+        MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13);

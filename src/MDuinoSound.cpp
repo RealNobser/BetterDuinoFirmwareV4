@@ -1,11 +1,11 @@
-#include "MarcDuinoSound.h"
+#include "MDuinoSound.h"
 
-MarcDuinoSound::MarcDuinoSound()
+MDuinoSound::MDuinoSound()
 {
 
 }
 
-void MarcDuinoSound::Play(const byte BankNr, const byte SoundNr)
+void MDuinoSound::Play(const byte BankNr, const byte SoundNr)
 {
     byte CalcSoundNr = 0;
     CalcSoundNr = (BankNr-1)*25 + SoundNr;
@@ -14,18 +14,18 @@ void MarcDuinoSound::Play(const byte BankNr, const byte SoundNr)
 
 ///////////
 
-MarcDuinoSoundMP3Trigger::MarcDuinoSoundMP3Trigger(SendOnlySoftwareSerial& SoundSerial) :
+MDuinoSoundMP3Trigger::MDuinoSoundMP3Trigger(SendOnlySoftwareSerial& SoundSerial) :
     SoundSerial(SoundSerial)
 {
     CurrentVolume = 0x20;   // Medium Volume
 }
 
-void MarcDuinoSoundMP3Trigger::init()
+void MDuinoSoundMP3Trigger::init()
 {
     VolumeMid();
 }
 
-void MarcDuinoSoundMP3Trigger::SetVolume(const byte Volume)
+void MDuinoSoundMP3Trigger::SetVolume(const byte Volume)
 {
     byte cmd[2];
 
@@ -38,7 +38,7 @@ void MarcDuinoSoundMP3Trigger::SetVolume(const byte Volume)
     SoundSerial.write(cmd, 2);
 }
 
-void MarcDuinoSoundMP3Trigger::VolumeUp()
+void MDuinoSoundMP3Trigger::VolumeUp()
 {
     if (CurrentVolume >= 2)
     {
@@ -47,7 +47,7 @@ void MarcDuinoSoundMP3Trigger::VolumeUp()
     }
 }
 
-void MarcDuinoSoundMP3Trigger::VolumeDown()
+void MDuinoSoundMP3Trigger::VolumeDown()
 {
     if (CurrentVolume < 0x40)
     {
@@ -56,27 +56,27 @@ void MarcDuinoSoundMP3Trigger::VolumeDown()
     }
 }
 
-void MarcDuinoSoundMP3Trigger::VolumeMid()
+void MDuinoSoundMP3Trigger::VolumeMid()
 {
     SetVolume(0x20);
 }
 
-void MarcDuinoSoundMP3Trigger::VolumeMax()
+void MDuinoSoundMP3Trigger::VolumeMax()
 {
     SetVolume(0x00);
 }
 
-void MarcDuinoSoundMP3Trigger::VolumeMin()
+void MDuinoSoundMP3Trigger::VolumeMin()
 {
     SetVolume(0x40);
 }
 
-void MarcDuinoSoundMP3Trigger::VolumeOff()
+void MDuinoSoundMP3Trigger::VolumeOff()
 {
     SetVolume(0xff);
 }
 
-void MarcDuinoSoundMP3Trigger::Play(const byte SoundNr)
+void MDuinoSoundMP3Trigger::Play(const byte SoundNr)
 {
     byte cmd[2];
 
@@ -86,13 +86,13 @@ void MarcDuinoSoundMP3Trigger::Play(const byte SoundNr)
     SoundSerial.write(cmd, 2);
 }
 
-void MarcDuinoSoundMP3Trigger::Stop()
+void MDuinoSoundMP3Trigger::Stop()
 {
     byte cmd[1] = {'O'};  // ATTENTION: This is Start/Stop, not only Stop
     SoundSerial.write(cmd, 1);
 }
 
-void MarcDuinoSoundMP3Trigger::Quiet(const bool on/* = true*/)
+void MDuinoSoundMP3Trigger::Quiet(const bool on/* = true*/)
 {
     byte cmd[2];
 
@@ -108,13 +108,13 @@ void MarcDuinoSoundMP3Trigger::Quiet(const bool on/* = true*/)
 
 ///////////
 
-MarcDuinoSoundDFPlayer::MarcDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial) :
+MDuinoSoundDFPlayer::MDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial) :
     SoundSerial(SoundSerial)
 {
     CurrentVolume = 15;   // Medium Volume
 }
 
-void MarcDuinoSoundDFPlayer::init()
+void MDuinoSoundDFPlayer::init()
 {
     SoundSerial.flush();
 
@@ -126,13 +126,13 @@ void MarcDuinoSoundDFPlayer::init()
     delay(100);
 }
 
-void MarcDuinoSoundDFPlayer::SetVolume(const byte Volume)
+void MDuinoSoundDFPlayer::SetVolume(const byte Volume)
 {
     CurrentVolume = Volume;
     sendCommand(0x06, 0x00, Volume);    // Specify Volume (0-30)
 }
 
-void MarcDuinoSoundDFPlayer::VolumeUp()
+void MDuinoSoundDFPlayer::VolumeUp()
 {
     if (CurrentVolume < 30)
     {
@@ -141,7 +141,7 @@ void MarcDuinoSoundDFPlayer::VolumeUp()
     }    
 }
 
-void MarcDuinoSoundDFPlayer::VolumeDown()
+void MDuinoSoundDFPlayer::VolumeDown()
 {
     if (CurrentVolume >= 2)
     {
@@ -150,42 +150,42 @@ void MarcDuinoSoundDFPlayer::VolumeDown()
     }
 }
 
-void MarcDuinoSoundDFPlayer::VolumeMid()
+void MDuinoSoundDFPlayer::VolumeMid()
 {
     SetVolume(15);
 }
 
-void MarcDuinoSoundDFPlayer::VolumeMax()
+void MDuinoSoundDFPlayer::VolumeMax()
 {
     SetVolume(30);
 }
 
-void MarcDuinoSoundDFPlayer::VolumeMin()
+void MDuinoSoundDFPlayer::VolumeMin()
 {
     SetVolume(5);
 }
 
-void MarcDuinoSoundDFPlayer::VolumeOff()
+void MDuinoSoundDFPlayer::VolumeOff()
 {
     SetVolume(0);
 }
 
-void MarcDuinoSoundDFPlayer::Play(const byte SoundNr)
+void MDuinoSoundDFPlayer::Play(const byte SoundNr)
 {
     sendCommand(0x12, 0x00, SoundNr);      // Playback
 }
 
-void MarcDuinoSoundDFPlayer::Stop()
+void MDuinoSoundDFPlayer::Stop()
 {
     sendCommand(0x16, 0x00, 0x00);  
 }
 
-void MarcDuinoSoundDFPlayer::Quiet(const bool on/* = true*/)
+void MDuinoSoundDFPlayer::Quiet(const bool on/* = true*/)
 {
 
 }
 
-void MarcDuinoSoundDFPlayer::sendCommand(const byte Command, const byte Param1, const byte Param2) 
+void MDuinoSoundDFPlayer::sendCommand(const byte Command, const byte Param1, const byte Param2) 
 {
 
 	// Calculate the checksum
@@ -204,7 +204,7 @@ void MarcDuinoSoundDFPlayer::sendCommand(const byte Command, const byte Param1, 
 //////////
 
 
-MarcDuinoSoundVocalizer::MarcDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSerial) :
+MDuinoSoundVocalizer::MDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSerial) :
     SoundSerial(SoundSerial)
 {
     // Init 
@@ -212,19 +212,19 @@ MarcDuinoSoundVocalizer::MarcDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSe
     CurrentVolume = 50;   // Medium Volume
 }
 
-void MarcDuinoSoundVocalizer::init()
+void MDuinoSoundVocalizer::init()
 {
     VolumeMid();
 }
 
-void MarcDuinoSoundVocalizer::SetVolume(const byte Volume)
+void MDuinoSoundVocalizer::SetVolume(const byte Volume)
 {
     SoundSerial.printf(F("<PVV%d>"), Volume);  // Vocaliser
     SoundSerial.printf(F("<PVA%d>"), Volume);  // Wav Channel A
     SoundSerial.printf(F("<PVB%d>"), Volume);  // Wav Channel B
 }
 
-void MarcDuinoSoundVocalizer::VolumeUp()
+void MDuinoSoundVocalizer::VolumeUp()
 {
     if (CurrentVolume < 100)
     {
@@ -233,7 +233,7 @@ void MarcDuinoSoundVocalizer::VolumeUp()
     }    
 }
 
-void MarcDuinoSoundVocalizer::VolumeDown()
+void MDuinoSoundVocalizer::VolumeDown()
 {
     if (CurrentVolume >= 5)
     {
@@ -242,47 +242,47 @@ void MarcDuinoSoundVocalizer::VolumeDown()
     }
 }
 
-void MarcDuinoSoundVocalizer::VolumeMid()
+void MDuinoSoundVocalizer::VolumeMid()
 {
     SetVolume(50);
 }
 
-void MarcDuinoSoundVocalizer::VolumeMax()
+void MDuinoSoundVocalizer::VolumeMax()
 {
     SetVolume(100);
 }
 
-void MarcDuinoSoundVocalizer::VolumeMin()
+void MDuinoSoundVocalizer::VolumeMin()
 {
     SetVolume(10);
 }
 
-void MarcDuinoSoundVocalizer::VolumeOff()
+void MDuinoSoundVocalizer::VolumeOff()
 {
     SetVolume(0);
 }
 
-void MarcDuinoSoundVocalizer::Play(const byte SoundNr)
+void MDuinoSoundVocalizer::Play(const byte SoundNr)
 {
     SoundSerial.printf(F("<CA%04d>"), SoundNr);
 }
 
-void MarcDuinoSoundVocalizer::Stop()
+void MDuinoSoundVocalizer::Stop()
 {
     SoundSerial.print(F("<PSV>"));
 }
 
-void MarcDuinoSoundVocalizer::Quiet(const bool on/* = true*/)
+void MDuinoSoundVocalizer::Quiet(const bool on/* = true*/)
 {
 
 }
 
-void MarcDuinoSoundVocalizer::Muse()
+void MDuinoSoundVocalizer::Muse()
 {
     SoundSerial.print(F("<MM>"));
 }
 
-void MarcDuinoSoundVocalizer::Overload()
+void MDuinoSoundVocalizer::Overload()
 {
     SoundSerial.print(F("<SE>"));
 }

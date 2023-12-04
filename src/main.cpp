@@ -2,14 +2,14 @@
 #include <Wire.h>
 
 #include "config.h"
-#include "MarcDuinoBase.h"
-#include "MarcDuinoDome.h"
-#include "MarcDuinoDomeMaster.h"
-#include "MarcDuinoDomeSlave.h"
-#include "MarcDuinoBodyMaster.h"
-#include "MarcDuinoStorage.h"
+#include "MDuinoBase.h"
+#include "MDuinoDome.h"
+#include "MDuinoDomeMaster.h"
+#include "MDuinoDomeSlave.h"
+#include "MDuinoBodyMaster.h"
+#include "MDuinoStorage.h"
 
-MarcDuinoBase* MarcDuino = nullptr;
+MDuinoBase* MarcDuino = nullptr;
 
 // Initialize common ressources in main (due to interrupts and globals)
 
@@ -39,29 +39,29 @@ void setup() {
   // I2C - Master
   Wire.begin();
 
-  MarcDuinoStorage Storage;
-  MarcDuinoStorage::MarcDuinoType type;
+  MDuinoStorage Storage;
+  MDuinoStorage::MDuinoType type;
 
   type = Storage.getType();
  
   switch (type)
   {
-    case MarcDuinoStorage::DomeMaster:
-      MarcDuino = new MarcDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+    case MDuinoStorage::DomeMaster:
+      MarcDuino = new MDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
       break;
-    case MarcDuinoStorage::DomeSlave:
-      MarcDuino = new MarcDuinoDomeSlave(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+    case MDuinoStorage::DomeSlave:
+      MarcDuino = new MDuinoDomeSlave(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
       break;
-    case MarcDuinoStorage::BodyMaster:
-      //MarcDuino = new MarcDuinoBodyMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+    case MDuinoStorage::BodyMaster:
+      //MarcDuino = new MDuinoBodyMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
       break;
-    case MarcDuinoStorage::UnknownMarcDuino:
-      MarcDuino = new MarcDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
-      Storage.setType(MarcDuinoStorage::DomeMaster);
+    case MDuinoStorage::UnknownMarcDuino:
+      MarcDuino = new MDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+      Storage.setType(MDuinoStorage::DomeMaster);
       break;
     default:
-      MarcDuino = new MarcDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
-      Storage.setType(MarcDuinoStorage::DomeMaster);    
+      MarcDuino = new MDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+      Storage.setType(MDuinoStorage::DomeMaster);    
       break;
   }
   
