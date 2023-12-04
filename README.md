@@ -69,6 +69,7 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 
 ### Compatibility Matrix
 |Master/Salve|1.8|3.x|4.x|
+|--|--|--|--|
 |1.8|YES|YES|YES|
 |3.x|YES|YES|YES|
 |4.x|YES|YES|YES|
