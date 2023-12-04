@@ -67,6 +67,12 @@ The MarcDuinoV4 code has completely been rewritten from scratch. I took Neils id
 |MarcDuino V2 | NO |
 |BenDuino boards (https://www.printed-droid.com/kb/benduino-system/) | not yet, but planned, tests pending|
 
+### Compatibility Matrix
+|Master/Salve|1.8|3.x|4.x|
+|1.8|YES|YES|YES|
+|3.x|YES|YES|YES|
+|4.x|YES|YES|YES|
+
 ### Uploading firmware using *.hex files
 - Download the latest hex-Files from the GitHub Repository: https://github.com/RealNobser/MarcDuinoV4/releases
 - Flash hex file with the following fuse settings (**incorrect fuse settings will lead to non functional boards or unintended EEPROM content reset!**):
