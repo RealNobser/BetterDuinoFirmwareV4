@@ -32,6 +32,7 @@ https://github.com/nhutchison/MarcDuinoClient
 Nevertheless: Read and understand, how the boards work, why there is a master and a slave board, how the boards are connected ->
 
  https://www.curiousmarc.com/r2-d2/marcduino-system
+ 
  https://astromech.net/forums/showthread.php?28414-Support-Thread-for-MarcDuino-v1-5-s
 
 As soon as you are familiar with MarcDuino, come back here and proceed!
