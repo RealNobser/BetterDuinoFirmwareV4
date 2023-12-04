@@ -1,4 +1,4 @@
-# MarcDuino Firmware V4
+# BetterDuino Firmware V4
 
 ## What is the MarcDuino system?
 (from https://www.curiousmarc.com/r2-d2/marcduino-system):
@@ -7,8 +7,8 @@
 
 The system is centered around the MarcDuino boards which sit in the R2. There are two kinds, the Master and the Slave board, which are very similar to each other." - CuriousMarc
 
-## What is MarcDuino Firmware V4?
-The MarcDuinoFirmwareV4 software is a **firmware replacement** for the original MarcDuino V1.5Rev3 boards. 
+## What is BetterDuino Firmware V4?
+The BetterDuinoFirmwareV4 software is a **firmware replacement** for the original MarcDuino V1.5Rev3 boards. 
 
 Details about the **boards** can be found here:
 
@@ -25,7 +25,7 @@ https://github.com/nhutchison/MarcDuinoMain
 
 https://github.com/nhutchison/MarcDuinoClient
 
-***MarcDuinoFirmwareV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil! So if you have any questions about MarcDuino Firmware V4 don't ask any of them!***
+***BetterDuinoFirmwareV4 has nothing to do with the original firmware made by Marc nor with the spinoff made by Neil! So if you have any questions about BetterDuino Firmware V4 don't ask any of them!***
 
 Nevertheless: Read and understand, how the boards work, why there is a master and a slave board, how the boards are connected ->
 
@@ -34,10 +34,10 @@ Nevertheless: Read and understand, how the boards work, why there is a master an
 
 As soon as you are familiar with MarcDuino, come back here and proceed!
 
-## Why MarcDuino Firmware V4?
+## Why BetterDuino Firmware V4?
 The last update to the original firmware was in 2018. Neil's last update was a minor change in mid-2022. His V3 software has about 80% of the original source in common, adding some features for the latest MarcDuino boards (servo controllers and EXT/AUX pin controllers). He also added the nice feature of saving settings to EEPROM at runtime. But the code also has some glitches and bugs and is based on outdated Arduino libraries. I started 2023 after the whole Arduino framework and community has made really great progress in the last 5 years.
 
-The MarcDuino Firmware V4 code has completely been rewritten from scratch. I took Neils idea of the EEPROM storage a step further, so nearly ***any*** setting is stored there. Including per-servo position settings. I also added the new panel animation of Tim Hebel who is also using a modified MarcDuino V3 firmware (https://github.com/Eebel/SHADOW_MD_EEBEL).
+The BetterDuino Firmware V4 code has completely been rewritten from scratch. I took Neils idea of the EEPROM storage a step further, so nearly ***any*** setting is stored there. Including per-servo position settings. I also added the new panel animation of Tim Hebel who is also using a modified MarcDuino V3 firmware (https://github.com/Eebel/SHADOW_MD_EEBEL).
 
 ### New Features (excerpt)
 - Support for MP3 Trigger, DF Mini Player and R2-D2 / Astromech Vocalizer (https://humancyborgrelations.com/)
@@ -75,7 +75,7 @@ The MarcDuino Firmware V4 code has completely been rewritten from scratch. I too
 |4.x|YES|YES|YES|
 
 ### Uploading firmware using *.hex files
-- Download the latest hex-Files from the GitHub Repository: https://github.com/RealNobser/MarcDuinoFirmwareV4/releases
+- Download the latest hex-Files from the GitHub Repository: https://github.com/RealNobser/BetterDuinoFirmwareV4/releases
 - Flash hex file with the following fuse settings (**incorrect fuse settings will lead to non functional boards or unintended EEPROM content reset!**):
 	* efuse: 0x07
 	* hfuse: 0xD7
@@ -94,17 +94,17 @@ The MarcDuino Firmware V4 code has completely been rewritten from scratch. I too
 
 ### Building and uploading firmware using Visual Studio Code
 - Clone the GitHub repository using Visual Studio Code (Source Control / Clone Repository)
-- ![VSCode Clone 1](https://github.com/RealNobser/MarcDuinoFirmwareV4/blob/main/assets/Clone1.png)
-- ![VSCode Clone 2](https://github.com/RealNobser/MarcDuinoFirmwareV4/blob/main/assets/Clone2.png)
+- ![VSCode Clone 1](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Clone1.png)
+- ![VSCode Clone 2](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Clone2.png)
 - Open local folder
 - Edit the file "platformio.ini" to match the serial port of your programmer:
 `upload_port = /dev/cu.usbmodem141201` (example)
 - build the code (PlatformIO / ATmega328P / General / Build)
-- ![VSCode Build](https://github.com/RealNobser/MarcDuinoFirmwareV4/blob/main/assets/Build.png)
+- ![VSCode Build](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Build.png)
 - upload the code (PlatformIO / ATmega328P / General / Upload)
-- ![VSCode Upload](https://github.com/RealNobser/MarcDuinoFirmwareV4/blob/main/assets/Upload.png)
+- ![VSCode Upload](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Upload.png)
 
-## MarcDuino Commands
+## MarcDuino/BetterDuino Commands
 ### Format
 Every command must start with one of these special characters (defined in the header file). The start character is recognized in the main loop:
 
@@ -239,7 +239,7 @@ These commands are only processed by the MarcDuino Master module
 | **Command** | **Function** | **Remark** |
 | --- | --- | --- |
 | \*EOxx<br><br>TO SLAVE | Pull pin high/low on AUX1. Can be used to trigger a smoke machine as an example.<br><br>xx is the time in seconds.<br><br>* 00 - off<br> <br>* 01-98 is the time in seconds (don't use values >10 for smoke machines!)<br> <br>* 99 on permanently (again don't use for smoke machines) | will be executed on SLAVE only |
-| :EOxx | Pull pin high/low on AUX1. Can be used to trigger a smoke machine as an example.<br><br>xx is the time in seconds.<br><br>* 00 - off<br> <br>* 01-98 is the time in seconds (don't use values >10 for smoke machines!)<br> <br>* 99 on permanently (again don't use for smoke machines) | will be executed on MASTER only<br><br>MarcDuino Firmware V4 and greater |
+| :EOxx | Pull pin high/low on AUX1. Can be used to trigger a smoke machine as an example.<br><br>xx is the time in seconds.<br><br>* 00 - off<br> <br>* 01-98 is the time in seconds (don't use values >10 for smoke machines!)<br> <br>* 99 on permanently (again don't use for smoke machines) | will be executed on MASTER only<br><br>BetterDuino Firmware V4 and greater |
 
 ### Setup Commands
 | **Command** | **Function** | **Remark** |
@@ -248,35 +248,35 @@ These commands are only processed by the MarcDuino Master module
 | #SD00 | Set global servo direction forward | |
 | #SD01 | Set global servo direction reversed | |
 | #SRxxy | Set individual servo to either forward or reversed xx=servo number y=direction<br><br>* Must be a 2 digit Servo number i.e. Servo 4 is 04<br> <br>* Must be either 0 or 1 to set the direction (0 normal, 1 reversed)<br> <br>* Use SDxx to globally set the Servo direction, then SRxxy to change individual servos. | depricated, removed in future releases |
-| #SRxx | Set individual servo to reversed, xx=servo number<br><br>* Must be a 2 digit Servo number i.e. Servo 4 is 04<br> <br>* Use SDxx to globally set the Servo direction, then SRxxy to change individual servos. | MarcDuino Firmware V4 and greater |
-| #SNxx | Set individual servo to normal, xx=servo number<br><br>* Must be a 2 digit Servo number i.e. Servo 4 is 04<br> <br>* Use SDxx to globally set the Servo direction, then SRxxy to change individual servos. | MarcDuino Firmware V4 and greater |
-| #SVxx | Use individual servo settings (0 = no, 1 = yes) | MarcDuino Firmware V4 and greater |
-| #SOxxdddd | Set Servo Degrees/Microseconds for Panel Open, dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino Firmware V4 and greater |
-| #SCxxdddd | Set Servo Degrees/Microseconds for Panel Closed dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino Firmware V4 and greater |
-| #SPxxddd | Set Servo Speed, ddd=0-255 | MarcDuino Firmware V4 and greater |
+| #SRxx | Set individual servo to reversed, xx=servo number<br><br>* Must be a 2 digit Servo number i.e. Servo 4 is 04<br> <br>* Use SDxx to globally set the Servo direction, then SRxxy to change individual servos. | BetterDuino Firmware V4 and greater |
+| #SNxx | Set individual servo to normal, xx=servo number<br><br>* Must be a 2 digit Servo number i.e. Servo 4 is 04<br> <br>* Use SDxx to globally set the Servo direction, then SRxxy to change individual servos. | BetterDuino Firmware V4 and greater |
+| #SVxx | Use individual servo settings (0 = no, 1 = yes) | BetterDuino Firmware V4 and greater |
+| #SOxxdddd | Set Servo Degrees/Microseconds for Panel Open, dddd=0000-0180 deg, dddd > 0544 Microseconds | BetterDuino Firmware V4 and greater |
+| #SCxxdddd | Set Servo Degrees/Microseconds for Panel Closed dddd=0000-0180 deg, dddd > 0544 Microseconds | BetterDuino Firmware V4 and greater |
+| #SPxxddd | Set Servo Speed, ddd=0-255 | BetterDuino Firmware V4 and greater |
 | | **Startup Sound Controls** | |
 | #SSxx | Set startup sound<br><br>* #SS00 : Disable Startup Sound, and remove startup sound delay for fast boot of R2<br> <br>* #SS01 : Default Startup Sound in file 255<br> <br>* #SS02 : Alternate Startup Sound in file 254<br> <br>* #SS03 : Second Alternate Startup Sound in file 253 | depricated, removed in future releases |
-| #SSxxx | Set startup sound<br><br>* #SS000 : Disable Startup Sound, and remove startup sound delay for fast boot of R2<br> <br>* #SSxxx : Set Startup Sound in file xxx | MarcDuino Firmware V4 and greater |
+| #SSxxx | Set startup sound<br><br>* #SS000 : Disable Startup Sound, and remove startup sound delay for fast boot of R2<br> <br>* #SSxxx : Set Startup Sound in file xxx | BetterDuino Firmware V4 and greater |
 | #SQxx | Chatty / Silent mode<br><br>* #SQ00 : Default Chatty Mode<br> <br>* #SQ01 : Silent on startup | |
 | #SMxx | Disable Random Sound<br><br>* #SM00 : Random Sound on <br> #SM01 : No Random Sound + Volume off <br> #SM02 : No Random Sound | What’s the difference between Chatty and Random Sounds (#SQxx)?<br><br>maybe depricated |
-| #SXxx | Set Max Random Pause in seconds. - Maximum timespan between two random sounds | MarcDuino Firmware V4 and greater |
-| #SYxx | Set Min Random Pause in seconds - Minimum timespan between two random sounds | MarcDuino Firmware V4 and greater |
+| #SXxx | Set Max Random Pause in seconds. - Maximum timespan between two random sounds | BetterDuino Firmware V4 and greater |
+| #SYxx | Set Min Random Pause in seconds - Minimum timespan between two random sounds | BetterDuino Firmware V4 and greater |
 | | **Panel Sequencer Controls** | |
 | #STxx | Setup Delay time between Master and Slave Panel Sequence. Use this if the Slave panels are starting too soon. Values up to 250 are supported. Values are in ms. | maybe depricated |
 | | **System Configuration and Management** | |
-| #MDxx | Set MarcDuino Mode<br><br>* #MD00 : MarcDuino Dome Master<br> <br>* #MD01 : MarcDuino Dome Slave<br> <br>* #MD02 : MarcDuino Body Master<br> <br><br>MarcDuino will reboot immediately after setup and start up in new mode. | MarcDuino Firmware V4 and greater |
-| #MPxx | Set MP3-Player Type<br><br>* #MP00 : SparkFun MP3 Trigger<br> <br>* #MP01 : DFPlayer<br> <br>* #MP02 : Vocalizer | MarcDuino Firmware V4 and greater |
-| #MSxyy | Set maximum sounds per soundbank. x=1-9 (Soundbank), y=0-25 (max. Sounds) | MarcDuino Firmware V4 and greater |
+| #MDxx | Set MarcDuino Mode<br><br>* #MD00 : MarcDuino Dome Master<br> <br>* #MD01 : MarcDuino Dome Slave<br> <br>* #MD02 : MarcDuino Body Master<br> <br><br>MarcDuino will reboot immediately after setup and start up in new mode. | BetterDuino Firmware V4 and greater |
+| #MPxx | Set MP3-Player Type<br><br>* #MP00 : SparkFun MP3 Trigger<br> <br>* #MP01 : DFPlayer<br> <br>* #MP02 : Vocalizer | BetterDuino Firmware V4 and greater |
+| #MSxyy | Set maximum sounds per soundbank. x=1-9 (Soundbank), y=0-25 (max. Sounds) | BetterDuino Firmware V4 and greater |
 | #HLxy | Set HoloLight x to High Active (y=1) or Low Active (y=0). x=0 → All Holo Lights | |
-| #HOxxdddd | Set Holo HServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino Firmware V4 and greater |
-| #HCxxdddd | Set Holo HServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino Firmware V4 and greater |
-| #HPxxddd | Set Holo HServo Speed, ddd=0-255 | MarcDuino Firmware V4 and greater |
-| #VOxxdddd | Set Holo VServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino Firmware V4 and greater |
-| #VCxxdddd | Set Holo VServo Degrees/Microseconds Min dddd=0000-0180 deg, dddd > 0544 Microseconds | MarcDuino Firmware V4 and greater |
-| #VPxxddd | Set Holo VServo Speed, ddd=0-255 | MarcDuino Firmware V4 and greater |
-| #DUxx | Dump EEPORM to serial<br><br>* #DUxx : value at address xx<br> <br>* #DUMP : dump complete EEPROM content | MarcDuino Firmware V4 and greater |
-| #RSET | Restart MarcDuino | MarcDuino Firmware V4 and greater |
-| #ADxx | Adjustment Mode: When setting up individual Servo settings, servo will positioned immediately<br><br>* #AD00 : Adjustment Mode Off<br> <br>* #AD01 : Adjustment Mode On | MarcDuino Firmware V4 and greater |
+| #HOxxdddd | Set Holo HServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds | BetterDuino Firmware V4 and greater |
+| #HCxxdddd | Set Holo HServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds | BetterDuino Firmware V4 and greater |
+| #HPxxddd | Set Holo HServo Speed, ddd=0-255 | BetterDuino Firmware V4 and greater |
+| #VOxxdddd | Set Holo VServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds | BetterDuino Firmware V4 and greater |
+| #VCxxdddd | Set Holo VServo Degrees/Microseconds Min dddd=0000-0180 deg, dddd > 0544 Microseconds | BetterDuino Firmware V4 and greater |
+| #VPxxddd | Set Holo VServo Speed, ddd=0-255 | BetterDuino Firmware V4 and greater |
+| #DUxx | Dump EEPORM to serial<br><br>* #DUxx : value at address xx<br> <br>* #DUMP : dump complete EEPROM content | BetterDuino Firmware V4 and greater |
+| #RSET | Restart MarcDuino | BetterDuino Firmware V4 and greater |
+| #ADxx | Adjustment Mode: When setting up individual Servo settings, servo will positioned immediately<br><br>* #AD00 : Adjustment Mode Off<br> <br>* #AD01 : Adjustment Mode On | BetterDuino Firmware V4 and greater |
 
 ## EEPROM Memory Map
 All the settings of the “Setup Commands” are stored in EEPROM. The corresponding Memory Map is described here. Default settings when EEPROM is empty are written in **bold** letter.
