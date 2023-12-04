@@ -14,6 +14,7 @@ The BetterDuinoFirmwareV4 software is a **firmware replacement** for the origina
 Details about the **boards** can be found here:
 
 https://www.curiousmarc.com/r2-d2/marcduino-system/marcduino-boards/marcduino-v1-5
+
 https://astromech.net/forums/showthread.php?28414-Support-Thread-for-MarcDuino-v1-5-s
 
 The **original firmware** can be found here:
