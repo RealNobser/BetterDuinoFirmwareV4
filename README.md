@@ -1,5 +1,4 @@
 # BetterDuino Firmware V4
-## Disclaimer
 
 ## What is the MarcDuino system?
 (from https://www.curiousmarc.com/r2-d2/marcduino-system):
