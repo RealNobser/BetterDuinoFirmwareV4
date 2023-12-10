@@ -137,6 +137,8 @@ void MDuinoDomeMaster::setStandardRandomSoundIntervall()
 {
     byte DisableRandomSound = Storage.getDisableRandomSound();
 
+    RandomSoundMillis       = millis();
+
     if (!Storage.getChattyMode())
     {
         RandomSoundIntervall = 0;
@@ -433,6 +435,8 @@ void MDuinoDomeMaster::processSoundCommand(const char* command)
 
     if (!separateSoundCommand(command, cmd, bank, sound))
         return;
+
+    Sound->VolumeStandard();
 
     if ((bank != 0) && (sound != 0))
     {

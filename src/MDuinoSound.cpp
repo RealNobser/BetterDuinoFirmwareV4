@@ -5,6 +5,11 @@ MDuinoSound::MDuinoSound()
 
 }
 
+void MDuinoSound::VolumeStandard()
+{
+    SetVolume(CurrentVolume);
+}
+
 void MDuinoSound::Play(const byte BankNr, const byte SoundNr)
 {
     byte CalcSoundNr = 0;
@@ -25,7 +30,7 @@ void MDuinoSoundMP3Trigger::init()
     VolumeMid();
 }
 
-void MDuinoSoundMP3Trigger::SetVolume(const byte Volume)
+void MDuinoSoundMP3Trigger::SetVolume(const byte Volume, const bool SetAsStandard /*= true*/)
 {
     byte cmd[2];
 
@@ -34,7 +39,8 @@ void MDuinoSoundMP3Trigger::SetVolume(const byte Volume)
                         // Per the VS1053 datasheet, maximum volume is 0x00, and values 
                         // much above 0x40 are too low to be audible.  
 
-    CurrentVolume = Volume;
+    if (SetAsStandard)
+        CurrentVolume = Volume;
     SoundSerial.write(cmd, 2);
 }
 
@@ -73,7 +79,7 @@ void MDuinoSoundMP3Trigger::VolumeMin()
 
 void MDuinoSoundMP3Trigger::VolumeOff()
 {
-    SetVolume(0xff);
+    SetVolume(0xff, false);
 }
 
 void MDuinoSoundMP3Trigger::Play(const byte SoundNr)
@@ -126,9 +132,11 @@ void MDuinoSoundDFPlayer::init()
     delay(100);
 }
 
-void MDuinoSoundDFPlayer::SetVolume(const byte Volume)
+void MDuinoSoundDFPlayer::SetVolume(const byte Volume, const bool SetAsStandard /*= true*/)
 {
-    CurrentVolume = Volume;
+    if (SetAsStandard)
+        CurrentVolume = Volume;
+
     sendCommand(0x06, 0x00, Volume);    // Specify Volume (0-30)
 }
 
@@ -167,7 +175,7 @@ void MDuinoSoundDFPlayer::VolumeMin()
 
 void MDuinoSoundDFPlayer::VolumeOff()
 {
-    SetVolume(0);
+    SetVolume(0, false);
 }
 
 void MDuinoSoundDFPlayer::Play(const byte SoundNr)
@@ -217,8 +225,11 @@ void MDuinoSoundVocalizer::init()
     VolumeMid();
 }
 
-void MDuinoSoundVocalizer::SetVolume(const byte Volume)
+void MDuinoSoundVocalizer::SetVolume(const byte Volume, const bool SetAsStandard /*= true*/)
 {
+    if (SetAsStandard)
+        CurrentVolume = Volume;
+
     SoundSerial.printf(F("<PVV%d>"), Volume);  // Vocaliser
     SoundSerial.printf(F("<PVA%d>"), Volume);  // Wav Channel A
     SoundSerial.printf(F("<PVB%d>"), Volume);  // Wav Channel B
@@ -259,7 +270,7 @@ void MDuinoSoundVocalizer::VolumeMin()
 
 void MDuinoSoundVocalizer::VolumeOff()
 {
-    SetVolume(0);
+    SetVolume(0, false);
 }
 
 void MDuinoSoundVocalizer::Play(const byte SoundNr)

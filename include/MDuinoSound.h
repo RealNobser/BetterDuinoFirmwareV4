@@ -67,7 +67,7 @@ class MDuinoSound
 
         virtual void init() = 0;
 
-        virtual void SetVolume(const byte Volume) = 0;
+        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) = 0;
         virtual void VolumeUp()     = 0;
         virtual void VolumeDown()   = 0;
         virtual void VolumeMid()    = 0;
@@ -83,6 +83,7 @@ class MDuinoSound
         virtual void Muse() {}; // empty, but not pure virtual by design
         virtual void Overload() {}; // empty, but not pure virtual by design
 
+        void VolumeStandard();
         void Play(const byte BankNr, const byte SoundNr);
 
     protected:
@@ -96,7 +97,7 @@ class MDuinoSoundMP3Trigger : public MDuinoSound
 
         virtual void init() override;
 
-        virtual void SetVolume(const byte Volume) override;
+        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
         virtual void VolumeUp() override;
         virtual void VolumeDown() override;
         virtual void VolumeMid() override;
@@ -121,7 +122,7 @@ class MDuinoSoundDFPlayer : public MDuinoSound
 
         virtual void init() override;
 
-        virtual void SetVolume(const byte Volume) override;
+        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
         virtual void VolumeUp() override;
         virtual void VolumeDown() override;
         virtual void VolumeMid() override;
@@ -147,7 +148,7 @@ class MDuinoSoundVocalizer : public MDuinoSound
 
         virtual void init() override;
 
-        virtual void SetVolume(const byte Volume) override;
+        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
         virtual void VolumeUp() override;
         virtual void VolumeDown() override;
         virtual void VolumeMid() override;
