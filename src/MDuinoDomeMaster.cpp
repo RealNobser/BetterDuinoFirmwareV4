@@ -73,7 +73,8 @@ void MDuinoDomeMaster::init()
     byte StartupSoundNr = Storage.getStartupSoundNr();
     if (StartupSoundNr != 0)
     {
-        delay(1000);    // Soundboards need time to startup
+        delay(3000);                // Soundboards need time to startup
+        Sound->VolumeStandard();    // Store on EEPROM later
         Sound->Play(StartupSoundNr);
         if (RandomSoundIntervall != 0)
             RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
