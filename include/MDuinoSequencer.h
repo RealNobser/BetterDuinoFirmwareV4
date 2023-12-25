@@ -43,7 +43,7 @@ class MDuinoSequencer
         void clearSequenceCompletionCallbacks();
 
     protected:
-        MDuinoBase*  instance    = nullptr;
+        MDuinoBase*     instance    = nullptr;
         Panel**         Panels      = nullptr;
         unsigned int    PanelCount  = 0;
         unsigned int    MinPanel    = 0;

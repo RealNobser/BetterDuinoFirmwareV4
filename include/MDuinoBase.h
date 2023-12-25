@@ -50,6 +50,8 @@ class MDuinoBase
         bool separateCommand(const char* command, char* cmd, unsigned int & param_num);
         void processSetupCommand(const char* command);
 
+        void adjustServo(const unsigned int & servo, const unsigned int & value);
+
         void(* resetFunc) (void) = 0;
 };
 

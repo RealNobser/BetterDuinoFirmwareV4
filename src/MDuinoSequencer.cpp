@@ -7,6 +7,8 @@ MDuinoSequencer::MDuinoSequencer(MDuinoBase* instance)
     : instance(instance)
 {
     clearSequenceCompletionCallbacks();
+    for(unsigned int i=0; i < SEQUENCE_SIZE; i++)
+        servoSpeed[i]=0;
 }
 
 void MDuinoSequencer::init()

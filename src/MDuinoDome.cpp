@@ -49,41 +49,11 @@ void MDuinoDome::adjustHoloEndPositions(Holo* Holos[], const unsigned int MinHol
     word HMax          = 0;
     word VMin          = 0;
     word VMax          = 0;
-    /*
-    byte GlobalHDirection   = 0;
-    byte GlobalVDirection   = 0;
-    byte ServoHDirection    = 0;
-    byte ServoVDirection    = 0;
-    */
-
-    unsigned int Index  = 0;
 
     for (unsigned int i=MinHolo; i<= MaxHolo; i++)
     {
-        if (Storage.getIndividualSettings() == 0x01)
-            Index = i;
-        else
-            Index = 0;
-
-        Storage.getHoloPositions(Index, HMin, HMax, VMin, VMax);
+        Storage.getHoloPositions(i, HMin, HMax, VMin, VMax);
         Holos[i]->setEndPositions(HMin, HMax, VMin, VMax);
-
-        // Set Direction
-        // erstmal ohne Drehung
-        /*
-        Storage.getHoloDirection(0, GlobalHDirection, GlobalVDirection);
-        Storage.getHoloDirection(i, ServoHDirection, ServoVDirection);
-
-        if ((GlobalHDirection == 1) || (ServoHDirection == 1)) // Reverse Servo
-            Holos[i]->setHorizontalEndPositions(MaxHValue, MinHValue);
-        else    // Normal
-            Holos[i]->setHorizontalEndPositions(MinHValue, MaxHValue);
-
-        if ((GlobalVDirection == 1) || (ServoVDirection == 1)) // Reverse Servo
-            Holos[i]->setVerticalEndPositions(MaxVValue, MinVValue);
-        else    // Normal
-            Holos[i]->setVerticalEndPositions(MinVValue, MaxVValue);
-        */
     }
 }
 
@@ -91,21 +61,10 @@ void MDuinoDome::adjustPanelEndPositions(Panel* Panels[], const unsigned int Min
 {
     word OpenPos        = 0;
     word ClosedPos      = 0;
-    unsigned int Index  = 0;
 
     for (unsigned int i=MinPanel; i<= MaxPanel; i++)
     {
-        if (Storage.getIndividualSettings() == 0x01)
-            Index = i;
-        else
-            Index = 0;
-
-        // Set Direction
-        if ((Storage.getServoDirection(0) == 1) || (Storage.getServoDirection(i) == 1)) // Reverse Servo
-            Storage.getServoPositions(Index, ClosedPos, OpenPos);
-        else    // Normal
-            Storage.getServoPositions(Index, OpenPos, ClosedPos);
-
+        Storage.getServoPositions(i, OpenPos, ClosedPos);
         Panels[i]->setEndPositions(OpenPos, ClosedPos);
     }
 }

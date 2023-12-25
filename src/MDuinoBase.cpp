@@ -60,7 +60,6 @@ void MDuinoBase::checkEEPROM()
         #endif
         Storage.setType(MDuinoStorage::DomeMaster);
         Storage.setMP3Player(MDuinoStorage::MP3Trigger);
-        // Storage.setStartupSound(1);
         Storage.setStartupSoundNr(255);
         Storage.setChattyMode();
         Storage.setDisableRandomSound(0);
@@ -80,17 +79,14 @@ void MDuinoBase::checkEEPROM()
         Storage.setMinRandomPause(MINRANDOMPAUSE);
         Storage.setMaxRandomPause(MAXRANDOMPAUSE);
 
-        Storage.setIndividualSettings(0);
-
-        for (int i=0; i <= MAX_MARCUDINOSERVOS; i++)
+        for (int i=1; i <= MAX_MARCUDINOSERVOS; i++)
         {
-            Storage.setServoDirection(i, 0);                    // Direction normal, Global Setting plus each individual
-            Storage.setServoSpeed(i, 255);                      // Full Speed, Global Setting plus each individual
+            Storage.setServoSpeed(i, 255);                      // Full Speed
             Storage.setServoPositions(i, PANEL_OPN, PANEL_CLS); // see config.h, original MarcDuino Default Values
         }
-        for (int i=0; i <= MAX_MARCDUINOHOLOS; i++)
+        for (int i=1; i <= MAX_MARCDUINOHOLOS; i++)
         {
-            Storage.setHoloDirection(i, 0, 0);
+            Storage.setHoloServoSpeed(i, 255, 255);  // Full speed
             Storage.setHoloPositions(i, HOLO_MIN, HOLO_MAX, HOLO_MIN, HOLO_MAX);
             Storage.setHoloLightHighActive(i, true);
         }
@@ -134,73 +130,71 @@ bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & 
 /*
  *	Setup Commands
  * * 
- *	//// SERVO CONTROLS
- *	#SD00 Set Servo direction forward
- *	#SD01 Set servo direction reversed
- *
- *  // deprecated, will be removed in future
- *	#SRxxy Set individual servo to either forward or reversed xx=servo number y=direction
- *		Must be a 2 digit Servo number i.e. Servo 4 is 04
- *		Must be either 0 or 1 to set the direction (0 normal, 1 reversed)
- *		Use SDxx to globally set the Servo direction, then SRxxy to change individual servos.
- *  // NEW:
- *	#SRxx Set individual servo to reversed xx=servo number
- *		Must be a 2 digit Servo number i.e. Servo 4 is 04
- *		Use SDxx to globally set the Servo direction, then SRxxy to change individual servos.
- *	#SNxx Set individual servo to normal xx=servo number
- *		Must be a 2 digit Servo number i.e. Servo 4 is 04
- *		Use SDxx to globally set the Servo direction, then SRxxy to change individual servos.
- *
- *  #IOxx - Use individual open settings (0 = no, 1 = yes)
- *  #ICxx - Use individual close settings (0 = no, 1 = yes)
- *  #IMxx - Use individual mid settings (0 = no, 1 = yes)
- *
- *  #SOxxdddd Set Servo Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds
- *  #SCxxdddd Set Servo Degrees/Microseconds for Panel Close,  dddd=0000-0180  deg, dddd > 0544 Microseconds
- *  #SPxxdddd Set Servo Degrees/Microseconds for Panel Mid,  dddd=0000-0180  deg, dddd > 0544 Microseconds
  * 
- *  //// STARTUP SOUND CONTROLS
- *  #SSxx Set startup sound
- *	    #SS00 : Disable Startup Sound, and remove startup sound delay for fast boot of R2
- *	    #SS01 : Default Startup Sound in file 255
- *      #SS02 : Alternate Startup Sound in file 254
- *	    #SS03 : Second Alternate Startup Sound in file 253
- *
- *	// Chatty/Silent Mode
- *  #SQnn Set chatty mode
- *	    #SQ00 : Default Chatty Mode
- *  	#SQ01 : Silent on startup
- *
- *  #SMxx - Disable Random Sounds   (deprecated, will be removed in future)
- *      #SM00 : Random Sound on
- *      #SM01 : No Random Sound + Volume off
- *      #SM02 : No Random Sound
+ * ** Servo Control
  * 
- *  #SXxx - Set Max Random Pause in seconds
- *  #SYxx - Set Min Random Pause in seconds
- *
- *	//// PANEL SEQUENCER CONTROLS
- *	#STxx Setup Delay time between Master and Slave Panel Sequences.
- *		Use this if the Slave panels are starting too soon
- *		Values up to 250 are supported.  Values are in ms.
- *
- *  //// MAIN CONFIG
- *  #MDxx Set MarcDuino Mode
- *      #MD00 : MarcDuino Dome Master
- *      #MD01 : MarcDuino Dome Slave
- *      #MD02 : MarcDuino Body Master
- *      MarcDuino will reboot immediately after setup and start in new mode.
+ * #SOxxdddd    - Set Servo xx Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds 
+ * #SCxxdddd    - Set Servo xx Degrees/Microseconds for Panel Closed dddd=0000-0180 deg, dddd > 0544 Microseconds 
+ * #SPxxddd     - Set Servo xx Speed, ddd=0-255
+ * #SWxx        - Swap Panel xx Open<->Close value. Don’t use as the classic “reverse servo” command. Don’t call it at every boot, just use it in adjustment process.
  * 
- *  #MPxx Set MP3-Player Type
- *      #MP00 : SparkFun MP3 Trigger
- *      #MP01 : DFPlayer
- *      #MP02 : Vocalizer
+ * ** Startup Sound Controls
+ * #SSxxx       - Set startup sound #
+ *      #SS000  : Disable Startup Sound, and remove startup sound delay for fast boot of R2
+ *      #SSxxx  : Set Startup Sound in file xxx
  * 
- *  #MSxyy Set max Sounds per Bank. x=1-9, y=0-25
+ * #SQxx        - Chatty / Silent mode
+ *      #SQ00   : Default Chatty Mode
+ *      #SQ01   : Silent on startup
  * 
- *  //// SYSTEM FUNCTIONS
- *  #DMxx Dump EEPROM at address xx
- *  #RSET Reboot MarcDuino
+ * #SMxx        - Disable Random Sound
+ *      #SM00   : Random Sound on
+ *      #SM01   : No Random Sound + Volume off
+ *      #SM02   : No Random Sound
+ * 
+ * #SXxx        - Set Max Random Pause in seconds - Maximum timespan between two random sounds
+ * #SYxx        - Set Min Random Pause in seconds - Minimum timespan between two random sounds
+ * 
+ * ** Panel Sequencer Controls
+ * #STxxx       - Setup Delay time between Master and Slave Panel Sequence. Use this if the Slave panels are starting too soon. Values up to 255 are supported.  Values are in ms.
+ * 
+ * ** System Configuration and Management
+ * #MDxx        - Set MarcDuino Mode
+ *      #MD00   : MarcDuino Dome Master
+ *      #MD01   : MarcDuino Dome Slave
+ *      #MD02   : MarcDuino Body Master
+ * 
+ * MarcDuino will reboot immediately after setup and start up in new mode.
+ * 
+ * #MPxx        - Set MP3-Player Type
+ *      #MP00   : SparkFun MP3 Trigger
+ *      #MP01   : DFPlayer
+ *      #MP02   : Vocalizer
+ * 
+ * #MSxyy       - Set maximum sounds per soundbank. x=1-9 (Soundbank), y=0-25 (max. Sounds)
+ * 
+ * #HLxy        - Set HoloLight x to High Active (y=1) or Low Active (y=0). x=0 → All Holo Lights
+ * 
+ * #HOxxdddd    - Set Holo HServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds 
+ * #HCxxdddd    - Set Holo HServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds 
+ * #HPxxddd     - Set Holo HServo Speed, ddd=0-255
+ * 
+ * #VOxxdddd    - Set Holo VServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds 
+ * #VCxxdddd    - Set Holo VServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds 
+ * #VPxxddd     - Set Holo VServo Speed, ddd=0-255
+ * 
+ * #CHxx        - Center Holo Nr xx
+ * 
+ * #DUxx        - Dump EEPORM to serial
+ *      #DUxx   : value at address xx
+ *      #DUMP   : dump complete EEPROM content
+ * 
+ * #RSET        - Restart MarcDuino
+ * 
+ * #ADxx        - Adjustment Mode: When setting up individual Servo settings, servo will positioned immediately
+ *      #AD00   : Adjustment Mode Off
+ *      #AD01   : Adjustment Mode On
+ * 
  */
 
 void MDuinoBase::processSetupCommand(const char* command)
@@ -231,7 +225,7 @@ void MDuinoBase::processSetupCommand(const char* command)
         if (!separateCommand(command, cmd, param_num))
             return; // Invalid Command
     }
-    else if (strlen(command) == 6)   // #SRxxy and #MSxyy
+    else if (strlen(command) == 6)   // #SRxxy, #MSxyy and #SSxxx
     {
         memcpy(cmd, command+1, 2);
 
@@ -245,6 +239,10 @@ void MDuinoBase::processSetupCommand(const char* command)
             memcpy(param, command+3, 1);
             memcpy(param_ext, command+4, 2);
         }
+        else if (strcmp(cmd, "SS") == 0)
+        {
+            memcpy(param, command+3, 3);
+        }        
         else
         {
             return; // Invalid Command
@@ -258,7 +256,7 @@ void MDuinoBase::processSetupCommand(const char* command)
 
         if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) &&
             (strcmp(cmd, "HO") != 0) && (strcmp(cmd, "HC") != 0) &&
-            (strcmp(cmd, "VO") != 0) && (strcmp(cmd, "VC") != 0) )
+            (strcmp(cmd, "VO") != 0) && (strcmp(cmd, "VC") != 0))
         {
             #ifdef DEBUG_MSG
             Serial.println(F("Invalid Extended Command"));
@@ -278,66 +276,28 @@ void MDuinoBase::processSetupCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("cmd: %s, param_num: %d, param_num_ext: %d\r\n"), cmd, param_num, param_num_ext);
     #endif
-
-    if (strcmp(cmd, "SD") == 0)            // Servo Direction
-    {
-        Storage.setServoDirection(0, param_num);
-    }
-    else if (strcmp(cmd, "SR") == 0)       // Individual Servo Reverse
-    {
-        Storage.setServoDirection(param_num, 1);
-    }
-    else if (strcmp(cmd, "SN") == 0)       // Individual Servo Normal
-    {
-        Storage.setServoDirection(param_num, 0);
-    }
-    else if (strcmp(cmd, "SV") == 0)       // Use individual servo settings (0 = no, 1 = yes)
-    {
-        Storage.setIndividualSettings(param_num);
-    }
-    else if (strcmp(cmd, "SO") == 0)       // Set Servo Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds
+    if (strcmp(cmd, "SO") == 0)       // Set Servo Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
         Storage.getServoPositions(param_num, OpenPos, ClosedPos);
-
-        if (Storage.getServoDirection(param_num) == 0x01)
-            ClosedPos = param_num_ext;
-        else
-            OpenPos = param_num_ext;
-
+        OpenPos = param_num_ext;
         Storage.setServoPositions(param_num, OpenPos, ClosedPos);
-
-        if (Storage.getAdjustmentMode())
-        {
-            char ServoCommand[6];
-            memset(ServoCommand, 0x00, 6);
-            sprintf(ServoCommand, ":OP%02d", param_num);
-            delay(250);
-            parseCommand(ServoCommand);
-        }
+        adjustServo(param_num, param_num_ext);
     }
     else if (strcmp(cmd, "SC") == 0)       // Set Servo Degrees/Microseconds for Panel Close,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
         Storage.getServoPositions(param_num, OpenPos, ClosedPos);
-
-        if (Storage.getServoDirection(param_num) == 0x01)
-            OpenPos = param_num_ext;
-        else
-            ClosedPos = param_num_ext;
-
+        ClosedPos = param_num_ext;
         Storage.setServoPositions(param_num, OpenPos, ClosedPos);
-
-        if (Storage.getAdjustmentMode())
-        {
-            char ServoCommand[6];
-            memset(ServoCommand, 0x00, 6);
-            sprintf(ServoCommand, ":CL%02d", param_num);
-            delay(250);
-            parseCommand(ServoCommand);            
-        }
+        adjustServo(param_num, param_num_ext);
     }
     else if (strcmp(cmd, "SP") == 0)       // Set Servo Speed (0-255)
     {
         Storage.setServoSpeed(param_num, param_num_ext);
+    }
+    else if (strcmp(cmd, "SW") == 0)       // Swap Panel xx Open<->Close value
+    {
+        Storage.getServoPositions(param_num, OpenPos, ClosedPos);
+        Storage.setServoPositions(param_num, ClosedPos, OpenPos);
     }
     else if (strcmp(cmd, "HO") == 0)       // Set Holo HServo Degrees/Microseconds Max Pos,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
@@ -371,38 +331,18 @@ void MDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "SS") == 0)       // Sound Control
     {
-        switch(param_num)
-        {
-            case 0:
-                Storage.setStartupSoundNr(0);
-            break;
-            case 1:
-                Storage.setStartupSoundNr(255);
-            break;
-            case 2:
-                Storage.setStartupSoundNr(254);
-            break;
-            case 3:
-                Storage.setStartupSoundNr(253);
-            break;
-            default:
-                Storage.setStartupSoundNr(255);
-            break;
-        }
+        Storage.setStartupSoundNr(param_num);
     }
     else if (strcmp(cmd, "SQ") == 0)       // Chatty Mode
     {
-        if (param_num == 0)
+        switch (param_num)
         {
-            Storage.setChattyMode();            
-        }
-        else if (param_num == 1)
-        {
-            Storage.setChattyMode(false);
-        }
-        else
-        {
-            Storage.setChattyMode();       // Default on
+            case 1:
+                Storage.setChattyMode(false);
+            break;
+            default:
+                Storage.setChattyMode();
+            break;
         }
     }
     else if (strcmp(cmd, "SM") == 0)       // Disable Random Mode
@@ -519,4 +459,16 @@ void MDuinoBase::processSetupCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("valid %s\r\n"), cmd);
     #endif
+}
+
+void MDuinoBase::adjustServo(const unsigned int & servo, const unsigned int & value)
+{
+    if (Storage.getAdjustmentMode())    // TODO: use new move command later
+    {
+        char ServoCommand[10];
+        memset(ServoCommand, 0x00, 10);
+        sprintf(ServoCommand, ":MV%02u%04u", servo, value);
+        delay(250);
+        parseCommand(ServoCommand);
+    }
 }

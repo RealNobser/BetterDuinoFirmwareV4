@@ -1,7 +1,15 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-// #define DEBUG_MSG   // Additional Log Messages to Serial
+// #define DEBUG_MSG            // Additional Log Messages to Serial
+// #define INCLUDE_BODY_MASTER  // Uncomment to include Body Controller in combined firmware
+
+
+// #define DEDICATED_FIRMWARE   // Separate Hex Files for Master/Slave/Body
+// Choose one:
+// #define DEDICATED_MASTER
+// #define DEDICATED_SLAVE
+// #define DEDICATED_BODY
 
 #define SERIAL_BAUD         9600
 #define SERIAL_SLAVE_BAUD   9600
@@ -43,9 +51,9 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.0.1"
+#define VERSION         "4.0.2"
 #define HW_VERSION      "1.5.3"
-#define CONFIG_VERSION  40
+#define CONFIG_VERSION  41
 
 #define MAX_MARCUDINOSERVOS 13
 #define MAX_SEQUENCE_COMPLETION_CALLBACKS 5

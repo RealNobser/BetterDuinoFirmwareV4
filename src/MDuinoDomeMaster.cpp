@@ -242,18 +242,45 @@ void MDuinoDomeMaster::parseCommand(const char* command)
 void MDuinoDomeMaster::processPanelCommand(const char* command)
 {
     char cmd[3];
+    char param[4];
+    char param_ext[5];
+
     unsigned int param_num = 0;
+    unsigned int param_num_ext = 0;
 
     memset(cmd, 0x00, 3);
+    memset(param, 0x00, 4);
+    memset(param_ext, 0x00, 5);
 
     #ifdef DEBUG_MSG
     Serial.printf(F("PanelCommand(Master): %s\r\n"), command);
     #endif
 
-    if (!separateCommand(command, cmd, param_num))
+    if (strlen(command) == 9)   // :MVxxyyyy
+    {
+        memcpy(cmd, command+1, 2);
+
+        if ((strcmp(cmd, "MV") != 0))
+            return; // Invalid Command
+        else
+        {
+            memcpy(param, command+3, 2);
+            memcpy(param_ext, command+5, 4);
+        }
+        param_num       = atoi(param);
+        param_num_ext   = atoi(param_ext);
+    }
+    else if (!separateCommand(command, cmd, param_num))
         return;
 
-    if (strcmp(cmd, "SE")==0)       // Start Sequence
+    if (strcmp(cmd, "MV")==0)
+    {
+        if (param_num > MaxPanel)
+            return;
+
+        Panels[param_num]->move(param_num_ext);
+    }
+    else if (strcmp(cmd, "SE")==0)       // Start Sequence
     {
         playSequence(param_num);
     } 
@@ -273,13 +300,11 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         }
         else if (param_num == 12)   // Send commands to slave to open slave panels
         {
-            // Serial_Slave.print(F(":OP07\r")); // OLD
-            Serial_Slave.print(F(":OP12\r")); // OLD
+            Serial_Slave.print(F(":OP12\r"));
         }
         else if (param_num == 13)   // Send commands to slave to open slave panels
         {
-            //Serial_Slave.print(F(":OP08\r")); // OLD
-            Serial_Slave.print(F(":OP13\r")); // OLD
+            Serial_Slave.print(F(":OP13\r"));
         }
         else if (param_num == 14)    // Open Top Panels
         {

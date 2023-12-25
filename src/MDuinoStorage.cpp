@@ -51,53 +51,6 @@ void MDuinoStorage::setMP3Player(const MDuinoMP3PlayerType type)
     EEPROM.update(ADDR_MARCDUINOMP3PLAYER, type);
 }
 
-/*
-byte MDuinoStorage::getStartupSound()
-{
-    uint8_t value = EEPROM.read(ADDR_STARTUPSOUND);
-    switch (value)
-    {
-    case 0:
-        return 0;
-        break;
-    case 1:
-        return 255;
-        break;
-    case 2:
-        return 254;
-        break;
-    case 3:
-        return 253;
-        break;
-    default:
-        return 255;
-        break;
-    }
-}
-
-void MDuinoStorage::setStartupSound(const byte SoundNr)
-{
-    switch (SoundNr)
-    {
-    case 0:
-        EEPROM.update(ADDR_STARTUPSOUND, 0);
-        break;
-    case 1:
-        EEPROM.update(ADDR_STARTUPSOUND, 255);
-        break;
-    case 2:
-        EEPROM.update(ADDR_STARTUPSOUND, 254);
-        break;
-    case 3:
-        EEPROM.update(ADDR_STARTUPSOUND, 253);
-        break;
-    default:
-        EEPROM.update(ADDR_STARTUPSOUND, 255);
-        break;
-    }
-}
-*/
-
 byte MDuinoStorage::getStartupSoundNr()
 {
     return EEPROM.read(ADDR_STARTUPSOUNDNR);
@@ -182,33 +135,9 @@ void MDuinoStorage::setMinRandomPause(const byte seconds)
     EEPROM.update(ADDR_MINRANDOMPAUSE, seconds);
 }
 
-void MDuinoStorage::setIndividualSettings(const byte choice)
-{
-    if (choice > 1)
-        return;
-    EEPROM.update(ADDR_INDIVIDUALS, choice);
-}
-
-byte MDuinoStorage::getIndividualSettings()
-{
-    return EEPROM.read(ADDR_INDIVIDUALS);
-}
-
 //
 // Panels / Servos
 // 
-byte MDuinoStorage::getServoDirection(const byte ServoNr)
-{
-    if (ServoNr > MAX_MARCUDINOSERVOS)
-        return 0;
-    return EEPROM.read(ADDR_SERVODIRBASE+ServoNr);
-}   
-void MDuinoStorage::setServoDirection(const byte ServoNr, const byte Direction)
-{
-    if ((ServoNr > MAX_MARCUDINOSERVOS) || (Direction > 1))
-        return;
-    EEPROM.update(ADDR_SERVODIRBASE+ServoNr, Direction);
-}
 
 byte MDuinoStorage::getServoSpeed(const byte ServoNr)
 {
@@ -243,22 +172,6 @@ void MDuinoStorage::setServoPositions(const byte ServoNr, const word OpenPositio
 //
 // Holos / Servos
 //
-void MDuinoStorage::getHoloDirection(const byte HoloNr, byte & HDirection, byte & VDirection)
-{
-    if (HoloNr > MAX_MARCDUINOHOLOS)
-        return;
-
-    EEPROM.get(ADDR_HOLODIRBASE+(HoloNr*2), HDirection);
-    EEPROM.get(ADDR_HOLODIRBASE+1+(HoloNr*2), VDirection);
-}
-void MDuinoStorage::setHoloDirection(const byte HoloNr, const byte HDirection, const byte VDirection)
-{
-    if (HoloNr > MAX_MARCDUINOHOLOS)
-        return;
-
-    EEPROM.put(ADDR_HOLODIRBASE+(HoloNr*2), HDirection);
-    EEPROM.put(ADDR_HOLODIRBASE+1+(HoloNr*2), VDirection);
-}
 
 void MDuinoStorage::getHoloServoSpeed(const byte HoloNr, byte & HSpeed, byte & VSpeed)
 {

@@ -95,7 +95,7 @@ void MDuinoBodyMaster::playSequence(const unsigned int SeqNr)
 void MDuinoBodyMaster::playSequenceAddons(const unsigned int SeqNr)
 {
     // Also forward to Slave
-    Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
+    Serial_Slave.printf(F(":SE%2u\r"), SeqNr);
 
     // Disable Servo detach during Animations
     ServoBuzzIntervall = 0;
