@@ -21,6 +21,7 @@ MDuinoDomeMaster::MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnl
     }
 
     MDuinoStorage::MDuinoMP3PlayerType player = Storage.getMP3Player();
+
     switch (player)
     {
         case MDuinoStorage::MP3Trigger:
@@ -154,22 +155,23 @@ void MDuinoDomeMaster::setStandardRandomSoundIntervall()
         Storage.setMaxRandomPause(MaxRandomPause);
     }
 
-    switch (DisableRandomSound)
+    if (DisableRandomSound == 0)
     {
-        case 0:
-            RandomSoundIntervall = random(MinRandomPause * 1000, MaxRandomPause * 1000 + 1);
-        break;
-        case 1:
-            RandomSoundIntervall = 0;
-            Sound->VolumeOff();
-        break;
-        case 2:
-            RandomSoundIntervall = 0;
-        break;
-        default:
-            RandomSoundIntervall = random(MinRandomPause * 1000, MaxRandomPause * 1000 + 1);
-            Storage.setDisableRandomSound(0);
-        break;
+        RandomSoundIntervall = random(MinRandomPause * 1000, MaxRandomPause * 1000 + 1);
+    }
+    else if (DisableRandomSound == 1)
+    {
+        RandomSoundIntervall = 0;
+        Sound->VolumeOff();
+    }
+    else if (DisableRandomSound == 2)
+    {
+        RandomSoundIntervall = 0;
+    }
+    else
+    {
+        RandomSoundIntervall = random(MinRandomPause * 1000, MaxRandomPause * 1000 + 1);
+        Storage.setDisableRandomSound(0);        
     }
 }
 

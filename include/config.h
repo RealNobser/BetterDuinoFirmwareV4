@@ -7,7 +7,7 @@
 
 // #define DEDICATED_FIRMWARE   // Separate Hex Files for Master/Slave/Body
 // Choose one:
-// #define DEDICATED_MASTER
+#define DEDICATED_MASTER
 // #define DEDICATED_SLAVE
 // #define DEDICATED_BODY
 

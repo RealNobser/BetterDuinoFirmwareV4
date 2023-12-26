@@ -335,29 +335,15 @@ void MDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "SQ") == 0)       // Chatty Mode
     {
-        switch (param_num)
-        {
-            case 1:
-                Storage.setChattyMode(false);
-            break;
-            default:
-                Storage.setChattyMode();
-            break;
-        }
+        if (param_num == 1)
+            Storage.setChattyMode(false);
+        else
+            Storage.setChattyMode();
     }
     else if (strcmp(cmd, "SM") == 0)       // Disable Random Mode
     {
-        switch(param_num)
-        {
-            case 0:
-            case 1:
-            case 2:
-                Storage.setDisableRandomSound(param_num);
-            break;
-            default:
-                Storage.setDisableRandomSound(0);
-            break;
-        }
+        if (param_num <= 2)
+            Storage.setDisableRandomSound(param_num);
     }    
     else if (strcmp(cmd, "SX") == 0)       // Max Random Pause
     {
@@ -372,41 +358,25 @@ void MDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "MD") == 0)       // Set MarcDuino Type and reboot in new mode
     {
-        switch(param_num)
-        {
-            case 0:
-                Storage.setType(MDuinoStorage::DomeMaster);
-            break;
-            case 1:
-                Storage.setType(MDuinoStorage::DomeSlave);
-            break;
-            case 2:
-                Storage.setType(MDuinoStorage::BodyMaster);
-            break;
-            default:
-                return;
-            break;            
-        }
+        if (param_num == 0)
+            Storage.setType(MDuinoStorage::DomeMaster);
+        else if (param_num == 1)
+            Storage.setType(MDuinoStorage::DomeSlave);
+        else if (param_num == 2)
+            Storage.setType(MDuinoStorage::BodyMaster);
+
         delay(500);
         resetFunc();
     }
     else if (strcmp(cmd, "MP") == 0)       // Set MarcDuinoMP3Player Type
     {
-        switch(param_num)
-        {
-            case 0:
-                Storage.setMP3Player(MDuinoStorage::MP3Trigger);
-            break;
-            case 1:
-                Storage.setMP3Player(MDuinoStorage::DFPlayer);
-            break;
-            case 2:
-                Storage.setMP3Player(MDuinoStorage::Vocalizer);
-            break;
-            default:
-                return;
-            break;
-        }
+        if (param_num == 0)
+            Storage.setMP3Player(MDuinoStorage::MP3Trigger);
+        else if (param_num == 1)
+            Storage.setMP3Player(MDuinoStorage::DFPlayer);
+        else if (param_num == 2)
+            Storage.setMP3Player(MDuinoStorage::Vocalizer);
+                    
         delay(500);
         resetFunc();
     }
@@ -421,18 +391,7 @@ void MDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "HL") == 0)
     {
-        switch(param_num)
-        {
-            case 00:    // All Holos LOW Active
-                Storage.setHoloLightHighActive(0, false);
-            break;
-            case 01:    // All Holos HIGH Active
-                Storage.setHoloLightHighActive(0, true);
-            break;
-            default:
-                // TODO
-            break;
-        }
+        Storage.setHoloLightHighActive(abs(param_num/10), (param_num%10) == 1);
     }
     #ifdef DEBUG_MSG
     else if (strcmp(cmd, "DM") == 0)             // Dump EEPROM

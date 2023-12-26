@@ -82,7 +82,7 @@ bool MDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigned i
     memset(bank_char, 0x00, 2);
     memset(sound_char, 0x00, 3);
 
-    //if ((strlen(command) != 4) && (strlen(command) != 2))
+    //if ((strlen(command) != 4) && (strlen(command) != 2)) 
     if ((strlen(command) <2) || (strlen(command) >4))
     {
         #ifdef DEBUG_MSG
@@ -99,18 +99,16 @@ bool MDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigned i
     {
         memcpy(bank_char, command+1, 1);
         memcpy(sound_char, command+2, 1);
-
-        bank=atoi(bank_char);
-        sound=atoi(sound_char);
     }
     else if (strlen(command) == 4)
     {
         memcpy(bank_char, command+1, 1);
         memcpy(sound_char, command+2, 2);
-
-        bank=atoi(bank_char);
-        sound=atoi(sound_char);
     }
+
+    bank=atoi(bank_char);
+    sound=atoi(sound_char);
+
     return true;
 }
 
@@ -122,21 +120,21 @@ void MDuinoDome::getRandomSound(unsigned int & bank, unsigned int & sound)
 
 void MDuinoDome::AUX1(const unsigned int Duration)
 {
-    switch (Duration)
+    if (Duration == 0)
     {
-    case 0:
+        AUX1Duration = 0;
         digitalWrite(P_AUX1, LOW);
+    } 
+    else if (Duration == 99)
+    {
         AUX1Duration = 0;
-        break;
-    case 99:
         digitalWrite(P_AUX1, HIGH);
-        AUX1Duration = 0;
-        break;
-    default:
+    }
+    else
+    {
         AUX1Millis = millis();
         AUX1Duration = Duration*1000;
         digitalWrite(P_AUX1, HIGH);
-        break;
     }
 }
 
