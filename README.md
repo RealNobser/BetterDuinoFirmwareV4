@@ -50,7 +50,7 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 
 ### New Features (excerpt)
 - Support for MP3 Trigger, DF Mini Player and R2-D2 / Astromech Vocalizer (https://humancyborgrelations.com/)
-- Identical firmware for Master and Slave
+- Identical firmware for Master, Slave and Body
 - Automatic configuration of Master and Slave at first startup
 - per servo runtime settings for min/max and open/close positions
 - switch to modern OOP software design and use of most recent common Arduino libraries
