@@ -115,6 +115,57 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 - upload the code (PlatformIO / ATmega328P / General / Upload)
 - ![VSCode Upload](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Upload.png)
 
+Connecting Servos (common way)
+=================
+# Master
+|     |     |     |
+| --- | --- | --- |
+| **Servo** | **Function** | **Remark** |
+|Servo 1|Panel 1|Lower Panel|
+|Servo 2|Panel 2|Lower Panel|
+|Servo 3|Panel 3|Lower Panel|
+|Servo 4|Panel 4|Lower Panel|
+|Servo 5|Panel 5|Lower Panel|
+|Servo 6|Panel 6|Lower Panel|
+|Servo 7|Panel 7|Upper Panel|
+|Servo 8|Panel 8|Upper Panel|
+|Servo 9|Panel 9|Upper Panel|
+|Servo 10|Panel 10|Upper Panel|
+|Servo 11|unused||
+|AUX|unused||
+# Slave
+|     |     |     |
+| --- | --- | --- |
+| **Servo** | **Function** | **Remark** |
+|Servo 1|Front Holo, V-Servo||
+|Servo 2|Front Holo, H-Servo||
+|Servo 3|Rear Holo, V-Servo||
+|Servo 4|Rear Holo, H-Servo||
+|Servo 5|Top Holo, V-Servo||
+|Servo 6|Top Holo, H-Servo||
+|Servo 7|Front Holo Light||
+|Servo 8|Rear Holo Light||
+|Servo 9|Top Holo Light||
+|Servo 10=12|unused|Controlled as Servo 12 via Master|
+|Servo 11=13|unused|Controlles as Servo 13 vi Master|
+|AUX|unused||
+# Body
+|     |     |     |
+| --- | --- | --- |
+| **Servo** | **Function** | **Remark** |
+|Servo 1|DPL - DataPanel Door||
+|Servo 2|UtlArmU - Upper Utility Arm||
+|Servo 3|UtlArmL - Lower Utility Arm||
+|Servo 4|LBdyDr - Left BreadPan Door||
+|Servo 5|LArm - Left Arm Raise/Lower||
+|Servo 6|LArmTool - Left Arm Tool||
+|Servo 7|ToolRBdyDr - Right BreadPan Door||
+|Servo 8|RArm - Right Arm Raise/Lower||
+|Servo 9|RArmTool - Right Arm Tool||
+|Servo 10|unused|Future Charge Bay Door servo|
+|Servo 11|unused||
+|AUX|unused||
+
 MarcDuino Command Set (V4 only)
 ===============================
 
