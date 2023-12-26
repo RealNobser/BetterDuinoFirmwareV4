@@ -145,7 +145,7 @@ Connecting Servos (common way)
 |Servo 8|Rear Holo Light||
 |Servo 9|Top Holo Light||
 |Servo 10=12|unused|Controlled as Servo 12 via Master|
-|Servo 11=13|unused|Controlles as Servo 13 vi Master|
+|Servo 11=13|unused|Controlles as Servo 13 via Master|
 |AUX|unused||
 # Body
 | **Servo** | **Function** | **Remark** |
