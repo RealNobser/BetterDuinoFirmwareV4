@@ -67,7 +67,7 @@ void MDuinoSequencer::startSequence()
 
     currentStep         = 0;
 
-    currentStepDuration = (int)pgm_read_word(&currentSequence[currentStep][0]);
+    currentStepDuration = (unsigned long)pgm_read_word(&currentSequence[currentStep][0]);
     currentStepDuration *= 10;
 
     currentStepTime     = millis();
@@ -104,7 +104,7 @@ void MDuinoSequencer::nextStep()
         return;
     }
 
-    currentStepDuration = (int)pgm_read_word(&currentSequence[currentStep][0]);
+    currentStepDuration = (unsigned long)pgm_read_word(&currentSequence[currentStep][0]);
     currentStepDuration *= 10;
 
     currentStepTime     = millis();
@@ -119,8 +119,9 @@ void MDuinoSequencer::movePanels()
 
     for(unsigned int panel = MinPanel; panel <= MaxPanel; panel++)
     {
-        unsigned int Position = _NP;
-        Position = (unsigned int)pgm_read_word(&currentSequence[currentStep][panel]);
+        byte Position = _NP;
+        Position = (byte)pgm_read_byte(&currentSequence[currentStep][panel+1]);
+
         switch (Position)
         {
         case _OPN:
@@ -129,15 +130,12 @@ void MDuinoSequencer::movePanels()
         case _CLS:
             Panels[panel]->close(servoSpeed[panel]);
             break;
-        case _MID:
-            // TODO:!
-            break;
         case _NP:
             Panels[panel]->detach();
             break;
         default:
             break;
-        }
+        }        
     }
 }
 

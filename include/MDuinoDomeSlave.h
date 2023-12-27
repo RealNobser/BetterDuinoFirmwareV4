@@ -85,7 +85,7 @@ class MDuinoDomeSlave : public MDuinoDome
         virtual void run() override;
 
         virtual const char* getProductName() override { return "MarcDuino Dome Slave"; }
-        virtual void parseCommand(const char* command);
+        virtual void parseCommand(const char* command) override;
 
     protected:
         SendOnlySoftwareSerial& Serial_Magic;

@@ -62,7 +62,7 @@ void setup() {
     case MDuinoStorage::DomeSlave:
       MarcDuino = new MDuinoDomeSlave(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
       break;
-  #ifdef INCLUDE_BODY
+  #ifdef INCLUDE_BODY_MASTER
     case MDuinoStorage::BodyMaster:
       MarcDuino = new MDuinoBodyMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
       break;

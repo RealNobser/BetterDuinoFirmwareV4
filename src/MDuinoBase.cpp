@@ -81,12 +81,12 @@ void MDuinoBase::checkEEPROM()
 
         for (int i=1; i <= MAX_MARCUDINOSERVOS; i++)
         {
-            Storage.setServoSpeed(i, 255);                      // Full Speed
+            Storage.setServoSpeed(i, 0);            // Full Speed
             Storage.setServoPositions(i, PANEL_OPN, PANEL_CLS); // see config.h, original MarcDuino Default Values
         }
         for (int i=1; i <= MAX_MARCDUINOHOLOS; i++)
         {
-            Storage.setHoloServoSpeed(i, 255, 255);  // Full speed
+            Storage.setHoloServoSpeed(i, 0, 0);     // Full speed
             Storage.setHoloPositions(i, HOLO_MIN, HOLO_MAX, HOLO_MIN, HOLO_MAX);
             Storage.setHoloLightHighActive(i, true);
         }

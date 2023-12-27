@@ -1,6 +1,8 @@
 #ifndef __MARCDUINOSTORAGE_H__
 #define __MARCDUINOSTORAGE_H__
 
+#include "config.h"
+
 /*
 * IDEAS / ToDos
 * - Configure AUX1 as input or output

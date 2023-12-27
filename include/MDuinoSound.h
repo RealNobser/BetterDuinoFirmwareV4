@@ -93,7 +93,7 @@ class MDuinoSound
 class MDuinoSoundMP3Trigger : public MDuinoSound
 {
     public:
-        MDuinoSoundMP3Trigger(SendOnlySoftwareSerial& SoundSerial);
+        explicit MDuinoSoundMP3Trigger(SendOnlySoftwareSerial& SoundSerial);
 
         virtual void init() override;
 
@@ -118,7 +118,7 @@ class MDuinoSoundMP3Trigger : public MDuinoSound
 class MDuinoSoundDFPlayer : public MDuinoSound
 {
     public:
-        MDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial);
+        explicit MDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial);
 
         virtual void init() override;
 
@@ -144,7 +144,7 @@ class MDuinoSoundDFPlayer : public MDuinoSound
 class MDuinoSoundVocalizer : public MDuinoSound
 {
     public:
-        MDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSerial);
+        explicit MDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSerial);
 
         virtual void init() override;
 

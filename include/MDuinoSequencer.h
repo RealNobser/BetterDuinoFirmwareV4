@@ -4,11 +4,19 @@
 #include "config.h"
 #include "Panel.h"
 
-#define SEQ_SIZE(A) (sizeof(A) / sizeof(A[0]))
-#define SEQUENCE_SIZE (MAX_MARCUDINOSERVOS + 1) // 13 Servos plus Timer
+// Classic Code
 
+#define SPLIT_WORD(A) (A & 0xFF), ((A >> 8) & 0xFF)
+
+#define SEQ_SIZE(A) (sizeof(A) / sizeof(A[0]))
+#define SEQUENCE_SIZE (MAX_MARCUDINOSERVOS + 2) // 13 Servos (1 Byte each) plus Timer (2 bytes)
+
+/*
 typedef const unsigned int sequence_t[][SEQUENCE_SIZE];
 typedef const unsigned int (*sequence_t_ptr)[SEQUENCE_SIZE];
+*/
+typedef const byte sequence_t[][SEQUENCE_SIZE];
+typedef const byte (*sequence_t_ptr)[SEQUENCE_SIZE];
 
 // Forward Declaration for Callbacks
 class MDuinoBase;
@@ -25,7 +33,7 @@ class MDuinoSequencer
             super_slow
         };
 
-        MDuinoSequencer(MDuinoBase* instance);
+        explicit MDuinoSequencer(MDuinoBase* instance);
         
         void init();
         void run();

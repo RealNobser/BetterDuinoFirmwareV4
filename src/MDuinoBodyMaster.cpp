@@ -33,17 +33,17 @@ void MDuinoBodyMaster::playSequence(const unsigned int SeqNr)
         break;
     case 1:  // SCREAM
     case 51:
-        Sequencer.loadSequence(body_panel_all_open, SEQ_SIZE(panel_all_open));
+        Sequencer.loadSequence(body_panel_all_open, SEQ_SIZE(body_panel_all_open));
         Sequencer.setServoSpeed(MDuinoSequencer::slow);
         break;
     case 2: // WAVE
     case 52:
-        Sequencer.loadSequence(body_panel_wave, SEQ_SIZE(panel_wave));
+        Sequencer.loadSequence(body_panel_wave, SEQ_SIZE(body_panel_wave));
         Sequencer.setServoSpeed(MDuinoSequencer::full);
         break;
     case 6: // SHORT CIRCUIT / FAINT
     case 56:
-        Sequencer.loadSequence(body_panel_all_open_long, SEQ_SIZE(panel_all_open_long));
+        Sequencer.loadSequence(body_panel_all_open_long, SEQ_SIZE(body_panel_all_open_long));
         Sequencer.setServoSpeed(MDuinoSequencer::super_slow);
         break;
     case 8: // LEIA
@@ -51,7 +51,7 @@ void MDuinoBodyMaster::playSequence(const unsigned int SeqNr)
     case 11:
     case 13:
     case 14:
-        Sequencer.loadSequence(body_panel_init, SEQ_SIZE(panel_init));	// Close panels
+        Sequencer.loadSequence(body_panel_init, SEQ_SIZE(body_panel_init));	// Close panels
         Sequencer.setServoSpeed(MDuinoSequencer::slow);
         break;
 

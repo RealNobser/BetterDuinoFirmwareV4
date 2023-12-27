@@ -2,12 +2,12 @@
 #define __CONFIG_H__
 
 // #define DEBUG_MSG            // Additional Log Messages to Serial
-// #define INCLUDE_BODY_MASTER  // Uncomment to include Body Controller in combined firmware
+#define INCLUDE_BODY_MASTER  // Uncomment to include Body Controller in combined firmware
 
 
 // #define DEDICATED_FIRMWARE   // Separate Hex Files for Master/Slave/Body
 // Choose one:
-#define DEDICATED_MASTER
+// #define DEDICATED_MASTER
 // #define DEDICATED_SLAVE
 // #define DEDICATED_BODY
 
@@ -29,7 +29,6 @@
 
 // Original Marcduino Default Values
 #define PANEL_OPN   1000 // Open
-#define PANEL_MID   1750 // Mid Open
 #define PANEL_CLS   2000 // Closed
 
 #define HOLO_MIN    1000
@@ -51,7 +50,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.0.2"
+#define VERSION         "4.1.0"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  41
 
@@ -60,10 +59,10 @@
 #define MAX_MARCDUINOHOLOS  3
 
 // Panel Sequence Position. No PWM value any more! Don't touch here!
-#define _NP     0
-#define _CLS    1
-#define _OPN    2
-#define _MID    3
+// Will be opening level in percent in the future
+#define _NP     255
+#define _CLS    0
+#define _OPN    100
 
 // Generic GPIOs
 #define P_I2C_SCL   19

@@ -12,11 +12,8 @@ class MDuinoDome : public MDuinoBase
         MDuinoDome(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                     VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13);
 
-        virtual void init();
-        virtual void run();
-
-        virtual const char* getProductName() = 0;
-        virtual void parseCommand(const char* command) = 0;
+        virtual void init() override;
+        virtual void run() override;
 
     protected:
         unsigned long AUX1Millis            = 0;
