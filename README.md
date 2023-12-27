@@ -50,7 +50,7 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 
 ### New Features (excerpt)
 - Support for MP3 Trigger, DF Mini Player and R2-D2 / Astromech Vocalizer (https://humancyborgrelations.com/)
-- Identical firmware for Master and Slave
+- Identical firmware for Master, Slave and Body
 - Automatic configuration of Master and Slave at first startup
 - per servo runtime settings for min/max and open/close positions
 - switch to modern OOP software design and use of most recent common Arduino libraries
@@ -115,15 +115,62 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 - upload the code (PlatformIO / ATmega328P / General / Upload)
 - ![VSCode Upload](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Upload.png)
 
+Connecting Servos (common way)
+=================
+# Master
+| **Servo** | **Function** | **Remark** |
+| --- | --- | --- |
+|Servo 1|Panel 1|Lower Panel|
+|Servo 2|Panel 2|Lower Panel|
+|Servo 3|Panel 3|Lower Panel|
+|Servo 4|Panel 4|Lower Panel|
+|Servo 5|Panel 5|Lower Panel|
+|Servo 6|Panel 6|Lower Panel|
+|Servo 7|Panel 7|Upper Panel|
+|Servo 8|Panel 8|Upper Panel|
+|Servo 9|Panel 9|Upper Panel|
+|Servo 10|Panel 10|Upper Panel|
+|Servo 11|unused||
+|AUX|unused||
+# Slave
+| **Servo** | **Function** | **Remark** |
+| --- | --- | --- |
+|Servo 1|Front Holo, V-Servo||
+|Servo 2|Front Holo, H-Servo||
+|Servo 3|Rear Holo, V-Servo||
+|Servo 4|Rear Holo, H-Servo||
+|Servo 5|Top Holo, V-Servo||
+|Servo 6|Top Holo, H-Servo||
+|Servo 7|Front Holo Light||
+|Servo 8|Rear Holo Light||
+|Servo 9|Top Holo Light||
+|Servo 10=12|unused|Controlled as Servo 12 via Master|
+|Servo 11=13|unused|Controlles as Servo 13 via Master|
+|AUX|unused||
+# Body
+| **Servo** | **Function** | **Remark** |
+| --- | --- | --- |
+|Servo 1|DPL - DataPanel Door||
+|Servo 2|UtlArmU - Upper Utility Arm||
+|Servo 3|UtlArmL - Lower Utility Arm||
+|Servo 4|LBdyDr - Left BreadPan Door||
+|Servo 5|LArm - Left Arm Raise/Lower||
+|Servo 6|LArmTool - Left Arm Tool||
+|Servo 7|ToolRBdyDr - Right BreadPan Door||
+|Servo 8|RArm - Right Arm Raise/Lower||
+|Servo 9|RArmTool - Right Arm Tool||
+|Servo 10|unused|Future Charge Bay Door servo|
+|Servo 11|unused||
+|AUX|unused||
+
 MarcDuino Command Set (V4 only)
 ===============================
 
 History
 =======
 
-|     |     |     |
-| --- | --- | --- |
 | **Date** | **Software Version** | **Change** |
+| --- | --- | --- |
 | 25.12.2023 | v0.9x | initial information |
 | 25.12.2023 |     | update visualisation, removing unnecessary classic commands |
 
@@ -152,9 +199,8 @@ Every command must start with one of these special characters (defined in the he
 Command processing
 ------------------
 
-|     |     |     |     |     |     |     |
-| --- | --- | --- | --- | --- | --- | --- |
 | **Start Cmd** | **Function** | **Master process** | **Master Interface** | **Slave process** | **Slave Interface** | **Remark** |
+| --- | --- | --- | --- | --- | --- | --- |
 | :   | Pie panel commands | PROCESSED<br><br>FORWARDED TO SLAVE P12/P13 | Servos<br><br>Serial_Slave | PROCESSED | Servos | Slave is only responsible for panel 12/13 |
 | *   | Holo Projector (HP) commands | NOT PROCESSED<br><br>FORWARDED TO SLAVE | Serial_Slave | PROCESSED | Servos |     |
 | @   | Display commands | NOT PROCESSED<br><br>FORWARDED TO SLAVE | Serial_Slave | PROCESSED | Serial_Teeces |     |
@@ -170,9 +216,8 @@ Panel Commands
 
 They must follow the syntax ":CCxx\\r" where CC=command , xx= two digit decimal number, \\r is carriage return.
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
 | **Command** | **Function** | **Master** | **Slave** | **Remark** |
+| --- | --- | --- | --- | --- |
 | :SExx | launches sequences, see below | YES | YES |     |
 | :OPxx | open panel number xx=01-13. If xx=00, opens all panels (12/13 Slave only) | YES | YES |     |
 | :OP14 | open top panels | YES | NO  | tbd |
@@ -188,9 +233,8 @@ Sequence Command Details
 
 See sequence\_command, panel sequence matrices defined in panel\_sequences.h
 
-|     |     |     |
-| --- | --- | --- |
 | **Command** | **Function** | **Remark** |
+| --- | --- | --- |
 |     | **Full (Move, Sound, Display…)** |     |
 | :SE00 | Close all panels (full speed), servo off - use as init only. Use CL00 for all soft close. |     |
 | :SE01 | Scream, with all panels open |     |
@@ -231,9 +275,8 @@ Holo Projector Commands
 
 These commands are only processed by the MarcDuino Slave module
 
-|     |     |     |
-| --- | --- | --- |
 | **Command** | **Function** | **Remark** |
+| --- | --- | --- |
 | *RDxx | Random Holo movement (xx=01 to 03). xx=00 and >3 all random. |     |
 | *ONxx | Turns Holo Light on (xx=01 to 03). xx=00 or >3 all lights on |     |
 | *OFxx | Turns Holo Lights off (xx=01 to 03). xx=00 turns all lights off |     |
@@ -252,9 +295,8 @@ Sound Commands
 
 These commands are only processed by the MarcDuino Master module
 
-|     |     |     |
-| --- | --- | --- |
 | **Command** | **Function** | **Remark** |
+| --- | --- | --- |
 | $xyy | Play sound command by bank/sound numbers<br><br>· x=bank number<br><br>· yy=sound number. If none, next sound is played in. |     |
 | $xy | Play sound command by bank/sound numbers, short version<br><br>· x=bank number<br><br>· y=sound number. If none, next sound is played in. |     |
 | $R  | random from 4 first banks |     |
@@ -280,18 +322,16 @@ These commands are only processed by the MarcDuino Master module
 Special Features
 ----------------
 
-|     |     |     |
-| --- | --- | --- |
 | **Command** | **Function** | **Remark** |
+| --- | --- | --- |
 | :EOxx | Pull pin high/low on AUX1. Can be used to trigger a smoke machine as an example.<br><br>xx is the time in seconds.<br><br>· 00 - off<br><br>· 01-98 is the time in seconds (don't use values >10 for smoke machines!)<br><br>· 99 on permanently (again don't use for smoke machines) | will be executed on MASTER only |
 | *EOxx<br><br>TO SLAVE | Pull pin high/low on AUX1. Can be used to trigger a smoke machine as an example.<br><br>xx is the time in seconds.<br><br>· 00 - off<br><br>· 01-98 is the time in seconds (don't use values >10 for smoke machines!)<br><br>· 99 on permanently (again don't use for smoke machines) | will be executed on SLAVE only |
 
 Setup Commands
 --------------
 
-|     |     |     |
-| --- | --- | --- |
 | **Command** | **Function** | **Remark** |
+| --- | --- | --- |
 |     | **Servo Controls** |     |
 | #SOxxdddd | Set Servo xx Degrees/Microseconds for Panel Open, dddd=0000-0180 deg, dddd > 0544 Microseconds |     |
 | #SCxxdddd | Set Servo xx Degrees/Microseconds for Panel Closed dddd=0000-0180 deg, dddd > 0544 Microseconds |     |
@@ -326,9 +366,8 @@ EEPROM Memory Map
 
 All the settings of the “Setup Commands” are stored in EEPROM. The corresponding Memory Map is described here. Default settings when EEPROM is empty are written in **bold** letter.
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
 | **Address** | **Type** | **Content** | **Default** | **Description** |
+| --- | --- | --- | --- | --- |
 | 0x00 | byte | SW-/Config-Version |     | Version 4.0.x = 40, Version 4.1.x = 41, … |
 | 0x01 | byte | MarcDuinoType | **0 = DomeMaster** | 0 = DomeMaster<br><br>1 = DomeSlave<br><br>2 = BodyMaster |
 | 0x02 | byte | DEPRICATED |     |     |
