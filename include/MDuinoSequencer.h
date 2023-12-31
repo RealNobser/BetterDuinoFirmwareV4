@@ -63,7 +63,7 @@ class MDuinoSequencer
         unsigned int    currentSequenceSteps = 0;
 
         unsigned long   currentStepTime = 0;
-        unsigned long   currentStepDuration = 0;
+        unsigned int    currentStepDuration = 0;
 
         void nextStep();
         void movePanels();

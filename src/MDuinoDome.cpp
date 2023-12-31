@@ -24,7 +24,7 @@ void MDuinoDome::init()
 
     // AUX1 Port
     pinMode(P_AUX1, OUTPUT);
-    digitalWrite(P_AUX1, LOW);    
+    digitalWrite(P_AUX1, LOW);
 }
 
 void MDuinoDome::run()

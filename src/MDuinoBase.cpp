@@ -50,10 +50,10 @@ void MDuinoBase::run()
     }
 }
 
-void MDuinoBase::checkEEPROM()
+void MDuinoBase::checkEEPROM(const bool & factoryReset /*= false*/)
 {
     byte ConfigVersion = Storage.getConfigVersion();
-    if (ConfigVersion != CONFIG_VERSION)
+    if ((ConfigVersion != CONFIG_VERSION) || (factoryReset == true))
     {
         #ifdef DEBUG_MSG
         Serial.println(F("Invalid Config Version. Storing defaults in EEPROM and restart."));
@@ -401,8 +401,15 @@ void MDuinoBase::processSetupCommand(const char* command)
     #endif
     else if (strcmp(cmd, "RS") == 0)             // Reboot MarcDuino
     {
-        delay(500);
-        resetFunc();
+        if (param_num == 0x01)
+        {
+            checkEEPROM(true);  // Factory Reset
+        }
+        else
+        {
+            delay(500);
+            resetFunc();
+        }
     }
     else if (strcmp(cmd, "AD") == 0)             // Activate Adjustment Mode
     {

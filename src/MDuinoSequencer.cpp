@@ -7,8 +7,8 @@ MDuinoSequencer::MDuinoSequencer(MDuinoBase* instance)
     : instance(instance)
 {
     clearSequenceCompletionCallbacks();
-    for(unsigned int i=0; i < SEQUENCE_SIZE; i++)
-        servoSpeed[i]=0;
+    for(unsigned int panel = MinPanel; panel <= MaxPanel; panel++)
+        servoSpeed[panel]=0;
 }
 
 void MDuinoSequencer::init()
@@ -67,7 +67,7 @@ void MDuinoSequencer::startSequence()
 
     currentStep         = 0;
 
-    currentStepDuration = (unsigned long)pgm_read_word(&currentSequence[currentStep][0]);
+    currentStepDuration = (unsigned int)pgm_read_word(&currentSequence[currentStep][0]);
     currentStepDuration *= 10;
 
     currentStepTime     = millis();
@@ -104,7 +104,7 @@ void MDuinoSequencer::nextStep()
         return;
     }
 
-    currentStepDuration = (unsigned long)pgm_read_word(&currentSequence[currentStep][0]);
+    currentStepDuration = (unsigned int)pgm_read_word(&currentSequence[currentStep][0]);
     currentStepDuration *= 10;
 
     currentStepTime     = millis();
@@ -116,6 +116,8 @@ void MDuinoSequencer::movePanels()
 {
     if (currentSequence == nullptr)
         return;
+
+    Serial.println("Moving Panels.");
 
     for(unsigned int panel = MinPanel; panel <= MaxPanel; panel++)
     {
@@ -170,9 +172,9 @@ void MDuinoSequencer::setServoSpeed(speed_t speed)
         break;
     }
 
-    for(int i=0; i < SEQUENCE_SIZE; i++)
+    for(unsigned int panel = MinPanel; panel <= MaxPanel; panel++)
     {
-        servoSpeed[i] = set_speed;
+        servoSpeed[panel] = set_speed;
     }
 }
 

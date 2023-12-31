@@ -43,7 +43,7 @@ class MDuinoBase
         VarSpeedServo& Servo12;
         VarSpeedServo& Servo13;
 
-        virtual void checkEEPROM();
+        virtual void checkEEPROM(const bool & factoryReset = false);
 
         void toggleHeartBeat();
 
