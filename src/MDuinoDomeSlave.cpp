@@ -132,7 +132,8 @@ void MDuinoDomeSlave::parseCommand(const char* command)
         break;    
     default:
         break;
-    }    
+    }
+    delay(COMMAND_DELAY);
 }
 
 void MDuinoDomeSlave::processPanelCommand(const char* command)
@@ -281,20 +282,32 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     {
         for (unsigned int i=MinHolo; i <= MaxHolo; i++)
         {
-            Holos[i]->on(param_num);
+            if (param_num > 0)
+                Holos[i]->on(param_num);
+            else
+                Holos[i]->off();
         }
     }    
     else if (strcmp(cmd, "H1")==0)  // Holo1 On for xx seconds
     {
-        Holos[1]->on(param_num);
+        if (param_num > 0)
+            Holos[1]->on(param_num);
+        else
+            Holos[1]->off();
     }    
     else if (strcmp(cmd, "H2")==0)  // Holo2 On for xx seconds
     {
-        Holos[2]->on(param_num);
+        if (param_num > 0)
+            Holos[2]->on(param_num);
+        else
+            Holos[2]->off();
     }    
     else if (strcmp(cmd, "H3")==0)  // Holo3 On for xx seconds
     {
-        Holos[3]->on(param_num);
+        if (param_num > 0)
+            Holos[3]->on(param_num);
+        else
+            Holos[3]->off();
     }    
     else if (strcmp(cmd, "F0")==0)  // Holos Flicker for xx seconds
     {        

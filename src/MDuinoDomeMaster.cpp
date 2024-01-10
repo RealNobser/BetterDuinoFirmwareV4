@@ -224,7 +224,8 @@ void MDuinoDomeMaster::parseCommand(const char* command)
         break;    
     default:
         break;
-    }    
+    }
+    delay(COMMAND_DELAY);
 }
 /*
  * Panel commands
@@ -648,16 +649,10 @@ void MDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
     case 9:	// DISCO
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
         Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
-        // message on the logics
-        // parseCommand("@1MR2 D2   "); // message is top front is R2
-        // parseCommand("@2M  D2  ");	// message is lower front is D2
-        parseCommand("@3MSTAR WARS   ");// message in rear is STAR WARS...
-        // parseCommand("@3P61");		// ... in Aurabesh!
         parseCommand("@0T92");      // spectrum display
-        parseCommand("@3T100");
-        parseCommand("$D");         // disco music
         parseCommand("*F099");      // HPs flicker as long as possible   
-        parseCommand("%T52");	    // Magic Panel in VU Mode        
+        parseCommand("%T52");	    // Magic Panel in VU Mode
+        parseCommand("$D");         // disco music
         break;
     case 10: // QUIET   sounds off, holo stop, panel closed
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
