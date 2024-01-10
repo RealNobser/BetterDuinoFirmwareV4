@@ -313,20 +313,32 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     {        
         for (unsigned int i=MinHolo; i <= MaxHolo; i++)
         {
-            Holos[i]->flickerOn(param_num);
+            if (param_num > 0)
+                Holos[i]->flickerOn(param_num);
+            else
+                Holos[i]->off();
         }
     }    
     else if (strcmp(cmd, "F1")==0)  // Holo1 Flicker for xx seconds
     {
-        Holos[1]->flickerOn(param_num);
+        if (param_num > 0)
+            Holos[1]->flickerOn(param_num);
+        else
+            Holos[1]->off();
     }    
     else if (strcmp(cmd, "F2")==0)  // Holo2 Flicker for xx seconds
     {
-        Holos[2]->flickerOn(param_num);
+        if (param_num > 0)
+            Holos[2]->flickerOn(param_num);
+        else
+            Holos[2]->off();
     }    
     else if (strcmp(cmd, "F3")==0)  // Holo3 Flicker for xx seconds
     {
-        Holos[3]->flickerOn(param_num);
+        if (param_num > 0)
+            Holos[3]->flickerOn(param_num);
+        else
+            Holos[3]->off();
     }    
     else if (strcmp(cmd, "EO")==0)  // AUX1 on
     {
