@@ -61,8 +61,9 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Description |
 |--|--|--
-| 2023-10-23|V0.9.0 RC1|First version for closed beta test group|
+| 2023-12-30|V1.0.0|First stable public version|
 | 2023-12-11|V0.9.1 RC |Bugfixes from closed beta test group|
+| 2023-10-23|V0.9.0 RC1|First version for closed beta test group|
 
 
 ### Known MISSING functionality compared to the original source (will be released in the future)
