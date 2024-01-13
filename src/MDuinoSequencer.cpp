@@ -117,8 +117,6 @@ void MDuinoSequencer::movePanels()
     if (currentSequence == nullptr)
         return;
 
-    Serial.println("Moving Panels.");
-
     for(unsigned int panel = MinPanel; panel <= MaxPanel; panel++)
     {
         byte Position = _NP;

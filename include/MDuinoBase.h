@@ -18,6 +18,7 @@ class MDuinoBase
 
         virtual const char* getProductName() = 0;
         virtual void parseCommand(const char* command) = 0;
+        virtual void processI2CCommand(const char* command);
 
     protected:
         unsigned long HeartBeatMillis       = 0;
@@ -25,7 +26,9 @@ class MDuinoBase
         byte HeartBeatStatus = LOW;
 
         char SerialBuffer[SERIALBUFFERSIZE];
+        char WireBuffer[SERIALBUFFERSIZE];
         int BufferIndex = 0;
+        int WireIndex = 0;
 
         MDuinoStorage    Storage;
 

@@ -1,5 +1,6 @@
 
 #include "MDuinoBase.h"
+#include <Wire.h>
 
 MDuinoBase::MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                              VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
@@ -22,6 +23,7 @@ void MDuinoBase::init()
     digitalWrite(P_LED2, HeartBeatStatus);
 
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
+    memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
 
     checkEEPROM();
 }
@@ -48,6 +50,26 @@ void MDuinoBase::run()
         toggleHeartBeat();
         HeartBeatMillis = millis();
     }
+
+    // I2C
+    #ifdef INCLUDE_I2C_SLAVE
+    if (Wire.available())
+    {
+        int i = Wire.read();
+        unsigned char c;
+        c = (unsigned char)i;
+
+        WireBuffer[WireIndex++] = c;
+        if ((c == '\r') || (WireIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
+        {
+            WireBuffer[WireIndex-1] = 0x00; // ensure proper termination
+            Serial.println(WireBuffer);
+            parseCommand(WireBuffer);
+            memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
+            WireIndex = 0;
+        }
+    }
+    #endif
 }
 
 void MDuinoBase::checkEEPROM(const bool & factoryReset /*= false*/)
@@ -437,4 +459,90 @@ void MDuinoBase::adjustServo(const unsigned int & servo, const unsigned int & va
         delay(250);
         parseCommand(ServoCommand);
     }
+}
+
+void MDuinoBase::processI2CCommand(const char* command)
+{
+    #ifdef INCLUDE_CLASSIC_I2C_SUPPORT
+
+    #ifdef DEBUG_MSG
+    Serial.printf(F("I2CCommand(Base): %s\r\n"), command);
+    #endif
+
+    // Supported I2C Address Range: 0-127 (7 Bit)
+	unsigned int I2C_Address = 0;
+    char* token = NULL;
+    char* cmd   = NULL;
+  	const char delim[] = ",";
+
+    if (strlen(command) < 2)
+        return;
+
+    cmd = new char[strlen(command)];
+    memset(cmd, 0x00, strlen(command));
+    memcpy(cmd, command+1, strlen(command)-1);  // truncate leading "&"
+
+    // get the address field. Need to tokenize on the next "," or "\0"
+	token = strtok(cmd, delim);
+    if (token == NULL) {
+        return;
+    }
+
+	if (sscanf(token, "%u", &I2C_Address) != 1) {
+        return;
+    }
+
+    if (I2C_Address > 127) {
+        return;
+    }     
+
+    Wire.beginTransmission((uint8_t)I2C_Address);
+    token=strtok(NULL, delim); 	// get next token
+    while(token != NULL)
+    {
+        uint8_t data;
+        bool isValid = false;
+        switch(token[0])
+        {
+            case 'x':   // Hex Character
+                unsigned int hex;
+	            if (sscanf(token, "%x", &hex) == 1)
+                {
+                    isValid = true;
+                    data = (uint8_t)hex;
+                }
+            break;
+            case '"':   // String
+                for (unsigned int ui = 1; ui < strlen(token); ui++)
+                {
+                    data = (uint8_t)token[ui];
+                    Wire.write(data);
+                }
+            break;
+            case '\'':  // Single Character
+                char ch;
+	            if (sscanf(token, "%c", &ch) == 1)
+                {
+                    isValid = true;
+                    data = (uint8_t)ch;
+                }                
+            break;
+            default:
+                int num;
+	            if (sscanf(token, "%d", &num) == 1)
+                {
+                    isValid = true;
+                    data = (uint8_t)num;
+                }                   
+            break;
+        }
+        if (isValid) 
+        {
+            Wire.write(data);
+        }
+        token=strtok(NULL, delim); 	// get next token
+    }
+    Wire.endTransmission();
+
+    #endif
 }

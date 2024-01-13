@@ -215,6 +215,8 @@ void MDuinoDomeMaster::parseCommand(const char* command)
         break;
     case '&':
         processI2CCommand(command);
+        // Forward to slave
+        Serial_Slave.printf(F("%s\r"), command);
         break;
     case '#':
         processSetupCommand(command);
@@ -571,13 +573,6 @@ void MDuinoDomeMaster::processAltHoloCommand(const char* command)
     Serial.printf(F("AltHoloCommand(Master): %s\r\n"), command);
     #endif
     Serial_Slave.printf(F("%s\r"), command);
-}
-
-void MDuinoDomeMaster::processI2CCommand(const char* command)
-{
-    #ifdef DEBUG_MSG
-    Serial.printf(F("I2CCommand(Master): %s\r\n"), command);
-    #endif
 }
 
 void MDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)

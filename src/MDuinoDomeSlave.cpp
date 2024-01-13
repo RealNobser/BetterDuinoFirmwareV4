@@ -370,13 +370,6 @@ void MDuinoDomeSlave::processExpansionCommand(const char* command)
     Serial_Magic.printf(F("%s\r"), command+1);    // stripped
 }
 
-void MDuinoDomeSlave::processI2CCommand(const char* command)
-{
-    #ifdef DEBUG_MSG
-    Serial.printf(F("I2CCommand(Master): %s\r\n"), command);
-    #endif
-}
-
 void MDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)
 {
     #ifdef DEBUG_MSG

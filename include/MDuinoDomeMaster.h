@@ -49,7 +49,6 @@ class MDuinoDomeMaster : public MDuinoDome
         void processSoundCommand(const char* command);
         void processAltSoundCommand(const char* command);
         void processAltHoloCommand(const char* command);
-        void processI2CCommand(const char* command);
 
         void playSequenceAddons(const unsigned int SeqNr) override;
 

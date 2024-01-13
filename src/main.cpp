@@ -30,6 +30,16 @@ VarSpeedServo Servo11;
 VarSpeedServo Servo12;
 VarSpeedServo Servo13;
 
+#ifdef INCLUDE_I2C_SLAVE
+void I2C_Callback(int count)
+{
+  // MarcDuinio->I2C_Callback();
+  #ifdef DEBUG_MSG
+  Serial.print("\rI2C\r");
+  #endif
+}
+#endif
+
 void setup() {
   // put your setup code here, to run once:
   // Serial Port
@@ -37,7 +47,9 @@ void setup() {
   while(!Serial);
 
   // I2C - Master
+  #ifdef INCLUDE_CLASSIC_I2C_SUPPORT
   Wire.begin();
+  #endif
 
   MDuinoStorage Storage;
 
@@ -58,19 +70,35 @@ void setup() {
   {
     case MDuinoStorage::DomeMaster:
       MarcDuino = new MDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+      #ifdef INCLUDE_I2C_SLAVE
+      Wire.begin(I2C_DOME_MASTER);
+      Wire.onReceive(I2C_Callback);
+      #endif
       break;
     case MDuinoStorage::DomeSlave:
       MarcDuino = new MDuinoDomeSlave(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+      #ifdef INCLUDE_I2C_SLAVE
+      Wire.begin(I2C_DOME_SLAVE);
+      Wire.onReceive(I2C_Callback);
+      #endif
       break;
   #ifdef INCLUDE_BODY_MASTER
     case MDuinoStorage::BodyMaster:
       MarcDuino = new MDuinoBodyMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
+      #ifdef INCLUDE_I2C_SLAVE
+      Wire.begin(I2C_BODY_MASTER);
+      Wire.onReceive(I2C_Callback);
+      #endif
       break;
   #endif
     case MDuinoStorage::UnknownMarcDuino:
     default:
       MarcDuino = new MDuinoDomeMaster(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13);
       Storage.setType(MDuinoStorage::DomeMaster);    
+      #ifdef INCLUDE_I2C_SLAVE
+      Wire.begin(I2C_DOME_MASTER);
+      Wire.onReceive(I2C_Callback);
+      #endif
       break;
   }
   

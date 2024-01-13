@@ -107,7 +107,6 @@ class MDuinoDomeSlave : public MDuinoDome
         void processDisplayCommand(const char* command);
         void processAltDisplayCommand(const char* command);
         void processExpansionCommand(const char* command);
-        void processI2CCommand(const char* command);
 
         void playSequenceAddons(const unsigned int SeqNr) override;
 

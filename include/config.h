@@ -1,11 +1,20 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-// #define DEBUG_MSG            // Additional Log Messages to Serial
-#define INCLUDE_BODY_MASTER  // Uncomment to include Body Controller in combined firmware
+// #define DEBUG_MSG                    // Additional Log Messages to Serial
+#define INCLUDE_BODY_MASTER             // Uncomment to include Body Controller in combined firmware
+// #define INCLUDE_CLASSIC_I2C_SUPPORT     // Uncomment to include classic Seriial to I2C support.
+#define INCLUDE_I2C_SLAVE               // Uncommend for new I2C slave mode
 
+// #ifdef INCLUDE_CLASSIC_I2C_SUPPORT      // Choose one!
+//#define I2C_MASTER              // Uncomment, if you want to send I2C commands regarding the classic protocoll
+// #define I2C_SLAVE               // Uncomment, if you want to recieve I2C encoded MarcDuino commands (BetterDuino only)
+//#ifdef I2C_SLAVE
+//#define I2C_ADDRESS 0x50
+//#endif
+//#endif
 
-// #define DEDICATED_FIRMWARE   // Separate Hex Files for Master/Slave/Body
+//#define DEDICATED_FIRMWARE   // Separate Hex Files for Master/Slave/Body
 // Choose one:
 // #define DEDICATED_MASTER
 // #define DEDICATED_SLAVE
@@ -87,7 +96,7 @@
 #define P_SERVO_09  12
 #define P_SERVO_10  13
 #define P_SERVO_11  7
-#define I2C_DOME_MASTER
+#define I2C_DOME_MASTER 50
 
 // Dome Slave
 #define P_HPF_V     2
@@ -101,7 +110,7 @@
 #define P_TL        12
 #define P_SERVO_12  13
 #define P_SERVO_13  7
-#define I2C_DOME_SLAVE
+#define I2C_DOME_SLAVE  51
 
 // Body Master
 #define P_DPL            2
@@ -115,6 +124,6 @@
 #define P_RIGHT_ARM_TOOL 12
 #define P_CHRG_BAY_DR    13
 #define P_RFU            7
-#define I2C_BODY_MASTER
+#define I2C_BODY_MASTER 52
 
 #endif // __CONFIG_H__
