@@ -61,13 +61,13 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Description |
 |--|--|--
+| 2024-01-13|V1.0.1|Classic Master I2C and new I2C slave mode|
 | 2023-12-30|V1.0.0|First stable public version|
 | 2023-12-11|V0.9.1 RC |Bugfixes from closed beta test group|
 | 2023-10-23|V0.9.0 RC1|First version for closed beta test group|
 
 
 ### Known MISSING functionality compared to the original source (will be released in the future)
-- I2C command support
 - RC-IN support
 
 ### Supported Boards
@@ -115,6 +115,22 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 - ![VSCode Build](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Build.png)
 - upload the code (PlatformIO / ATmega328P / General / Upload)
 - ![VSCode Upload](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Upload.png)
+
+### Compiler defines in include/config.h
+Normally you do not need to change the defines, but, for experienced users, some instructions:
+|Define|Function|Remark|Default|
+|--|--|--|--|
+|DEBUG_MSG|activate additional debug messages on the USB/Serial-Port|program size will exceed, so you can only use that in combination with the DEDICATED_FIRMWARE flag|off|
+|INCLUDE_CLASSIC_I2C_SUPPORT|activate support for the classic MarcDuino I2C commands|program size will exceed, so you can only use that in combination with the DEDICATED_FIRMWARE flag|off|
+|INCLUDE_I2C_SLAVE|activate support for the ne I2C Slave support||on|
+|DEDICATED_FIRMWARE|when dedicated hex-files for Dome Master, Dome Slave and Body Master are needed, activate this setting with one of the following settings|needed, when programm size in combined mode will be exceeded|off|
+|DEDICATED_MASTER|generates hex file with Dome Master code only|Must be set in combination with DEDICATED_FIRMWARE|off|
+|DEDICATED_SLAVE|generates hex file with Dome Salve code only|Must be set in combination with DEDICATED_FIRMWARE|off|
+|DEDICATED_BODY|generates hex file with Body Master code only|Must be set in combination with DEDICATED_FIRMWARE|off|
+
+...more to follow...
+
+***Do not touch any other of the defines.***
 
 Connecting Servos (common way)
 =================
@@ -167,14 +183,6 @@ Connecting Servos (common way)
 MarcDuino Command Set (V4 only)
 ===============================
 
-History
-=======
-
-| **Date** | **Software Version** | **Change** |
-| --- | --- | --- |
-| 25.12.2023 | v0.9x | initial information |
-| 25.12.2023 |     | update visualisation, removing unnecessary classic commands |
-
 Unsupported original MarcDuino features
 =======================================
 
@@ -224,6 +232,8 @@ They must follow the syntax ":CCxx\\r" where CC=command , xx= two digit decimal 
 | :OP14 | open top panels | YES | NO  | tbd |
 | :OP15 | open bottom panels | YES | NO  | tbd |
 | :CLxx | close panel number xx=01-13, removes from RC if it was, stops servo. If xx=00, all panels, slow close. | YES | YES |     |
+| :LKxx | lock panel number xx=01-13, lock current position to avoid problems with DomeLift. If xx=00, locks all panels (12/13 Slave only) | YES | YES |     |
+| :ULxx | unlock panel number xx=01-13, unlocks panel, normal mode. If xx=00, unlocks all panels (12/13 Slave only) | YES | YES |     |
 | :RCxx | places panel xx=01-13 under RC input control. If xx=00, all panels placed on RC. | YES | NO  |     |
 | :STxx | buzz kill/soft hold: removes panel from RC control AND shuts servo off to eliminate buzz. xx=00 all panels off RC servos off. | YES | YES |     |
 | :HDxx | RC hold: removes from RC, but does not turn servo off, keeps at last position. xx=00 all panels hold. | YES | NO  |     |
@@ -361,6 +371,53 @@ Setup Commands
 | #DUxx | Dump EEPORM to serial<br><br>· #DUxx : value at address xx<br><br>· #DUMP : dump complete EEPROM content |     |
 | #RSET | Restart MarcDuino |     |
 | #ADxx | Adjustment Mode: When setting up individual Servo settings, servo will positioned immediately<br><br>· #AD00 : Adjustment Mode Off<br><br>· #AD01 : Adjustment Mode On |     |
+
+I2C Commands (Classic, Master-Mode)
+============
+**Source:**
+
+https://www.curiousmarc.com/r2-d2/marcduino-system/marcduino-software-reference/marcduino-command-reference#h.p_EQOGPlR2RuOk
+
+If you send a command following the format:
+
+***&I2Caddress, data, data, data...**
+
+an I2C write command will be generated on all the I2C ports in the MarcDuino chain (master and all slaves). The write command will be addressed to the device at I2Caddress and will write all the data bytes provided in order.
+
+Data can be decimal numbers, hex bytes, characters or strings, depending on the prefix appended to the data, as follows.
+
+Decimals need no prefix. Valid range is -128 to 255. For example, to send command 2 (decimal) to an I2C device at address 25:
+
+***&25,2**
+
+To send an hex byte, add x as a prefix. To send the hex byte 0xFF to device 25:
+
+***&25,xFF***
+
+To send a single character, use the ' prefix
+
+***&25,'c***
+
+To send a string, use the " prefix. Don't put another " at the end or it will be transmitted as part of the string...
+
+***&25,"Hello World  (note: there is no second " at the end of the string)***
+
+And of course you can mix everything:
+
+***&25,2,xFF,'c,"Hello World***
+
+I2C Commands (New, Slave-Mode)
+==============================
+MarcDuino boards with NewDuino firmware are enabled to receive any serial command also as I2C slave via the I2C interface. So other componetes beside the main control system (ShadowMD etc.) are able to execute commands or start sequences (e.g. dome lift). The protocol is pretty simple, just send an I2C message to one of the following slave addresses with data payload identical to one of the commands described above (don't forget dto finalise the command with 0x0a = '\r' = Carriage Return.
+
+| **I2C-Address (dec/hex)** | **Type** |
+| --- | --- |
+|50/0x32|MarcDuino Dome Master|
+|51/0x33|MarcDuino Dome Slave|
+|52/0x34|MarcDuino Body Master|
+
+I2C addresses can be changed in include/config.h if needed.
+
 
 EEPROM Memory Map
 =================
