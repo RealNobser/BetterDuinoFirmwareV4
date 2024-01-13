@@ -302,13 +302,9 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         {
             Panels[param_num]->open();
         }
-        else if (param_num == 12)   // Send commands to slave to open slave panels
+        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
         {
-            Serial_Slave.print(F(":OP12\r"));
-        }
-        else if (param_num == 13)   // Send commands to slave to open slave panels
-        {
-            Serial_Slave.print(F(":OP13\r"));
+            Serial_Slave.printf(F(":OP%02u\r"), param_num);
         }
         else if (param_num == 14)    // Open Top Panels
         {
@@ -340,15 +336,9 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         {
             Panels[param_num]->close();
         }
-        else if (param_num == 12)   // Send commands to slave to open slave panels
+        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to close slave panels
         {
-            // Serial_Slave.print(F(":CL07\r")); // OLD
-            Serial_Slave.print(F(":CL12\r"));
-        }
-        else if (param_num == 13)   // Send commands to slave to open slave panels
-        {
-            // Serial_Slave.print(F(":CL08\r"));  // OLD
-            Serial_Slave.print(F(":CL13\r"));
+            Serial_Slave.printf(F(":CL%02u\r"), param_num);
         }
         else if (param_num == 14)    // Open Top Panels
         {
@@ -365,6 +355,73 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             }
         }        
     }
+
+    else if (strcmp(cmd, "LK")==0)  // Lock Panel
+    {
+        if (param_num == 0)         // lock all
+        {
+            for(unsigned int i=MinPanel; i<= MaxPanel; i++)
+                Panels[i]->lock(true);
+            
+            // Open Slave, too
+            Serial_Slave.print(F(":LK00\r"));
+        }
+        else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
+        {
+            Panels[param_num]->lock(true);
+        }
+        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
+        {
+            Serial_Slave.printf(F(":LK%02u\r"), param_num);
+        }
+        else if (param_num == 14)    // Lock Top Panels
+        {
+            for (unsigned int i=7; i<=MaxPanel; i++)
+            {
+                Panels[i]->lock(true);
+            }
+        }
+        else if (param_num == 15)    // Lock Bottom Panels
+        {
+            for (int i=MinPanel; i<=6; i++)
+            {
+                Panels[i]->lock(true);
+            }
+        }        
+    }
+    else if (strcmp(cmd, "UL")==0)  // Unlock Panel
+    {
+        if (param_num == 0)         // Unlock all
+        {
+            for(unsigned int i=MinPanel; i<= MaxPanel; i++)
+                Panels[i]->lock(false);
+            
+            // Open Slave, too
+            Serial_Slave.print(F(":UL00\r"));
+        }
+        else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
+        {
+            Panels[param_num]->lock(false);
+        }
+        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
+        {
+            Serial_Slave.printf(F(":UL%02u\r"), param_num);
+        }
+        else if (param_num == 14)    // Unlock Top Panels
+        {
+            for (unsigned int i=7; i<=MaxPanel; i++)
+            {
+                Panels[i]->lock(false);
+            }
+        }
+        else if (param_num == 15)    // Unlock Bottom Panels
+        {
+            for (int i=MinPanel; i<=6; i++)
+            {
+                Panels[i]->lock(false);
+            }
+        }        
+    }
     else if (strcmp(cmd, "ST")==0)
     {
         if (param_num == 0)    // Alle panels
@@ -378,13 +435,9 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         {
             Panels[param_num]->detach();
         }
-        else if (param_num == 12)
+        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
         {
-            Serial_Slave.print(F(":ST12\r"));
-        }
-        else if (param_num == 13)
-        {
-            Serial_Slave.print(F(":ST13\r"));
+            Serial_Slave.printf(F(":ST%02u\r"), param_num);
         }
     }
     else if (strcmp(cmd, "RC")==0)

@@ -3,16 +3,8 @@
 
 // #define DEBUG_MSG                    // Additional Log Messages to Serial
 #define INCLUDE_BODY_MASTER             // Uncomment to include Body Controller in combined firmware
-// #define INCLUDE_CLASSIC_I2C_SUPPORT     // Uncomment to include classic Seriial to I2C support.
+// #define INCLUDE_CLASSIC_I2C_SUPPORT  // Uncomment to include classic Seriial to I2C support.
 #define INCLUDE_I2C_SLAVE               // Uncommend for new I2C slave mode
-
-// #ifdef INCLUDE_CLASSIC_I2C_SUPPORT      // Choose one!
-//#define I2C_MASTER              // Uncomment, if you want to send I2C commands regarding the classic protocoll
-// #define I2C_SLAVE               // Uncomment, if you want to recieve I2C encoded MarcDuino commands (BetterDuino only)
-//#ifdef I2C_SLAVE
-//#define I2C_ADDRESS 0x50
-//#endif
-//#endif
 
 //#define DEDICATED_FIRMWARE   // Separate Hex Files for Master/Slave/Body
 // Choose one:
@@ -61,7 +53,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.1.0"
+#define VERSION         "4.1.1"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  41
 
