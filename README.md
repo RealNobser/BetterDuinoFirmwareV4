@@ -408,7 +408,16 @@ And of course you can mix everything:
 
 I2C Commands (New, Slave-Mode)
 ==============================
-tbd
+MarcDuino boards with NewDuino firmware are enabled to receive any serial command also as I2C slave via the I2C interface. So other componetes beside the main control system (ShadowMD etc.) are able to execute commands or start sequences (e.g. dome lift). The protocol is pretty simple, just send an I2C message to one of the following slave addresses with data payload identical to one of the commands described above (don't forget dto finalise the command with 0x0a = '\r' = Carriage Return.
+
+| **I2C-Address** | **Type** |
+| --- | --- |
+|50|MarcDuino Dome Master|
+|51|MarcDuino Dome Slave|
+|52|MarcDuino Body Master|
+
+I2C addresses can be changed in include/config.h if needed.
+
 
 EEPROM Memory Map
 =================
