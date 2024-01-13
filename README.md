@@ -118,13 +118,17 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 
 ### Compiler defines in include/config.h
 Normally you do not need to change the defines, but, for experienced users, some instructions:
-|Define|Function|Remark|
-|--|--|--|
-|DEBUG_MSG|activate additional debug messages on the USB/Serial-Port|program size will exceed, so you can only use that in combination with the DEDICATED_FIRMWARE flag|
-|INCLUDE_CLASSIC_I2C_SUPPORT|activate support for the classic MarcDuino I2C commands|--|
-|--|--|--|
-|--|--|--|
-|--|--|--|
+|Define|Function|Remark|Default|
+|--|--|--|--|
+|DEBUG_MSG|activate additional debug messages on the USB/Serial-Port|program size will exceed, so you can only use that in combination with the DEDICATED_FIRMWARE flag|off|
+|INCLUDE_CLASSIC_I2C_SUPPORT|activate support for the classic MarcDuino I2C commands|program size will exceed, so you can only use that in combination with the DEDICATED_FIRMWARE flag|off|
+|INCLUDE_I2C_SLAVE|activate support for the ne I2C Slave support||on|
+|DEDICATED_FIRMWARE|when dedicated hex-files for Dome Master, Dome Slave and Body Master are needed, activate this setting with one of the following settings|needed, when programm size in combined mode will be exceeded|off|
+|DEDICATED_MASTER|generates hex file with Dome Master code only|Must be set in combination with DEDICATED_FIRMWARE|off|
+|DEDICATED_SLAVE|generates hex file with Dome Salve code only|Must be set in combination with DEDICATED_FIRMWARE|off|
+|DEDICATED_BODY|generates hex file with Body Master code only|Must be set in combination with DEDICATED_FIRMWARE|off|
+
+...more to follow...
 
 ***Do not touch any other of the defines.***
 
@@ -178,14 +182,6 @@ Connecting Servos (common way)
 
 MarcDuino Command Set (V4 only)
 ===============================
-
-History
-=======
-
-| **Date** | **Software Version** | **Change** |
-| --- | --- | --- |
-| 25.12.2023 | v0.9x | initial information |
-| 25.12.2023 |     | update visualisation, removing unnecessary classic commands |
 
 Unsupported original MarcDuino features
 =======================================
