@@ -83,7 +83,7 @@ void MDuinoDomeMaster::init()
 
     parseCommand(":SE00");              // Close Panels
     Serial_Slave.print(F("#MD01\r"));   // Force Slave board to be in Slave Mode
-}
+    }
 
 void MDuinoDomeMaster::run()
 {
@@ -222,12 +222,14 @@ void MDuinoDomeMaster::parseCommand(const char* command)
         processSetupCommand(command);
         // Forwarding all but #MD to Slave to be in sync
         if (strncmp(command, "#MD", 3) != 0)
+        {
             Serial_Slave.printf(F("%s\r"), command);
+        }
         break;    
     default:
         break;
     }
-    delay(COMMAND_DELAY);
+    Serial_Slave.flush();
 }
 /*
  * Panel commands
@@ -339,7 +341,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to close slave panels
         {
             Serial_Slave.printf(F(":CL%02u\r"), param_num);
-        }
+                    }
         else if (param_num == 14)    // Open Top Panels
         {
             for (unsigned int i=7; i<=MaxPanel; i++)
@@ -398,7 +400,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             
             // Open Slave, too
             Serial_Slave.print(F(":UL00\r"));
-        }
+                    }
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
         {
             Panels[param_num]->lock(false);
@@ -406,7 +408,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
         {
             Serial_Slave.printf(F(":UL%02u\r"), param_num);
-        }
+                    }
         else if (param_num == 14)    // Unlock Top Panels
         {
             for (unsigned int i=7; i<=MaxPanel; i++)
@@ -472,7 +474,7 @@ void MDuinoDomeMaster::processDisplayCommand(const char* command)
 
     // Forward to slave
     Serial_Slave.printf(F("%s\r"), command);
-}
+ }
 
 	////////////////////////////////////////////////
 	// Play sound command by bank/sound numbers
@@ -632,6 +634,7 @@ void MDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
 {
     // Also forward to Slave
     Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
+    Serial_Slave.flush();
 
     // Disable Servo detach during Animations
     ServoBuzzIntervall = 0;
@@ -663,7 +666,6 @@ void MDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         break;
     case 5: // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
-        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         parseCommand("@0T92");      // spectrum display
         parseCommand("*HP17");      // HPs flash for 17 seconds
         parseCommand("$c");         // beeping cantina sound
@@ -680,7 +682,6 @@ void MDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         break;
     case 7: // Cantina (Orchestral Cantina, Rhythmic Panels)
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
-        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         parseCommand("$C");         // Cantina sound        
         parseCommand("@0T92");      // spectrum display
         parseCommand("*F046");      // HPs flicker 46 seconds        
@@ -696,7 +697,6 @@ void MDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         break;
     case 9:	// DISCO
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
-        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         parseCommand("@0T92");      // spectrum display
         parseCommand("*F099");      // HPs flicker as long as possible   
         parseCommand("%T52");	    // Magic Panel in VU Mode
@@ -704,9 +704,6 @@ void MDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
         break;
     case 10: // QUIET   sounds off, holo stop, panel closed
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
-        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
-        parseCommand("*H000");  // quick way to turn off holos if connected to MarcDuino  
-        parseCommand("@0T1");   // abort test routine, reset all to normal
         parseCommand("*ST00");  // all holos to stop
         parseCommand("$s");		// stop sounds
         // stop_command(0);					// all panels off RC        
