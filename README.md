@@ -188,7 +188,7 @@ Unsupported original MarcDuino features
 
 · no Panel/Servo RC_IN support
 
-· some configuration commands are not supported / necessary do to cleaned command processing / storage
+· some configuration commands are not supported / necessary due to cleaned command processing / storage
 
 Commands
 ========
