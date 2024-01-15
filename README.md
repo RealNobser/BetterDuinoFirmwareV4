@@ -31,9 +31,9 @@ https://github.com/nhutchison/MarcDuinoClient
 
 ***If you find any issues, please use the github "Issues" mechanism above. When you are an experienced software developer please feel free to submit pull requests. This is a living repository and I appreciate any community input!***
 
-***Please do not contact astromech.net or open up a discussion in the astromech.net forum. astromech.net is not in charge with BetterDuinoFirmwareV4. You will not get any support or help regarding BetterDuino. On the other side, if you have questions about the original firmware for MarcDuino boards, then you are fine in the astromech forum.***
-
 If there are still questions not anserwed here, feel free to visit Michael Baddeleys fantastic Printed Droid community here: https://www.facebook.com/groups/MrBaddeley . You will be treated in a fair and polite way and we will find a solution or answer to your questions!
+
+*Update:* Now there also is a BetterDuino support thread on Astromech.net: https://astromech.net/forums/showthread.php?44309-MarcDuino-Replacement-Firmware
 
 Nevertheless: Read and understand, how the boards work, why there is a master and a slave board, how the boards are connected ->
 
