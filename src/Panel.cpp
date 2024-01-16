@@ -1,14 +1,14 @@
 #include <Arduino.h>
 #include "Panel.h"
 
-Panel::Panel(VarSpeedServo& Servo, const int & Pin) :
+Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin) :
     Servo(Servo),
     Pin(Pin)
 {
     //attach();
 }
 
-Panel::Panel(VarSpeedServo& Servo, const int & Pin, const int & OpenPos, const int & ClosedPos) :
+Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin, const word OpenPos, const word ClosedPos) :
     Servo(Servo),
     Pin(Pin),
     OpenPos(OpenPos),
@@ -29,17 +29,17 @@ void Panel::detach()
         Servo.detach();
 }
 
-void Panel::open(const int & speed)
+void Panel::open(const byte speed)
 {
     move(OpenPos, speed);
 }
 
-void Panel::close(const int & speed)
+void Panel::close(const byte speed)
 {
     move(ClosedPos, speed);
 }
 
-void Panel::move(const int & position, const int & speed)
+void Panel::move(const word position, const byte speed)
 {
     if (locked)
         return;
@@ -54,18 +54,24 @@ void Panel::move(const int & position, const int & speed)
     Servo.write(position, speed);
 }
 
-void Panel::setEndPositions(const int & OpenPos, const int & ClosedPos)
+void Panel::move(const byte percent, const byte speed)
+{
+    word position = map(percent, 0, 100, ClosedPos, OpenPos);
+    move(position, speed);
+}
+
+void Panel::setEndPositions(const word OpenPos, const word ClosedPos)
 {
     this->OpenPos     = OpenPos;
     this->ClosedPos   = ClosedPos;
 }
 
-void Panel::setOpenPos(const int & Pos)
+void Panel::setOpenPos(const word Pos)
 {
     this->OpenPos = Pos;
 }
 
-void Panel::setClosedPos(const int & Pos)
+void Panel::setClosedPos(const word Pos)
 {
     this->ClosedPos = Pos;
 }

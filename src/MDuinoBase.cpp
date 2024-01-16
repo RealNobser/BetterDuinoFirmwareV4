@@ -8,6 +8,7 @@ MDuinoBase::MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedSer
     Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11), Servo12(Servo12), Servo13(Servo13)
 {
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
+    memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
 
     HeartBeatMillis     = millis();
     HeartBeatIntervall  = HEARTBEAT_MILLIS;
@@ -72,7 +73,7 @@ void MDuinoBase::run()
     #endif
 }
 
-void MDuinoBase::checkEEPROM(const bool & factoryReset /*= false*/)
+void MDuinoBase::checkEEPROM(const bool factoryReset /*= false*/)
 {
     byte ConfigVersion = Storage.getConfigVersion();
     if ((ConfigVersion != CONFIG_VERSION) || (factoryReset == true))
@@ -101,12 +102,12 @@ void MDuinoBase::checkEEPROM(const bool & factoryReset /*= false*/)
         Storage.setMinRandomPause(MINRANDOMPAUSE);
         Storage.setMaxRandomPause(MAXRANDOMPAUSE);
 
-        for (int i=1; i <= MAX_MARCUDINOSERVOS; i++)
+        for (byte i=1; i <= MAX_MARCUDINOSERVOS; i++)
         {
             Storage.setServoSpeed(i, 0);            // Full Speed
             Storage.setServoPositions(i, PANEL_OPN, PANEL_CLS); // see config.h, original MarcDuino Default Values
         }
-        for (int i=1; i <= MAX_MARCDUINOHOLOS; i++)
+        for (byte i=1; i <= MAX_MARCDUINOHOLOS; i++)
         {
             Storage.setHoloServoSpeed(i, 0, 0);     // Full speed
             Storage.setHoloPositions(i, HOLO_MIN, HOLO_MAX, HOLO_MIN, HOLO_MAX);
@@ -145,7 +146,7 @@ bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & 
     memcpy(cmd, command+1, 2);
     memcpy(param, command+3, 2);
 
-    param_num = atoi(param);    
+    param_num = atoi(param);
 
     return true;
 }
@@ -449,7 +450,7 @@ void MDuinoBase::processSetupCommand(const char* command)
     #endif
 }
 
-void MDuinoBase::adjustServo(const unsigned int & servo, const unsigned int & value)
+void MDuinoBase::adjustServo(const byte servo, const word value)
 {
     if (Storage.getAdjustmentMode())    // TODO: use new move command later
     {

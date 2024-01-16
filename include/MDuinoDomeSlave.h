@@ -94,10 +94,10 @@ class MDuinoDomeSlave : public MDuinoDome
         unsigned long MagicPanelMillis  = 0;
         unsigned long MagicPanelInterval= 0;
 
-        static const unsigned int MinPanel = 12;    // Master Board has 11 Panel Connectors
-        static const unsigned int MaxPanel = 13;    // Master Board has 11 Panel Connectors
-        static const unsigned int MinHolo  = 1;     // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
-        static const unsigned int MaxHolo  = 3;     // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
+        static const byte MinPanel = 12;   // Master Board has 11 Panel Connectors
+        static const byte MaxPanel = 13;   // Master Board has 11 Panel Connectors
+        static const byte MinHolo  = 1;    // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
+        static const byte MaxHolo  = 3;    // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
 
         Holo* Holos[MaxHolo + 1];       // +1 for index 0 dummy
         Panel* Panels[MaxPanel + 1];    // +1 for index 0 dummy
@@ -108,15 +108,15 @@ class MDuinoDomeSlave : public MDuinoDome
         void processAltDisplayCommand(const char* command);
         void processExpansionCommand(const char* command);
 
-        void playSequenceAddons(const unsigned int SeqNr) override;
+        void playSequenceAddons(const byte SeqNr) override;
 
         void HolosOn(const byte HoloNr);
         void HolosOff(const byte HoloNr);
 
         void HoloCenter(const byte HoloNr);
 
-        void MagicPanelCtrl(const unsigned int param_num);
-        void HoloMovementCtrl(const unsigned int param_num, const bool moving);
+        void MagicPanelCtrl(const byte param);
+        void HoloMovementCtrl(const byte param, const bool moving);
 };
 
 #endif // __MARCDUINODOMESLAVE_H__

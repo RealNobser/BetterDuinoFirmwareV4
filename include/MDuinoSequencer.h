@@ -37,8 +37,8 @@ class MDuinoSequencer
         
         void init();
         void run();
-        void setPanels(Panel** Panels, const unsigned int PanelCount);
-        void setPanelRange(const unsigned int MinPanel, const unsigned int MaxPanel);
+        void setPanels(Panel** Panels, const byte PanelCount);
+        void setPanelRange(const byte MinPanel, const byte MaxPanel);
         void loadSequence(sequence_t_ptr Seq, const unsigned int Steps);
         void clearSequence();
         void startSequence();
@@ -53,9 +53,9 @@ class MDuinoSequencer
     protected:
         MDuinoBase*     instance    = nullptr;
         Panel**         Panels      = nullptr;
-        unsigned int    PanelCount  = 0;
-        unsigned int    MinPanel    = 0;
-        unsigned int    MaxPanel    = 0;
+        byte            PanelCount  = 0;
+        byte            MinPanel    = 0;
+        byte            MaxPanel    = 0;
 
         unsigned int    currentStep = 0;
         sequence_t_ptr  currentSequence = nullptr;
@@ -71,7 +71,7 @@ class MDuinoSequencer
         byte servoSpeed[SEQUENCE_SIZE];
 
         void(*seq_completion_callback[MAX_SEQUENCE_COMPLETION_CALLBACKS])(MDuinoBase*); // Maximum 5 Sequence Completion Callbacks
-        unsigned int CompletionCallbacksNr = 0;
+        byte CompletionCallbacksNr = 0;
 
 };
 

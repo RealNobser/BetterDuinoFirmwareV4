@@ -16,12 +16,12 @@ MDuinoDomeSlave::MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlyS
     Serial_Teeces.begin(SERIAL_TEECES_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
     while(!Serial_Teeces);
 
-    for(unsigned int i=0; i <= MaxHolo; ++i)
+    for(byte i=0; i <= MaxHolo; ++i)
     {
         Holos[i] = nullptr;
     }   
 
-    for(unsigned int i=0; i <= MaxPanel; ++i)
+    for(byte i=0; i <= MaxPanel; ++i)
     {
         Panels[i] = nullptr;
     }   
@@ -54,7 +54,7 @@ void MDuinoDomeSlave::run()
     MDuinoDome::run();
 
     // Holos
-    for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+    for (byte i=MinHolo; i <= MaxHolo; i++)
         Holos[i]->run();
 
     // Servos. TODO: Double implementation, check BaseClass Idea for Dome MarcDuinos
@@ -62,7 +62,7 @@ void MDuinoDomeSlave::run()
     {
         if ((millis() - ServoBuzzMillis) > ServoBuzzIntervall)
         {
-            for (unsigned int i = MinPanel; i <= MaxPanel; i++)
+            for (byte i = MinPanel; i <= MaxPanel; i++)
             {
                 Panels[i]->detach();
             }
@@ -159,7 +159,7 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
     {
         if (param_num == 0)         // open all
         {
-            for(unsigned int i=MinPanel; i<=MaxPanel; i++)
+            for(byte i=MinPanel; i<=MaxPanel; i++)
                 Panels[i]->open();
             
         }
@@ -179,7 +179,7 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
     {
         if (param_num == 0)         // close all
         {
-            for(unsigned int i=MinPanel; i<=MaxPanel; i++)
+            for(byte i=MinPanel; i<=MaxPanel; i++)
                 Panels[i]->close();            
         }
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
@@ -197,7 +197,7 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
     {
         if (param_num == 0)    // Alle panels
         {
-            for(unsigned int i=MinPanel; i <= MaxPanel; i++)
+            for(byte i=MinPanel; i <= MaxPanel; i++)
                 Panels[i]->detach();
         }
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
@@ -246,7 +246,7 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
         adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
         if(param_num == 0)
         {
-            for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+            for (byte i=MinHolo; i <= MaxHolo; i++)
                 HoloCenter(i);
         }
         else
@@ -280,7 +280,7 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     }    
     else if (strcmp(cmd, "H0")==0)  // Holos On for xx seconds
     {
-        for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+        for (byte i=MinHolo; i <= MaxHolo; i++)
         {
             if (param_num > 0)
                 Holos[i]->on(param_num);
@@ -311,7 +311,7 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     }    
     else if (strcmp(cmd, "F0")==0)  // Holos Flicker for xx seconds
     {        
-        for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+        for (byte i=MinHolo; i <= MaxHolo; i++)
         {
             if (param_num > 0)
                 Holos[i]->flickerOn(param_num);
@@ -370,7 +370,7 @@ void MDuinoDomeSlave::processExpansionCommand(const char* command)
     Serial_Magic.printf(F("%s\r"), command+1);    // stripped
 }
 
-void MDuinoDomeSlave::playSequenceAddons(const unsigned int SeqNr)
+void MDuinoDomeSlave::playSequenceAddons(const byte SeqNr)
 {
     #ifdef DEBUG_MSG
     Serial.printf(F("PlaySequenceAddons(Slave): %i\r\n"), SeqNr);
@@ -385,7 +385,7 @@ void MDuinoDomeSlave::HolosOn(const byte HoloNr)
 
     if((HoloNr == 0) || (HoloNr == 4))  // All Holos
     {
-        for(unsigned int i=1; i<= MAX_MARCDUINOHOLOS; i++)
+        for(byte i=1; i<= MAX_MARCDUINOHOLOS; i++)
             Holos[i]->on();
     }
     else
@@ -399,7 +399,7 @@ void MDuinoDomeSlave::HolosOff(const byte HoloNr)
 
     if((HoloNr == 0) || (HoloNr == 4))  // All Holos
     {
-        for(unsigned int i=1; i<= MAX_MARCDUINOHOLOS; i++)
+        for(byte i=1; i<= MAX_MARCDUINOHOLOS; i++)
             Holos[i]->off();
     }
     else
@@ -421,29 +421,29 @@ void MDuinoDomeSlave::HoloCenter(const byte HoloNr)
     Holos[HoloNr]->move(HCenter, VCenter);
 }
 
-void MDuinoDomeSlave::MagicPanelCtrl(const unsigned int param_num)
+void MDuinoDomeSlave::MagicPanelCtrl(const byte param)
 {
     MagicPanelInterval = 0;
 
-    if(param_num == 0)
+    if(param == 0)
         Serial_Magic.print(F("T0\r"));   // OFF
-    else if (param_num == 99)
+    else if (param == 99)
         Serial_Magic.print(F("T1\r"));   // ON
     else
     {
-        MagicPanelInterval = param_num * 1000;
+        MagicPanelInterval = param * 1000;
         MagicPanelMillis = millis();
         Serial_Magic.print(F("T1\r"));   // Timer
     }
 }
 
-void MDuinoDomeSlave::HoloMovementCtrl(const unsigned int param_num, const bool moving)
+void MDuinoDomeSlave::HoloMovementCtrl(const byte param, const bool moving)
 {
-    if ((param_num == 0) || (param_num >3))
+    if ((param == 0) || (param >3))
     {
-        for (unsigned int i=MinHolo; i <= MaxHolo; i++)
+        for (byte i=MinHolo; i <= MaxHolo; i++)
             Holos[i]->randomMove(moving);
     }
     else
-        Holos[param_num]->randomMove(moving);
+        Holos[param]->randomMove(moving);
 }

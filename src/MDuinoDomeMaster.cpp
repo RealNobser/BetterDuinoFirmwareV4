@@ -15,7 +15,7 @@ MDuinoDomeMaster::MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnl
     Serial_MP3.begin(SERIAL_MP3_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
     while(!Serial_MP3);
 
-    for(unsigned int i=0; i <= MaxPanel; ++i)
+    for(byte i=0; i <= MaxPanel; ++i)
     {
         Panels[i] = nullptr;
     }
@@ -94,7 +94,7 @@ void MDuinoDomeMaster::run()
     {
         if ((millis() - ServoBuzzMillis) > ServoBuzzIntervall)
         {
-            for (unsigned int i = MinPanel; i <= MaxPanel; i++)
+            for (byte i = MinPanel; i <= MaxPanel; i++)
             {
                 Panels[i]->detach();
             }
@@ -107,8 +107,8 @@ void MDuinoDomeMaster::run()
     {
         if ((millis()-RandomSoundMillis) > RandomSoundIntervall)
         {
-            unsigned int bank   = 0;
-            unsigned int sound  = 0;
+            byte bank   = 0;
+            byte sound  = 0;
 
             getRandomSound(bank, sound);
 
@@ -284,7 +284,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         if (param_num > MaxPanel)
             return;
 
-        Panels[param_num]->move(param_num_ext);
+        Panels[param_num]->move((word)param_num_ext);
     }
     else if (strcmp(cmd, "SE")==0)       // Start Sequence
     {
@@ -294,7 +294,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     {
         if (param_num == 0)         // open all
         {
-            for(unsigned int i=MinPanel; i<=MaxPanel; i++)
+            for(byte i=MinPanel; i<=MaxPanel; i++)
                 Panels[i]->open();
             
             // Open Slave, too
@@ -310,14 +310,14 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         }
         else if (param_num == 14)    // Open Top Panels
         {
-            for (unsigned int i=7; i<=MaxPanel; i++)
+            for (byte i=7; i<=MaxPanel; i++)
             {
                 Panels[i]->open();
             }
         }
         else if (param_num == 15)    // Open Bottom Panels
         {
-            for (int i=MinPanel; i<=6; i++)
+            for (byte i=MinPanel; i<=6; i++)
             {
                 Panels[i]->open();
             }
@@ -328,7 +328,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     {
         if (param_num == 0)         // close all
         {
-            for(unsigned int i=MinPanel; i<= MaxPanel; i++)
+            for(byte i=MinPanel; i<= MaxPanel; i++)
                 Panels[i]->close();
             
             // Open Slave, too
@@ -341,17 +341,17 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to close slave panels
         {
             Serial_Slave.printf(F(":CL%02u\r"), param_num);
-                    }
+        }
         else if (param_num == 14)    // Open Top Panels
         {
-            for (unsigned int i=7; i<=MaxPanel; i++)
+            for (byte i=7; i<=MaxPanel; i++)
             {
                 Panels[i]->close();
             }
         }
         else if (param_num == 15)    // Open Bottom Panels
         {
-            for (int i=MinPanel; i<=6; i++)
+            for (byte i=MinPanel; i<=6; i++)
             {
                 Panels[i]->close();
             }
@@ -362,7 +362,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     {
         if (param_num == 0)         // lock all
         {
-            for(unsigned int i=MinPanel; i<= MaxPanel; i++)
+            for(byte i=MinPanel; i<= MaxPanel; i++)
                 Panels[i]->lock(true);
             
             // Open Slave, too
@@ -378,14 +378,14 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         }
         else if (param_num == 14)    // Lock Top Panels
         {
-            for (unsigned int i=7; i<=MaxPanel; i++)
+            for (byte i=7; i<=MaxPanel; i++)
             {
                 Panels[i]->lock(true);
             }
         }
         else if (param_num == 15)    // Lock Bottom Panels
         {
-            for (int i=MinPanel; i<=6; i++)
+            for (byte i=MinPanel; i<=6; i++)
             {
                 Panels[i]->lock(true);
             }
@@ -395,12 +395,12 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     {
         if (param_num == 0)         // Unlock all
         {
-            for(unsigned int i=MinPanel; i<= MaxPanel; i++)
+            for(byte i=MinPanel; i<= MaxPanel; i++)
                 Panels[i]->lock(false);
             
             // Open Slave, too
             Serial_Slave.print(F(":UL00\r"));
-                    }
+        }
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
         {
             Panels[param_num]->lock(false);
@@ -408,17 +408,17 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
         {
             Serial_Slave.printf(F(":UL%02u\r"), param_num);
-                    }
+        }
         else if (param_num == 14)    // Unlock Top Panels
         {
-            for (unsigned int i=7; i<=MaxPanel; i++)
+            for (byte i=7; i<=MaxPanel; i++)
             {
                 Panels[i]->lock(false);
             }
         }
         else if (param_num == 15)    // Unlock Bottom Panels
         {
-            for (int i=MinPanel; i<=6; i++)
+            for (byte i=MinPanel; i<=6; i++)
             {
                 Panels[i]->lock(false);
             }
@@ -428,7 +428,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     {
         if (param_num == 0)    // Alle panels
         {
-            for(unsigned int i=MinPanel; i <= MaxPanel; i++)
+            for(byte i=MinPanel; i <= MaxPanel; i++)
                 Panels[i]->detach();
 
             Serial_Slave.print(F(":ST00\r"));
@@ -509,8 +509,8 @@ void MDuinoDomeMaster::processDisplayCommand(const char* command)
 void MDuinoDomeMaster::processSoundCommand(const char* command)
 {
     char cmd[3];
-    unsigned int bank = 0;
-    unsigned int sound= 0;
+    byte bank = 0;
+    byte sound= 0;
 
     memset(cmd, 0x00, 3);
     
@@ -535,6 +535,7 @@ void MDuinoDomeMaster::processSoundCommand(const char* command)
     {
         case 'R':   // random from 4 first banks
             setStandardRandomSoundIntervall();
+            RandomSoundIntervall = 1;   // Immediately play new random sound
         break;
         case 'O':   // sound off
             RandomSoundIntervall = 0;   // Stop Random sounds
@@ -630,7 +631,7 @@ void MDuinoDomeMaster::processAltHoloCommand(const char* command)
     Serial_Slave.printf(F("%s\r"), command);
 }
 
-void MDuinoDomeMaster::playSequenceAddons(const unsigned int SeqNr)
+void MDuinoDomeMaster::playSequenceAddons(const byte SeqNr)
 {
     // Also forward to Slave
     Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
@@ -764,10 +765,16 @@ void MDuinoDomeMaster::sequenceCallbackJedi(MDuinoBase* object)
     object->parseCommand("*H000\r"); // quick way to turn off holos if connected to MarcDuino
 	object->parseCommand("@0T1\r");  // abort test routine, reset all to normal
 	object->parseCommand("%T00\r");  // MP Off
+	object->parseCommand("$R\r");  	 // Back to random mode if configured
 }
 
 // callback to reset JEDI to normal after a sequence, works only once
 void MDuinoDomeMaster::sequenceCallbackResetMP(MDuinoBase* object)
 {
 	object->parseCommand("%T00\r");  	// Off
+}
+
+void MDuinoDomeMaster::sequenceCallbackResetSound(MDuinoBase* object)
+{
+	object->parseCommand("$R\r");  	    // Back to random mode if configured
 }

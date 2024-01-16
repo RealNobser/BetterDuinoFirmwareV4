@@ -6,25 +6,26 @@
 class Panel
 {
     public:
-        Panel(VarSpeedServo& Servo, const int & Pin);
-        Panel(VarSpeedServo& Servo, const int & Pin, const int & OpenPos, const int & ClosedPos);
+        Panel(VarSpeedServo& Servo, const uint8_t Pin);
+        Panel(VarSpeedServo& Servo, const uint8_t Pin, const word OpenPos, const word ClosedPos);
         void attach();
         void detach();
 
-        void open(const int & speed=0);
-        void close(const int & speed=0);
-        void move(const int & angle, const int & speed=0);
-        void lock(const bool & lock) { locked = lock; }
+        void open(const byte speed=0);
+        void close(const byte speed=0);
+        void move(const word angle, const byte speed=0);
+        void move(const byte percent, const byte speed=0);
+        void lock(const bool lock) { locked = lock; }
         
-        void setEndPositions(const int & OpenPos, const int & ClosedPos);
-        void setOpenPos(const int & Pos);
-        void setClosedPos(const int & Pos);
+        void setEndPositions(const word OpenPos, const word ClosedPos);
+        void setOpenPos(const word Pos);
+        void setClosedPos(const word Pos);
 
     protected:
         VarSpeedServo& Servo;
-        int Pin             = 0;
-        int OpenPos         = 0;
-        int ClosedPos       = 0;
+        uint8_t Pin         = 0;
+        word OpenPos        = 0;
+        word ClosedPos      = 0;
         bool firstAttach    = true;     // Bug in VarSpeedServo
         bool locked         = false;    // Don't react on movement commands
 };

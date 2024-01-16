@@ -9,7 +9,7 @@ MDuinoDome::MDuinoDome(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedSer
 {
      // Initilize Sound Bank Overview for Random Songs
     MaxSoundsPerBank[0] = 0;
-    for (int i = 1; i <= MAX_SOUND_BANK; i++)
+    for (byte i = 1; i <= MAX_SOUND_BANK; i++)
         MaxSoundsPerBank[i] = Storage.getMaxSound(i);    
 
     ServoBuzzMillis     = millis();
@@ -43,33 +43,33 @@ void MDuinoDome::run()
     }    
 }
 
-void MDuinoDome::adjustHoloEndPositions(Holo* Holos[], const unsigned int MinHolo, const unsigned int MaxHolo)
+void MDuinoDome::adjustHoloEndPositions(Holo* Holos[], const byte MinHolo, const byte MaxHolo)
 {
     word HMin          = 0;
     word HMax          = 0;
     word VMin          = 0;
     word VMax          = 0;
 
-    for (unsigned int i=MinHolo; i<= MaxHolo; i++)
+    for (byte i=MinHolo; i<= MaxHolo; i++)
     {
         Storage.getHoloPositions(i, HMin, HMax, VMin, VMax);
         Holos[i]->setEndPositions(HMin, HMax, VMin, VMax);
     }
 }
 
-void MDuinoDome::adjustPanelEndPositions(Panel* Panels[], const unsigned int MinPanel, const unsigned int MaxPanel)
+void MDuinoDome::adjustPanelEndPositions(Panel* Panels[], const byte MinPanel, const byte MaxPanel)
 {
     word OpenPos        = 0;
     word ClosedPos      = 0;
 
-    for (unsigned int i=MinPanel; i<= MaxPanel; i++)
+    for (byte i=MinPanel; i<= MaxPanel; i++)
     {
         Storage.getServoPositions(i, OpenPos, ClosedPos);
         Panels[i]->setEndPositions(OpenPos, ClosedPos);
     }
 }
 
-bool MDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound)
+bool MDuinoDome::separateSoundCommand(const char* command, char* cmd, byte & bank, byte & sound)
 {
     char bank_char[2];
     char sound_char[3];
@@ -112,7 +112,7 @@ bool MDuinoDome::separateSoundCommand(const char* command, char* cmd, unsigned i
     return true;
 }
 
-void MDuinoDome::getRandomSound(unsigned int & bank, unsigned int & sound)
+void MDuinoDome::getRandomSound(byte & bank, byte & sound)
 {
     bank = random(1,6);
     sound = random(1, MaxSoundsPerBank[bank]+1);
@@ -138,7 +138,7 @@ void MDuinoDome::AUX1(const unsigned int Duration)
     }
 }
 
-void MDuinoDome::playSequence(const unsigned int SeqNr)
+void MDuinoDome::playSequence(const byte SeqNr)
 {
     Sequencer.stopSequence();
     Sequencer.clearSequence();

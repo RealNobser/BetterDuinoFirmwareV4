@@ -24,16 +24,16 @@ class MDuinoDome : public MDuinoBase
 
         MDuinoSequencer  Sequencer;
 
-        unsigned int MaxSoundsPerBank[10];
+        byte MaxSoundsPerBank[10];
 
-        void adjustHoloEndPositions(Holo* Holos[], const unsigned int MinHolo, const unsigned int MaxHolo);
-        void adjustPanelEndPositions(Panel* Panels[], const unsigned int MinPanel, const unsigned int MaxPanel);
+        void adjustHoloEndPositions(Holo* Holos[], const byte MinHolo, const byte MaxHolo);
+        void adjustPanelEndPositions(Panel* Panels[], const byte MinPanel, const byte MaxPanel);
 
-        bool separateSoundCommand(const char* command, char* cmd, unsigned int & bank, unsigned int & sound);
-        void getRandomSound(unsigned int & bank, unsigned int & sound);
+        bool separateSoundCommand(const char* command, char* cmd, byte & bank, byte & sound);
+        void getRandomSound(byte & bank, byte & sound);
 
-        virtual void playSequence(const unsigned int SeqNr);
-        virtual void playSequenceAddons(const unsigned int SeqNr) = 0;
+        virtual void playSequence(const byte SeqNr);
+        virtual void playSequenceAddons(const byte SeqNr) = 0;
 
         void AUX1(const unsigned int Duration);
 

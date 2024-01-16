@@ -53,7 +53,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.1.1"
+#define VERSION         "4.1.3"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  41
 

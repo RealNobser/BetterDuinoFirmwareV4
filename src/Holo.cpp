@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "Holo.h"
 
-Holo::Holo(const int LightPin, const bool HighActive, VarSpeedServo& HServo, const int HPin, VarSpeedServo& VServo, const int VPin) :
+Holo::Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin) :
     LightPin(LightPin),
     HighActive(HighActive),
     HServo(HServo),
@@ -80,7 +80,7 @@ void Holo::off()
     HoloFlickerIntervall       = 0;
 }
 
-void Holo::move(const int HPos, const int VPos, const int speed /*=0*/)
+void Holo::move(const word HPos, const word VPos, const byte speed /*=0*/)
 {
     if(!HServo.attached())
     {
@@ -115,7 +115,7 @@ void Holo::randomMove(const bool moving /*=true*/)
     moveTrigger();
 }
 
-void Holo::setEndPositions(const int HMin, const int HMax, const int VMin, const int VMax)
+void Holo::setEndPositions(const word HMin, const word HMax, const word VMin, const word VMax)
 {
     HMinPos = HMin;
     HMaxPos = HMax;
@@ -143,9 +143,9 @@ void Holo::flickerTrigger()
 
 void Holo::moveTrigger()
 {
-    int HPos = 0;
-    int VPos = 0;
-    int Speed = 0;
+    word HPos = 0;
+    word VPos = 0;
+    word Speed = 0;
 
     HPos = random(HMinPos, HMaxPos);
     VPos = random(VMinPos, VMaxPos);
@@ -159,9 +159,9 @@ void Holo::moveTrigger()
 
 void Holo::testTrigger()
 {
-    int HPos    = 0;
-    int VPos    = 0;
-    int Speed   = 0;
+    word HPos    = 0;
+    word VPos    = 0;
+    word Speed   = 0;
 
     // Center
     HPos = (HMaxPos-HMinPos)/2 + HMinPos;

@@ -34,8 +34,8 @@ class MDuinoBodyMaster : public MDuinoDomeMaster
         virtual const char* getProductName() override { return "MarcDuino Body Master"; }
 
     protected:
-        void playSequence(const unsigned int SeqNr) override;
-        void playSequenceAddons(const unsigned int SeqNr) override;
+        void playSequence(const byte SeqNr) override;
+        void playSequenceAddons(const byte SeqNr) override;
         
 };
 

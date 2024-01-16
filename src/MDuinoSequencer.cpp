@@ -7,7 +7,7 @@ MDuinoSequencer::MDuinoSequencer(MDuinoBase* instance)
     : instance(instance)
 {
     clearSequenceCompletionCallbacks();
-    for(unsigned int panel = MinPanel; panel <= MaxPanel; panel++)
+    for(byte panel = MinPanel; panel <= MaxPanel; panel++)
         servoSpeed[panel]=0;
 }
 
@@ -25,13 +25,13 @@ void MDuinoSequencer::run()
     }
 }
 
-void MDuinoSequencer::setPanels(Panel** Panels, const unsigned int PanelCount)
+void MDuinoSequencer::setPanels(Panel** Panels, const byte PanelCount)
 {
     this->Panels    = Panels;
     this->PanelCount= PanelCount;
 }
 
-void MDuinoSequencer::setPanelRange(const unsigned int MinPanel, const unsigned int MaxPanel)
+void MDuinoSequencer::setPanelRange(const byte MinPanel, const byte MaxPanel)
 {
     this->MinPanel = MinPanel;
     this->MaxPanel = MaxPanel;
@@ -77,7 +77,7 @@ void MDuinoSequencer::startSequence()
 
 void MDuinoSequencer::stopSequence()
 {
-
+    currentStep = currentSequenceSteps;
 }
 
 void MDuinoSequencer::pauseSequence()
@@ -97,7 +97,7 @@ void MDuinoSequencer::nextStep()
     else
     {
         // End Sequence Callbacks
-        for(unsigned int i=0; i < CompletionCallbacksNr; i++)
+        for(byte i=0; i < CompletionCallbacksNr; i++)
             seq_completion_callback[i](instance);
         
         clearSequence();
@@ -117,25 +117,18 @@ void MDuinoSequencer::movePanels()
     if (currentSequence == nullptr)
         return;
 
-    for(unsigned int panel = MinPanel; panel <= MaxPanel; panel++)
+    for(byte panel = MinPanel; panel <= MaxPanel; panel++)
     {
         byte Position = _NP;
         Position = (byte)pgm_read_byte(&currentSequence[currentStep][panel+1]);
 
-        switch (Position)
+        if (Position == _NP)
         {
-        case _OPN:
-            Panels[panel]->open(servoSpeed[panel]);
-            break;
-        case _CLS:
-            Panels[panel]->close(servoSpeed[panel]);
-            break;
-        case _NP:
             Panels[panel]->detach();
-            break;
-        default:
-            break;
-        }        
+            return;
+        }
+
+        Panels[panel]->move(Position, servoSpeed[panel]);
     }
 }
 
@@ -170,7 +163,7 @@ void MDuinoSequencer::setServoSpeed(speed_t speed)
         break;
     }
 
-    for(unsigned int panel = MinPanel; panel <= MaxPanel; panel++)
+    for(byte panel = MinPanel; panel <= MaxPanel; panel++)
     {
         servoSpeed[panel] = set_speed;
     }
@@ -188,6 +181,6 @@ void MDuinoSequencer::addSequenceCompletionCallback(void(*usercallback)(MDuinoBa
 
 void MDuinoSequencer::clearSequenceCompletionCallbacks()
 {
-    for (unsigned int i = 0; i < MAX_SEQUENCE_COMPLETION_CALLBACKS; i++)
+    for (byte i = 0; i < MAX_SEQUENCE_COMPLETION_CALLBACKS; i++)
         seq_completion_callback[CompletionCallbacksNr] = nullptr;
 }

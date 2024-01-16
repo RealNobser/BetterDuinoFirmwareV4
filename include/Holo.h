@@ -7,7 +7,7 @@
 class Holo
 {
     public:
-        Holo(const int LightPin, const bool HighActive, VarSpeedServo& HServo, const int HPin, VarSpeedServo& VServo, const int VPin);
+        Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin);
 
         void setHighActive(const bool HighActive = true);
 
@@ -18,13 +18,13 @@ class Holo
         void flickerOn(const unsigned long duration = 0);
         void off();
 
-        void move(const int HPos, const int VPos, const int speed = 0);
+        void move(const word HPos, const word VPos, const byte speed = 0);
                
         void randomMove(const bool moving=true);
 
         bool isOn() { return LightOn; }
 
-        void setEndPositions(const int HMin, const int HMax, const int VMin, const int VMax);
+        void setEndPositions(const word HMin, const word HMax, const word VMin, const word VMax);
 
         void run();
 
@@ -33,22 +33,22 @@ class Holo
         void testTrigger();
 
     protected:
-        int LightPin            = 0;
+        uint8_t LightPin        = 0;
         bool HighActive         = true;
         bool LightOn            = false;
         uint8_t LightStateOn    = HIGH;
         uint8_t LightStateOff   = LOW;
 
         VarSpeedServo HServo;
-        int HPin = 0;
+        uint8_t HPin = 0;
         
         VarSpeedServo VServo;
-        int VPin = 0;
+        uint8_t VPin = 0;
 
-        int HMinPos     = 0;
-        int HMaxPos     = 0;
-        int VMinPos     = 0;
-        int VMaxPos     = 0;
+        word HMinPos     = 0;
+        word HMaxPos     = 0;
+        word VMinPos     = 0;
+        word VMaxPos     = 0;
 
         byte testStep   = 0;
 

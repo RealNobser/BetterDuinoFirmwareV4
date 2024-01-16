@@ -20,7 +20,7 @@ void MDuinoBodyMaster::run()
     MDuinoDomeMaster::run();
 }
 
-void MDuinoBodyMaster::playSequence(const unsigned int SeqNr)
+void MDuinoBodyMaster::playSequence(const byte SeqNr)
 {
     Sequencer.stopSequence();
     Sequencer.clearSequence();
@@ -92,7 +92,7 @@ void MDuinoBodyMaster::playSequence(const unsigned int SeqNr)
     playSequenceAddons(SeqNr);
 }
 
-void MDuinoBodyMaster::playSequenceAddons(const unsigned int SeqNr)
+void MDuinoBodyMaster::playSequenceAddons(const byte SeqNr)
 {
     // Also forward to Slave
     Serial_Slave.printf(F(":SE%2u\r"), SeqNr);
@@ -101,14 +101,15 @@ void MDuinoBodyMaster::playSequenceAddons(const unsigned int SeqNr)
     ServoBuzzIntervall = 0;
     Sequencer.addSequenceCompletionCallback(sequenceCallbackBuzz);
 
+    // No speicals besides panel movement
+    // Just one at the moment
+    /*
     switch (SeqNr)
     {
-        case 30:
-            parseCommand("*MF04");      // Magic Flicker for 4 seconds
-        break;    
         default:
         break;
     }
+    */
 
     // Finally GOOOOO
     Sequencer.startSequence();

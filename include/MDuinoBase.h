@@ -27,8 +27,8 @@ class MDuinoBase
 
         char SerialBuffer[SERIALBUFFERSIZE];
         char WireBuffer[SERIALBUFFERSIZE];
-        int BufferIndex = 0;
-        int WireIndex = 0;
+        byte BufferIndex = 0;
+        byte WireIndex = 0;
 
         MDuinoStorage    Storage;
 
@@ -46,14 +46,14 @@ class MDuinoBase
         VarSpeedServo& Servo12;
         VarSpeedServo& Servo13;
 
-        virtual void checkEEPROM(const bool & factoryReset = false);
+        virtual void checkEEPROM(const bool factoryReset = false);
 
         void toggleHeartBeat();
 
         bool separateCommand(const char* command, char* cmd, unsigned int & param_num);
         void processSetupCommand(const char* command);
 
-        void adjustServo(const unsigned int & servo, const unsigned int & value);
+        void adjustServo(const byte servo, const word value);
 
         void(* resetFunc) (void) = 0;
 };

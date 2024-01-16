@@ -27,10 +27,10 @@ class MDuinoDomeMaster : public MDuinoDome
         SendOnlySoftwareSerial& Serial_Slave;
         SendOnlySoftwareSerial& Serial_MP3;
 
-        static const unsigned int MinPanel =  1;   // Master Board has 11 Panel Connectors
-        static const unsigned int MaxPanel = 11;   // Master Board has 11 Panel Connectors
+        static const byte MinPanel =  1;   // Master Board has 11 Panel Connectors
+        static const byte MaxPanel = 11;   // Master Board has 11 Panel Connectors
 
-        Panel* Panels[MaxPanel + 1];               // +1 for index 0 dummy
+        Panel* Panels[MaxPanel + 1];      // +1 for index 0 dummy
 
         MDuinoSound* Sound = nullptr;
 
@@ -50,11 +50,12 @@ class MDuinoDomeMaster : public MDuinoDome
         void processAltSoundCommand(const char* command);
         void processAltHoloCommand(const char* command);
 
-        void playSequenceAddons(const unsigned int SeqNr) override;
+        void playSequenceAddons(const byte SeqNr) override;
 
         static void sequenceCallbackBuzz(MDuinoBase* object);
         static void sequenceCallbackJedi(MDuinoBase* object);
         static void sequenceCallbackResetMP(MDuinoBase* object);
+        static void sequenceCallbackResetSound(MDuinoBase* object);
 };
 
 #endif // __MARCDUINODOMEMASTER_H__
