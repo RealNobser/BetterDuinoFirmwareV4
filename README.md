@@ -31,9 +31,9 @@ https://github.com/nhutchison/MarcDuinoClient
 
 ***If you find any issues, please use the github "Issues" mechanism above. When you are an experienced software developer please feel free to submit pull requests. This is a living repository and I appreciate any community input!***
 
-***Please do not contact astromech.net or open up a discussion in the astromech.net forum. astromech.net is not in charge with BetterDuinoFirmwareV4. You will not get any support or help regarding BetterDuino. On the other side, if you have questions about the original firmware for MarcDuino boards, then you are fine in the astromech forum.***
-
 If there are still questions not anserwed here, feel free to visit Michael Baddeleys fantastic Printed Droid community here: https://www.facebook.com/groups/MrBaddeley . You will be treated in a fair and polite way and we will find a solution or answer to your questions!
+
+*Update:* Now there also is a BetterDuino support thread on Astromech.net: https://astromech.net/forums/showthread.php?44309-MarcDuino-Replacement-Firmware
 
 Nevertheless: Read and understand, how the boards work, why there is a master and a slave board, how the boards are connected ->
 
@@ -162,7 +162,7 @@ Connecting Servos (common way)
 |Servo 8|Rear Holo Light||
 |Servo 9|Top Holo Light||
 |Servo 10=12|unused|Controlled as Servo 12 via Master|
-|Servo 11=13|unused|Controlles as Servo 13 via Master|
+|Servo 11=13|unused|Controlled as Servo 13 via Master|
 |AUX|unused||
 # Body
 | **Servo** | **Function** | **Remark** |
@@ -188,7 +188,7 @@ Unsupported original MarcDuino features
 
 · no Panel/Servo RC_IN support
 
-· some configuration commands are not supported / necessary do to cleaned command processing / storage
+· some configuration commands are not supported / necessary due to cleaned command processing / storage
 
 Commands
 ========
