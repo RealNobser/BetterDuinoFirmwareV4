@@ -61,6 +61,8 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Description |
 |--|--|--
+| 2024-01-17|V1.0.3|Added free panel positioning to panel sequences 0% = closed / 100% = open|
+| 2024-01-15|V1.0.2|BugFix-Release|
 | 2024-01-13|V1.0.1|Classic Master I2C and new I2C slave mode|
 | 2023-12-30|V1.0.0|First stable public version|
 | 2023-12-11|V0.9.1 RC |Bugfixes from closed beta test group|
@@ -69,6 +71,10 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 
 ### Known MISSING functionality compared to the original source (will be released in the future)
 - RC-IN support
+
+### Known ISSUES
+- MP3-Trigger: stopping only pauses, workaround pending (playing an empty soundfile). Bugfix-Release: V1.0.4
+
 
 ### Supported Boards
 |Board|Support|
@@ -368,7 +374,7 @@ Setup Commands
 | #VOxxdddd | Set Holo VServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds |     |
 | #VCxxdddd | Set Holo VServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds |     |
 | #VPxxddd | Set Holo VServo Speed, ddd=0-255 |     |
-| #DUxx | Dump EEPORM to serial<br><br>· #DUxx : value at address xx<br><br>· #DUMP : dump complete EEPROM content |     |
+| #DUxx | Dump EEPORM to serial<br><br>· #DUxx : value at address xx<br><br>· #DUMP : dump complete EEPROM content | DEACTIVATED AT THE MOMENT, UNDER REVISON |
 | #RSET | Restart MarcDuino |     |
 | #ADxx | Adjustment Mode: When setting up individual Servo settings, servo will positioned immediately<br><br>· #AD00 : Adjustment Mode Off<br><br>· #AD01 : Adjustment Mode On |     |
 
