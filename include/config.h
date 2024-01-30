@@ -1,6 +1,11 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
+
+// Specific Astromech, Choose one
+#define R2D2
+// #define CHOPPER
+
 // #define DEBUG_MSG                    // Additional Log Messages to Serial
 #define INCLUDE_BODY_MASTER             // Uncomment to include Body Controller in combined firmware
 // #define INCLUDE_CLASSIC_I2C_SUPPORT  // Uncomment to include classic Seriial to I2C support.
@@ -28,7 +33,7 @@
 #define MAX_SOUND_BANK  9
 #define MAX_BANK_SOUND  25
 
-// Original Marcduino Default Values
+// Original MarcDuino Default Values
 #define PANEL_OPN   1000 // Open
 #define PANEL_CLS   2000 // Closed
 
@@ -53,7 +58,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.1.3"
+#define VERSION         "4.1.4"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  41
 

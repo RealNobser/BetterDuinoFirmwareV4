@@ -539,5 +539,41 @@ sequence_t const body_panel_init PROGMEM =
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP}
 };
 
+/*
+ *****
+ ***** Chopper Sequences *****
+ *****
+ *
+ * See README.md for Servo Connections
+ */
 
+sequence_t cp_dome_panel_init PROGMEM =
+{
+		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
+		// 	time			servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
+		{SPLIT_WORD(20), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,    _NP,	_NP,	_NP},
+		{SPLIT_WORD(100), 	_NP, 	_NP, 	_NP, 	_CLS,	_NP,	_NP, 	_NP, 	_CLS, 	_NP,	_NP, 	_NP,	_NP,	_NP},
+		{SPLIT_WORD(100), 	_NP, 	_NP, 	_CLS, 	_CLS, 	_NP,	_NP, 	_CLS, 	_CLS, 	_NP,	_NP, 	_NP,	_NP,	_NP},
+		{SPLIT_WORD(100), 	_NP, 	_CLS, 	_CLS, 	_CLS, 	_NP,	_CLS, 	_CLS, 	_CLS, 	_NP,	_NP, 	_NP,	_NP,	_NP},
+		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS,	_CLS, 	_CLS, 	_CLS, 	_NP,	_NP, 	_NP,	_NP,	_NP},
+		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,    _NP,	_NP,	_NP}
+};
+
+sequence_t cp_dome_arms_wave PROGMEM =
+{
+		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
+		// 	time			servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
+		{SPLIT_WORD(20), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS,   _CLS,	_CLS},
+		{SPLIT_WORD(100), 	_OPN, 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS, 	_CLS},
+		{SPLIT_WORD(100), 	_OPN, 	_OPN, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS, 	_CLS},
+		{SPLIT_WORD(50), 	_OPN, 	_OPN, 	_OPN, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS, 	_CLS},
+		{SPLIT_WORD(50), 	_OPN, 	_OPN, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS,  	_CLS},
+		{SPLIT_WORD(50), 	_OPN, 	_OPN, 	_OPN, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS,	_CLS},
+		{SPLIT_WORD(50), 	_OPN, 	_OPN, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS,  	_CLS},
+		{SPLIT_WORD(50), 	_OPN, 	_OPN, 	_OPN, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS,  	_CLS},
+		{SPLIT_WORD(100), 	_OPN, 	_OPN, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS,  	_CLS},
+		{SPLIT_WORD(100), 	_OPN, 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS,  	_CLS},
+		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS,  	_CLS},
+		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,    _NP,   _NP,		_NP}
+};
 #endif  // __PANELSEQUENCES_H__

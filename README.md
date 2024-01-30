@@ -61,6 +61,8 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Description |
 |--|--|--
+| 2024-01-30|V1.0.4|First Chopper Integration|
+| 2024-01-13|V1.0.2/3|Bugfix Releases|
 | 2024-01-13|V1.0.1|Classic Master I2C and new I2C slave mode|
 | 2023-12-30|V1.0.0|First stable public version|
 | 2023-12-11|V0.9.1 RC |Bugfixes from closed beta test group|
@@ -132,7 +134,7 @@ Normally you do not need to change the defines, but, for experienced users, some
 
 ***Do not touch any other of the defines.***
 
-Connecting Servos (common way)
+Connecting Servos R2D2 (common way)
 =================
 # Master
 | **Servo** | **Function** | **Remark** |
@@ -179,6 +181,25 @@ Connecting Servos (common way)
 |Servo 10|unused|Future Charge Bay Door servo|
 |Servo 11|unused||
 |AUX|unused||
+
+Connecting Servos Chopper
+=================
+# Master
+| **Servo** | **Function** | **Remark** |
+| --- | --- | --- |
+|Servo 1|Left Dome Door||
+|Servo 2|Left Dome Arm||
+|Servo 3|Left Dome Gripper||
+|Servo 4|Left Dome Arm Turn|Tim Hebel Mod|
+|Servo 5|Right Dome Door||
+|Servo 6|Right Dome Arm||
+|Servo 7|Right Dome Gripper||
+|Servo 8|Right Dome Arm Turn|Tim Hebel Mod|
+|Servo 9|Periscope Lift||
+|Servo 10|Periscope Turn||
+|Servo 11|unused|Periscope LED?|
+|AUX|unused||
+
 
 MarcDuino Command Set (V4 only)
 ===============================
