@@ -127,6 +127,8 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 Normally you do not need to change the defines, but, for experienced users, some instructions:
 |Define|Function|Remark|Default|
 |--|--|--|--|
+|R2D2|build standard R2D2 MarcDuino compatible firmware|Only choose one, R2D2 or Chopper|on|
+|CHOPPER|BETA build new Chopper compatible firmware|Only choose one, R2D2 or Chopper|off|
 |DEBUG_MSG|activate additional debug messages on the USB/Serial-Port|program size will exceed, so you can only use that in combination with the DEDICATED_FIRMWARE flag|off|
 |INCLUDE_CLASSIC_I2C_SUPPORT|activate support for the classic MarcDuino I2C commands|program size will exceed, so you can only use that in combination with the DEDICATED_FIRMWARE flag|off|
 |INCLUDE_I2C_SLAVE|activate support for the ne I2C Slave support||on|
