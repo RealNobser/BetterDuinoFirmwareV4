@@ -455,11 +455,14 @@ Best practice panel adjustment
 - Use the new "Move Panel" (:MVxxdddd) command to get a feeling, which is the area, the servo moves within.
 - If you find a valid position for "open", store it with the command "Store Open" (#SOxxdddd)
 - If you find a valid position for "closed", store it with the command "Store Closed" (#SCxxdddd)
-- Example:
-o If you think, ":MV010900" moves panel/servo #1 to a valid open position, store the setting with "#SO010900"
-o If you think, ":MV011750" moves panel/servo #1 to a valid closed position, store the setting with "#SC011750"
-o :MVxxdddd does not store any position, it just moves the servo to the PWM/degree value
-- Shortcut: If the default positions are fine but swapped (:OP01 closes the panel and :CL01 opens it), just use "#SW01" to swap the values for open and closed position. The values are automatically stored. Important: That command is not identical to the "Reverse Servo" command. Just use the swap command while calibrating your servos, not at every startup. Otherwise it will always toggle the settings on every startup.
+
+*Example:*
+- If you think, ":MV010900" moves panel/servo #1 to a valid open position, store the setting with "#SO010900"
+- If you think, ":MV011750" moves panel/servo #1 to a valid closed position, store the setting with "#SC011750"
+- :MVxxdddd does not store any position, it just moves the servo to the PWM/degree value
+
+*Shortcut*
+- If the default positions are fine but swapped (:OP01 closes the panel and :CL01 opens it), just use "#SW01" to swap the values for open and closed position. The values are automatically stored. Important: That command is not identical to the "Reverse Servo" command. Just use the swap command while calibrating your servos, not at every startup. Otherwise it will always toggle the settings on every startup.
 - Repeat all the steps until each servo is calibrated
 
 
