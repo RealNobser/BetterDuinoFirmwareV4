@@ -61,11 +61,14 @@ void MDuinoDome::adjustPanelEndPositions(Panel* Panels[], const byte MinPanel, c
 {
     word OpenPos        = 0;
     word ClosedPos      = 0;
+    byte Speed          = 0;
 
     for (byte i=MinPanel; i<= MaxPanel; i++)
     {
         Storage.getServoPositions(i, OpenPos, ClosedPos);
+        Speed = Storage.getServoSpeed(i);
         Panels[i]->setEndPositions(OpenPos, ClosedPos);
+        Panels[i]->setSpeed(Speed);
     }
 }
 

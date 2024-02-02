@@ -273,7 +273,27 @@ void MDuinoBase::processSetupCommand(const char* command)
         param_num       = atoi(param);
         param_num_ext   = atoi(param_ext);
     }
-    else if (strlen(command) == 9)   // #SOxxyyyy, #SCxxyyyy / #HOxxyyyy, #HCxxyyyy / #VOxxyyyy, #VCxxyyyy
+    else if (strlen(command) == 8)      // #SPxxyyy
+    {
+        memcpy(cmd, command+1, 2);
+
+        if ((strcmp(cmd, "SP") != 0))
+        {
+            #ifdef DEBUG_MSG
+            Serial.println(F("Invalid Extended Command"));
+            #endif
+            
+            return; // Invalid Command
+        }
+        else
+        {
+            memcpy(param, command+3, 2);
+            memcpy(param_ext, command+5, 3);
+        }
+        param_num       = atoi(param);
+        param_num_ext   = atoi(param_ext);
+    }
+    else if (strlen(command) == 9)      // #SOxxyyyy, #SCxxyyyy / #HOxxyyyy, #HCxxyyyy / #VOxxyyyy, #VCxxyyyy
     {
         memcpy(cmd, command+1, 2);
 

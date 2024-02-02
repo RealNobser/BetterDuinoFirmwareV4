@@ -8,11 +8,12 @@ Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin) :
     //attach();
 }
 
-Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin, const word OpenPos, const word ClosedPos) :
+Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin, const word OpenPos, const word ClosedPos, const byte Speed ) :
     Servo(Servo),
     Pin(Pin),
     OpenPos(OpenPos),
-    ClosedPos(ClosedPos)
+    ClosedPos(ClosedPos),
+    Speed(Speed)
 {
     // attach();    
 }
@@ -29,17 +30,17 @@ void Panel::detach()
         Servo.detach();
 }
 
-void Panel::open(const byte speed)
+void Panel::open(const int speed)
 {
     move(OpenPos, speed);
 }
 
-void Panel::close(const byte speed)
+void Panel::close(const int speed)
 {
     move(ClosedPos, speed);
 }
 
-void Panel::move(const word position, const byte speed)
+void Panel::move(const word position, const int speed)
 {
     if (locked)
         return;
@@ -51,10 +52,13 @@ void Panel::move(const word position, const byte speed)
         firstAttach = false;
         Servo.attach(Pin);
     }
-    Servo.write(position, speed);
+    if (speed == -1)    // Use stored speed value
+        Servo.write(position, this->Speed);
+    else
+        Servo.write(position, speed);
 }
 
-void Panel::move(const byte percent, const byte speed)
+void Panel::move(const byte percent, const int speed)
 {
     word position = map(percent, 0, 100, ClosedPos, OpenPos);
     move(position, speed);
@@ -74,4 +78,9 @@ void Panel::setOpenPos(const word Pos)
 void Panel::setClosedPos(const word Pos)
 {
     this->ClosedPos = Pos;
+}
+
+void Panel::setSpeed(const byte Speed)
+{
+    this->Speed = Speed;
 }
