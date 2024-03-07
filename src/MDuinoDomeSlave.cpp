@@ -37,8 +37,8 @@ void MDuinoDomeSlave::init()
     Holos[3] = new Holo(P_TL, Storage.getHoloLightHighActive(3), Servo5, P_HPT_H, Servo6, P_HPT_V);    // Top
 
     // 2 Panels
-    Panels[12] = new Panel(Servo11, P_SERVO_12);
-    Panels[13] = new Panel(Servo11, P_SERVO_13);
+    Panels[12] = new Panel(Servo12, P_SERVO_12);
+    Panels[13] = new Panel(Servo13, P_SERVO_13);
 
     adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
     adjustPanelEndPositions(Panels, MinPanel, MaxPanel);
@@ -218,6 +218,113 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     Serial.printf(F("HoloCommand(Slave): %s\r\n"), command);
     #endif
 
+    #ifdef INCLUDE_HOLO_RGB
+    if (strlen(command) == 17)  // RGB LED *ON command
+    {
+        char param[3];
+        char red[4];
+        char green[4];
+        char blue[4];
+        char bright[4];
+
+        unsigned int red_num = 0;
+        unsigned int green_num = 0;
+        unsigned int blue_num = 0;
+        unsigned int bright_num = 0;
+
+        memset(param,   0x00, 3);
+        memset(red,     0x00, 4);
+        memset(green,   0x00, 4);
+        memset(blue,    0x00, 4);
+        memset(bright,  0x00, 4);
+
+        memcpy(cmd,     command+1, 2);
+        memcpy(param,   command+3, 2);
+        memcpy(red,     command+5, 3);
+        memcpy(green,   command+8, 3);
+        memcpy(blue,    command+11, 3);
+        memcpy(bright,  command+14, 3);
+
+        param_num   = atoi(param);
+        red_num     = atoi(red);
+        green_num   = atoi(green);
+        blue_num    = atoi(blue);
+        bright_num  = atoi(bright);
+
+        if (strcmp(cmd, "CO")==0)  // Holo Lights Color
+        {
+            Holos[param_num]->setColor(red_num, green_num, blue_num, bright_num);
+        }
+        else if (strcmp(cmd, "ON")==0)  // Holo Lights on
+        {
+            HolosOn(param_num, red_num, green_num, blue_num, bright_num);
+        }
+        else if (strcmp(cmd, "H0")==0)  // Holos On for xx seconds
+        {
+            for (byte i=MinHolo; i <= MaxHolo; i++)
+            {
+                if (param_num > 0)
+                    Holos[i]->on(red_num, green_num, blue_num, bright_num, param_num);
+                else
+                    Holos[i]->off();
+            }
+        }    
+        else if (strcmp(cmd, "H1")==0)  // Holo1 On for xx seconds
+        {
+            if (param_num > 0)
+                Holos[1]->on(red_num, green_num, blue_num, bright_num, param_num);
+            else
+                Holos[1]->off();
+        }    
+        else if (strcmp(cmd, "H2")==0)  // Holo2 On for xx seconds
+        {
+            if (param_num > 0)
+                Holos[2]->on(red_num, green_num, blue_num, bright_num, param_num);
+            else
+                Holos[2]->off();
+        }    
+        else if (strcmp(cmd, "H3")==0)  // Holo3 On for xx seconds
+        {
+            if (param_num > 0)
+                Holos[3]->on(red_num, green_num, blue_num, bright_num, param_num);
+            else
+                Holos[3]->off();
+        }    
+        else if (strcmp(cmd, "F0")==0)  // Holos Flicker for xx seconds
+        {        
+            for (byte i=MinHolo; i <= MaxHolo; i++)
+            {
+                if (param_num > 0)
+                    Holos[i]->flickerOn(red_num, green_num, blue_num, bright_num, param_num);
+                else
+                    Holos[i]->off();
+            }
+        }    
+        else if (strcmp(cmd, "F1")==0)  // Holo1 Flicker for xx seconds
+        {
+            if (param_num > 0)
+                Holos[1]->flickerOn(red_num, green_num, blue_num, bright_num, param_num);
+            else
+                Holos[1]->off();
+        }    
+        else if (strcmp(cmd, "F2")==0)  // Holo2 Flicker for xx seconds
+        {
+            if (param_num > 0)
+                Holos[2]->flickerOn(red_num, green_num, blue_num, bright_num, param_num);
+            else
+                Holos[2]->off();
+        }    
+        else if (strcmp(cmd, "F3")==0)  // Holo3 Flicker for xx seconds
+        {
+            if (param_num > 0)
+                Holos[3]->flickerOn(red_num, green_num, blue_num, bright_num, param_num);
+            else
+                Holos[3]->off();
+        }
+        return;         
+    }
+    #endif
+
     if (!separateCommand(command, cmd, param_num))
         return;
 
@@ -391,6 +498,22 @@ void MDuinoDomeSlave::HolosOn(const byte HoloNr)
     else
         Holos[HoloNr]->on();
 }
+
+#ifdef INCLUDE_HOLO_RGB
+void MDuinoDomeSlave::HolosOn(const byte HoloNr, const byte red, const byte green, const byte blue, const byte bright)
+{
+    if (HoloNr > (MAX_MARCDUINOHOLOS + 1)) // Parameter = 4
+        return;
+
+    if((HoloNr == 0) || (HoloNr == 4))  // All Holos
+    {
+        for(byte i=1; i<= MAX_MARCDUINOHOLOS; i++)
+            Holos[i]->on(red, green, blue, bright);
+    }
+    else
+        Holos[HoloNr]->on(red, green, blue, bright);
+}
+#endif
 
 void MDuinoDomeSlave::HolosOff(const byte HoloNr)
 {

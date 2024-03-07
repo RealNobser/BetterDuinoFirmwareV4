@@ -113,6 +113,10 @@ class MDuinoDomeSlave : public MDuinoDome
         void HolosOn(const byte HoloNr);
         void HolosOff(const byte HoloNr);
 
+        #ifdef INCLUDE_HOLO_RGB
+        void HolosOn(const byte HoloNr, const byte red, const byte green, const byte blue, const byte bright);
+        #endif
+
         void HoloCenter(const byte HoloNr);
 
         void MagicPanelCtrl(const byte param);

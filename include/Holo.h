@@ -3,11 +3,14 @@
 
 #include <Arduino.h>
 #include <VarSpeedServo.h>
+#include <Adafruit_NeoPixel.h>
+
+#include "config.h"
 
 class Holo
 {
     public:
-        Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin);
+        Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin, const bool NeoPixelHolo = true);
 
         void setHighActive(const bool HighActive = true);
 
@@ -18,11 +21,20 @@ class Holo
         void flickerOn(const unsigned long duration = 0);
         void off();
 
+        void setBrightness(const uint8_t bright);
+
+        #ifdef INCLUDE_HOLO_RGB
+        void setColor(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t bright);
+        void on(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t bright, const unsigned long duration = 0);
+        void flickerOn(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t bright, const unsigned long duration = 0);
+        #endif
+
         void move(const word HPos, const word VPos, const byte speed = 0);
                
         void randomMove(const bool moving=true);
 
         bool isOn() { return LightOn; }
+        bool isNeoPixelHolo() { return NeoPixelHolo; }
 
         void setEndPositions(const word HMin, const word HMax, const word VMin, const word VMax);
 
@@ -39,11 +51,22 @@ class Holo
         uint8_t LightStateOn    = HIGH;
         uint8_t LightStateOff   = LOW;
 
+        uint8_t red             = 255;
+        uint8_t green           = 255;
+        uint8_t blue            = 255;
+        uint8_t bright          = 200;
+
         VarSpeedServo HServo;
         uint8_t HPin = 0;
         
         VarSpeedServo VServo;
         uint8_t VPin = 0;
+
+        bool NeoPixelHolo = false;
+
+        #ifdef INCLUDE_HOLO_RGB
+        Adafruit_NeoPixel* pixels = nullptr;
+        #endif
 
         word HMinPos     = 0;
         word HMaxPos     = 0;

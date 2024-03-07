@@ -1,18 +1,29 @@
 #include <Arduino.h>
 #include "Holo.h"
 
-Holo::Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin) :
+Holo::Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin, const bool NeoPixelHolo /*= false*/) :
     LightPin(LightPin),
     HighActive(HighActive),
     HServo(HServo),
     HPin(HPin),
     VServo(VServo),
-    VPin(VPin)
+    VPin(VPin),
+    NeoPixelHolo(NeoPixelHolo)
 {
-    setHighActive(HighActive);
-
-    pinMode(LightPin, OUTPUT);
-    digitalWrite(LightPin, LightStateOff);
+    #ifdef INCLUDE_HOLO_RGB
+    if (NeoPixelHolo)
+    {
+        pixels = new Adafruit_NeoPixel(NEO_JEWEL_LEDS, LightPin, HP_NEO_TYPE);
+        pixels->begin();
+        pixels->clear();
+    }
+    else
+    #endif
+    {
+        setHighActive(HighActive);
+        pinMode(LightPin, OUTPUT);
+        digitalWrite(LightPin, LightStateOff);
+    }
 }
 
 void Holo::run()
@@ -57,7 +68,16 @@ void Holo::detach()
 
 void Holo::on(const unsigned long duration/* = 0*/)
 {
-    digitalWrite(LightPin, LightStateOn);
+    #ifdef INCLUDE_HOLO_RGB
+    if(NeoPixelHolo)
+    {
+        this->on(red, green, blue, bright, duration);
+        return;
+    }
+    else
+    #endif
+        digitalWrite(LightPin, LightStateOn);
+    
     LightOn = true;
 
     HoloIntervall  = duration*1000;
@@ -71,13 +91,90 @@ void Holo::flickerOn(const unsigned long duration/* = 0*/)
     flickerTrigger();
 }
 
+#ifdef INCLUDE_HOLO_RGB
+void Holo::setColor(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t bright)
+{
+    this->red   = red;
+    this->green = green;
+    this->blue  = blue;
+    this->bright= bright;
+
+    uint32_t color = 0x00000000;
+
+    pixels->clear();
+
+    color |= static_cast<uint32_t>(0x00)    << 24;
+    color |= static_cast<uint32_t>(red)     << 16;
+    color |= static_cast<uint32_t>(green)   << 8;
+    color |= static_cast<uint32_t>(blue);
+
+    pixels->fill(color, 0, NEO_JEWEL_LEDS);
+
+    /*
+    for(int i=0; i<NEO_JEWEL_LEDS; i++) 
+    {
+        pixels->setPixelColor(i, pixels->Color(red, green, blue));
+    }
+    */
+
+    pixels->setBrightness(bright);
+
+}
+
+void Holo::on(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t bright, const unsigned long duration)
+{
+    setColor(red, green, blue, bright);
+
+    pixels->show();
+
+    LightOn = true;
+
+    HoloIntervall  = duration*1000;
+    HoloMillis     = millis();
+}
+
+void Holo::flickerOn(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t bright, const unsigned long duration)
+{
+    setColor(red, green, blue, bright);
+
+    HoloIntervall = duration*1000;
+    HoloMillis = millis();
+    flickerTrigger();
+}
+#endif
+
+
 void Holo::off()
 {
-    digitalWrite(LightPin, LightStateOff);
+    #ifdef INCLUDE_HOLO_RGB
+    if(NeoPixelHolo)
+    {
+        pixels->clear();
+        pixels->show();
+    }
+    else
+    #endif
+        digitalWrite(LightPin, LightStateOff);
 
     LightOn                    = false;
     HoloIntervall              = 0;
     HoloFlickerIntervall       = 0;
+}
+
+
+void Holo::setBrightness(const uint8_t bright)
+{
+    #ifdef INCLUDE_HOLO_RGB
+    if(NeoPixelHolo)
+    {
+        pixels->setBrightness(bright);
+        pixels->show();
+    }
+    /*
+    else*/
+    #endif
+
+    // PWM ?
 }
 
 void Holo::move(const word HPos, const word VPos, const byte speed /*=0*/)
@@ -129,13 +226,33 @@ void Holo::flickerTrigger()
     if (LightOn)
     {
         HoloFlickerIntervall = random(30,100);
-        digitalWrite(LightPin, LightStateOff);
+
+        #ifdef INCLUDE_HOLO_RGB
+        if (NeoPixelHolo)
+        {
+            pixels->clear();
+            pixels->show();
+        }
+        else
+        #endif
+            digitalWrite(LightPin, LightStateOff);
+
         LightOn = false;
     }
     else
     {
         HoloFlickerIntervall = random(50,200);
-        digitalWrite(LightPin, LightStateOn);
+
+        #ifdef INCLUDE_HOLO_RGB
+        if (NeoPixelHolo)
+        {
+            setColor(red, green, blue, bright);
+            pixels->show();
+        }
+        else
+        #endif
+            digitalWrite(LightPin, LightStateOn);
+
         LightOn = true;
     }
     HoloFlickerMillis = millis();
