@@ -319,6 +319,7 @@ These commands are only processed by the MarcDuino Slave module
 | *RDxx | Random Holo movement (xx=01 to 03). xx=00 and >3 all random. |     |
 | *ONxx | Turns Holo Light on (xx=01 to 03). xx=00 or >3 all lights on |     |
 | *OFxx | Turns Holo Lights off (xx=01 to 03). xx=00 turns all lights off |     |
+| *ONxxaaabbbcccddd | Turns RGB Holo Light on (xx=01 to 03). xx=00 or >3 all lights on.<br>aaa - decimal R value (0-255)<br>bbb - decimal G value (0-255)<br>ccc - decimal B value(0-255)<br>ddd - brightness (0-255) | |
 | *RCxx | Holo vertical movement under RC control, horizontal centered (xx=01-03). 00 or >3 all RC |     |
 | *TExx | Holo movement test (xx=01-03). Goes through a loop of holo movements to assist in adjusting holo servos mechanical setup. 00 or >3 all HPs to test |     |
 | *STxx | stop/reset Holos random movement, turns lights off, and RC off. 00=all off |     |
@@ -326,7 +327,9 @@ These commands are only processed by the MarcDuino Slave module
 | *MOxx | magic panel on. xx=01 to 98, on from 1 to 98 seconds.<br><br>· xx = 99 is on permanently<br><br>· xx = 00 is off |     |
 | *MFxx | magic panel flicker xx=1 to 99 flicker for 1 to 99 seconds. 00= off. |     |
 | *H1xx<br><br>*H2xx<br><br>*H3xx<br><br>*H0xx | Will turn on-board HP1, 2, 3, and all (HP0xx) for xx seconds.<br><br>· xx = 99 is on permanently<br><br>· xx = 00 is off |     |
+| *Hzxxaaabbbcccddd | See “*H0”-”*H3”<br>aaa - decimal R value (0-255)<br>bbb - decimal G value (0-255)<br>ccc - decimal B value(0-255)<br>ddd - brightness (0-255)||
 | *F1xx<br><br>*F2xx<br><br>*F3xx<br><br>*F0xx | Will flicker on-board HP1, 2, 3, and all (F0xx) for xx seconds.<br><br>· xx = 99 is on permanently<br><br>· xx = 00 is off |     |
+| *Fzxxaaabbbcccddd | See “*F0”-”*F3”<br>aaa - decimal R value (0-255)<br>bbb - decimal G value (0-255)<br>ccc - decimal B value(0-255)<br>ddd - brightness (0-255) | |
 | *CHxx | Center Holo Nr xx |     |
 
 Sound Commands
