@@ -267,7 +267,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     {
         if (strcmp(cmd, "SE") != 0)
         { 
-            Serial_Slave.printf(command);
+            Serial_Slave.printf(F("%s\r"), command);
             return;
         }
     }

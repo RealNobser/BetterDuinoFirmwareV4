@@ -51,11 +51,6 @@ class Holo
         uint8_t LightStateOn    = HIGH;
         uint8_t LightStateOff   = LOW;
 
-        uint8_t red             = 255;
-        uint8_t green           = 255;
-        uint8_t blue            = 255;
-        uint8_t bright          = 200;
-
         VarSpeedServo HServo;
         uint8_t HPin = 0;
         
@@ -66,6 +61,10 @@ class Holo
 
         #ifdef INCLUDE_HOLO_RGB
         Adafruit_NeoPixel* pixels = nullptr;
+        uint8_t red             = 255;
+        uint8_t green           = 255;
+        uint8_t blue            = 255;
+        uint8_t bright          = 200;
         #endif
 
         word HMinPos     = 0;

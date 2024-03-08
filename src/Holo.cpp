@@ -170,11 +170,9 @@ void Holo::setBrightness(const uint8_t bright)
         pixels->setBrightness(bright);
         pixels->show();
     }
-    /*
-    else*/
+    else
     #endif
-
-    // PWM ?
+        ;    // PWM ?
 }
 
 void Holo::move(const word HPos, const word VPos, const byte speed /*=0*/)
