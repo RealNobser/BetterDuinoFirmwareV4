@@ -79,7 +79,7 @@ class MDuinoDomeSlave : public MDuinoDome
         MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
-            VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13);
+            VarSpeedServo& Servo11);
             
         virtual void init() override;
         virtual void run() override;
@@ -94,8 +94,8 @@ class MDuinoDomeSlave : public MDuinoDome
         unsigned long MagicPanelMillis  = 0;
         unsigned long MagicPanelInterval= 0;
 
-        static const byte MinPanel = 12;   // Master Board has 11 Panel Connectors
-        static const byte MaxPanel = 13;   // Master Board has 11 Panel Connectors
+        static const byte MinPanel = 12;   // Slave Board has 2 Panel Connectors names Panel 12 and Panel 13
+        static const byte MaxPanel = 13;   // Slave Board has 2 Panel Connectors names Panel 12 and Panel 13
         static const byte MinHolo  = 1;    // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
         static const byte MaxHolo  = 3;    // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
 

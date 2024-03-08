@@ -4,9 +4,8 @@
 
 MDuinoDomeSlave::MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
-            VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
-            VarSpeedServo& Servo11, VarSpeedServo& Servo12, VarSpeedServo& Servo13) :
-    MDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11, Servo12, Servo13),
+            VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11) :
+    MDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11),
     Serial_Magic(Serial_Magic),
     Serial_Teeces(Serial_Teeces)
 {
@@ -37,8 +36,8 @@ void MDuinoDomeSlave::init()
     Holos[3] = new Holo(P_TL, Storage.getHoloLightHighActive(3), Servo5, P_HPT_H, Servo6, P_HPT_V);    // Top
 
     // 2 Panels
-    Panels[12] = new Panel(Servo12, P_SERVO_12);
-    Panels[13] = new Panel(Servo13, P_SERVO_13);
+    Panels[12] = new Panel(Servo10, P_SERVO_12);
+    Panels[13] = new Panel(Servo11, P_SERVO_13);
 
     adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
     adjustPanelEndPositions(Panels, MinPanel, MaxPanel);
@@ -147,9 +146,9 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
 
     memset(cmd, 0x00, 3);
 
-    #ifdef DEBUG_MSG
+    //#ifdef DEBUG_MSG
     Serial.printf(F("PanelCommand(Slave): %s\r\n"), command);
-    #endif
+    //#endif
 
     if (!separateCommand(command, cmd, param_num, param_num_ext))
         return;
