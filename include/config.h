@@ -10,7 +10,7 @@
 #define INCLUDE_BODY_MASTER             // Uncomment to include Body Controller in combined firmware
 // #define INCLUDE_CLASSIC_I2C_SUPPORT  // Uncomment to include classic Seriial to I2C support.
 #define INCLUDE_I2C_SLAVE               // Uncommend for new I2C slave mode
-//#define INCLUDE_HOLO_RGB                // Uncomment for NeoPixel-Holo (needs dedicated Slave Firmware!) 
+// #define INCLUDE_HOLO_RGB                // Uncomment for NeoPixel-Holo (needs dedicated Slave Firmware!) 
 
 #ifdef INCLUDE_HOLO_RGB
 #define NEO_JEWEL_LEDS 16

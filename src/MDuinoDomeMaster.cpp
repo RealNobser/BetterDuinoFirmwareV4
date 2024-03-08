@@ -247,36 +247,19 @@ void MDuinoDomeMaster::parseCommand(const char* command)
  */
 void MDuinoDomeMaster::processPanelCommand(const char* command)
 {
+    // Sequence and Panel Commands will be processed
     char cmd[3];
-    char param[4];
-    char param_ext[5];
 
     unsigned int param_num = 0;
     unsigned int param_num_ext = 0;
 
     memset(cmd, 0x00, 3);
-    memset(param, 0x00, 4);
-    memset(param_ext, 0x00, 5);
 
     #ifdef DEBUG_MSG
     Serial.printf(F("PanelCommand(Master): %s\r\n"), command);
     #endif
 
-    if (strlen(command) == 9)   // :MVxxyyyy
-    {
-        memcpy(cmd, command+1, 2);
-
-        if ((strcmp(cmd, "MV") != 0))
-            return; // Invalid Command
-        else
-        {
-            memcpy(param, command+3, 2);
-            memcpy(param_ext, command+5, 4);
-        }
-        param_num       = atoi(param);
-        param_num_ext   = atoi(param_ext);
-    }
-    else if (!separateCommand(command, cmd, param_num))
+    if (!separateCommand(command, cmd, param_num, param_num_ext))
         return;
 
     // Address Slave Panels

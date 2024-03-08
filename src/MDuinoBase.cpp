@@ -130,12 +130,18 @@ void MDuinoBase::toggleHeartBeat()
     digitalWrite(P_LED2, HeartBeatStatus);
 }
 
-bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & param_num)
+bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & param_num, unsigned int & param_num_ext)
 {
     char param[3];
-    memset(param, 0x00, 3);
+    char param_ext[16];
 
-    if (strlen(command) != 5)
+    memset(param, 0x00, 3);
+    memset(param_ext, 0x00, 16);
+
+    // Minimum Command Size is 5
+    // Prefix(1)+Command(2)+Params(>=2)
+
+    if (strlen(command) < 5)
     {
         #ifdef DEBUG_MSG
         Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
@@ -147,6 +153,13 @@ bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & 
     memcpy(param, command+3, 2);
 
     param_num = atoi(param);
+
+    if (strlen(command) > 5)
+    {
+        memcpy(param_ext, command+5, strlen(command)-5);
+        param_num_ext = atoi(param_ext);
+    }
+
 
     return true;
 }
@@ -242,22 +255,11 @@ void MDuinoBase::processSetupCommand(const char* command)
     memset(param_ext, 0x00, 5);
 
     // Command Parsing
-
-    if (strlen(command) == 5)   // Standard #CCxx
-    {
-        if (!separateCommand(command, cmd, param_num))
-            return; // Invalid Command
-    }
-    else if (strlen(command) == 6)   // #SRxxy, #MSxyy and #SSxxx
+    if (strlen(command) == 6)   // #MSxyy and #SSxxx
     {
         memcpy(cmd, command+1, 2);
 
-        if (strcmp(cmd, "SR") == 0)
-        {
-            memcpy(param, command+3, 2);
-            memcpy(param_ext, command+5, 1);
-        } 
-        else if (strcmp(cmd, "MS") == 0)
+        if (strcmp(cmd, "MS") == 0)
         {
             memcpy(param, command+3, 1);
             memcpy(param_ext, command+4, 2);
@@ -273,52 +275,16 @@ void MDuinoBase::processSetupCommand(const char* command)
         param_num       = atoi(param);
         param_num_ext   = atoi(param_ext);
     }
-    else if (strlen(command) == 8)      // #SPxxyyy
+    else // Standard #CCxxyy...
     {
-        memcpy(cmd, command+1, 2);
-
-        if ((strcmp(cmd, "SP") != 0))
-        {
-            #ifdef DEBUG_MSG
-            Serial.println(F("Invalid Extended Command"));
-            #endif
-            
+        if (!separateCommand(command, cmd, param_num, param_num_ext))
             return; // Invalid Command
-        }
-        else
-        {
-            memcpy(param, command+3, 2);
-            memcpy(param_ext, command+5, 3);
-        }
-        param_num       = atoi(param);
-        param_num_ext   = atoi(param_ext);
-    }
-    else if (strlen(command) == 9)      // #SOxxyyyy, #SCxxyyyy / #HOxxyyyy, #HCxxyyyy / #VOxxyyyy, #VCxxyyyy
-    {
-        memcpy(cmd, command+1, 2);
-
-        if ((strcmp(cmd, "SO") != 0) && (strcmp(cmd, "SC") != 0) &&
-            (strcmp(cmd, "HO") != 0) && (strcmp(cmd, "HC") != 0) &&
-            (strcmp(cmd, "VO") != 0) && (strcmp(cmd, "VC") != 0))
-        {
-            #ifdef DEBUG_MSG
-            Serial.println(F("Invalid Extended Command"));
-            #endif
-            
-            return; // Invalid Command
-        }
-        else
-        {
-            memcpy(param, command+3, 2);
-            memcpy(param_ext, command+5, 4);
-        }
-        param_num       = atoi(param);
-        param_num_ext   = atoi(param_ext);
     }
 
     #ifdef DEBUG_MSG
     Serial.printf(F("cmd: %s, param_num: %d, param_num_ext: %d\r\n"), cmd, param_num, param_num_ext);
     #endif
+
     if (strcmp(cmd, "SO") == 0)       // Set Servo Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
         Storage.getServoPositions(param_num, OpenPos, ClosedPos);

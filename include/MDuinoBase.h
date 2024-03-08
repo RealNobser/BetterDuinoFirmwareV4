@@ -50,7 +50,7 @@ class MDuinoBase
 
         void toggleHeartBeat();
 
-        bool separateCommand(const char* command, char* cmd, unsigned int & param_num);
+        bool separateCommand(const char* command, char* cmd, unsigned int & param_num, unsigned int & param_num_ext);
         void processSetupCommand(const char* command);
 
         void adjustServo(const byte servo, const word value);
