@@ -279,6 +279,17 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     else if (!separateCommand(command, cmd, param_num))
         return;
 
+    // Address Slave Panels
+    if ((param_num == 12) || (param_num == 13))   
+    {
+        if (strcmp(cmd, "SE") != 0)
+        { 
+            Serial_Slave.printf(command);
+            return;
+        }
+    }
+
+    // Address Master Panels
     if (strcmp(cmd, "MV")==0)
     {
         if (param_num > MaxPanel)
@@ -303,10 +314,6 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
         {
             Panels[param_num]->open();
-        }
-        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
-        {
-            Serial_Slave.printf(F(":OP%02u\r"), param_num);
         }
         else if (param_num == 14)    // Open Top Panels
         {
@@ -338,10 +345,6 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         {
             Panels[param_num]->close();
         }
-        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to close slave panels
-        {
-            Serial_Slave.printf(F(":CL%02u\r"), param_num);
-        }
         else if (param_num == 14)    // Open Top Panels
         {
             for (byte i=7; i<=MaxPanel; i++)
@@ -357,7 +360,6 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             }
         }        
     }
-
     else if (strcmp(cmd, "LK")==0)  // Lock Panel
     {
         if (param_num == 0)         // lock all
@@ -371,10 +373,6 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
         {
             Panels[param_num]->lock(true);
-        }
-        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
-        {
-            Serial_Slave.printf(F(":LK%02u\r"), param_num);
         }
         else if (param_num == 14)    // Lock Top Panels
         {
@@ -405,10 +403,6 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         {
             Panels[param_num]->lock(false);
         }
-        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
-        {
-            Serial_Slave.printf(F(":UL%02u\r"), param_num);
-        }
         else if (param_num == 14)    // Unlock Top Panels
         {
             for (byte i=7; i<=MaxPanel; i++)
@@ -436,10 +430,6 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
         {
             Panels[param_num]->detach();
-        }
-        else if ((param_num == 12) || (param_num == 13))   // Send commands to slave to open slave panels
-        {
-            Serial_Slave.printf(F(":ST%02u\r"), param_num);
         }
     }
     else if (strcmp(cmd, "RC")==0)

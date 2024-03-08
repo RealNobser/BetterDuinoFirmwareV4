@@ -140,18 +140,45 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
 {
     // Sequence and Panel Commands will be processed
     char cmd[3];
+    char param[4];
+    char param_ext[5];
+
     unsigned int param_num = 0;
+    unsigned int param_num_ext = 0;
 
     memset(cmd, 0x00, 3);
+    memset(param, 0x00, 4);
+    memset(param_ext, 0x00, 5);
 
     #ifdef DEBUG_MSG
     Serial.printf(F("PanelCommand(Slave): %s\r\n"), command);
     #endif
 
-    if (!separateCommand(command, cmd, param_num))
+    if (strlen(command) == 9)   // :MVxxyyyy
+    {
+        memcpy(cmd, command+1, 2);
+
+        if ((strcmp(cmd, "MV") != 0))
+            return; // Invalid Command
+        else
+        {
+            memcpy(param, command+3, 2);
+            memcpy(param_ext, command+5, 4);
+        }
+        param_num       = atoi(param);
+        param_num_ext   = atoi(param_ext);
+    }
+    else if (!separateCommand(command, cmd, param_num))
         return;
 
-    if (strcmp(cmd, "SE")==0)       // Start Sequence
+    if (strcmp(cmd, "MV")==0)
+    {
+        if (param_num > MaxPanel)
+            return;
+
+        Panels[param_num]->move((word)param_num_ext);
+    }
+    else if (strcmp(cmd, "SE")==0)       // Start Sequence
     {
         playSequence(param_num);
     } 
@@ -193,6 +220,42 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
         {
         }
     }
+    else if (strcmp(cmd, "LK")==0)  // Lock Panel
+    {
+        if (param_num == 0)         // lock all
+        {
+            for(byte i=MinPanel; i<= MaxPanel; i++)
+                Panels[i]->lock(true);            
+        }
+        else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
+        {
+            Panels[param_num]->lock(true);
+        }
+        else if (param_num == 14)    // Lock Top Panels
+        {
+        }
+        else if (param_num == 15)    // Lock Bottom Panels
+        {
+        }        
+    }
+    else if (strcmp(cmd, "UL")==0)  // Unlock Panel
+    {
+        if (param_num == 0)         // Unlock all
+        {
+            for(byte i=MinPanel; i<= MaxPanel; i++)
+                Panels[i]->lock(false);
+        }
+        else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
+        {
+            Panels[param_num]->lock(false);
+        }
+        else if (param_num == 14)    // Unlock Top Panels
+        {
+        }
+        else if (param_num == 15)    // Unlock Bottom Panels
+        {
+        }        
+    }    
     else if (strcmp(cmd, "ST")==0)
     {
         if (param_num == 0)    // Alle panels
