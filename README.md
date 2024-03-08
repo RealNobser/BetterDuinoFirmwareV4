@@ -61,6 +61,7 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Description |
 |--|--|--
+| 2024-03-08|V1.0.5|NeoPixelHolo-Integration, Bugfix Servo 12/13|
 | 2024-01-30|V1.0.4|First Chopper Integration|
 | 2024-01-17|V1.0.3|Added free panel positioning to panel sequences 0% = closed / 100% = open|
 | 2024-01-15|V1.0.2|BugFix-Release|
