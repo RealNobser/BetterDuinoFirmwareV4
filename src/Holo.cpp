@@ -1,19 +1,20 @@
 #include <Arduino.h>
 #include "Holo.h"
 
-Holo::Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin, const bool NeoPixelHolo /*= false*/) :
+Holo::Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin, const bool NeoPixelHolo /*= false*/, const uint8_t NrPixels /*= 7*/) :
     LightPin(LightPin),
     HighActive(HighActive),
     HServo(HServo),
     HPin(HPin),
     VServo(VServo),
     VPin(VPin),
-    NeoPixelHolo(NeoPixelHolo)
+    NeoPixelHolo(NeoPixelHolo),
+    NrPixels(NrPixels)
 {
     #ifdef INCLUDE_HOLO_RGB
     if (NeoPixelHolo)
     {
-        pixels = new Adafruit_NeoPixel(NEO_JEWEL_LEDS, LightPin, HP_NEO_TYPE);
+        pixels = new Adafruit_NeoPixel(NrPixels, LightPin, HP_NEO_TYPE);
         pixels->begin();
         pixels->clear();
     }
@@ -108,7 +109,7 @@ void Holo::setColor(const uint8_t red, const uint8_t green, const uint8_t blue, 
     color |= static_cast<uint32_t>(green)   << 8;
     color |= static_cast<uint32_t>(blue);
 
-    pixels->fill(color, 0, NEO_JEWEL_LEDS);
+    pixels->fill(color, 0, NrPixels);
 
     /*
     for(int i=0; i<NEO_JEWEL_LEDS; i++) 

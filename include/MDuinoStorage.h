@@ -132,6 +132,12 @@
 *  0xd1     Holo1 Light High Active (=1) or Low Active (=0)
 *  0xd2     Holo2 Light High Active (=1) or Low Active (=0)
 *  0xd3     Holo3 Light High Active (=1) or Low Active (=0)
+*  0xd4     Holo1 Light Type (false - Standard; true - Neopixel)
+*  0xd5     Holo2 Light Type (false - Standard; true - Neopixel)
+*  0xd6     Holo3 Light Type (false - Standard; true - Neopixel)
+*  0xd7     Holo1 Neopixel LEDs (default 7)
+*  0xd8     Holo2 Neopixel LEDs (default 7)
+*  0xd9     Holo3 Neopixel LEDs (default 7)
 
 *  0xe0 
 *  0xe1 
@@ -227,6 +233,9 @@ class MDuinoStorage
 
         //
         // Holos / Servos
+        bool getHoloNeoPixel(const byte HoloNr);
+        void setHoloNeoPixel(const byte HoloNr, const bool NeoPixel);
+
         void getHoloServoSpeed(const byte HoloNr, byte & HSpeed, byte & VSpeed);
         void setHoloServoSpeed(const byte HoloNr, const byte HSpeed, const byte VSpeed);
 
@@ -235,6 +244,9 @@ class MDuinoStorage
 
         bool getHoloLightHighActive(const byte HoloNr);
         void setHoloLightHighActive(const byte HoloNr, const bool HighActive);
+
+        byte getHoloLEDs(const byte HoloNr);
+        void setHoloLEDs(const byte HoloNr, const byte LEDs);
 
         bool getAdjustmentMode();
         void setAdjustmentMode(const bool on);

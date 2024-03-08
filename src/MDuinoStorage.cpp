@@ -172,6 +172,48 @@ void MDuinoStorage::setServoPositions(const byte ServoNr, const word OpenPositio
 //
 // Holos / Servos
 //
+bool MDuinoStorage::getHoloNeoPixel(const byte HoloNr)
+{
+    bool value = false;
+
+    if (HoloNr > MAX_MARCDUINOHOLOS)
+        return 0;
+
+    EEPROM.get(ADDR_HOLOLIGHTBASE + 3 + HoloNr, value);
+    return value;
+}
+void MDuinoStorage::setHoloNeoPixel(const byte HoloNr, const bool NeoPixel)
+{
+    if (HoloNr > MAX_MARCDUINOHOLOS)
+        return;
+
+    if (HoloNr == 0)
+    {
+        EEPROM.put(ADDR_HOLOLIGHTBASE + 3 + 1, NeoPixel);
+        EEPROM.put(ADDR_HOLOLIGHTBASE + 3 + 2, NeoPixel);
+        EEPROM.put(ADDR_HOLOLIGHTBASE + 3 + 3, NeoPixel);
+    }
+    else
+        EEPROM.put(ADDR_HOLOLIGHTBASE + 3 + HoloNr, NeoPixel);
+}
+
+byte MDuinoStorage::getHoloLEDs(const byte HoloNr)
+{
+    uint8_t value = 7;
+
+    if (HoloNr > MAX_MARCDUINOHOLOS)
+        return 0;
+
+    value = EEPROM.read(ADDR_HOLOLIGHTBASE + 6 + HoloNr);
+    return value;
+}
+void MDuinoStorage::setHoloLEDs(const byte HoloNr, const byte LEDs)
+{
+    if (HoloNr > MAX_MARCDUINOHOLOS)
+        return;
+
+    EEPROM.update(ADDR_HOLOLIGHTBASE + 6 + HoloNr, LEDs);
+}
 
 void MDuinoStorage::getHoloServoSpeed(const byte HoloNr, byte & HSpeed, byte & VSpeed)
 {

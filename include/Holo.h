@@ -10,7 +10,7 @@
 class Holo
 {
     public:
-        Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin, const bool NeoPixelHolo = true);
+        Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo, const uint8_t HPin, VarSpeedServo& VServo, const uint8_t VPin, const bool NeoPixelHolo = true, const uint8_t NrPixels = 7);
 
         void setHighActive(const bool HighActive = true);
 
@@ -61,6 +61,7 @@ class Holo
 
         #ifdef INCLUDE_HOLO_RGB
         Adafruit_NeoPixel* pixels = nullptr;
+        uint8_t NrPixels        = 7;
         uint8_t red             = 255;
         uint8_t green           = 255;
         uint8_t blue            = 255;

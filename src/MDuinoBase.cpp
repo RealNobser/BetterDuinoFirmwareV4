@@ -112,6 +112,8 @@ void MDuinoBase::checkEEPROM(const bool factoryReset /*= false*/)
             Storage.setHoloServoSpeed(i, 0, 0);     // Full speed
             Storage.setHoloPositions(i, HOLO_MIN, HOLO_MAX, HOLO_MIN, HOLO_MAX);
             Storage.setHoloLightHighActive(i, true);
+            Storage.setHoloNeoPixel(i, false);  // Non NeoPixels
+            Storage.setHoloLEDs(i, 7);          // 7 LEDs for NeoPixels
         }
 
         Storage.setConfigVersion(CONFIG_VERSION);   // Final step before restart
@@ -210,6 +212,8 @@ bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & 
  * #MSxyy       - Set maximum sounds per soundbank. x=1-9 (Soundbank), y=0-25 (max. Sounds)
  * 
  * #HLxy        - Set HoloLight x to High Active (y=1) or Low Active (y=0). x=0 → All Holo Lights
+ * #HNxy        - Set HoloLight x to normal LED (y=0) or NeoPixel (y=1). x=0 → All Holo Lights
+ * #HXxxyy      - Set HoloLight xx NeoPixels to yy LEDs
  * 
  * #HOxxdddd    - Set Holo HServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds 
  * #HCxxdddd    - Set Holo HServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds 
@@ -401,6 +405,14 @@ void MDuinoBase::processSetupCommand(const char* command)
     else if (strcmp(cmd, "HL") == 0)
     {
         Storage.setHoloLightHighActive(abs(param_num/10), (param_num%10) == 1);
+    }
+    else if (strcmp(cmd, "HN") == 0)
+    {
+        Storage.setHoloNeoPixel(abs(param_num/10), (param_num%10) == 1);
+    }
+    else if (strcmp(cmd, "HX") == 0)
+    {
+        Storage.setHoloLEDs(param_num, param_num_ext);
     }
     #ifdef DEBUG_MSG
     else if (strcmp(cmd, "DM") == 0)             // Dump EEPROM
