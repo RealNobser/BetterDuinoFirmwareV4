@@ -321,6 +321,7 @@ These commands are only processed by the MarcDuino Slave module
 | *ONxx | Turns Holo Light on (xx=01 to 03). xx=00 or >3 all lights on |     |
 | *OFxx | Turns Holo Lights off (xx=01 to 03). xx=00 turns all lights off |     |
 | *ONxxaaabbbcccddd | Turns RGB Holo Light on (xx=01 to 03). xx=00 or >3 all lights on.<br>aaa - decimal R value (0-255)<br>bbb - decimal G value (0-255)<br>ccc - decimal B value(0-255)<br>ddd - brightness (0-255) | |
+| *COxxaaabbbcccddd | Sets color for RGB Holo Light (xx=01 to 03). xx=00 or >3 all lights on.<br>aaa - decimal R value (0-255)<br>bbb - decimal G value (0-255)<br>ccc - decimal B value(0-255)<br>ddd - brightness (0-255) | |
 | *RCxx | Holo vertical movement under RC control, horizontal centered (xx=01-03). 00 or >3 all RC |     |
 | *TExx | Holo movement test (xx=01-03). Goes through a loop of holo movements to assist in adjusting holo servos mechanical setup. 00 or >3 all HPs to test |     |
 | *STxx | stop/reset Holos random movement, turns lights off, and RC off. 00=all off |     |
