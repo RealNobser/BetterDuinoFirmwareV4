@@ -32,14 +32,18 @@ void MDuinoDomeSlave::init()
 
     // 3 Holos
     bool isNeoPixel = false;
-    isNeoPixel = Storage.getHoloNeoPixel(1);
-    Holos[1] = new Holo(P_FL, Storage.getHoloLightHighActive(1), Servo1, P_HPF_H, Servo2, P_HPF_V, isNeoPixel);    // Front
+    uint8_t nrLEDs = 7;
+    isNeoPixel  = Storage.getHoloNeoPixel(1);
+    nrLEDs      = Storage.getHoloLEDs(1);
+    Holos[1] = new Holo(P_FL, Storage.getHoloLightHighActive(1), Servo1, P_HPF_H, Servo2, P_HPF_V, isNeoPixel, nrLEDs);    // Front
 
-    isNeoPixel = Storage.getHoloNeoPixel(2);
-    Holos[2] = new Holo(P_RL, Storage.getHoloLightHighActive(2), Servo3, P_HPR_H, Servo4, P_HPR_V, isNeoPixel);    // Rear
+    isNeoPixel  = Storage.getHoloNeoPixel(2);
+    nrLEDs      = Storage.getHoloLEDs(2);
+    Holos[2] = new Holo(P_RL, Storage.getHoloLightHighActive(2), Servo3, P_HPR_H, Servo4, P_HPR_V, isNeoPixel, nrLEDs);    // Rear
 
-    isNeoPixel = Storage.getHoloNeoPixel(3);
-    Holos[3] = new Holo(P_TL, Storage.getHoloLightHighActive(3), Servo5, P_HPT_H, Servo6, P_HPT_V, isNeoPixel);    // Top
+    isNeoPixel  = Storage.getHoloNeoPixel(3);
+    nrLEDs      = Storage.getHoloLEDs(3);
+    Holos[3] = new Holo(P_TL, Storage.getHoloLightHighActive(3), Servo5, P_HPT_H, Servo6, P_HPT_V, isNeoPixel, nrLEDs);    // Top
 
     // 2 Panels
     Panels[12] = new Panel(Servo10, P_SERVO_12);
