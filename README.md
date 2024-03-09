@@ -394,6 +394,8 @@ Setup Commands
 | #MSxyy | Set maximum sounds per soundbank. x=1-9 (Soundbank), y=0-25 (max. Sounds) |     |
 |     | **Holo Projector Configuration** |     |
 | #HLxy | Set HoloLight x to High Active (y=1) or Low Active (y=0). x=0 → All Holo Lights |     |
+| #HNxy | Set HoloLight x to NeoPixel (y=1) or Standard-LED (y=0). x=0 → All Holo Lights |     |
+| #HXxxyy | Configure number of LEDs (yy) for HoloLight xx.|Will only be used, if HoloLight xx is set to NeoPixel|
 | #HOxxdddd | Set Holo HServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds |     |
 | #HCxxdddd | Set Holo HServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds |     |
 | #HPxxddd | Set Holo HServo Speed, ddd=0-255 |     |
