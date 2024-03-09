@@ -57,11 +57,11 @@ class Holo
         VarSpeedServo VServo;
         uint8_t VPin = 0;
 
-        bool NeoPixelHolo = false;
+        bool NeoPixelHolo       = false;
+        uint8_t NrPixels        = 7;
 
         #ifdef INCLUDE_HOLO_RGB
         Adafruit_NeoPixel* pixels = nullptr;
-        uint8_t NrPixels        = 7;
         uint8_t red             = 255;
         uint8_t green           = 255;
         uint8_t blue            = 255;
