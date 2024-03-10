@@ -61,6 +61,7 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Description |
 |--|--|--
+| 2024-03-09|V1.0.6|NeoPixelHolo configuration|
 | 2024-03-08|V1.0.5|NeoPixelHolo-Integration, Bugfix Servo 12/13|
 | 2024-01-30|V1.0.4|First Chopper Integration|
 | 2024-01-17|V1.0.3|Added free panel positioning to panel sequences 0% = closed / 100% = open|
@@ -82,10 +83,12 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 |Board|Support|
 |--|--|
 |MarcDuino V1.5 Rev3|YES|
-|MarcDuino V1.5 Rev2|not yet, but planned, tests  pending|
+|MarcDuino V1.5 Rev2|YES, Servo 11 = Master AUX2, Servo 13 = Slave AUX2, Servo 12 = n/a|
+|Printed Droid AIO2.0|YES, Servo 11 = Master A2, Servo 13 = Slave A2, Servo 12 = n/a|
+|Printed Droid BenDuino boards (https://www.printed-droid.com/kb/benduino-system/) | not yet, but planned, tests pending|
 |MarcDuino V1 | NO |
 |MarcDuino V2 | NO |
-|BenDuino boards (https://www.printed-droid.com/kb/benduino-system/) | not yet, but planned, tests pending|
+
 
 ### Compatibility Matrix
 |Master/Salve|1.8|3.x|4.x|
