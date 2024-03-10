@@ -423,14 +423,10 @@ void MDuinoBase::processSetupCommand(const char* command)
     else if (strcmp(cmd, "RS") == 0)             // Reboot MarcDuino
     {
         if (param_num == 0x01)
-        {
             checkEEPROM(true);  // Factory Reset
-        }
-        else
-        {
-            delay(500);
-            resetFunc();
-        }
+
+        delay(500);
+        resetFunc();
     }
     else if (strcmp(cmd, "AD") == 0)             // Activate Adjustment Mode
     {

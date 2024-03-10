@@ -156,9 +156,9 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
 
     memset(cmd, 0x00, 3);
 
-    //#ifdef DEBUG_MSG
+    #ifdef DEBUG_MSG
     Serial.printf(F("PanelCommand(Slave): %s\r\n"), command);
-    //#endif
+    #endif
 
     if (!separateCommand(command, cmd, param_num, param_num_ext))
         return;
