@@ -83,8 +83,8 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 |Board|Support|
 |--|--|
 |MarcDuino V1.5 Rev3|YES|
-|MarcDuino V1.5 Rev2|YES<br>Servo 11 = Master AUX2<br>Servo 12 = MP<br>Servo 13 = Slave AUX2<br>Magic Panel = Slave "To Slave"|
-|Printed Droid AIO2.0|YES<br>Servo 11 = Master A2<br>Servo 12 = MP<br>Servo 13 = Slave A2<br>Magic Panel = Slave2|
+|MarcDuino V1.5 Rev2|YES<br>Servo 11 = Master AUX2<br>Servo 12 = ML<br>Servo 13 = Slave AUX2<br>Magic Panel = Slave "To Slave"|
+|Printed Droid AIO2.0|YES<br>Servo 11 = Master A2<br>Servo 12 = ML<br>Servo 13 = Slave A2<br>Magic Panel = Slave2|
 |Printed Droid BenDuino boards (https://www.printed-droid.com/kb/benduino-system/) | not yet, but planned, tests pending|
 |MarcDuino V1 | NO |
 |MarcDuino V2 | NO |
