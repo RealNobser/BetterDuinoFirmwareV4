@@ -35,11 +35,14 @@ void MDuinoBase::run()
     if (Serial.available())
     {
         unsigned char c = Serial.read();
+        if (c == '\n')
+            return;        
         SerialBuffer[BufferIndex++] = c;
         if ((c == '\r') || (BufferIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
         {
             SerialBuffer[BufferIndex-1] = 0x00; // ensure proper termination
-            parseCommand(SerialBuffer);
+            if (BufferIndex>1)
+                parseCommand(SerialBuffer);
             memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
             BufferIndex = 0;
         }
