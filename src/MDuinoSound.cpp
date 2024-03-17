@@ -126,7 +126,7 @@ void MDuinoSoundDFPlayer::init()
 
     sendCommand(0x09, 0x00, 0x01);  // Playback Source TF
     delay(500);
-    sendCommand(0x07, 0x00, 0x01);  // EQ pop
+    sendCommand(0x07, 0x00, 0x00);  // EQ Normal
     delay(100);
     VolumeMid();
     delay(100);
@@ -207,7 +207,7 @@ void MDuinoSoundDFPlayer::sendCommand(const byte Command, const byte Param1, con
     SoundSerial.flush();
 
 	// Delay needed between successive commands
-	// delay(30);
+	delay(100);
 }
 
 //////////
