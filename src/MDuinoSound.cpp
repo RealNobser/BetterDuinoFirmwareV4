@@ -204,6 +204,7 @@ void MDuinoSoundDFPlayer::sendCommand(const byte Command, const byte Param1, con
 			highByte(checkSum), lowByte(checkSum), 0xEF };
 
     SoundSerial.write(commandBuffer, 10);
+    SoundSerial.flush();
 
 	// Delay needed between successive commands
 	// delay(30);
