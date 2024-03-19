@@ -2,18 +2,24 @@
 #include "MDuinoDomeSlave.h"
 #include "PanelSequences.h"
 
-MDuinoDomeSlave::MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
+MDuinoDomeSlave::MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces, SERIAL_LIFT_TYPE& Serial_Lift,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11) :
     MDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11),
     Serial_Magic(Serial_Magic),
-    Serial_Teeces(Serial_Teeces)
+    Serial_Teeces(Serial_Teeces),
+    Serial_Lift(Serial_Lift)
 {
     Serial_Magic.begin(SERIAL_MAGIC_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
     while(!Serial_Magic);
 
     Serial_Teeces.begin(SERIAL_TEECES_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
     while(!Serial_Teeces);
+    
+    #ifdef SEPARATE_DOMELIFT
+    Serial_Lift.begin(SERIAL_LIFT_BAUD);
+    while(!Serial_Lift);
+    #endif
 
     for(byte i=0; i <= MaxHolo; ++i)
     {

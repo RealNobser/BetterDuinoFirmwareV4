@@ -1,18 +1,24 @@
 
 #include "MDuinoDomeMaster.h"
 
-MDuinoDomeMaster::MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
+MDuinoDomeMaster::MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11) :
     MDuinoDome(Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11),
     Serial_Slave(Serial_Slave),
-    Serial_MP3(Serial_MP3)
+    Serial_MP3(Serial_MP3),
+    Serial_Lift(Serial_Lift)
 {
-    Serial_Slave.begin(SERIAL_SLAVE_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
+    Serial_Slave.begin(SERIAL_SLAVE_BAUD);
     while(!Serial_Slave);
 
-    Serial_MP3.begin(SERIAL_MP3_BAUD); // TODO: Depends on Board Type (Master, Slave, Body)
+    Serial_MP3.begin(SERIAL_MP3_BAUD);
     while(!Serial_MP3);
+
+    #ifdef SEPARATE_DOMELIFT
+    Serial_Lift.begin(SERIAL_LIFT_BAUD);
+    while(!Serial_Lift);
+    #endif
 
     for(byte i=0; i <= MaxPanel; ++i)
     {
@@ -425,6 +431,10 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     else if (strcmp(cmd, "EO")==0)
     {
         AUX1(param_num);
+    }
+    else if (strcmp(cmd, "LI")==0)
+    {
+        Serial_Lift.printf(F("%s\r"), command);
     }
 }
 

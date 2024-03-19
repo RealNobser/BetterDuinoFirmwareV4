@@ -76,7 +76,7 @@
 class MDuinoDomeSlave : public MDuinoDome
 {
     public:
-        MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces,
+        MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces, SERIAL_LIFT_TYPE& Serial_Lift,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
@@ -90,6 +90,7 @@ class MDuinoDomeSlave : public MDuinoDome
     protected:
         SendOnlySoftwareSerial& Serial_Magic;
         SendOnlySoftwareSerial& Serial_Teeces;
+        SERIAL_LIFT_TYPE& Serial_Lift;
 
         unsigned long MagicPanelMillis  = 0;
         unsigned long MagicPanelInterval= 0;

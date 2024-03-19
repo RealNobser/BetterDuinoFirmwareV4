@@ -1,16 +1,22 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-
 // Specific Astromech, Choose one
 #define R2D2
 // #define CHOPPER
 
 // #define DEBUG_MSG                    // Additional Log Messages to Serial
 #define INCLUDE_BODY_MASTER             // Uncomment to include Body Controller in combined firmware
-#define INCLUDE_CLASSIC_I2C_SUPPORT     // Uncomment to include classic Seriial to I2C support.
-//#define INCLUDE_I2C_SLAVE             // Uncommend for new I2C slave mode
+//#define INCLUDE_CLASSIC_I2C_SUPPORT     // Uncomment to include classic Seriial to I2C support.
+#define INCLUDE_I2C_SLAVE             // Uncommend for new I2C slave mode
 //#define INCLUDE_HOLO_RGB              // Uncomment for NeoPixel-Holo (needs dedicated Slave Firmware!) 
+//#define SEPARATE_DOMELIFT               // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
+
+#ifdef SEPARATE_DOMELIFT
+#define SERIAL_LIFT_TYPE SendOnlySoftwareSerial
+#else
+#define SERIAL_LIFT_TYPE HardwareSerial
+#endif
 
 #ifdef INCLUDE_CLASSIC_I2C_SUPPORT
     #undef INCLUDE_BODY_MASTER
@@ -37,6 +43,7 @@
 #define SERIAL_MP3_BAUD     9600
 #define SERIAL_TEECES_BAUD  2400
 #define SERIAL_MAGIC_BAUD   9600
+#define SERIAL_LIFT_BAUD    9600
 
 #define SERIALBUFFERSIZE    24
 
@@ -73,7 +80,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.1.7"
+#define VERSION         "4.1.8"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  41
 

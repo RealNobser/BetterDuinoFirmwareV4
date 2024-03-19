@@ -22,8 +22,10 @@ void MDuinoDome::init()
     Sequencer.init();
 
     // AUX1 Port
+    #ifndef SEPARATE_DOMELIFT
     pinMode(P_AUX1, OUTPUT);
     digitalWrite(P_AUX1, LOW);
+    #endif
 }
 
 void MDuinoDome::run()
@@ -32,6 +34,7 @@ void MDuinoDome::run()
     Sequencer.run();
 
     // AUX1
+    #ifndef SEPARATE_DOMELIFT
     if ((AUX1Duration != 0) && (AUX1Duration != 99))
     {
         if ((millis() - AUX1Millis) > AUX1Duration)
@@ -39,7 +42,8 @@ void MDuinoDome::run()
             digitalWrite(P_AUX1, LOW);
             AUX1Duration = 0;
         }
-    }    
+    }
+    #endif
 }
 
 void MDuinoDome::adjustHoloEndPositions(Holo* Holos[], const byte MinHolo, const byte MaxHolo)
@@ -122,6 +126,7 @@ void MDuinoDome::getRandomSound(byte & bank, byte & sound)
 
 void MDuinoDome::AUX1(const unsigned int Duration)
 {
+    #ifndef SEPARATE_DOMELIFT
     if (Duration == 0)
     {
         AUX1Duration = 0;
@@ -138,6 +143,7 @@ void MDuinoDome::AUX1(const unsigned int Duration)
         AUX1Duration = Duration*1000;
         digitalWrite(P_AUX1, HIGH);
     }
+    #endif
 }
 
 void MDuinoDome::playSequence(const byte SeqNr)

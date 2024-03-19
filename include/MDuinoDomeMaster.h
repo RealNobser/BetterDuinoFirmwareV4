@@ -10,7 +10,7 @@
 class MDuinoDomeMaster : public MDuinoDome
 {
     public:
-        MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, 
+        MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
@@ -26,6 +26,7 @@ class MDuinoDomeMaster : public MDuinoDome
     protected:
         SendOnlySoftwareSerial& Serial_Slave;
         SendOnlySoftwareSerial& Serial_MP3;
+        SERIAL_LIFT_TYPE& Serial_Lift;
 
         static const byte MinPanel =  1;   // Master Board has 11 Panel Connectors
         static const byte MaxPanel = 11;   // Master Board has 11 Panel Connectors
