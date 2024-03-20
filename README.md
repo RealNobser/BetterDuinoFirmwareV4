@@ -78,7 +78,7 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 - RC-IN support
 
 ### Known ISSUES
-- MP3-Trigger: stopping only pauses, workaround pending (playing an empty soundfile). Bugfix-Release: V1.0.5
+- MP3-Trigger: stopping only pauses, workaround pending (playing an empty soundfile).
 
 
 ### Supported Boards
