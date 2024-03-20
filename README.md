@@ -266,6 +266,7 @@ They must follow the syntax ":CCxx\\r" where CC=command , xx= two digit decimal 
 | :CLxx | close panel number xx=01-13, removes from RC if it was, stops servo. If xx=00, all panels, slow close. | YES | YES |     |
 | :LKxx | lock panel number xx=01-13, lock current position to avoid problems with DomeLift. If xx=00, locks all panels (12/13 Slave only) | YES | YES |     |
 | :ULxx | unlock panel number xx=01-13, unlocks panel, normal mode. If xx=00, unlocks all panels (12/13 Slave only) | YES | YES |     |
+| :LIxx | activate dome lift number xx=01-13. Toggle functionality, if lift is up when command is sent, it will be lowered and vice versa. If xx=00, all lifts | YES | YES |     |
 | :RCxx | places panel xx=01-13 under RC input control. If xx=00, all panels placed on RC. | YES | NO  |     |
 | :STxx | buzz kill/soft hold: removes panel from RC control AND shuts servo off to eliminate buzz. xx=00 all panels off RC servos off. | YES | YES |     |
 | :HDxx | RC hold: removes from RC, but does not turn servo off, keeps at last position. xx=00 all panels hold. | YES | NO  |     |
@@ -474,6 +475,22 @@ Best practice panel adjustment
 *Shortcut*
 - If the default positions are fine but swapped (:OP01 closes the panel and :CL01 opens it), just use "#SW01" to swap the values for open and closed position. The values are automatically stored. Important: That command is not identical to the "Reverse Servo" command. Just use the swap command while calibrating your servos, not at every startup. Otherwise it will always toggle the settings on every startup.
 - Repeat all the steps until each servo is calibrated
+
+Connection Dome Lift to MarcDuino boards
+========================================
+Please use BetterDuino firmware V1.0.8 or higher. New I2C slave mode must be activated (standard in BetterDuino, classic I2C Master mode also available in dedicated firmware, see config.h).
+- Connect Master InterCom-TX to Dome Lift RX0
+- Connect I2C bus from MarcDuino board to Dome Lift Board
+- Use modified dome lift firmware
+- New MarcDuino comand is :LIxx. To be compatible with the R2Touch-App the command mapping is as follows:
+  
+| **Cmd** | **Action** |
+| --- | --- |
+| :LI07 | Bad Motivator |
+| :LI08 | Dome Zapper |
+| :LI09 | Lightsaber |
+| :LI10 | Life Form |
+| :LI11 | Periscope |
 
 
 EEPROM Memory Map
