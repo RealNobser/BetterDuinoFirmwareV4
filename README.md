@@ -60,7 +60,9 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ## Lets get started
 ### Revision History
 | Date | Rev | Description |
-|--|--|--
+|--|--|--|
+| 2024-03-20|V1.0.8|Added Dome Lift integration|
+| 2024-03-17|V1.0.7|removed R2Touch Keepalives, fixed DFMini command sequences|
 | 2024-03-09|V1.0.6|NeoPixelHolo configuration|
 | 2024-03-08|V1.0.5|NeoPixelHolo-Integration, Bugfix Servo 12/13|
 | 2024-01-30|V1.0.4|First Chopper Integration|
