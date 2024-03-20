@@ -483,7 +483,7 @@ Connection Dome Lift to MarcDuino boards
 Please use BetterDuino firmware V1.0.8 or higher. New I2C slave mode must be activated (standard in BetterDuino, classic I2C Master mode also available in dedicated firmware, see config.h).
 - Connect Master InterCom-TX to Dome Lift RX0
 - Connect I2C bus from MarcDuino board to Dome Lift Board
-- Use modified dome lift firmware
+- Use modified dome lift firmware (https://github.com/RealNobser/DomeLiftMechanism/tree/main)
 - New MarcDuino comand is :LIxx. To be compatible with the R2Touch-App the command mapping is as follows:
   
 | **Cmd** | **Action** |
