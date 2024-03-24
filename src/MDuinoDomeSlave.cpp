@@ -73,6 +73,7 @@ void MDuinoDomeSlave::run()
         Holos[i]->run();
 
     // Servos. TODO: Double implementation, check BaseClass Idea for Dome MarcDuinos
+    // check https://stackoverflow.com/questions/13340074/c-static-const-members-overriding for const static members MinPanel/MaxPanel
     if (ServoBuzzIntervall != 0)
     {
         if ((millis() - ServoBuzzMillis) > ServoBuzzIntervall)

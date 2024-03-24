@@ -68,7 +68,7 @@
 #define SERVO_SPEED_SLOW        100
 #define SERVO_SPEED_SUPER_SLOW  50
 
-#define SERVO_BUZZ_MILLIS       2000
+#define SERVO_BUZZ_MILLIS       3000
 
 #define COMMAND_DELAY           50
 
@@ -80,7 +80,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.1.8"
+#define VERSION         "4.1.9"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  41
 
