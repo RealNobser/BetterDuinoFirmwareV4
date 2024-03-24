@@ -61,6 +61,7 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Description |
 |--|--|--|
+| 2024-03-20|V1.0.9|**New initialization procedure, read documentation!**|
 | 2024-03-20|V1.0.8|Added Dome Lift integration|
 | 2024-03-17|V1.0.7|removed R2Touch Keepalives, fixed DFMini command sequences|
 | 2024-03-09|V1.0.6|NeoPixelHolo configuration|
@@ -88,8 +89,8 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 |MarcDuino V1.5 Rev2|YES|Servo 11 = Master AUX2<br>Servo 12 = Slave ML<br>Servo 13 = Slave AUX2<br>Magic Panel = Slave "To Slave"|
 |Printed Droid AIO2.0|YES|Servo 11 = Master A2<br>Servo 12 = Slave ML<br>Servo 13 = Slave A2<br>Magic Panel = Slave2|
 |Printed Droid BenDuino boards (https://www.printed-droid.com/kb/benduino-system/) | not yet, but planned, tests pending||
-|MarcDuino V1 | NO ||
-|MarcDuino V2 | NO ||
+|MarcDuino V1 | **NO** ||
+|MarcDuino V2 | **NO** ||
 
 
 ### Compatibility Matrix
@@ -109,6 +110,15 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 	* avrdude: https://github.com/MCUdude/avrdude
 	* GUI for avrdude: https://blog.zakkemble.net/avrdudess-a-gui-for-avrdude/
 	* some instructions: https://forum.arduino.cc/t/the-simplest-way-to-upload-a-compiled-hex-file-without-the-ide/401996
+
+### Very first initialization procedure
+After flashing the firmware for the very first time, the status LED will flash fast at startup. Please do the following steps:
+- Connect to MarcDuino board Interconnect/Serial TX+RX using a serial interface (9600 baud)
+- when powering up you should see the following message (depending on version:
+  ***MarcDuino Dome Master***
+  ***Version 4.x.x***
+- enter "#RS01" (case sensitive!) and press enter
+- the board should restart, the LED should blink slowly
 
 ### Development Environment
 * Visual Studio Code: https://code.visualstudio.com/download
