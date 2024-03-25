@@ -26,7 +26,6 @@ void MDuinoBase::init()
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
     memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
 
-    delay(500);     // Ensure stable power supply
     checkEEPROM();
 }
 
@@ -80,16 +79,16 @@ void MDuinoBase::run()
 void MDuinoBase::checkEEPROM(const bool factoryReset /*= false*/)
 {
     byte ConfigVersion = Storage.getConfigVersion();
-    if (ConfigVersion != CONFIG_VERSION)
-    {
-        // Fast blink
-        HeartBeatIntervall = HEARTBEAT_MILLIS / 8;
-    }
-    if (factoryReset == true)
-    {
+
+    if ((ConfigVersion != CONFIG_VERSION) || (factoryReset == true))
+    {       
         #ifdef DEBUG_MSG
-        Serial.println(F("Invalid Config Version. Storing defaults in EEPROM and restart."));
+        Serial.println(F("Invalid Config Version or Factory Reset. Storing defaults in EEPROM and restart."));
         #endif
+
+        // Fast blink
+        HeartBeatIntervall = HEARTBEAT_MILLIS / 8;        
+
         Storage.setType(MDuinoStorage::DomeMaster);
         Storage.setMP3Player(MDuinoStorage::MP3Trigger);
         Storage.setStartupSoundNr(255);
