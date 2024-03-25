@@ -103,9 +103,11 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Uploading firmware using *.hex files
 - Download the latest hex-Files from the GitHub Repository: https://github.com/RealNobser/BetterDuinoFirmwareV4/releases
 - Flash hex file with the following fuse settings (**incorrect fuse settings will lead to non functional boards or unintended EEPROM content reset!**):
-	* efuse: 0x07
-	* hfuse: 0xD7
-	* lfuse: 0xFF
+  
+	* L: 0xFF
+	* H: 0xD7
+	* E: 0xFC
+
 - **Recommended:** When not using the Arduino IDE take a look at avrdude
 	* avrdude: https://github.com/MCUdude/avrdude
 	* GUI for avrdude: https://blog.zakkemble.net/avrdudess-a-gui-for-avrdude/
