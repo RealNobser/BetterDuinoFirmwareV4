@@ -113,15 +113,6 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 	* GUI for avrdude: https://blog.zakkemble.net/avrdudess-a-gui-for-avrdude/
 	* some instructions: https://forum.arduino.cc/t/the-simplest-way-to-upload-a-compiled-hex-file-without-the-ide/401996
 
-### Very first initialization procedure
-After flashing the firmware for the very first time, the status LED will flash fast at startup. Please do the following steps:
-- Connect to MarcDuino board Interconnect/Serial TX+RX using a serial interface (9600 baud)
-- when powering up you should see the following message (depending on version:
-  ***MarcDuino Dome Master***
-  ***Version 4.x.x***
-- enter "#RS01" (case sensitive!) and press enter
-- the board should restart, the LED should blink slowly
-
 ### Development Environment
 * Visual Studio Code: https://code.visualstudio.com/download
 * PlatformIO Extension: https://platformio.org/install/ide?install=vscode
