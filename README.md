@@ -540,6 +540,6 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 Used Libraries
 ==============
 
-https://github.com/nickgammon/SendOnlySoftwareSerial
-https://github.com/netlabtoolkit/VarSpeedServo
-https://github.com/adafruit/Adafruit_NeoPixel
+- https://github.com/nickgammon/SendOnlySoftwareSerial
+- https://github.com/netlabtoolkit/VarSpeedServo
+- https://github.com/adafruit/Adafruit_NeoPixel
