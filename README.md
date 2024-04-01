@@ -535,3 +535,11 @@ All the settings of the “Setup Commands” are stored in EEPROM. The correspon
 | 0xd1-0xd3 | bytes | Holo 1-3 Light High- or Low-Active | **1 = High-Active** | Holo Light High- or Low-Active, 0 = LowActive / 1 = HighActive |
 | 0xe0-0xe1 |     | **freed** |     |     |
 | 0xe2-0xe7 |     | Servo1 Holo1-Servo-H Speed (0-255)<br><br>Servo2 Holo1-Servo-V Speed (0-255)<br><br>Servo3 Holo2-Servo-H Speed (0-255)<br><br>Servo4 Holo2-Servo-V Speed (0-255)<br><br>Servo5 Holo3-Servo-H Speed (0-255)<br><br>Servo6 Holo4-Servo-V Speed (0-255) | **255 = max Speed** | 0 = Minimum<br><br>255 = Maximum |
+
+
+Used Libraries
+==============
+
+https://github.com/nickgammon/SendOnlySoftwareSerial
+https://github.com/netlabtoolkit/VarSpeedServo
+https://github.com/adafruit/Adafruit_NeoPixel
