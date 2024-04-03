@@ -117,6 +117,15 @@ void MDuinoDomeMaster::run()
             byte sound  = 0;
 
             getRandomSound(bank, sound);
+            setStandardRandomSoundIntervall();
+            
+            // Additional check / override
+            byte DisableRandomSound = Storage.getDisableRandomSound();
+            if (DisableRandomSound != 0)
+            {
+                RandomSoundIntervall = 0;
+                return;
+            }
 
             if (Sound->hasVocalizer())
             {
@@ -128,9 +137,6 @@ void MDuinoDomeMaster::run()
                 if ((bank != 0) && (sound != 0))
                     Sound->Play(bank, sound);
             }
-
-            RandomSoundMillis = millis();
-            setStandardRandomSoundIntervall();
         }
     }
 }
