@@ -92,7 +92,6 @@ void MDuinoBase::checkEEPROM(const bool factoryReset /*= false*/)
         Storage.setType(MDuinoStorage::DomeMaster);
         Storage.setMP3Player(MDuinoStorage::MP3Trigger);
         Storage.setStartupSoundNr(255);
-        Storage.setChattyMode();
         Storage.setDisableRandomSound(0);
 
         // check SD-Card and edit sound banks!
@@ -189,14 +188,10 @@ bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & 
  *      #SS000  : Disable Startup Sound, and remove startup sound delay for fast boot of R2
  *      #SSxxx  : Set Startup Sound in file xxx
  * 
- * #SQxx        - Chatty / Silent mode
- *      #SQ00   : Default Chatty Mode
- *      #SQ01   : Silent on startup
- * 
- * #SMxx        - Disable Random Sound
- *      #SM00   : Random Sound on
- *      #SM01   : No Random Sound + Volume off
- *      #SM02   : No Random Sound
+ * #SQxx        - Disable Random Sound
+ *      #SQ00   : Random Sound on
+ *      #SQ01   : No Random Sound + Volume off
+ *      #SQ02   : No Random Sound
  * 
  * #SXxx        - Set Max Random Pause in seconds - Maximum timespan between two random sounds
  * #SYxx        - Set Min Random Pause in seconds - Minimum timespan between two random sounds
@@ -354,14 +349,7 @@ void MDuinoBase::processSetupCommand(const char* command)
     {
         Storage.setStartupSoundNr(param_num);
     }
-    else if (strcmp(cmd, "SQ") == 0)       // Chatty Mode
-    {
-        if (param_num == 1)
-            Storage.setChattyMode(false);
-        else
-            Storage.setChattyMode();
-    }
-    else if (strcmp(cmd, "SM") == 0)       // Disable Random Mode
+    else if (strcmp(cmd, "SQ") == 0)       // Disable Random Sound
     {
         if (param_num <= 2)
             Storage.setDisableRandomSound(param_num);

@@ -142,15 +142,7 @@ void MDuinoDomeMaster::resetServoBuzz()
 
 void MDuinoDomeMaster::setStandardRandomSoundIntervall()
 {
-    byte DisableRandomSound = Storage.getDisableRandomSound();
-
     RandomSoundMillis       = millis();
-
-    if (!Storage.getChattyMode())
-    {
-        RandomSoundIntervall = 0;
-        return;
-    }
 
     if ((MinRandomPause > MaxRandomPause) || (MaxRandomPause < MinRandomPause))
     {
@@ -160,6 +152,7 @@ void MDuinoDomeMaster::setStandardRandomSoundIntervall()
         Storage.setMaxRandomPause(MaxRandomPause);
     }
 
+    byte DisableRandomSound = Storage.getDisableRandomSound();
     if (DisableRandomSound == 0)
     {
         RandomSoundIntervall = random(MinRandomPause * 1000, MaxRandomPause * 1000 + 1);

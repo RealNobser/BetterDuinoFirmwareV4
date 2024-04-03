@@ -16,7 +16,7 @@
 *  0x00     SW-/Config-Version (40 = 4.0,41 = 4.1 ...=
 *  0x01     MDuinoType (0-DomeMaster, 1-DomeSlave, 2-BodyMaster)
 *  0x02     
-*  0x03     Chatty/Silent Mode (0-Chatty, 1-Silent)
+*  0x03     
 *  0x04     MP3-Player-Type (0-SparkFun, 1-DF-Mini, 2-Vocalizer)
 *  0x05     Disable Random Sound (0-Random Sound, 1-No Random Sound + Volume off, 2-No Random Sound)
 *  0x06     Slave Delay Byte 1 (Delay in ms, 0-255) (default 0ms)
@@ -151,7 +151,6 @@
 
 #define ADDR_MARCDUINOVERSION   0x00
 #define ADDR_MARCDUINOTYPE      0x01
-#define ADDR_CHATTYMODE         0x03
 #define ADDR_MARCDUINOMP3PLAYER 0x04
 #define ADDR_DISABLERANDOMSOUND 0x05
 #define ADDR_STARTUPSOUNDNR     0x06
@@ -205,9 +204,6 @@ class MDuinoStorage
 
         byte getStartupSoundNr();
         void setStartupSoundNr(const byte SoundNr);
-
-        bool getChattyMode();
-        void setChattyMode(const bool on = true);
 
         byte getDisableRandomSound();
         void setDisableRandomSound(const byte DisableRandomSound);

@@ -61,29 +61,6 @@ void MDuinoStorage::setStartupSoundNr(const byte SoundNr)
     EEPROM.update(ADDR_STARTUPSOUNDNR, SoundNr);
 }
 
-bool MDuinoStorage::getChattyMode()
-{
-    uint8_t value = EEPROM.read(ADDR_CHATTYMODE);
-
-    if (value == 0)
-        return true;
-    else if (value == 1)
-        return false;
-    else
-    {
-        setChattyMode();
-        return true;
-    }
-}
-
-void MDuinoStorage::setChattyMode(const bool on/* = true*/)
-{
-    if (on)
-        EEPROM.update(ADDR_CHATTYMODE, 0x00);
-    else
-        EEPROM.update(ADDR_CHATTYMODE, 0x01);
-}
-
 byte MDuinoStorage::getDisableRandomSound()
 {
     return EEPROM.read(ADDR_DISABLERANDOMSOUND);
