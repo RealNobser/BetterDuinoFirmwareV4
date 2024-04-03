@@ -85,6 +85,10 @@ void MDuinoBodyMaster::playSequence(const byte SeqNr)
         Sequencer.loadSequence(body_panel_pingpong_Doors, SEQ_SIZE(body_panel_pingpong_Doors));
         Sequencer.setServoSpeed(MDuinoSequencer::full);
         break;
+    case 36: //Body - Use Claws, two gripper arms mod
+        Sequencer.loadSequence(body_panel_use_claws, SEQ_SIZE(body_panel_use_claws));
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
+        break;
     default:
         break;         
     }
