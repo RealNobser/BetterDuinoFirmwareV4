@@ -392,8 +392,7 @@ Setup Commands
 | #SWxx | Swap Panel xx Open&lt;-&gt;Close value | Don’t use as the classic “reverse servo” command. Don’t call it at every boot, just use it in adjustment process. |
 |     | **Startup Sound Controls** |     |
 | #SSxxx | Set startup sound<br><br>· #SS000 : Disable Startup Sound, and remove startup sound delay for fast boot of R2<br><br>· #SSxxx : Set Startup Sound in file xxx |     |
-| #SQxx | Chatty / Silent mode<br><br>· #SQ00 : Default Chatty Mode<br><br>· #SQ01 : Silent on startup |     |
-| #SMxx | Disable Random Sound<br><br>· #SM00 : Random Sound on<br><br>· #SM01 : No Random Sound + Volume off<br><br>· #SM02 : No Random Sound |     |
+| #SQxx | Disable Random Sound<br><br>· #SQ00 : Random Sound on<br><br>· #SQ01 : No Random Sound + Volume off<br><br>· #SQ02 : No Random Sound |     |
 | #SXxx | Set Max Random Pause in seconds - Maximum timespan between two random sounds |     |
 | #SYxx | Set Min Random Pause in seconds - Minimum timespan between two random sounds |     |
 |     | **Panel Sequencer Controls** |     |
