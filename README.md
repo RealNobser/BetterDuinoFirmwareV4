@@ -302,13 +302,14 @@ See sequence\_command, panel sequence matrices defined in panel\_sequences.h
 | :SE14 | Awake+ Mode reset ((panel close, random sound, holo movement, lights on) |     |
 | :SE15 | Screams no panels |     |
 | :SE16 | Panel Wiggle |     |
-|     | **Body Sequences** |     |
+|     | **Body Sequences (Tim Hebel)** |     |
 | :SE30 | Utility ARM open and close sequence |     |
 | :SE31 | All Body Panels open and close sequence |     |
 | :SE32 | All Body Doors open and wiggle close sequence |     |
 | :SE33 | Body - Use Gripper |     |
 | :SE34 | Body - Use Interface Tool |     |
 | :SE35 | Body - Ping Pong Body Doors |     |
+| :SE36 | Body - BT-1 Two gripper Sequence | Thanks to David Steinke  |
 |     | **Move Panels only** |     |
 | :SE51 | Scream, with all panels open |     |
 | :SE52 | Wave, one panel at a time |     |
