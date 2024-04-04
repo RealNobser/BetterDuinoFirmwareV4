@@ -1,9 +1,17 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
+//
+// Supported Astromechs
+// - R2D2 
+// - Chopper
+// - BT1
+// For connecting servos see https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/README.md#connecting-servos-r2d2-common-way
+//
 // Specific Astromech, Choose one
 #define R2D2
 // #define CHOPPER
+// #define BT1
 
 // #define DEBUG_MSG                    // Additional Log Messages to Serial
 #define INCLUDE_BODY_MASTER             // Uncomment to include Body Controller in combined firmware
@@ -80,7 +88,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.1.11"
+#define VERSION         "4.2.0"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  41
 

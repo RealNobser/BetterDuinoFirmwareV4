@@ -6,8 +6,13 @@
 #include "MDuinoDome.h"
 #include "MDuinoDomeMaster.h"
 #include "MDuinoDomeMasterChopper.h"
+#include "MDuinoDomeMasterBT1.h"
 #include "MDuinoDomeSlave.h"
+//#include "MDuinoDomeSlaveChopper.h"
+//#include "MDuinoDomeSlaveBT1.h"
 #include "MDuinoBodyMaster.h"
+#include "MDuinoBodyMasterChopper.h"
+#include "MDuinoBodyMasterBT1.h"
 #include "MDuinoStorage.h"
 
 MDuinoBase* MarcDuino = nullptr;
@@ -64,16 +69,24 @@ void setup() {
         MarcDuino = new MDuinoDomeMaster(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #elif defined(CHOPPER)
         MarcDuino = new MDuinoDomeMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      #elif defined(BT1)
+        MarcDuino = new MDuinoDomeMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #endif
     #elif defined(DEDICATED_SLAVE)
       #if defined(R2D2)
         MarcDuino = new MDuinoDomeSlave(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #elif defined(CHOPPER)
+        MarcDuino = new MDuinoDomeSlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      #elif defined(BT1)
+        MarcDuino = new MDuinoDomeSlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #endif
     #elif defined (DEDICATED_BODY)    
       #if defined(R2D2)
         MarcDuino = new MDuinoBodyMaster(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #elif defined(CHOPPER)
+        MarcDuino = new MDuinoBodyMasterChoppper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      #elif defined(BT1)
+        MarcDuino = new MDuinoBodyMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #endif
     #endif
   #else
@@ -88,6 +101,8 @@ void setup() {
         MarcDuino = new MDuinoDomeMaster(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #elif defined(CHOPPER)
         MarcDuino = new MDuinoDomeMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      #elif defined(BT1)
+        MarcDuino = new MDuinoDomeMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #endif
       #ifdef INCLUDE_I2C_SLAVE
       Wire.begin(I2C_DOME_MASTER);
@@ -98,6 +113,9 @@ void setup() {
       #if defined(R2D2)
         MarcDuino = new MDuinoDomeSlave(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #elif defined(CHOPPER)
+        //MarcDuino = new MDuinoDomeSlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      #elif defined(BT1)
+        //MarcDuino = new MDuinoDomeSlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #endif
       #ifdef INCLUDE_I2C_SLAVE
       Wire.begin(I2C_DOME_SLAVE);
@@ -109,6 +127,9 @@ void setup() {
       #if defined(R2D2)
         MarcDuino = new MDuinoBodyMaster(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #elif defined(CHOPPER)
+        MarcDuino = new MDuinoBodyMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      #elif defined(BT1)
+        MarcDuino = new MDuinoBodyMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #endif
       #ifdef INCLUDE_I2C_SLAVE
       Wire.begin(I2C_BODY_MASTER);
@@ -121,7 +142,9 @@ void setup() {
       #if defined(R2D2)
         MarcDuino = new MDuinoDomeMaster(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #elif defined(CHOPPER)
-        MarcDuino = new MDuinoDomeMasterChopper(Serial1, Serial2, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MarcDuino = new MDuinoDomeMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+      #elif defined(BT1)
+        MarcDuino = new MDuinoDomeMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
       #endif
       Storage.setType(MDuinoStorage::DomeMaster);    
       #ifdef INCLUDE_I2C_SLAVE

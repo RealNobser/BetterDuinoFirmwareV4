@@ -479,51 +479,6 @@ sequence_t const body_utility_arms_open PROGMEM = //SE30
  };
 //Eebel END
 
-// Steinke BEGIN
-sequence_t const body_panel_use_claws PROGMEM = //SE36
-{
-		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
-		// time	servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
-		//     	DPL		UtlArmU	UtlArmL	LBdyDr	LArm	LArmToolRBdyDr	RArm	RArmTool ChrgBay 
-	 	{SPLIT_WORD(20), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(90), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(90), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(50), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(120), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(250), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP}
-};
-
-sequence_t const body_panel_use_right_claw PROGMEM = //SE37
-{
-		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
-		// time	servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
-		//     	DPL		UtlArmU	UtlArmL	LBdyDr	LArm	LArmToolRBdyDr	RArm	RArmTool ChrgBay 
-	 	{SPLIT_WORD(20), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(150), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(150), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(170), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(250), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
- 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP}
-};
-// Steinke END
-
 sequence_t const body_panel_all_open PROGMEM = //SE51
 {
 		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
@@ -621,4 +576,59 @@ sequence_t cp_dome_arms_wave PROGMEM =
 		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,   _CLS,  	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,    _NP,   _NP,		_NP}
 };
+
+
+/*
+ *****
+ ***** BT-1 Sequences *****
+ *****
+ *
+ * See README.md for Servo Connections
+ */
+
+// Steinke BEGIN
+sequence_t const bt_body_panel_use_claws PROGMEM = //SE36
+{
+		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
+		// time	servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
+		//     	DPL		UtlArmU	UtlArmL	LBdyDr	LArm	LArmToolRBdyDr	RArm	RArmTool ChrgBay 
+	 	{SPLIT_WORD(20), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(90), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(90), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_OPN, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(50), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_OPN, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(120), 	_CLS, 	_CLS, 	_CLS, 	_OPN,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(250), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP}
+};
+
+sequence_t const bt_body_panel_use_right_claw PROGMEM = //SE37
+{
+		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
+		// time	servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
+		//     	DPL		UtlArmU	UtlArmL	LBdyDr	LArm	LArmToolRBdyDr	RArm	RArmTool ChrgBay 
+	 	{SPLIT_WORD(20), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(150), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(150), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_OPN,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(170), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(250), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
+ 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP}
+};
+// Steinke END
+
 #endif  // __PANELSEQUENCES_H__

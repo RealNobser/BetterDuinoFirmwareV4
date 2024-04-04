@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOBODYMASTERCHOPPER_H__
-#define __MARCDUINOBODYMASTERCHOPPER_H__
+#ifndef __MARCDUINODOMEMASTERCHOPPER_H__
+#define __MARCDUINODOMEMASTERCHOPPER_H__
 
 #include <SendOnlySoftwareSerial.h>
 
@@ -11,13 +11,6 @@
  *
  *	Sequences details (see sequence_command, panel sequence matrices defined in panel_sequences.h)
  *
- *	:SE30 Utility Arm open and close sequence
- *	:SE31 All Body Panels open and close sequence
- *	:SE32 All Body Doors open and wiggle close sequence
- *	:SE33 Body - Use Gripper
- *	:SE34 Body - Use Interface Tool
- *	:SE35 Body - Ping Pong Body Doors
- 
  */
 
 class MDuinoDomeMasterChopper : public MDuinoDomeMaster

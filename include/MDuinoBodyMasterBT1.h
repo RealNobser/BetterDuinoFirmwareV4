@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOBODYMASTER_H__
-#define __MARCDUINOBODYMASTER_H__
+#ifndef __MARCDUINOBODYMASTERBT1_H__
+#define __MARCDUINOBODYMASTERBT1_H__
 
 #include <SendOnlySoftwareSerial.h>
 
@@ -17,12 +17,14 @@
  *	:SE33 Body - Use Gripper
  *	:SE34 Body - Use Interface Tool
  *	:SE35 Body - Ping Pong Body Doors
+ *	:SE36 Body - Use Claws
+ *	:SE37 Body - Use right Claw
  */
 
-class MDuinoBodyMaster : public MDuinoDomeMaster
+class MDuinoBodyMasterBT1 : public MDuinoDomeMaster
 {
     public:
-        MDuinoBodyMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift, 
+        MDuinoBodyMasterBT1(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift, 
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
@@ -30,7 +32,7 @@ class MDuinoBodyMaster : public MDuinoDomeMaster
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Body Master"; }
+        virtual const char* getProductName() override { return "MarcDuino Body Master BT-1"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
@@ -38,4 +40,4 @@ class MDuinoBodyMaster : public MDuinoDomeMaster
         
 };
 
-#endif // __MARCDUINOBODYMASTER_H__
+#endif // __MARCDUINOBODYMASTERBT1_H__
