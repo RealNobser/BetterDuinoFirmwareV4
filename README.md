@@ -151,7 +151,8 @@ upload_flags =
 and
 
 ```
-upload_command = avrdude $UPLOAD_FLAGS -U flash:w:$SOURCE:i
+upload_command = avrdude $UPLOAD_FLAGS -U flash:w:$SOURCE:i -U efuse:w:$board_fuses.efuse:m -U hfuse:w:$board_fuses.hfuse:m -U lfuse:w:$board_fuses.lfuse:m
+ 
 ```
 
 ### Compiler defines in include/config.h
