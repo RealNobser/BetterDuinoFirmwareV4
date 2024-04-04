@@ -132,6 +132,28 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 - upload the code (PlatformIO / ATmega328P / General / Upload)
 - ![VSCode Upload](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Upload.png)
 
+If you are using an USBasp based programmer, you will have to alter the file "platformio.ini" to use different upload configuration.
+
+```
+upload_flags =
+    -C
+    ; use "tool-avrdude-megaavr" for the atmelmegaavr platform
+    ${platformio.packages_dir}/tool-avrdude/avrdude.conf
+    -p
+    $BOARD_MCU
+    -P
+    $UPLOAD_PORT
+    -b
+    $UPLOAD_SPEED
+    -c
+    usbasp
+```
+and
+
+```
+upload_command = avrdude $UPLOAD_FLAGS -U flash:w:$SOURCE:i
+```
+
 ### Compiler defines in include/config.h
 Normally you do not need to change the defines, but, for experienced users, some instructions:
 |Define|Function|Remark|Default|
