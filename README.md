@@ -132,7 +132,12 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 - upload the code (PlatformIO / ATmega328P / General / Upload)
 - ![VSCode Upload](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Upload.png)
 
-If you are using an USBasp based programmer, you will have to alter the file "platformio.ini" to use different upload configuration.
+If you are using an USBasp based programmer, you will have to alter the file "platformio.ini" to use a different upload protocol 
+
+```
+upload_protocol = custom
+```
+different upload flags
 
 ```
 upload_flags =
@@ -148,12 +153,15 @@ upload_flags =
     -c
     usbasp
 ```
-and
+and an updated upload command
 
 ```
-upload_command = avrdude $UPLOAD_FLAGS -U flash:w:$SOURCE:i -U efuse:w:$board_fuses.efuse:m -U hfuse:w:$board_fuses.hfuse:m -U lfuse:w:$board_fuses.lfuse:m
- 
+upload_command = avrdude $UPLOAD_FLAGS -U flash:w:$SOURCE:i -F 
 ```
+
+Unfortunately the custom upload protocol requires writing the fuses to be a separate steps, so after having uploaded the firmware (PlatformIO / ATmega328P / General / Upload) you need to write the fuses ( PlatformIO / ATmega328P / Platform / Set Fuses ).
+
+
 
 ### Compiler defines in include/config.h
 Normally you do not need to change the defines, but, for experienced users, some instructions:
