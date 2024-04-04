@@ -89,6 +89,10 @@ void MDuinoBodyMaster::playSequence(const byte SeqNr)
         Sequencer.loadSequence(body_panel_use_claws, SEQ_SIZE(body_panel_use_claws));
         Sequencer.setServoSpeed(MDuinoSequencer::full);
         break;
+    case 37: //Body - Use right claw, no interface arm
+        Sequencer.loadSequence(body_panel_use_right_claw, SEQ_SIZE(body_panel_use_right_claw));
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
+        break;    
     default:
         break;         
     }
