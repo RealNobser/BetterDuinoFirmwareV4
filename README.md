@@ -61,6 +61,9 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Description |
 |--|--|--|
+| 2024-04-05|V1.0.12|Additional BT-1 Sequence|
+| 2024-04-04|V1.0.11|Sound Hotfix|
+| 2024-04-03|V1.0.10|Random Sound fixes, BT-1 Sequence|
 | 2024-03-20|V1.0.9|EEPROM protection, Brownout Setting|
 | 2024-03-20|V1.0.8|Added Dome Lift integration|
 | 2024-03-17|V1.0.7|removed R2Touch Keepalives, fixed DFMini command sequences|
