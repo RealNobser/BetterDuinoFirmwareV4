@@ -135,37 +135,6 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 - upload the code (PlatformIO / ATmega328P / General / Upload)
 - ![VSCode Upload](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/Upload.png)
 
-If you are using an USBasp based programmer, you will have to alter the file "platformio.ini" to use a different upload protocol 
-
-```
-upload_protocol = custom
-```
-different upload flags
-
-```
-upload_flags =
-    -C
-    ; use "tool-avrdude-megaavr" for the atmelmegaavr platform
-    ${platformio.packages_dir}/tool-avrdude/avrdude.conf
-    -p
-    $BOARD_MCU
-    -P
-    $UPLOAD_PORT
-    -b
-    $UPLOAD_SPEED
-    -c
-    usbasp
-```
-and an updated upload command
-
-```
-upload_command = avrdude $UPLOAD_FLAGS -U flash:w:$SOURCE:i -F 
-```
-
-Unfortunately the custom upload protocol requires writing the fuses to be a separate steps, so after having uploaded the firmware (PlatformIO / ATmega328P / General / Upload) you need to write the fuses ( PlatformIO / ATmega328P / Platform / Set Fuses ).
-
-
-
 ### Compiler defines in include/config.h
 Normally you do not need to change the defines, but, for experienced users, some instructions:
 |Define|Function|Remark|Default|
@@ -183,27 +152,6 @@ Normally you do not need to change the defines, but, for experienced users, some
 ...more to follow...
 
 ***Do not touch any other of the defines.***
-
-Assigning Roles
-=================
-The same version of BetterDuino firmware will be used for MarcDuinos Master, Slave and Body Master. For the newly flashed MarcDuinos to know their role, we have to assign them to each one.
-
-To do so, you will have to establish a Serial Monitor connection to your new flashed MarcDuino. You could you the Serial Monitor inbuild into ArduinoIDE or add the [Serial Monitor Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-serial-monitor) to Visual Studio Code.
-
-You will have to set the baud-rate to 9600 to be able to establish a communication.
-
-When connecting via the Serial Terminal, you should be welcomed with a message similar to 
-
-![Welcome Message](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/boot_message.png)
-
-To assign the needed role to your MarcDuino, you need to enter one of the following commands, depending on the role that you want this MarcDuino to have:
-
-* `#MD00` for MarcDuino Dome Master
-* `#MD01` for MarcDuino Dome Slave
-* `#MD02` for MarcDuino Body Master
-
-MarcDuino will reboot immediately after setup and start up in new mode.
-
 
 Connecting Servos R2D2 (common way)
 =================
