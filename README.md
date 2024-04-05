@@ -135,7 +135,7 @@ To assign the needed role to your MarcDuino, you need to enter one of the follow
 
 MarcDuino will reboot immediately after setup and start up in new mode.
 
-**Hint:** Default config after factory reset is MarcDuino Dome Master. A board connected to the slave port of the MarcDuino Master will automatically be configured as Dome Slave. A Body Master has either to be configured manually or by an additional startup command "#MD02", send only to the Body Controller.
+**Hint:** Default config after factory reset is MarcDuino Dome Master. A board connected to the slave port of the MarcDuino Master will automatically be configured as Dome Slave. A Body Master has either to be configured manually or by an additional startup command "#MD02", sent only to the Body Controller.
 
 ### Development Environment
 * Visual Studio Code: https://code.visualstudio.com/download
