@@ -116,6 +116,27 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 	* GUI for avrdude: https://blog.zakkemble.net/avrdudess-a-gui-for-avrdude/
 	* some instructions: https://forum.arduino.cc/t/the-simplest-way-to-upload-a-compiled-hex-file-without-the-ide/401996
 
+### Assigning Roles
+The same version of BetterDuino firmware will be used for MarcDuinos Master, Slave and Body Master. For the newly flashed MarcDuinos to know their role, we have to assign them to each one.
+
+To do so, you will have to establish a Serial Monitor connection to your new flashed MarcDuino. You could you the Serial Monitor inbuild into ArduinoIDE or add the [Serial Monitor Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-serial-monitor) to Visual Studio Code.
+
+You will have to set the baud-rate to 9600 to be able to establish a communication.
+
+When connecting via the Serial Terminal, you should be welcomed with a message similar to 
+
+![Welcome Message](https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/assets/boot_message.png)
+
+To assign the needed role to your MarcDuino, you need to enter one of the following commands, depending on the role that you want this MarcDuino to have:
+
+* `#MD00` for MarcDuino Dome Master
+* `#MD01` for MarcDuino Dome Slave
+* `#MD02` for MarcDuino Body Master
+
+MarcDuino will reboot immediately after setup and start up in new mode.
+
+**Hint:** Default config after factory reset is MarcDuino Dome Master. A board connected to the slave port of the MarcDuino Master will automatically be configured as Dome Slave. A Body Master has either to be configured manually or by an additional startup command "#MD02", send only to the Body Controller.
+
 ### Development Environment
 * Visual Studio Code: https://code.visualstudio.com/download
 * PlatformIO Extension: https://platformio.org/install/ide?install=vscode
