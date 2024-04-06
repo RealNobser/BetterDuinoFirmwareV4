@@ -28,8 +28,12 @@ void MDuinoDomeMasterBT1::playSequence(const byte SeqNr)
     {
     case 0: // CLOSE ALL PANELS
         //Sequencer.loadSequence(bt_dome_panel_init, SEQ_SIZE(cp_dome_panel_init));
-        Sequencer.setServoSpeed(MDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::fast);
         break;
+    case 38: // Fire dome rockets
+        Sequencer.loadSequence(bt_dome_danger_fire, SEQ_SIZE(bt_dome_danger_fire));
+        Sequencer.setServoSpeed(MDuinoSequencer::fast);
+        break;           
     default:
         break;         
     }
@@ -46,14 +50,15 @@ void MDuinoDomeMasterBT1::playSequenceAddons(const byte SeqNr)
     Sequencer.addSequenceCompletionCallback(sequenceCallbackBuzz);
 
     // No speicals besides panel movement
-    // Just one at the moment
-    /*
     switch (SeqNr)
     {
+    case 38: // Fire dome rockets
+        parseCommand("@0T5");       // Scream Display
+        parseCommand("*F004");      // HP Flicker for 4 seconds
+        break;           
         default:
         break;
     }
-    */
 
     // Finally GOOOOO
     Sequencer.startSequence();

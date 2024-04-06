@@ -11,6 +11,7 @@
  *
  *	Sequences details (see sequence_command, panel sequence matrices defined in panel_sequences.h)
  *
+ *	:SE38 Dome - Fire Rockets
  */
 
 class MDuinoDomeMasterBT1 : public MDuinoDomeMaster
