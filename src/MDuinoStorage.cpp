@@ -256,19 +256,6 @@ void MDuinoStorage::setHoloLightHighActive(const byte HoloNr, const bool HighAct
         EEPROM.put(ADDR_HOLOLIGHTBASE+HoloNr, HighActive);
 }
 
-bool MDuinoStorage::getAdjustmentMode()
-{
-    return (EEPROM.read(ADDR_ADJUSTMENT) == 0x01);
-}
-
-void MDuinoStorage::setAdjustmentMode(const bool on)
-{
-    if (on)
-        EEPROM.write(ADDR_ADJUSTMENT, 0x01);
-    else
-        EEPROM.write(ADDR_ADJUSTMENT, 0x00);
-}
-
 #ifdef DEBUG_MSG
 void MDuinoStorage::dumpToSerial(const byte Address)
 {

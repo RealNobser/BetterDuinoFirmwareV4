@@ -12,10 +12,10 @@ class Panel
         void attach();
         void detach();
 
-        void open(const int speed=-1);
-        void close(const int speed=-1);
-        void move(const word angle, const int speed=-1);
-        void move(const byte percent, const int speed=-1);
+        void open(const int speed = -1);
+        void close(const int speed = -1);
+        void move(const word angle, const int speed = -1);
+        void move(const byte percent, const int speed = -1);
         void lock(const bool lock) { locked = lock; }
         
         void setEndPositions(const word OpenPos, const word ClosedPos);

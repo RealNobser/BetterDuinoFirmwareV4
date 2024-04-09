@@ -587,6 +587,14 @@ sequence_t cp_dome_arms_wave PROGMEM =
  */
 
 // Steinke BEGIN
+sequence_t bt_dome_panel_init PROGMEM = //SE00
+{
+		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
+		// time	servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
+		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	50, 	50,		_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP}
+};
+
 sequence_t const bt_body_panel_use_claws PROGMEM = //SE36
 {
 		//  ---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 

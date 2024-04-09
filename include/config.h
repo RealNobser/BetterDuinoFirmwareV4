@@ -2,12 +2,6 @@
 #define __CONFIG_H__
 
 
-// Checking size .pio/build/ATmega328P/firmware.elf
-// Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
-// RAM:   [======    ]  61.5% (used 1260 bytes from 2048 bytes)
-// Flash: [==========]  97.9% (used 32084 bytes from 32768 bytes)
-// Building .pio/build/ATmega328P/firmware.hex
-
 //
 // Supported Astromechs
 // - R2D2 
@@ -20,25 +14,32 @@
 // #define CHOPPER
 // #define BT1
 
-// #define DEBUG_MSG                    // Additional Log Messages to Serial
-#define INCLUDE_BODY_MASTER             // Uncomment to include Body Controller in combined firmware
-//#define INCLUDE_CLASSIC_I2C_SUPPORT     // Uncomment to include classic Seriial to I2C support.
-#define INCLUDE_I2C_SLAVE             // Uncommend for new I2C slave mode
-//#define INCLUDE_HOLO_RGB              // Uncomment for NeoPixel-Holo (needs dedicated Slave Firmware!) 
-//#define SEPARATE_DOMELIFT               // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
+// #define DEBUG_MSG                        // Additional Log Messages to Serial
+
+#define INCLUDE_DOME_MASTER                 // Uncomment to include Dome Master Controller in combined firmware
+#define INCLUDE_DOME_SLAVE                  // Uncomment to include Dome Slave Controller in combined firmware
+#define INCLUDE_BODY_MASTER                 // Uncomment to include Body Master Controller in combined firmware
+#define INCLUDE_BODY_SLAVE                  // Uncomment to include Body Slave Controller in combined firmware
+
+// #define INCLUDE_CLASSIC_I2C_SUPPORT      // Uncomment to include classic Serial to I2C support (excludes body master built)
+#define INCLUDE_I2C_SLAVE                   // Uncommend for new I2C slave mode
+// #define INCLUDE_HOLO_RGB                 // Uncomment for NeoPixel-Holo (excludes body master built) 
+// #define SEPARATE_DOMELIFT                // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
 
 #ifdef SEPARATE_DOMELIFT
-#define SERIAL_LIFT_TYPE SendOnlySoftwareSerial
+    #define SERIAL_LIFT_TYPE SendOnlySoftwareSerial
 #else
-#define SERIAL_LIFT_TYPE HardwareSerial
+    #define SERIAL_LIFT_TYPE HardwareSerial
 #endif
 
 #ifdef INCLUDE_CLASSIC_I2C_SUPPORT
     #undef INCLUDE_BODY_MASTER
+    #undef INCLUDE_BODY_SLAVE
 #endif
 
 #ifdef INCLUDE_HOLO_RGB
     #undef INCLUDE_BODY_MASTER
+    #undef INCLUDE_BODY_SLAVE
     //#define NEO_JEWEL_RGBW
     #ifdef NEO_JEWEL_RGBW
         #define HP_NEO_TYPE (NEO_GRBW + NEO_KHZ800)
@@ -46,12 +47,6 @@
         #define HP_NEO_TYPE (NEO_GRB + NEO_KHZ800)
     #endif
 #endif
-
-//  #define DEDICATED_FIRMWARE   // Separate Hex Files for Master/Slave/Body
-// Choose one:
-// #define DEDICATED_MASTER
-// #define DEDICATED_SLAVE
-// #define DEDICATED_BODY
 
 #define SERIAL_BAUD         9600
 #define SERIAL_SLAVE_BAUD   9600
@@ -159,5 +154,19 @@
 #define P_CHRG_BAY_DR    13
 #define P_RFU            7
 #define I2C_BODY_MASTER 52
+
+// Body Slave
+//#define P_DPL            2
+//#define P_UTIL_ARM_U     3 
+//#define P_UTIL_ARM_L     4
+//#define P_LEFT_BDY_DR    5
+//#define P_LEFT_ARM       6
+//#define P_LEFT_ARM_TOOL  9
+//#define P_RIGHT_BDY_DR   10
+//#define P_RIGHT_ARM      11
+//#define P_RIGHT_ARM_TOOL 12
+//#define P_CHRG_BAY_DR    13
+//#define P_RFU            7
+#define I2C_BODY_SLAVE 53
 
 #endif // __CONFIG_H__

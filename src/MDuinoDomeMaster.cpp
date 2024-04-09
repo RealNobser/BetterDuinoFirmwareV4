@@ -88,7 +88,7 @@ void MDuinoDomeMaster::init()
 
     parseCommand(":SE00");              // Close Panels
     Serial_Slave.print(F("#MD01\r"));   // Force Slave board to be in Slave Mode
-    }
+}
 
 void MDuinoDomeMaster::run()
 {

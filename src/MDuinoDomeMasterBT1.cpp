@@ -27,7 +27,7 @@ void MDuinoDomeMasterBT1::playSequence(const byte SeqNr)
     switch (SeqNr)
     {
     case 0: // CLOSE ALL PANELS
-        //Sequencer.loadSequence(bt_dome_panel_init, SEQ_SIZE(cp_dome_panel_init));
+        Sequencer.loadSequence(bt_dome_panel_init, SEQ_SIZE(bt_dome_panel_init));
         Sequencer.setServoSpeed(MDuinoSequencer::fast);
         break;
     case 38: // Fire dome rockets

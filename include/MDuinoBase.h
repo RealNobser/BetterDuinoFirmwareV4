@@ -44,14 +44,12 @@ class MDuinoBase
         VarSpeedServo& Servo10;
         VarSpeedServo& Servo11;
 
-        virtual void checkEEPROM(const bool factoryReset = false);
-
         void toggleHeartBeat();
 
         bool separateCommand(const char* command, char* cmd, unsigned int & param_num, unsigned int & param_num_ext);
         void processSetupCommand(const char* command);
 
-        void adjustServo(const byte servo, const word value);
+        virtual void checkEEPROM(const bool factoryReset = false);
 
         void(* resetFunc) (void) = 0;
 };

@@ -297,14 +297,12 @@ void MDuinoBase::processSetupCommand(const char* command)
         Storage.getServoPositions(param_num, OpenPos, ClosedPos);
         OpenPos = param_num_ext;
         Storage.setServoPositions(param_num, OpenPos, ClosedPos);
-        adjustServo(param_num, param_num_ext);
     }
     else if (strcmp(cmd, "SC") == 0)       // Set Servo Degrees/Microseconds for Panel Close,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
         Storage.getServoPositions(param_num, OpenPos, ClosedPos);
         ClosedPos = param_num_ext;
         Storage.setServoPositions(param_num, OpenPos, ClosedPos);
-        adjustServo(param_num, param_num_ext);
     }
     else if (strcmp(cmd, "SP") == 0)       // Set Servo Speed (0-255)
     {
@@ -424,10 +422,6 @@ void MDuinoBase::processSetupCommand(const char* command)
         delay(500);
         resetFunc();
     }
-    else if (strcmp(cmd, "AD") == 0)             // Activate Adjustment Mode
-    {
-        Storage.setAdjustmentMode(param_num == 0x01);
-    }
     else
     {
         #ifdef DEBUG_MSG
@@ -438,18 +432,6 @@ void MDuinoBase::processSetupCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("valid %s\r\n"), cmd);
     #endif
-}
-
-void MDuinoBase::adjustServo(const byte servo, const word value)
-{
-    if (Storage.getAdjustmentMode())    // TODO: use new move command later
-    {
-        char ServoCommand[10];
-        memset(ServoCommand, 0x00, 10);
-        sprintf(ServoCommand, ":MV%02u%04u", servo, value);
-        delay(250);
-        parseCommand(ServoCommand);
-    }
 }
 
 void MDuinoBase::processI2CCommand(const char* command)

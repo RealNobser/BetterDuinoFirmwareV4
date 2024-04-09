@@ -26,7 +26,7 @@
 *  0x0a     MinRandomPause in seconds (default 6s)
 *  0x0b     MaxRandomPause in seconds (default 12s)
 *  0x0c     
-*  0x0d     Set Adjustment Mode (panels will move to new position after individual Open/Mid/Closed Settings are changed)
+*  0x0d
 
 *  0x10
 *  0x11     Max Sounds Bank 1 (1-25)
@@ -157,7 +157,6 @@
 
 #define ADDR_MINRANDOMPAUSE     0x0a
 #define ADDR_MAXRANDOMPAUSE     0x0b
-#define ADDR_ADJUSTMENT         0x0d
 
 #define ADDR_MAXSONGSBASE       0x10
 
@@ -177,10 +176,11 @@ class MDuinoStorage
     public:
         enum MDuinoType
         {
-            DomeMaster          = 0,
-            DomeSlave           = 1,
-            BodyMaster          = 2,
-            UnknownMarcDuino    = 3
+            DomeMaster = 0,
+            DomeSlave,
+            BodyMaster,
+            BodySlave,
+            UnknownMarcDuino,
         };
 
         enum MDuinoMP3PlayerType
@@ -190,6 +190,7 @@ class MDuinoStorage
             Vocalizer       = 2,
             UnknownPlayer   = 3
         };
+        
     public:
         MDuinoStorage();
 
@@ -243,9 +244,6 @@ class MDuinoStorage
 
         byte getHoloLEDs(const byte HoloNr);
         void setHoloLEDs(const byte HoloNr, const byte LEDs);
-
-        bool getAdjustmentMode();
-        void setAdjustmentMode(const bool on);
 
         #ifdef DEBUG_MSG
         void dumpToSerial(const byte Address);
