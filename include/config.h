@@ -1,6 +1,13 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
+
+// Checking size .pio/build/ATmega328P/firmware.elf
+// Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+// RAM:   [======    ]  61.5% (used 1260 bytes from 2048 bytes)
+// Flash: [==========]  97.9% (used 32084 bytes from 32768 bytes)
+// Building .pio/build/ATmega328P/firmware.hex
+
 //
 // Supported Astromechs
 // - R2D2 
