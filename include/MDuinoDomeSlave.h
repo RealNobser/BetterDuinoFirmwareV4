@@ -33,8 +33,8 @@ class MDuinoDomeSlave : public MDuinoDome
         static const byte MinHolo  = 1;    // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
         static const byte MaxHolo  = 3;    // Slave Board uses 3 Holos with 2 Servos and one Light GPIO each
 
-        Holo* Holos[MaxHolo + 1];       // +1 for index 0 dummy
         Panel* Panels[MaxPanel + 1];    // +1 for index 0 dummy
+        Holo* Holos[MaxHolo + 1];       // +1 for index 0 dummy
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);

@@ -191,6 +191,9 @@ void MDuinoDomeMaster::setSoundIntervall(const unsigned long Intervall)
 */
 void MDuinoDomeMaster::parseCommand(const char* command)
 {
+    #ifdef DEBUG_MSG
+    Serial.printf(F("Command(Master): %s\r\n"), command);
+    #endif
     switch (command[0])
     {
     case ':':
@@ -230,20 +233,7 @@ void MDuinoDomeMaster::parseCommand(const char* command)
     }
     Serial_Slave.flush();
 }
-/*
- * Panel commands
- * They must follow the syntax ":CCxx\r" where CC=command , xx= two digit decimal number, \r is carriage return
- * The following commands are recognized in v1.4 (in process_command)
- * :SExx launches sequences, see below
- * :OPxx open panel number xx=01-13. If xx=00, opens all panels
- * 		OP14= open top panels
- * 		OP15= open bottom panels
- * :CLxx close panel number xx=01-13, removes from RC if it was, stops servo. If xx=00, all panels, slow close.
- * :RCxx places panel xx=01-11 under RC input control. If xx=00, all panels placed on RC.
- * :STxx buzz kill/soft hold: removes panel from RC control AND shuts servo off to eliminate buzz.
- * 		xx=00 all panels off RC servos off.
- * :HDxx RC hold: removes from RC, but does not turn servo off, keeps at last position. xx=00 all panels hold.
- */
+
 void MDuinoDomeMaster::processPanelCommand(const char* command)
 {
     // Sequence and Panel Commands will be processed
@@ -261,8 +251,8 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     if (!separateCommand(command, cmd, param_num, param_num_ext))
         return;
 
-    // Address Slave Panels
-    if ((param_num == 12) || (param_num == 13))   
+    // Address Slave Panels (12+13) + Addon Body Slave Servos (16-24)
+    if ((param_num == 12) || (param_num == 13) || ((param_num >= 16) && (param_num <= 24)))   
     {
         if (strcmp(cmd, "SE") != 0)
         { 

@@ -2,7 +2,8 @@
 #define __CONFIG_H__
 
 // Comment the line below when you are really really really really sure, what you are doin!
-#error NOT A FINAL RELEASE! Please choose a official release instead of the main branch! -> https://github.com/RealNobser/BetterDuinoFirmwareV4/releases
+#error NOT A FINAL RELEASE! Please choose a official release instead of the main branch!
+// ->>> https://github.com/RealNobser/BetterDuinoFirmwareV4/releases
 
 //
 // Supported Astromechs

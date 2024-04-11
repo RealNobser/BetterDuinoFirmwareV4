@@ -21,14 +21,14 @@ MDuinoDomeSlave::MDuinoDomeSlave(SendOnlySoftwareSerial& Serial_Magic, SendOnlyS
     while(!Serial_Lift);
     #endif
 
-    for(byte i=0; i <= MaxHolo; ++i)
-    {
-        Holos[i] = nullptr;
-    }   
-
     for(byte i=0; i <= MaxPanel; ++i)
     {
         Panels[i] = nullptr;
+    }   
+
+    for(byte i=0; i <= MaxHolo; ++i)
+    {
+        Holos[i] = nullptr;
     }   
 }
 
@@ -55,8 +55,8 @@ void MDuinoDomeSlave::init()
     Panels[12] = new Panel(Servo10, P_SERVO_12);
     Panels[13] = new Panel(Servo11, P_SERVO_13);
 
-    adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
     adjustPanelEndPositions(Panels, MinPanel, MaxPanel);
+    adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
 
     Sequencer.setPanels(Panels, MaxPanel+1);
     Sequencer.setPanelRange(MinPanel, MaxPanel);
@@ -116,7 +116,7 @@ void MDuinoDomeSlave::run()
 void MDuinoDomeSlave::parseCommand(const char* command)
 {
     #ifdef DEBUG_MSG
-    Serial.printf(F("Command(Salve): %s\r\n"), command);
+    Serial.printf(F("Command(Slave): %s\r\n"), command);
     #endif
 
     switch (command[0])
