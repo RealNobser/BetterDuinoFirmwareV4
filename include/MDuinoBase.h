@@ -38,9 +38,6 @@ class MDuinoBase
         byte BufferIndex = 0;
         byte WireIndex = 0;
 
-        MDuinoStorage    Storage;
-        MDuinoSequencer  Sequencer;
-
         VarSpeedServo& Servo1;
         VarSpeedServo& Servo2;
         VarSpeedServo& Servo3;
@@ -52,6 +49,9 @@ class MDuinoBase
         VarSpeedServo& Servo9;
         VarSpeedServo& Servo10;
         VarSpeedServo& Servo11;
+
+        MDuinoStorage    Storage;
+        MDuinoSequencer  Sequencer;
 
     protected:
         virtual void playSequence(const byte SeqNr) = 0;

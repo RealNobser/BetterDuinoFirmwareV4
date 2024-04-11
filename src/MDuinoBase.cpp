@@ -230,73 +230,6 @@ bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & 
 
     return true;
 }
-/*
- *	Setup Commands
- * * 
- * 
- * ** Servo Control
- * 
- * #SOxxdddd    - Set Servo xx Degrees/Microseconds for Panel Open,  dddd=0000-0180  deg, dddd > 0544 Microseconds 
- * #SCxxdddd    - Set Servo xx Degrees/Microseconds for Panel Closed dddd=0000-0180 deg, dddd > 0544 Microseconds 
- * #SPxxddd     - Set Servo xx Speed, ddd=0-255
- * #SWxx        - Swap Panel xx Open<->Close value. Don’t use as the classic “reverse servo” command. Don’t call it at every boot, just use it in adjustment process.
- * 
- * ** Startup Sound Controls
- * #SSxxx       - Set startup sound #
- *      #SS000  : Disable Startup Sound, and remove startup sound delay for fast boot of R2
- *      #SSxxx  : Set Startup Sound in file xxx
- * 
- * #SQxx        - Disable Random Sound
- *      #SQ00   : Random Sound on
- *      #SQ01   : No Random Sound + Volume off
- *      #SQ02   : No Random Sound
- * 
- * #SXxx        - Set Max Random Pause in seconds - Maximum timespan between two random sounds
- * #SYxx        - Set Min Random Pause in seconds - Minimum timespan between two random sounds
- * 
- * ** Panel Sequencer Controls
- * #STxxx       - Setup Delay time between Master and Slave Panel Sequence. Use this if the Slave panels are starting too soon. Values up to 255 are supported.  Values are in ms.
- * 
- * ** System Configuration and Management
- * #MDxx        - Set MarcDuino Mode
- *      #MD00   : MarcDuino Dome Master
- *      #MD01   : MarcDuino Dome Slave
- *      #MD02   : MarcDuino Body Master
- * 
- * MarcDuino will reboot immediately after setup and start up in new mode.
- * 
- * #MPxx        - Set MP3-Player Type
- *      #MP00   : SparkFun MP3 Trigger
- *      #MP01   : DFPlayer
- *      #MP02   : Vocalizer
- * 
- * #MSxyy       - Set maximum sounds per soundbank. x=1-9 (Soundbank), y=0-25 (max. Sounds)
- * 
- * #HLxy        - Set HoloLight x to High Active (y=1) or Low Active (y=0). x=0 → All Holo Lights
- * #HNxy        - Set HoloLight x to normal LED (y=0) or NeoPixel (y=1). x=0 → All Holo Lights
- * #HXxxyy      - Set HoloLight xx NeoPixels to yy LEDs
- * 
- * #HOxxdddd    - Set Holo HServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds 
- * #HCxxdddd    - Set Holo HServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds 
- * #HPxxddd     - Set Holo HServo Speed, ddd=0-255
- * 
- * #VOxxdddd    - Set Holo VServo Degrees/Microseconds Max, dddd=0000-0180 deg, dddd > 0544 Microseconds 
- * #VCxxdddd    - Set Holo VServo Degrees/Microseconds Min, dddd=0000-0180 deg, dddd > 0544 Microseconds 
- * #VPxxddd     - Set Holo VServo Speed, ddd=0-255
- * 
- * #CHxx        - Center Holo Nr xx
- * 
- * #DUxx        - Dump EEPORM to serial
- *      #DUxx   : value at address xx
- *      #DUMP   : dump complete EEPROM content
- * 
- * #RSET        - Restart MarcDuino
- * 
- * #ADxx        - Adjustment Mode: When setting up individual Servo settings, servo will positioned immediately
- *      #AD00   : Adjustment Mode Off
- *      #AD01   : Adjustment Mode On
- * 
- */
 
 void MDuinoBase::processSetupCommand(const char* command)
 {
@@ -429,7 +362,8 @@ void MDuinoBase::processSetupCommand(const char* command)
             Storage.setType(MDuinoStorage::DomeSlave);
         else if (param_num == 2)
             Storage.setType(MDuinoStorage::BodyMaster);
-
+        else if (param_num == 3)
+            Storage.setType(MDuinoStorage::BodySlave);
         delay(500);
         resetFunc();
     }

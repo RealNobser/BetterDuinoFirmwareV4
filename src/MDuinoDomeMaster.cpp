@@ -86,8 +86,7 @@ void MDuinoDomeMaster::init()
             RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
     }
 
-    parseCommand(":SE00");              // Close Panels
-    Serial_Slave.print(F("#MD01\r"));   // Force Slave board to be in Slave Mode
+    parseCommand(":SE00");              // Init Panels
 }
 
 void MDuinoDomeMaster::run()

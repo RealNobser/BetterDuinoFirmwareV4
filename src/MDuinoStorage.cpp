@@ -24,7 +24,7 @@ MDuinoStorage::MDuinoType MDuinoStorage::getType()
 {
     uint8_t value = EEPROM.read(ADDR_MARCDUINOTYPE);
 
-    if (value > MDuinoType::UnknownMarcDuino)
+    if (value >= MDuinoType::UnknownMarcDuino)
         return MDuinoType::UnknownMarcDuino;
     else
         return (MDuinoType)value;

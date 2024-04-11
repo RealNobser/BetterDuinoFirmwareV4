@@ -61,7 +61,7 @@ void MDuinoDomeSlave::init()
     Sequencer.setPanels(Panels, MaxPanel+1);
     Sequencer.setPanelRange(MinPanel, MaxPanel);
 
-    parseCommand(":SE00");    // Close Panels
+    parseCommand(":SE00");              // Init Panels
 }
 
 void MDuinoDomeSlave::run()

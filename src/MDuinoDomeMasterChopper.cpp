@@ -12,6 +12,7 @@ MDuinoDomeMasterChopper::MDuinoDomeMasterChopper(SendOnlySoftwareSerial& Serial_
 void MDuinoDomeMasterChopper::init()
 {
     MDuinoDomeMaster::init();
+    Serial_Slave.print(F("#MD01\r"));   // Force Slave board to be in Dome Slave Mode
 }
 
 void MDuinoDomeMasterChopper::run()

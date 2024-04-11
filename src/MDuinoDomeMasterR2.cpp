@@ -12,6 +12,7 @@ MDuinoDomeMasterR2::MDuinoDomeMasterR2(SendOnlySoftwareSerial& Serial_Slave, Sen
 void MDuinoDomeMasterR2::init()
 {
     MDuinoDomeMaster::init();
+    Serial_Slave.print(F("#MD01\r"));   // Force Slave board to be in Dome Slave Mode
 }
 
 void MDuinoDomeMasterR2::run()

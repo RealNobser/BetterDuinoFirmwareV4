@@ -12,6 +12,7 @@ MDuinoBodyMasterChopper::MDuinoBodyMasterChopper(SendOnlySoftwareSerial& Serial_
 void MDuinoBodyMasterChopper::init()
 {
     MDuinoDomeMasterChopper::init();
+    Serial_Slave.print(F("#MD03\r"));   // Force Slave board to be in Body Slave Mode
 }
 
 void MDuinoBodyMasterChopper::run()
