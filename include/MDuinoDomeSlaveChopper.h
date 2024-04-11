@@ -7,9 +7,7 @@
 
 /** Command implementation
  * 
- *  SAME AS DOME SLAVE, but additional sequences
- *
- *	Sequences details (see sequence_command, panel sequence matrices defined in panel_sequences.h)
+ * 	Sequences details (see sequence_command, panel sequence matrices defined in panel_sequences.h)
  *
  */
 
@@ -24,11 +22,11 @@ class MDuinoDomeSlaveChopper : public MDuinoDomeSlave
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Dome Slave Chopper"; }
+        virtual const char* getProductName() override { return "MarcDuino Dome Slave (C1-10P)"; }
 
     protected:
-        // void playSequence(const byte SeqNr) override;
-        // void playSequenceAddons(const byte SeqNr) override;
+        void playSequence(const byte SeqNr) override;
+        void playSequenceAddons(const byte SeqNr) override;
         
 };
 

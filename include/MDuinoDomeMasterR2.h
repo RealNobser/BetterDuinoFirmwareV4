@@ -1,22 +1,21 @@
-#ifndef __MARCDUINOBODYMASTERCHOPPER_H__
-#define __MARCDUINOBODYMASTERCHOPPER_H__
+#ifndef __MARCDUINODOMEMASTERR2_H__
+#define __MARCDUINODOMEMASTERR2_H__
 
 #include <SendOnlySoftwareSerial.h>
 
-#include "MDuinoDomeMasterChopper.h"
+#include "MDuinoDomeMaster.h"
 
 /** Command implementation
- * 
- *  SAME AS DOME MASTER, but additional sequences
  *
  *	Sequences details (see sequence_command, panel sequence matrices defined in panel_sequences.h)
  *
+ * 
  */
 
-class MDuinoBodyMasterChopper : public MDuinoDomeMasterChopper
+class MDuinoDomeMasterR2 : public MDuinoDomeMaster
 {
     public:
-        MDuinoBodyMasterChopper(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift, 
+        MDuinoDomeMasterR2(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
@@ -24,7 +23,7 @@ class MDuinoBodyMasterChopper : public MDuinoDomeMasterChopper
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Body Master (C1-10P)"; }
+        virtual const char* getProductName() override { return "MarcDuino Dome Master (R2-D2)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
@@ -32,4 +31,4 @@ class MDuinoBodyMasterChopper : public MDuinoDomeMasterChopper
         
 };
 
-#endif // __MARCDUINOBODYMASTERCHOPPER_H__
+#endif  // __MARCDUINOBODYMASTERCHOPPER_H__

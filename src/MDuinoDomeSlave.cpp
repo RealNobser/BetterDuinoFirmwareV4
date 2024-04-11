@@ -552,13 +552,6 @@ void MDuinoDomeSlave::processExpansionCommand(const char* command)
     Serial_Magic.printf(F("%s\r"), command+1);    // stripped
 }
 
-void MDuinoDomeSlave::playSequenceAddons(const byte SeqNr)
-{
-    #ifdef DEBUG_MSG
-    Serial.printf(F("PlaySequenceAddons(Slave): %i\r\n"), SeqNr);
-    #endif
-}
-
 
 void MDuinoDomeSlave::HolosOn(const byte HoloNr)
 {
@@ -575,7 +568,7 @@ void MDuinoDomeSlave::HolosOn(const byte HoloNr)
 }
 
 #ifdef INCLUDE_HOLO_RGB
-void MDuinoDomeSlave::HolosOn(const byte HoloNr, const byte red, const byte green, const byte blue, const byte bright)
+void MDuinoDomeSlaveR2::HolosOn(const byte HoloNr, const byte red, const byte green, const byte blue, const byte bright)
 {
     if (HoloNr > (MAX_MARCDUINOHOLOS + 1)) // Parameter = 4
         return;

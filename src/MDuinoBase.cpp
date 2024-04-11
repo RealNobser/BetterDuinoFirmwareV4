@@ -5,13 +5,17 @@
 MDuinoBase::MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                              VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11) :
     Servo1(Servo1), Servo2(Servo2), Servo3(Servo3), Servo4(Servo4), Servo5(Servo5), Servo6(Servo6),
-    Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11)
+    Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11),
+    Sequencer(this)
 {
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
     memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
 
     HeartBeatMillis     = millis();
     HeartBeatIntervall  = HEARTBEAT_MILLIS;
+
+    ServoBuzzMillis     = millis();
+    ServoBuzzIntervall  = SERVO_BUZZ_MILLIS;    // TODO Make EEPROM setting
 }
 
 void MDuinoBase::init()
@@ -23,14 +27,24 @@ void MDuinoBase::init()
     pinMode(P_LED2, OUTPUT);
     digitalWrite(P_LED2, HeartBeatStatus);
 
+    // AUX1 Port
+    #ifndef SEPARATE_DOMELIFT
+    pinMode(P_AUX1, OUTPUT);
+    digitalWrite(P_AUX1, LOW);
+    #endif
+
     memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
     memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
+
+    Sequencer.init();
 
     checkEEPROM();
 }
 
 void MDuinoBase::run()
 {
+    Sequencer.run();
+
     // Read Serial
     if (Serial.available())
     {
@@ -54,6 +68,18 @@ void MDuinoBase::run()
         toggleHeartBeat();
         HeartBeatMillis = millis();
     }
+
+    // AUX1
+    #ifndef SEPARATE_DOMELIFT
+    if ((AUX1Duration != 0) && (AUX1Duration != 99))
+    {
+        if ((millis() - AUX1Millis) > AUX1Duration)
+        {
+            digitalWrite(P_AUX1, LOW);
+            AUX1Duration = 0;
+        }
+    }
+    #endif
 
     // I2C
     #ifdef INCLUDE_I2C_SLAVE
@@ -137,6 +163,38 @@ void MDuinoBase::toggleHeartBeat()
       HeartBeatStatus = LOW;
 
     digitalWrite(P_LED2, HeartBeatStatus);
+}
+
+void MDuinoBase::resetServoBuzz()
+{
+    ServoBuzzIntervall = SERVO_BUZZ_MILLIS;
+}
+
+void MDuinoBase::sequenceCallbackBuzz(MDuinoBase* object)
+{
+    object->resetServoBuzz();
+}
+
+void MDuinoBase::AUX1(const unsigned int Duration)
+{
+    #ifndef SEPARATE_DOMELIFT
+    if (Duration == 0)
+    {
+        AUX1Duration = 0;
+        digitalWrite(P_AUX1, LOW);
+    } 
+    else if (Duration == 99)
+    {
+        AUX1Duration = 0;
+        digitalWrite(P_AUX1, HIGH);
+    }
+    else
+    {
+        AUX1Millis = millis();
+        AUX1Duration = Duration*1000;
+        digitalWrite(P_AUX1, HIGH);
+    }
+    #endif
 }
 
 bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & param_num, unsigned int & param_num_ext)

@@ -1,25 +1,25 @@
-#include "MDuinoBodyMaster.h"
+#include "MDuinoBodyMasterR2.h"
 #include "PanelSequences.h"
 
-MDuinoBodyMaster::MDuinoBodyMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift,
+MDuinoBodyMasterR2::MDuinoBodyMasterR2(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11):
-    MDuinoDomeMaster(Serial_Slave, Serial_MP3, Serial_Lift, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11)
+    MDuinoDomeMasterR2(Serial_Slave, Serial_MP3, Serial_Lift, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11)
 {
 
 }
 
-void MDuinoBodyMaster::init()
+void MDuinoBodyMasterR2::init()
 {
-    MDuinoDomeMaster::init();
+    MDuinoDomeMasterR2::init();
 }
 
-void MDuinoBodyMaster::run()
+void MDuinoBodyMasterR2::run()
 {
-    MDuinoDomeMaster::run();
+    MDuinoDomeMasterR2::run();
 }
 
-void MDuinoBodyMaster::playSequence(const byte SeqNr)
+void MDuinoBodyMasterR2::playSequence(const byte SeqNr)
 {
     Sequencer.stopSequence();
     Sequencer.clearSequence();
@@ -91,7 +91,7 @@ void MDuinoBodyMaster::playSequence(const byte SeqNr)
     playSequenceAddons(SeqNr);
 }
 
-void MDuinoBodyMaster::playSequenceAddons(const byte SeqNr)
+void MDuinoBodyMasterR2::playSequenceAddons(const byte SeqNr)
 {
     // Also forward to Slave
     Serial_Slave.printf(F(":SE%2u\r"), SeqNr);

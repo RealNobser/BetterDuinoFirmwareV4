@@ -1,34 +1,32 @@
-#ifndef __MARCDUINODOMEMASTERBT1_H__
-#define __MARCDUINODOMEMASTERBT1_H__
+#ifndef __MARCDUINODOMESLAVER2_H__
+#define __MARCDUINODOMESLAVER2_H__
 
 #include <SendOnlySoftwareSerial.h>
 
-#include "MDuinoDomeMaster.h"
+#include "MDuinoDomeSlave.h"
 
 /** Command implementation
  * 
- *	Sequences details (see sequence_command, panel sequence matrices defined in panel_sequences.h)
+ * 	Sequences details (see sequence_command, panel sequence matrices defined in panel_sequences.h)
  *
- *	:SE38 Dome - Fire Rockets
  */
 
-class MDuinoDomeMasterBT1 : public MDuinoDomeMaster
+class MDuinoDomeSlaveR2 : public MDuinoDomeSlave
 {
     public:
-        MDuinoDomeMasterBT1(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift,
+        MDuinoDomeSlaveR2(SendOnlySoftwareSerial& Serial_Magic, SendOnlySoftwareSerial& Serial_Teeces, SERIAL_LIFT_TYPE& Serial_Lift,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
-
+            
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Dome Master (BT-1)"; }
+        virtual const char* getProductName() override { return "MarcDuino Dome Slave (R2-D2)"; }
 
-    protected:
+protected:
         void playSequence(const byte SeqNr) override;
         void playSequenceAddons(const byte SeqNr) override;
-        
 };
 
-#endif  // __MARCDUINOBODYMASTERBT1_H__
+#endif // __MARCDUINODOMESLAVER2_H__

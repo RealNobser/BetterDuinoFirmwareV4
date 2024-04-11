@@ -17,3 +17,40 @@ void MDuinoDomeSlaveChopper::run()
 {
     MDuinoDomeSlave::run();
 }
+
+void MDuinoDomeSlaveChopper::playSequence(const byte SeqNr)
+{
+    Sequencer.stopSequence();
+    Sequencer.clearSequence();
+    
+    switch (SeqNr)
+    {
+    case 0: // CLOSE ALL PANELS
+        //Sequencer.loadSequence(body_panel_init, SEQ_SIZE(panel_init));
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
+        break;
+    default:
+        break;         
+    }
+    playSequenceAddons(SeqNr);
+}
+
+void MDuinoDomeSlaveChopper::playSequenceAddons(const byte SeqNr)
+{
+    // Disable Servo detach during Animations
+    ServoBuzzIntervall = 0;
+    Sequencer.addSequenceCompletionCallback(sequenceCallbackBuzz);
+
+    // No speicals besides panel movement
+    // Just one at the moment
+    /*
+    switch (SeqNr)
+    {
+        default:
+        break;
+    }
+    */
+
+    // Finally GOOOOO
+    Sequencer.startSequence();
+}

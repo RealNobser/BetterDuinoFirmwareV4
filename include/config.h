@@ -1,6 +1,7 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
+#error NOT A FINAL RELEASE! Please choose a official release instead of the main branch! -> https://github.com/RealNobser/BetterDuinoFirmwareV4/releases
 
 //
 // Supported Astromechs

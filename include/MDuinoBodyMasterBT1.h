@@ -3,7 +3,7 @@
 
 #include <SendOnlySoftwareSerial.h>
 
-#include "MDuinoDomeMaster.h"
+#include "MDuinoDomeMasterBT1.h"
 
 /** Command implementation
  * 
@@ -21,7 +21,7 @@
  *	:SE37 Body - Use right Claw
  */
 
-class MDuinoBodyMasterBT1 : public MDuinoDomeMaster
+class MDuinoBodyMasterBT1 : public MDuinoDomeMasterBT1
 {
     public:
         MDuinoBodyMasterBT1(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift, 
@@ -32,7 +32,7 @@ class MDuinoBodyMasterBT1 : public MDuinoDomeMaster
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Body Master BT-1"; }
+        virtual const char* getProductName() override { return "MarcDuino Body Master (BT-1)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;

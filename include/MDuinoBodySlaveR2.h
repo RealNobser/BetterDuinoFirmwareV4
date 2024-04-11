@@ -1,7 +1,7 @@
-#ifndef __MARCDUINOBODYSLAVE_H__
-#define __MARCDUINOBODYSLAVE_H__
+#ifndef __MARCDUINOBODYSLAVER2_H__
+#define __MARCDUINOBODYSLAVER2_H__
 
-#include "MDuinoBodyMaster.h"
+#include "MDuinoBodyMasterR2.h"
 
 /** Command implementation
  * 
@@ -12,10 +12,10 @@
  *
  */
 
-class MDuinoBodySlave : public MDuinoBodyMaster
+class MDuinoBodySlaveR2 : public MDuinoBodyMasterR2
 {
     public:
-        MDuinoBodySlave(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift, 
+        MDuinoBodySlaveR2(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift, 
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, 
             VarSpeedServo& Servo11);
@@ -23,7 +23,7 @@ class MDuinoBodySlave : public MDuinoBodyMaster
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Body Slave"; }
+        virtual const char* getProductName() override { return "MarcDuino Body Slave (R2-D2)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;

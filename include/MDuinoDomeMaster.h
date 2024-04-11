@@ -18,11 +18,6 @@ class MDuinoDomeMaster : public MDuinoDome
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override  { return "MarcDuino Dome Master"; }
-        virtual void parseCommand(const char* command) override;
-
-        void resetServoBuzz();
-
     protected:
         SendOnlySoftwareSerial& Serial_Slave;
         SendOnlySoftwareSerial& Serial_MP3;
@@ -44,6 +39,8 @@ class MDuinoDomeMaster : public MDuinoDome
         void setStandardRandomSoundIntervall();
         void setSoundIntervall(const unsigned long Intervall);
 
+        virtual void parseCommand(const char* command) override;
+
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);
         void processDisplayCommand(const char* command);
@@ -51,9 +48,6 @@ class MDuinoDomeMaster : public MDuinoDome
         void processAltSoundCommand(const char* command);
         void processAltHoloCommand(const char* command);
 
-        void playSequenceAddons(const byte SeqNr) override;
-
-        static void sequenceCallbackBuzz(MDuinoBase* object);
         static void sequenceCallbackJedi(MDuinoBase* object);
         static void sequenceCallbackResetMP(MDuinoBase* object);
         static void sequenceCallbackResetSound(MDuinoBase* object);

@@ -7,10 +7,9 @@
 
 /** Command implementation
  * 
- *  SAME AS R2D2 DOME MASTER, but different sequences
- *
  *	Sequences details (see sequence_command, panel sequence matrices defined in panel_sequences.h)
  *
+ * 
  */
 
 class MDuinoDomeMasterChopper : public MDuinoDomeMaster
@@ -24,7 +23,7 @@ class MDuinoDomeMasterChopper : public MDuinoDomeMaster
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Dome Master Chopper"; }
+        virtual const char* getProductName() override { return "MarcDuino Dome Master (C1-10P)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
