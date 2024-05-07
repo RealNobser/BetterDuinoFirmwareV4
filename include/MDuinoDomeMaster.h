@@ -1,5 +1,5 @@
-#ifndef __MARCDUINODOMEMASTER_H__
-#define __MARCDUINODOMEMASTER_H__
+#ifndef __MDUINODOMEMASTER_H__
+#define __MDUINODOMEMASTER_H__
 
 #include "MDuinoDome.h"
 #include "MDuinoStorage.h"
@@ -53,4 +53,4 @@ class MDuinoDomeMaster : public MDuinoDome
         static void sequenceCallbackResetSound(MDuinoBase* object);
 };
 
-#endif // __MARCDUINODOMEMASTER_H__
+#endif // __MDUINODOMEMASTER_H__

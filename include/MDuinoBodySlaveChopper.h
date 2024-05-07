@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOBODYSLAVECHOPPER_H__
-#define __MARCDUINOBODYSLAVECHOPPER_H__
+#ifndef __MDUINOBODYSLAVECHOPPER_H__
+#define __MDUINOBODYSLAVECHOPPER_H__
 
 #include "MDuinoBodyMasterChopper.h"
 
@@ -23,7 +23,7 @@ class MDuinoBodySlaveChopper : public MDuinoBodyMasterChopper
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Body Slave (C1-10P)"; }
+        virtual const char* getProductName() override { return "BetterDuino Body Slave (C1-10P)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
@@ -31,4 +31,4 @@ class MDuinoBodySlaveChopper : public MDuinoBodyMasterChopper
         
 };
 
-#endif  // __MARCDUINOBODYSLAVECHOPPER_H__
+#endif  // __MDUINOBODYSLAVECHOPPER_H__

@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOSTORAGE_H__
-#define __MARCDUINOSTORAGE_H__
+#ifndef __MDUINOSTORAGE_H__
+#define __MDUINOSTORAGE_H__
 
 #include "config.h"
 
@@ -149,9 +149,9 @@
 *  0xe7     Servo6 Holo3-Servo-V Speed (0-255)
 */
 
-#define ADDR_MARCDUINOVERSION   0x00
-#define ADDR_MARCDUINOTYPE      0x01
-#define ADDR_MARCDUINOMP3PLAYER 0x04
+#define ADDR_MDUINOVERSION      0x00
+#define ADDR_MDUINOTYPE         0x01
+#define ADDR_MDUINOMP3PLAYER    0x04
 #define ADDR_DISABLERANDOMSOUND 0x05
 #define ADDR_STARTUPSOUNDNR     0x06
 
@@ -180,7 +180,7 @@ class MDuinoStorage
             DomeSlave,
             BodyMaster,
             BodySlave,
-            UnknownMarcDuino,
+            UnknownType,
         };
 
         enum MDuinoMP3PlayerType
@@ -250,4 +250,4 @@ class MDuinoStorage
         #endif
 };
 
-#endif // __MARCDUINOSTORAGE_H__
+#endif // __MDUINOSTORAGE_H__

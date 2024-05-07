@@ -1,5 +1,5 @@
-#ifndef __MARCDUINODOMEMASTERR2_H__
-#define __MARCDUINODOMEMASTERR2_H__
+#ifndef __MDUINODOMEMASTERR2_H__
+#define __MDUINODOMEMASTERR2_H__
 
 #include <SendOnlySoftwareSerial.h>
 
@@ -23,7 +23,7 @@ class MDuinoDomeMasterR2 : public MDuinoDomeMaster
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Dome Master (R2-D2)"; }
+        virtual const char* getProductName() override { return "BetterDuino Dome Master (R2-D2)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
@@ -31,4 +31,4 @@ class MDuinoDomeMasterR2 : public MDuinoDomeMaster
         
 };
 
-#endif  // __MARCDUINOBODYMASTERCHOPPER_H__
+#endif  // __MDUINOBODYMASTERCHOPPER_H__

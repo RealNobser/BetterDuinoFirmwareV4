@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOS_H__
-#define __MARCDUINOS_H__
+#ifndef __MDUINOBASE_H__
+#define __MDUINOBASE_H__
 
 #include <Arduino.h>
 #include <config.h>
@@ -74,4 +74,4 @@ class MDuinoBase
         void(* resetFunc) (void) = 0;
 };
 
-#endif
+#endif  // __MDUINOBASE_H__

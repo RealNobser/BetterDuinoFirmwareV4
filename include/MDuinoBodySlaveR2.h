@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOBODYSLAVER2_H__
-#define __MARCDUINOBODYSLAVER2_H__
+#ifndef __MDUINOBODYSLAVER2_H__
+#define __MDUINOBODYSLAVER2_H__
 
 #include "MDuinoBodyMasterR2.h"
 
@@ -23,7 +23,7 @@ class MDuinoBodySlaveR2 : public MDuinoBodyMasterR2
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Body Slave (R2-D2)"; }
+        virtual const char* getProductName() override { return "BetterDuino Body Slave (R2-D2)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
@@ -31,4 +31,4 @@ class MDuinoBodySlaveR2 : public MDuinoBodyMasterR2
         
 };
 
-#endif  // __MARCDUINOBODYSLAVE_H__
+#endif  // __MDUINOBODYSLAVE_H__

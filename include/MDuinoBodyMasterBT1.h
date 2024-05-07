@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOBODYMASTERBT1_H__
-#define __MARCDUINOBODYMASTERBT1_H__
+#ifndef __MDUINOBODYMASTERBT1_H__
+#define __MDUINOBODYMASTERBT1_H__
 
 #include <SendOnlySoftwareSerial.h>
 
@@ -32,7 +32,7 @@ class MDuinoBodyMasterBT1 : public MDuinoDomeMasterBT1
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Body Master (BT-1)"; }
+        virtual const char* getProductName() override { return "BetterDuino Body Master (BT-1)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
@@ -40,4 +40,4 @@ class MDuinoBodyMasterBT1 : public MDuinoDomeMasterBT1
         
 };
 
-#endif // __MARCDUINOBODYMASTERBT1_H__
+#endif // __MDUINOBODYMASTERBT1_H__

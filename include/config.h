@@ -99,7 +99,7 @@
 
 #define MAX_MARCUDINOSERVOS 13
 #define MAX_SEQUENCE_COMPLETION_CALLBACKS 5
-#define MAX_MARCDUINOHOLOS  3
+#define MAX_MDUINOHOLOS  3
 
 // Panel Sequence Position. No PWM value any more! Don't touch here!
 // Will be opening level in percent in the future

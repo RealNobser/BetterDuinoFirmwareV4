@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOBODYMASTERR2_H__
-#define __MARCDUINOBODYMASTERR2_H__
+#ifndef __MDUINOBODYMASTERR2_H__
+#define __MDUINOBODYMASTERR2_H__
 
 #include <SendOnlySoftwareSerial.h>
 
@@ -30,7 +30,7 @@ class MDuinoBodyMasterR2 : public MDuinoDomeMasterR2
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Body Master (R2-D2)"; }
+        virtual const char* getProductName() override { return "BetterDuino Body Master (R2-D2)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
@@ -38,4 +38,4 @@ class MDuinoBodyMasterR2 : public MDuinoDomeMasterR2
         
 };
 
-#endif // __MARCDUINOBODYMASTER_H__
+#endif // __MDUINOBODYMASTER_H__

@@ -72,7 +72,7 @@ void MDuinoDomeSlave::run()
     for (byte i=MinHolo; i <= MaxHolo; i++)
         Holos[i]->run();
 
-    // Servos. TODO: Double implementation, check BaseClass Idea for Dome MarcDuinos
+    // Servos. TODO: Double implementation, check BaseClass Idea for Dome Board
     // check https://stackoverflow.com/questions/13340074/c-static-const-members-overriding for const static members MinPanel/MaxPanel
     if (ServoBuzzIntervall != 0)
     {
@@ -110,7 +110,7 @@ void MDuinoDomeSlave::run()
  *  '!' Alt1 alternate display command, passed to suart after stripping
  *  '%' Alt2 expansion command, passed to suart2 after stripping
  *		The master HP board will forward these to us
- *  '#' MarcDuino Setup commands used to configure various settings on the MarcDuino
+ *  '#' Setup commands used to configure various settings
  */
   
 void MDuinoDomeSlave::parseCommand(const char* command)
@@ -555,12 +555,12 @@ void MDuinoDomeSlave::processExpansionCommand(const char* command)
 
 void MDuinoDomeSlave::HolosOn(const byte HoloNr)
 {
-    if (HoloNr > (MAX_MARCDUINOHOLOS + 1)) // Parameter = 4
+    if (HoloNr > (MAX_MDUINOHOLOS + 1)) // Parameter = 4
         return;
 
     if((HoloNr == 0) || (HoloNr == 4))  // All Holos
     {
-        for(byte i=1; i<= MAX_MARCDUINOHOLOS; i++)
+        for(byte i=1; i<= MAX_MDUINOHOLOS; i++)
             Holos[i]->on();
     }
     else
@@ -570,12 +570,12 @@ void MDuinoDomeSlave::HolosOn(const byte HoloNr)
 #ifdef INCLUDE_HOLO_RGB
 void MDuinoDomeSlaveR2::HolosOn(const byte HoloNr, const byte red, const byte green, const byte blue, const byte bright)
 {
-    if (HoloNr > (MAX_MARCDUINOHOLOS + 1)) // Parameter = 4
+    if (HoloNr > (MAX_MDUINOHOLOS + 1)) // Parameter = 4
         return;
 
     if((HoloNr == 0) || (HoloNr == 4))  // All Holos
     {
-        for(byte i=1; i<= MAX_MARCDUINOHOLOS; i++)
+        for(byte i=1; i<= MAX_MDUINOHOLOS; i++)
             Holos[i]->on(red, green, blue, bright);
     }
     else
@@ -585,12 +585,12 @@ void MDuinoDomeSlaveR2::HolosOn(const byte HoloNr, const byte red, const byte gr
 
 void MDuinoDomeSlave::HolosOff(const byte HoloNr)
 {
-    if (HoloNr > (MAX_MARCDUINOHOLOS + 1))    // Parameter = 4
+    if (HoloNr > (MAX_MDUINOHOLOS + 1))    // Parameter = 4
         return;
 
     if((HoloNr == 0) || (HoloNr == 4))  // All Holos
     {
-        for(byte i=1; i<= MAX_MARCDUINOHOLOS; i++)
+        for(byte i=1; i<= MAX_MDUINOHOLOS; i++)
             Holos[i]->off();
     }
     else
@@ -601,7 +601,7 @@ void MDuinoDomeSlave::HoloCenter(const byte HoloNr)
 {
     word HMin, HMax, VMin, VMax, HCenter, VCenter = 0;
 
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
     
     Storage.getHoloPositions(HoloNr, HMin, HMax, VMin, VMax);

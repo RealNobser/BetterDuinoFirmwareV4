@@ -21,7 +21,7 @@
 #include "MDuinoBodySlaveBT1.h"
 #endif
 
-MDuinoBase *MarcDuino = nullptr;
+MDuinoBase *MDuino = nullptr;
 
 // Initialize common ressources in main (due to interrupts and globals)
 
@@ -76,11 +76,11 @@ void setup()
     #ifdef INCLUDE_DOME_MASTER
     case MDuinoStorage::DomeMaster:
         #if defined(R2D2)
-        MarcDuino = new MDuinoDomeMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
-        MarcDuino = new MDuinoDomeMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(BT1)
-        MarcDuino = new MDuinoDomeMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #else
         #error Please include at least one astromech type in config.h
         #endif
@@ -93,11 +93,11 @@ void setup()
     #ifdef INCLUDE_DOME_SLAVE
     case MDuinoStorage::DomeSlave:
         #if defined(R2D2)
-        MarcDuino = new MDuinoDomeSlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeSlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
-        MarcDuino = new MDuinoDomeSlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeSlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(BT1)
-        MarcDuino = new MDuinoDomeSlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeSlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #else
         #error Please include at least one astromech type in config.h
         #endif
@@ -110,11 +110,11 @@ void setup()
     #ifdef INCLUDE_BODY_MASTER
     case MDuinoStorage::BodyMaster:
         #if defined(R2D2)
-        MarcDuino = new MDuinoBodyMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodyMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
-        MarcDuino = new MDuinoBodyMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodyMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(BT1)
-        MarcDuino = new MDuinoBodyMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodyMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #else
         #error Please include at least one astromech type in config.h
         #endif
@@ -127,11 +127,11 @@ void setup()
     #ifdef INCLUDE_BODY_SLAVE
     case MDuinoStorage::BodySlave:
         #if defined(R2D2)
-        MarcDuino = new MDuinoBodySlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodySlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
-        MarcDuino = new MDuinoBodySlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodySlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(BT1)
-        MarcDuino = new MDuinoBodySlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodySlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #else
         #error Please include at least one astromech type in config.h
         #endif
@@ -141,16 +141,16 @@ void setup()
         #endif
         break;
     #endif
-    case MDuinoStorage::UnknownMarcDuino:
+    case MDuinoStorage::UnknownType:
     default:
         #ifdef INCLUDE_DOME_MASTER
 
         #if defined(R2D2)
-        MarcDuino = new MDuinoDomeMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
-        MarcDuino = new MDuinoDomeMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(BT1)
-        MarcDuino = new MDuinoDomeMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #else
         #error Please include at least one astromech type in config.h
         #endif
@@ -163,11 +163,11 @@ void setup()
         #elif defined(INCLUDE_DOME_SLAVE)
 
         #if defined(R2D2)
-        MarcDuino = new MDuinoDomeSlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeSlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
-        MarcDuino = new MDuinoDomeSlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeSlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(BT1)
-        MarcDuino = new MDuinoDomeSlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoDomeSlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #else
         #error Please include at least one astromech type in config.h
         #endif
@@ -179,11 +179,11 @@ void setup()
         #elif defined(INCLUDE_BODY_MASTER)
 
         #if defined(R2D2)
-        MarcDuino = new MDuinoBodyMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodyMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
-        MarcDuino = new MDuinoBodyMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodyMasterChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(BT1)
-        MarcDuino = new MDuinoBodyMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodyMasterBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #else
         #error Please include at least one astromech type in config.h
         #endif
@@ -195,11 +195,11 @@ void setup()
         #elif defined(INCLUDE_BODY_SLAVE)
 
         #if defined(R2D2)
-        MarcDuino = new MDuinoBodySlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodySlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
-        MarcDuino = new MDuinoBodySlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodySlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(BT1)
-        MarcDuino = new MDuinoBodySlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
+        MDuino = new MDuinoBodySlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #else
         #error Please include at least one astromech type in config.h
         #endif
@@ -215,13 +215,13 @@ void setup()
         break;
     }
 
-    MarcDuino->init();
+    MDuino->init();
 
-    Serial.printf(F("%s\r\nVersion %s\r\n\r\n"), MarcDuino->getProductName(), VERSION);
+    Serial.printf(F("%s\r\nVersion %s\r\n\r\n"), MDuino->getProductName(), VERSION);
 }
 
 void loop()
 {
     // put your main code here, to run repeatedly:
-    MarcDuino->run();
+    MDuino->run();
 }

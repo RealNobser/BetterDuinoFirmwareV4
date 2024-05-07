@@ -1,5 +1,5 @@
-#ifndef __MARCDUINODOME_H__
-#define __MARCDUINODOME_H__
+#ifndef __MDUINODOME_H__
+#define __MDUINODOME_H__
 
 #include "MDuinoBase.h"
 
@@ -26,4 +26,4 @@ class MDuinoDome : public MDuinoBase
         void getRandomSound(byte & bank, byte & sound);
 };
 
-#endif  //  __MARCDUINODOME_H__
+#endif  //  __MDUINODOME_H__

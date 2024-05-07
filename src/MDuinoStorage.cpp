@@ -12,33 +12,33 @@ MDuinoStorage::MDuinoStorage()
 
 byte MDuinoStorage::getConfigVersion()
 {
-    return EEPROM.read(ADDR_MARCDUINOVERSION);
+    return EEPROM.read(ADDR_MDUINOVERSION);
 }
 
 void MDuinoStorage::setConfigVersion(const byte version)
 {
-    EEPROM.update(ADDR_MARCDUINOVERSION, version);
+    EEPROM.update(ADDR_MDUINOVERSION, version);
 }
 
 MDuinoStorage::MDuinoType MDuinoStorage::getType()
 {
-    uint8_t value = EEPROM.read(ADDR_MARCDUINOTYPE);
+    uint8_t value = EEPROM.read(ADDR_MDUINOTYPE);
 
-    if (value >= MDuinoType::UnknownMarcDuino)
-        return MDuinoType::UnknownMarcDuino;
+    if (value >= MDuinoType::UnknownType)
+        return MDuinoType::UnknownType;
     else
         return (MDuinoType)value;
 }
 
 void MDuinoStorage::setType(const MDuinoType type)
 {
-    EEPROM.update(ADDR_MARCDUINOTYPE, type);
+    EEPROM.update(ADDR_MDUINOTYPE, type);
 }
 
 
 MDuinoStorage::MDuinoMP3PlayerType MDuinoStorage::getMP3Player()
 {
-    uint8_t value = EEPROM.read(ADDR_MARCDUINOMP3PLAYER);
+    uint8_t value = EEPROM.read(ADDR_MDUINOMP3PLAYER);
 
     if (value > MDuinoMP3PlayerType::UnknownPlayer)
         return MDuinoMP3PlayerType::UnknownPlayer;
@@ -48,7 +48,7 @@ MDuinoStorage::MDuinoMP3PlayerType MDuinoStorage::getMP3Player()
 
 void MDuinoStorage::setMP3Player(const MDuinoMP3PlayerType type)
 {
-    EEPROM.update(ADDR_MARCDUINOMP3PLAYER, type);
+    EEPROM.update(ADDR_MDUINOMP3PLAYER, type);
 }
 
 byte MDuinoStorage::getStartupSoundNr()
@@ -153,7 +153,7 @@ bool MDuinoStorage::getHoloNeoPixel(const byte HoloNr)
 {
     bool value = false;
 
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return 0;
 
     EEPROM.get(ADDR_HOLOLIGHTBASE + 3 + HoloNr, value);
@@ -161,7 +161,7 @@ bool MDuinoStorage::getHoloNeoPixel(const byte HoloNr)
 }
 void MDuinoStorage::setHoloNeoPixel(const byte HoloNr, const bool NeoPixel)
 {
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
 
     if (HoloNr == 0)
@@ -178,7 +178,7 @@ byte MDuinoStorage::getHoloLEDs(const byte HoloNr)
 {
     uint8_t value = 7;
 
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return 0;
 
     value = EEPROM.read(ADDR_HOLOLIGHTBASE + 6 + HoloNr);
@@ -186,7 +186,7 @@ byte MDuinoStorage::getHoloLEDs(const byte HoloNr)
 }
 void MDuinoStorage::setHoloLEDs(const byte HoloNr, const byte LEDs)
 {
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
 
     EEPROM.update(ADDR_HOLOLIGHTBASE + 6 + HoloNr, LEDs);
@@ -194,7 +194,7 @@ void MDuinoStorage::setHoloLEDs(const byte HoloNr, const byte LEDs)
 
 void MDuinoStorage::getHoloServoSpeed(const byte HoloNr, byte & HSpeed, byte & VSpeed)
 {
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
 
     EEPROM.get(ADDR_HOLOSPEEDBASE+(HoloNr*2), HSpeed);
@@ -202,7 +202,7 @@ void MDuinoStorage::getHoloServoSpeed(const byte HoloNr, byte & HSpeed, byte & V
 }
 void MDuinoStorage::setHoloServoSpeed(const byte HoloNr, const byte HSpeed, const byte VSpeed)
 {
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
 
     EEPROM.put(ADDR_HOLOSPEEDBASE+(HoloNr*2), HSpeed);
@@ -211,7 +211,7 @@ void MDuinoStorage::setHoloServoSpeed(const byte HoloNr, const byte HSpeed, cons
 
 void MDuinoStorage::getHoloPositions(const byte HoloNr, word & HMin, word & HMax, word & VMin, word & VMax)
 {
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
 
     EEPROM.get(ADDR_HOLOMINBASE+(HoloNr*4), HMin);
@@ -221,7 +221,7 @@ void MDuinoStorage::getHoloPositions(const byte HoloNr, word & HMin, word & HMax
 }
 void MDuinoStorage::setHoloPositions(const byte HoloNr, const word HMin, const word HMax, const word VMin, const word VMax)
 {
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
 
     EEPROM.put(ADDR_HOLOMINBASE+(HoloNr*4), HMin);
@@ -234,7 +234,7 @@ bool MDuinoStorage::getHoloLightHighActive(const byte HoloNr)
 {
     bool HighActive = true;
 
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return HighActive;
 
     EEPROM.get(ADDR_HOLOLIGHTBASE+HoloNr, HighActive);
@@ -243,7 +243,7 @@ bool MDuinoStorage::getHoloLightHighActive(const byte HoloNr)
 
 void MDuinoStorage::setHoloLightHighActive(const byte HoloNr, const bool HighActive)
 {
-    if (HoloNr > MAX_MARCDUINOHOLOS)
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
         
     if (HoloNr == 0)

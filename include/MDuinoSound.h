@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOSOUND_H__
-#define __MARCDUINOSOUND_H__
+#ifndef __MDUINOSOUND_H__
+#define __MDUINOSOUND_H__
 
 #include <Arduino.h>
 #include <SendOnlySoftwareSerial.h>
@@ -169,4 +169,4 @@ class MDuinoSoundVocalizer : public MDuinoSound
         SendOnlySoftwareSerial& SoundSerial;
 };
 
-#endif // __MARCDUINOSOUND_H__
+#endif // __MDUINOSOUND_H__

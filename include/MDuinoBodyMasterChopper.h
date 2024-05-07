@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOBODYMASTERCHOPPER_H__
-#define __MARCDUINOBODYMASTERCHOPPER_H__
+#ifndef __MDUINOBODYMASTERCHOPPER_H__
+#define __MDUINOBODYMASTERCHOPPER_H__
 
 #include <SendOnlySoftwareSerial.h>
 
@@ -24,7 +24,7 @@ class MDuinoBodyMasterChopper : public MDuinoDomeMasterChopper
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Body Master (C1-10P)"; }
+        virtual const char* getProductName() override { return "BetterDuino Body Master (C1-10P)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
@@ -32,4 +32,4 @@ class MDuinoBodyMasterChopper : public MDuinoDomeMasterChopper
         
 };
 
-#endif // __MARCDUINOBODYMASTERCHOPPER_H__
+#endif // __MDUINOBODYMASTERCHOPPER_H__

@@ -1,5 +1,5 @@
-#ifndef __MARCDUINODOMESLAVE_H__
-#define __MARCDUINODOMESLAVE_H__
+#ifndef __MDUINODOMESLAVE_H__
+#define __MDUINODOMESLAVE_H__
 
 #include "MDuinoDome.h"
 #include "Holo.h"
@@ -55,4 +55,4 @@ class MDuinoDomeSlave : public MDuinoDome
         void HoloMovementCtrl(const byte param, const bool moving);
 };
 
-#endif // __MARCDUINODOMESLAVE_H__
+#endif // __MDUINODOMESLAVE_H__

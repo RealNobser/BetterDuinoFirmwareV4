@@ -1,5 +1,5 @@
-#ifndef __MARCDUINOSEQUENCER_H__
-#define __MARCDUINOSEQUENCER_H__
+#ifndef __MDUINOSEQUENCER_H__
+#define __MDUINOSEQUENCER_H__
 
 #include "config.h"
 #include "Panel.h"
@@ -75,4 +75,4 @@ class MDuinoSequencer
 
 };
 
-#endif // __MARCDUINOSEQUENCER_H__
+#endif // __MDUINOSEQUENCER_H__

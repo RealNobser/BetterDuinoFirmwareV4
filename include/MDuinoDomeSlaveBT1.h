@@ -1,5 +1,5 @@
-#ifndef __MARCDUINODOMESLAVEBT1_H__
-#define __MARCDUINODOMESLAVEBT1_H__
+#ifndef __MDUINODOMESLAVEBT1_H__
+#define __MDUINODOMESLAVEBT1_H__
 
 #include <SendOnlySoftwareSerial.h>
 
@@ -22,7 +22,7 @@ class MDuinoDomeSlaveBT1 : public MDuinoDomeSlave
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "MarcDuino Dome Slave (BT-1)"; }
+        virtual const char* getProductName() override { return "BetterDuino Dome Slave (BT-1)"; }
 
     protected:
         void playSequence(const byte SeqNr) override;
@@ -30,4 +30,4 @@ class MDuinoDomeSlaveBT1 : public MDuinoDomeSlave
         
 };
 
-#endif  // __MARCDUINODOMESLAVEBT1_H__
+#endif  // __MDUINODOMESLAVEBT1_H__

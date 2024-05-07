@@ -140,7 +140,7 @@ void MDuinoBase::checkEEPROM(const bool factoryReset /*= false*/)
             Storage.setServoSpeed(i, 0);            // Full Speed
             Storage.setServoPositions(i, PANEL_OPN, PANEL_CLS); // see config.h, original MarcDuino Default Values
         }
-        for (byte i=1; i <= MAX_MARCDUINOHOLOS; i++)
+        for (byte i=1; i <= MAX_MDUINOHOLOS; i++)
         {
             Storage.setHoloServoSpeed(i, 0, 0);     // Full speed
             Storage.setHoloPositions(i, HOLO_MIN, HOLO_MAX, HOLO_MIN, HOLO_MAX);
@@ -354,7 +354,7 @@ void MDuinoBase::processSetupCommand(const char* command)
     else if (strcmp(cmd, "ST") == 0)       // Delay Time Master/Slave
     {
     }
-    else if (strcmp(cmd, "MD") == 0)       // Set MarcDuino Type and reboot in new mode
+    else if (strcmp(cmd, "MD") == 0)       // Set board mode and reboot in new mode
     {
         if (param_num == 0)
             Storage.setType(MDuinoStorage::DomeMaster);
@@ -367,7 +367,7 @@ void MDuinoBase::processSetupCommand(const char* command)
         delay(500);
         resetFunc();
     }
-    else if (strcmp(cmd, "MP") == 0)       // Set MarcDuinoMP3Player Type
+    else if (strcmp(cmd, "MP") == 0)       // Set MP3Player Type
     {
         if (param_num == 0)
             Storage.setMP3Player(MDuinoStorage::MP3Trigger);
@@ -406,7 +406,7 @@ void MDuinoBase::processSetupCommand(const char* command)
         Storage.dumpToSerial(param_num);
     }
     #endif
-    else if (strcmp(cmd, "RS") == 0)             // Reboot MarcDuino
+    else if (strcmp(cmd, "RS") == 0)             // Reboot Board
     {
         if (param_num == 0x01)
             checkEEPROM(true);  // Factory Reset

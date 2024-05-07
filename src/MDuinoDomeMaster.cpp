@@ -93,7 +93,7 @@ void MDuinoDomeMaster::run()
 {
     MDuinoDome::run();
 
-    // Servos. TODO: Double implementation, check BaseClass Idea for Dome MarcDuinos
+    // Servos. TODO: Double implementation, check BaseClass Idea for Dome Board
     // check https://stackoverflow.com/questions/13340074/c-static-const-members-overriding for const static members MinPanel/MaxPanel
     if (ServoBuzzIntervall != 0)
     {
@@ -187,7 +187,7 @@ void MDuinoDomeMaster::setSoundIntervall(const unsigned long Intervall)
  * '!' Alt1 alternate sound command, passed to suart2 after stripping
  * '%' Alt2 alternate HP board command, passed to suart without stripping
  *		The slave HP board will output it on suart2 after stripping
- * '#' MarcDuino Setup commands used to configure various settings on the MarcDuino
+ * '#' Setup commands used to configure various settings
 */
 void MDuinoDomeMaster::parseCommand(const char* command)
 {
@@ -600,7 +600,7 @@ void MDuinoDomeMaster::processAltHoloCommand(const char* command)
 // callback to reset JEDI to normal after a sequence, works only once
 void MDuinoDomeMaster::sequenceCallbackJedi(MDuinoBase* object)
 {
-    object->parseCommand("*H000\r"); // quick way to turn off holos if connected to MarcDuino
+    object->parseCommand("*H000\r"); // quick way to turn off holos if connected to board
 	object->parseCommand("@0T1\r");  // abort test routine, reset all to normal
 	object->parseCommand("%T00\r");  // MP Off
 	object->parseCommand("$R\r");  	 // Back to random mode if configured
