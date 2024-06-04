@@ -568,7 +568,7 @@ void MDuinoDomeSlave::HolosOn(const byte HoloNr)
 }
 
 #ifdef INCLUDE_HOLO_RGB
-void MDuinoDomeSlaveR2::HolosOn(const byte HoloNr, const byte red, const byte green, const byte blue, const byte bright)
+void MDuinoDomeSlave::HolosOn(const byte HoloNr, const byte red, const byte green, const byte blue, const byte bright)
 {
     if (HoloNr > (MAX_MDUINOHOLOS + 1)) // Parameter = 4
         return;
