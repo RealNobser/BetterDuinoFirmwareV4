@@ -43,6 +43,7 @@
 #ifdef INCLUDE_HOLO_RGB
     #undef INCLUDE_BODY_MASTER
     #undef INCLUDE_BODY_SLAVE
+    #undef INCLUDE_DOME_MASTER
     //#define NEO_JEWEL_RGBW
     #ifdef NEO_JEWEL_RGBW
         #define HP_NEO_TYPE (NEO_GRBW + NEO_KHZ800)
