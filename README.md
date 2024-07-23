@@ -238,7 +238,7 @@ Connecting Servos Chopper (WIP)
 |Servo 8|Right Dome Arm Turn|Tim Hebel Mod|
 |Servo 9|Periscope Lift||
 |Servo 10|Periscope Turn||
-|Servo 11|unused|Periscope LED?|
+|Servo 11|unused||
 |AUX|unused||
 
 # Slave
@@ -252,7 +252,7 @@ Connecting Servos Chopper (WIP)
 |Servo 6|||
 |Servo 7|||
 |Servo 8|||
-|Servo 9|||
+|Servo 9|Periscope LED?||
 |Servo 10=12||Controlled as Servo 12 via Master|
 |Servo 11=13||Controlled as Servo 13 via Master|
 |AUX|unused||
