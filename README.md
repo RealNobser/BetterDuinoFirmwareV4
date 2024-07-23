@@ -242,10 +242,36 @@ Connecting Servos Chopper (WIP)
 |AUX|unused||
 
 # Slave
-tbd
+| **Servo** | **Function** | **Remark** |
+| --- | --- | --- |
+|Servo 1|||
+|Servo 2|||
+|Servo 3|||
+|Servo 4|||
+|Servo 5|||
+|Servo 6|||
+|Servo 7|||
+|Servo 8|||
+|Servo 9|||
+|Servo 10=12||Controlled as Servo 12 via Master|
+|Servo 11=13||Controlled as Servo 13 via Master|
+|AUX|unused||
 
 # Body
-tbd
+| **Servo** | **Function** | **Remark** |
+| --- | --- | --- |
+|Servo 1|||
+|Servo 2|||
+|Servo 3|||
+|Servo 4|||
+|Servo 5|||
+|Servo 6|||
+|Servo 7|||
+|Servo 8|||
+|Servo 9|||
+|Servo 10|||
+|Servo 11|||
+|AUX|||
 
 Connecting Servos BT1
 =================
