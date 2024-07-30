@@ -260,10 +260,10 @@ Connecting Servos Chopper (WIP)
 # Body
 | **Servo** | **Function** | **Remark** |
 | --- | --- | --- |
-|Servo 1|||
-|Servo 2|||
-|Servo 3|||
-|Servo 4|||
+|Servo 1|Dome Tilt||
+|Servo 2|Utility Arm||
+|Servo 3|Utility Arm Hinge||
+|Servo 4|Utility Arm Gripper||
 |Servo 5|||
 |Servo 6|||
 |Servo 7|||
