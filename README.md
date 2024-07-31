@@ -190,7 +190,7 @@ Connecting Servos R2D2 (common way)
 |Servo 8|Panel 8|Upper Panel|
 |Servo 9|Panel 9|Upper Panel|
 |Servo 10|Panel 10|Upper Panel|
-|Servo 11|unused||
+|Servo 11|Panel 11|Lower Panel, Complex Dome MK4 only|
 |AUX|unused||
 # Slave
 | **Servo** | **Function** | **Remark** |
