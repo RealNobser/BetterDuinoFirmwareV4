@@ -190,7 +190,7 @@ Connecting Servos R2D2 (common way)
 |Servo 8|Panel 8|Upper Panel|
 |Servo 9|Panel 9|Upper Panel|
 |Servo 10|Panel 10|Upper Panel|
-|Servo 11|Panel 11|Tiny Lower Panel 1, Complex Dome MK4 only|
+|Servo 11|unused||
 |AUX|unused||
 # Slave
 | **Servo** | **Function** | **Remark** |
@@ -204,8 +204,8 @@ Connecting Servos R2D2 (common way)
 |Servo 7|Front Holo Light||
 |Servo 8|Rear Holo Light||
 |Servo 9|Top Holo Light||
-|Servo 10=12|Panel 12|Tiny Lower Panel 2, Complex Dome MK4 only, controlled as Servo 12 via Master|
-|Servo 11=13|unused|controlled as Servo 13 via Master|
+|Servo 10=12|Tiny1|Tiny Lower Panel 1, Michael Baddeley Complex Dome MK4 only, controlled as Servo 12 via Master|
+|Servo 11=13|Tiny2|Tiny Lower Panel 1, Michael Baddeley Complex Dome MK4 only, controlled as Servo 13 via Master|
 |AUX|unused||
 # Body
 | **Servo** | **Function** | **Remark** |
