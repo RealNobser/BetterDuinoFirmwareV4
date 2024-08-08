@@ -239,13 +239,13 @@ Connecting Servos Chopper (WIP)
 |Servo 9|Periscope Lift||
 |Servo 10|Periscope Turn||
 |Servo 11|unused||
-|AUX|unused||
+|AUX|Activate Camera||
 
 # Slave
 | **Servo** | **Function** | **Remark** |
 | --- | --- | --- |
-|Servo 1|||
-|Servo 2|||
+|Servo 1|Turn Antenna||
+|Servo 2|Tilt Antenna||
 |Servo 3|||
 |Servo 4|||
 |Servo 5|||
@@ -264,12 +264,12 @@ Connecting Servos Chopper (WIP)
 |Servo 2|Utility Arm||
 |Servo 3|Utility Arm Hinge||
 |Servo 4|Utility Arm Gripper||
-|Servo 5|||
-|Servo 6|||
-|Servo 7|||
-|Servo 8|||
-|Servo 9|||
-|Servo 10|||
+|Servo 5|Saw Door||
+|Servo 6|Saw Arm||
+|Servo 7|Saw Motor||
+|Servo 8|Interface Door||
+|Servo 9|Interface Arm||
+|Servo 10|Interface Action||
 |Servo 11|||
 |AUX|||
 
