@@ -262,14 +262,14 @@ Connecting Servos Chopper (WIP)
 | --- | --- | --- |
 |Servo 1|Dome Tilt||
 |Servo 2|Utility Arm||
-|Servo 3|Utility Arm Hinge||
-|Servo 4|Utility Arm Gripper||
-|Servo 5|Saw Door||
-|Servo 6|Saw Arm||
-|Servo 7|Saw Motor||
-|Servo 8|Interface Door||
-|Servo 9|Interface Arm||
-|Servo 10|Interface Action||
+|Servo 3|Utility Arm Gripper||
+|Servo 4|Saw Door||
+|Servo 5|Saw Arm||
+|Servo 6|Saw Motor||
+|Servo 7|Interface Door||
+|Servo 8|Interface Arm||
+|Servo 9|Interface Action||
+|Servo 10|||
 |Servo 11|||
 |AUX|||
 
