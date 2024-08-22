@@ -244,8 +244,8 @@ Connecting Servos Chopper (WIP)
 # Slave
 | **Servo** | **Function** | **Remark** |
 | --- | --- | --- |
-|Servo 1|Turn Antenna||
-|Servo 2|Tilt Antenna||
+|Servo 1|||
+|Servo 2|||
 |Servo 3|||
 |Servo 4|||
 |Servo 5|||
@@ -253,8 +253,8 @@ Connecting Servos Chopper (WIP)
 |Servo 7|||
 |Servo 8|||
 |Servo 9|Periscope LED?||
-|Servo 10=12||Controlled as Servo 12 via Master|
-|Servo 11=13||Controlled as Servo 13 via Master|
+|Servo 10=12|Turn Antenna|Controlled as Servo 12 via Master|
+|Servo 11=13|Tilt Antenna|Controlled as Servo 13 via Master|
 |AUX|unused||
 
 # Body
