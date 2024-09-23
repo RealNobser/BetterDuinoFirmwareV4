@@ -26,7 +26,7 @@
 
 // #define INCLUDE_CLASSIC_I2C_SUPPORT      // Uncomment to include classic Serial to I2C support (excludes body master built)
 #define INCLUDE_I2C_SLAVE                   // Uncommend for new I2C slave mode
-// #define INCLUDE_HOLO_RGB                 // Uncomment for NeoPixel-Holo (excludes body master built) 
+// #define INCLUDE_HOLO_RGB                    // Uncomment for NeoPixel-Holo (excludes body master built) 
 // #define SEPARATE_DOMELIFT                // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
 
 #ifdef SEPARATE_DOMELIFT
@@ -94,7 +94,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.2.0"
+#define VERSION         "4.2.1"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  41
 

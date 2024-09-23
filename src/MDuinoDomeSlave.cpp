@@ -267,14 +267,6 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
             Panels[param_num]->detach();
         }
     }
-	else if (strcmp(cmd, "RC")==0)
-    {
-
-    } 
-    else if (strcmp(cmd, "HD")==0)
-    {
-
-    }
     else if (strcmp(cmd, "EO")==0)
     {
         AUX1(param_num);
@@ -414,9 +406,6 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     else if (strcmp(cmd, "OF")==0)  // Holo Lights off
     {
         HolosOff(param_num);
-    }    
-    else if (strcmp(cmd, "RC")==0)  // Holo vertical movement under RC
-    {
     }    
     else if (strcmp(cmd, "TE")==0)  // Holo Movement Test
     {

@@ -300,6 +300,9 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             {
                 Panels[i]->open();
             }
+            // Open Tiny, too (Dome MK4)
+            Serial_Slave.print(F(":OP12\r"));
+            Serial_Slave.print(F(":OP13\r"));
         }
 
     }
@@ -330,6 +333,9 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             {
                 Panels[i]->close();
             }
+            // Close Tiny, too (Dome MK4)
+            Serial_Slave.print(F(":CL12\r"));
+            Serial_Slave.print(F(":CL13\r"));
         }        
     }
     else if (strcmp(cmd, "LK")==0)  // Lock Panel
@@ -359,6 +365,9 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             {
                 Panels[i]->lock(true);
             }
+            // Lock Tiny, too (Dome MK4)
+            Serial_Slave.print(F(":LK12\r"));
+            Serial_Slave.print(F(":LK13\r"));
         }        
     }
     else if (strcmp(cmd, "UL")==0)  // Unlock Panel
@@ -388,6 +397,9 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             {
                 Panels[i]->lock(false);
             }
+            // Unlock Tiny, too (Dome MK4)
+            Serial_Slave.print(F(":UL12\r"));
+            Serial_Slave.print(F(":UL13\r"));
         }        
     }
     else if (strcmp(cmd, "ST")==0)
@@ -403,14 +415,6 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         {
             Panels[param_num]->detach();
         }
-    }
-    else if (strcmp(cmd, "RC")==0)
-    {
-
-    } 
-    else if (strcmp(cmd, "HD")==0)
-    {
-
     }
     else if (strcmp(cmd, "EO")==0)
     {
