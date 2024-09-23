@@ -227,6 +227,10 @@ void MDuinoDomeMaster::parseCommand(const char* command)
         {
             Serial_Slave.printf(F("%s\r"), command);
         }
+        break;
+    case '>':
+        // Forward to slave without prefix
+        Serial_Slave.printf(F("%s\r"), command+1);
         break;    
     default:
         break;

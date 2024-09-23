@@ -12,7 +12,7 @@ MDuinoBodyMasterBT1::MDuinoBodyMasterBT1(SendOnlySoftwareSerial& Serial_Slave, S
 void MDuinoBodyMasterBT1::init()
 {
     MDuinoDomeMasterBT1::init();
-    Serial_Slave.print(F("#MD03\r"));   // Force Slave board to be in Body Slave Mode
+    // Serial_Slave.print(F("#MD03\r"));   // Force Slave board to be in Body Slave Mode
 }
 
 void MDuinoBodyMasterBT1::run()
