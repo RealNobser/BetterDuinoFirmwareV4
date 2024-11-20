@@ -2,32 +2,32 @@
 #define __CONFIG_H__
 
 // Comment the line below when you are really really really really sure, what you are doin!
-// #error NOT A FINAL RELEASE! Please choose a official release instead of the main branch!
+#error NOT A FINAL RELEASE! Please choose a official release instead of the main branch!
 // ->>> https://github.com/RealNobser/BetterDuinoFirmwareV4/releases
 
 //
 // Supported Astromechs
-// - R2D2 
+// - R2D2
 // - Chopper
 // - BT1
 // For connecting servos see https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/README.md#connecting-servos-r2d2-common-way
 //
 // Specific Astromech, Choose one
-#define R2D2
-// #define CHOPPER
+// #define R2D2
+#define CHOPPER
 // #define BT1
 
 // #define DEBUG_MSG                        // Additional Log Messages to Serial
 
-#define INCLUDE_DOME_MASTER                 // Uncomment to include Dome Master Controller in combined firmware
-#define INCLUDE_DOME_SLAVE                  // Uncomment to include Dome Slave Controller in combined firmware
-#define INCLUDE_BODY_MASTER                 // Uncomment to include Body Master Controller in combined firmware
-#define INCLUDE_BODY_SLAVE                  // Uncomment to include Body Slave Controller in combined firmware
+#define INCLUDE_DOME_MASTER     // Uncomment to include Dome Master Controller in combined firmware
+#define INCLUDE_DOME_SLAVE      // Uncomment to include Dome Slave Controller in combined firmware
+#define INCLUDE_BODY_MASTER     // Uncomment to include Body Master Controller in combined firmware
+// #define INCLUDE_BODY_SLAVE   // Uncomment to include Body Slave Controller in combined firmware
 
-// #define INCLUDE_CLASSIC_I2C_SUPPORT      // Uncomment to include classic Serial to I2C support (excludes body master built)
-#define INCLUDE_I2C_SLAVE                   // Uncommend for new I2C slave mode
-// #define INCLUDE_HOLO_RGB                    // Uncomment for NeoPixel-Holo (excludes body master built) 
-// #define SEPARATE_DOMELIFT                // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
+// #define INCLUDE_CLASSIC_I2C_SUPPORT  // Uncomment to include classic Serial to I2C support (excludes body master built)
+#define INCLUDE_I2C_SLAVE       // Uncommend for new I2C slave mode
+// #define INCLUDE_HOLO_RGB     // Uncomment for NeoPixel-Holo (excludes body master built)
+// #define SEPARATE_DOMELIFT    // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
 
 #ifdef SEPARATE_DOMELIFT
     #define SERIAL_LIFT_TYPE SendOnlySoftwareSerial
@@ -44,12 +44,12 @@
     #undef INCLUDE_BODY_MASTER
     #undef INCLUDE_BODY_SLAVE
     #undef INCLUDE_DOME_MASTER
-    //#define NEO_JEWEL_RGBW
-    #ifdef NEO_JEWEL_RGBW
-        #define HP_NEO_TYPE (NEO_GRBW + NEO_KHZ800)
-    #else
-        #define HP_NEO_TYPE (NEO_GRB + NEO_KHZ800)
-    #endif
+// #define NEO_JEWEL_RGBW
+#ifdef NEO_JEWEL_RGBW
+#define HP_NEO_TYPE (NEO_GRBW + NEO_KHZ800)
+#else
+#define HP_NEO_TYPE (NEO_GRB + NEO_KHZ800)
+#endif
 #endif
 
 #define SERIAL_BAUD         9600
@@ -94,7 +94,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION         "4.2.1"
+#define VERSION         "4.3.0"
 #define HW_VERSION      "1.5.3"
 #define CONFIG_VERSION  41
 
@@ -107,6 +107,7 @@
 #define _NP     255
 #define _CLS    0
 #define _OPN    100
+#define _MID    50
 
 // Generic GPIOs
 #define P_I2C_SCL   19

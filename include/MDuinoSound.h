@@ -19,7 +19,7 @@
  *       Bank 5: whistle sounds, numbered 101 to 125
  *       Bank 6: scream sounds, numbered 126 to 150
  *       Bank 7: Leia sounds, numbered 151 to 175
- *       Bank 8: sing sounds (deprecated, not used by R2 Touch)
+ *       Bank 8: sing sounds (deprecated, not used by R2 Touch), numberer 176 to 200
  *       Bank 9: mus sounds, numbered 201 t0 225
  *
  *  The pre-made R2 sound library contains only a few non-copyrighted music sounds.
@@ -169,4 +169,29 @@ class MDuinoSoundVocalizer : public MDuinoSound
         SendOnlySoftwareSerial& SoundSerial;
 };
 
+class MDuinoSoundDYPlayer : public MDuinoSound
+{
+    public:
+        explicit MDuinoSoundDYPlayer(SendOnlySoftwareSerial& SoundSerial);
+
+        virtual void init() override;
+
+        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
+        virtual void VolumeUp() override;
+        virtual void VolumeDown() override;
+        virtual void VolumeMid() override;
+        virtual void VolumeMax() override;
+        virtual void VolumeMin() override;
+        virtual void VolumeOff() override;
+
+        virtual void Play(const byte SoundNr) override;
+        virtual void Stop() override;
+        virtual void Quiet(const bool on = true) override;
+
+        virtual bool hasVocalizer() override { return false; }
+
+    protected:
+        SendOnlySoftwareSerial& SoundSerial;
+        void sendCommand(const byte* Command, const byte len);
+};
 #endif // __MDUINOSOUND_H__

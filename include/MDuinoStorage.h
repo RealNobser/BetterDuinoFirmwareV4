@@ -188,7 +188,8 @@ class MDuinoStorage
             MP3Trigger      = 0,
             DFPlayer        = 1,
             Vocalizer       = 2,
-            UnknownPlayer   = 3
+            DYPlayer        = 3,
+            UnknownPlayer   = 4
         };
         
     public:

@@ -38,6 +38,9 @@ MDuinoDomeMaster::MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnl
         case MDuinoStorage::Vocalizer:
             Sound = new MDuinoSoundVocalizer(Serial_MP3);
         break;
+        case MDuinoStorage::DYPlayer:
+            Sound = new MDuinoSoundDYPlayer(Serial_MP3);
+        break;        
         default:
             Sound = new MDuinoSoundMP3Trigger(Serial_MP3);
         break;

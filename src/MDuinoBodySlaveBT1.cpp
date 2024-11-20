@@ -1,5 +1,4 @@
 #include "MDuinoBodySlaveBT1.h"
-
 #include "PanelSequences.h"
 
 MDuinoBodySlaveBT1::MDuinoBodySlaveBT1(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift,

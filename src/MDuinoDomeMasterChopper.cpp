@@ -31,10 +31,58 @@ void MDuinoDomeMasterChopper::playSequence(const byte SeqNr)
         Sequencer.loadSequence(cp_dome_panel_init, SEQ_SIZE(cp_dome_panel_init));
         Sequencer.setServoSpeed(MDuinoSequencer::slow);
         break;
-    case 1: // Dome Arms Wave Animation
+    case 1:  // SCREAM
+    case 51: // Panel only Version
+        Sequencer.loadSequence(cp_dome_panel_all_open, SEQ_SIZE(cp_dome_panel_all_open));
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
+        break;
+    case 2:
+        Sequencer.loadSequence(cp_dome_periscope_and_antenna, SEQ_SIZE(cp_dome_periscope_and_antenna));
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
+        break;
+    case 3:
+        Sequencer.loadSequence(cp_dome_periscope, SEQ_SIZE(cp_dome_periscope));
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
+        break;
+    case 4:
+        Sequencer.loadSequence(cp_dome_panel_wave2, SEQ_SIZE(cp_dome_panel_wave2));
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
+        break;
+    case 6: // SHORT CIRCUIT / FAINT
+    case 56:// Panel only Version
+        Sequencer.loadSequence(cp_dome_panel_all_open_long, SEQ_SIZE(cp_dome_panel_all_open_long));
+        Sequencer.setServoSpeed(MDuinoSequencer::super_slow);
+        break;		
+    case 7:
+        break;
+    case 8:
+        Sequencer.loadSequence(cp_dome_antenna, SEQ_SIZE(cp_dome_antenna));
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
+        break;
+    case 11:
+        Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
+        Sequencer.setServoSpeed(MDuinoSequencer::full);
+        break;
+    case 12:
+        Sequencer.loadSequence(cp_dome_left_arm_wave, SEQ_SIZE(cp_dome_left_arm_wave));
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
+        break;
+    case 13:
+        Sequencer.loadSequence(cp_dome_right_arm_wave, SEQ_SIZE(cp_dome_right_arm_wave));
+        Sequencer.setServoSpeed(MDuinoSequencer::slow);
+        break;
+    case 14: // Dome Arms Wave Animation
         Sequencer.loadSequence(cp_dome_arms_wave, SEQ_SIZE(cp_dome_arms_wave));
         Sequencer.setServoSpeed(MDuinoSequencer::slow);
         break;
+
+    //
+    // 30+ : body sequences only
+    //
+
+    //
+    // 50+ : sound sequences only
+    //
     default:
         break;         
     }
@@ -50,15 +98,49 @@ void MDuinoDomeMasterChopper::playSequenceAddons(const byte SeqNr)
     ServoBuzzIntervall = 0;
     Sequencer.addSequenceCompletionCallback(sequenceCallbackBuzz);
 
-    // No speicals besides panel movement
+    // No specials besides panel movement
     // Just one at the moment
-    /*
     switch (SeqNr)
     {
-        default:
+    case 1:
+        parseCommand("$113");		// 0013
+        break;
+    case 7:
+        parseCommand("$805");		// 0180
+        break;
+    case 11: // WIDE AWAKE	random sounds, holos on random, panels closed
+        parseCommand("$R");			// random sounds mode
+        break;        
+    case 15:
+        parseCommand("$113");		// 0013
+        break;
+    case 61:
+        parseCommand("$804");		// 0179
+        break;
+    case 62:
+        parseCommand("$807");		// 0182
+        break;
+    case 63:
+        parseCommand("$809");		// 0184
+        break;
+    case 64:
+        parseCommand("$812");		// 0187
+        break;
+    case 65:
+        parseCommand("$813");		// 0188
+        break;
+    case 66:
+        parseCommand("$814");		// 0189
+        break;
+    case 67:
+        parseCommand("$815");		// 0190
+        break;
+    case 68:
+        parseCommand("$816");		// 0191
+        break;
+    default:
         break;
     }
-    */
 
     // Finally GOOOOO
     Sequencer.startSequence();
