@@ -105,6 +105,9 @@ void MDuinoDomeMasterChopper::playSequenceAddons(const byte SeqNr)
     case 1:
         parseCommand("$113");		// 0013
         break;
+    case 6:
+        parseCommand("$101");		// 0001
+        break;
     case 7:
         parseCommand("$805");		// 0180
         break;
