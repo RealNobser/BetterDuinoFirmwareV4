@@ -13,8 +13,8 @@
 // For connecting servos see https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/README.md#connecting-servos-r2d2-common-way
 //
 // Specific Astromech, Choose one
-// #define R2D2
-#define CHOPPER
+#define R2D2
+// #define CHOPPER
 // #define BT1
 
 // #define DEBUG_MSG                        // Additional Log Messages to Serial
@@ -28,7 +28,7 @@
 #define INCLUDE_I2C_SLAVE       // Uncommend for new I2C slave mode
 // #define INCLUDE_HOLO_RGB     // Uncomment for NeoPixel-Holo (excludes body master built)
 // #define SEPARATE_DOMELIFT    // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
-#define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module
+// #define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module
 
 #ifdef SEPARATE_DOMELIFT
     #define SERIAL_LIFT_TYPE SendOnlySoftwareSerial

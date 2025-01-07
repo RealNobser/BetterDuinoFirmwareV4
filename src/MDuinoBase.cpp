@@ -375,7 +375,10 @@ void MDuinoBase::processSetupCommand(const char* command)
             Storage.setMP3Player(MDuinoStorage::DFPlayer);
         else if (param_num == 2)
             Storage.setMP3Player(MDuinoStorage::Vocalizer);
-                    
+#ifdef INCLUDE_DY_PLAYER
+        else if (param_num == 3)
+            Storage.setMP3Player(MDuinoStorage::DYPlayer);
+#endif
         delay(500);
         resetFunc();
     }
