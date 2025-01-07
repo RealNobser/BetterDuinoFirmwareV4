@@ -12,7 +12,22 @@ void MDuinoSound::VolumeStandard()
 void MDuinoSound::Play(const byte BankNr, const byte SoundNr)
 {
 	byte CalcSoundNr = 0;
-	CalcSoundNr = (BankNr - 1) * 25 + SoundNr;
+
+	switch (Storage.getMP3Player())
+	{
+	case MDuinoStorage::MDuinoMP3PlayerType::DYPlayer:
+		// DYPlayer plays songs by disk index, not by name. We need to calculate the index from bank and sound number.
+		// Files must be properly sorted on the SD card for this to work - use DriveSort or similar.
+		for (uint8_t i = 1; i < BankNr; i++)
+			CalcSoundNr += Storage.getMaxSound(i);
+		CalcSoundNr += SoundNr;
+		break;
+
+	default:
+		CalcSoundNr = (BankNr - 1) * 25 + SoundNr;
+		break;
+	}
+
 	Play(CalcSoundNr);
 }
 

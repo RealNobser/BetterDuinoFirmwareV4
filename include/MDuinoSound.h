@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <SendOnlySoftwareSerial.h>
 
+#include "MDuinoStorage.h"
+
 #define DFPLAYER_MAX_CMD    16
 
 /***********************************************************
@@ -88,6 +90,7 @@ class MDuinoSound
 
     protected:
         byte CurrentVolume = 0;
+        MDuinoStorage Storage;
 };
 
 class MDuinoSoundMP3Trigger : public MDuinoSound
