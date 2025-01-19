@@ -2,7 +2,7 @@
 #define __CONFIG_H__
 
 // Comment the line below when you are really really really really sure, what you are doin!
-#error NOT A FINAL RELEASE! Please choose a official release instead of the main branch!
+// #error NOT A FINAL RELEASE! Please choose a official release instead of the main branch!
 // ->>> https://github.com/RealNobser/BetterDuinoFirmwareV4/releases
 
 //
@@ -28,7 +28,7 @@
 #define INCLUDE_I2C_SLAVE       // Uncommend for new I2C slave mode
 // #define INCLUDE_HOLO_RGB     // Uncomment for NeoPixel-Holo (excludes body master built)
 // #define SEPARATE_DOMELIFT    // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
-// #define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module
+// #define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module (not recommended at the moment, to many problems)
 
 #ifdef SEPARATE_DOMELIFT
     #define SERIAL_LIFT_TYPE SendOnlySoftwareSerial
