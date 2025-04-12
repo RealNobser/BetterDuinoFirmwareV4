@@ -282,11 +282,33 @@ sequence_t const panel_dance PROGMEM =  //Used in SE07
 		{SPLIT_WORD(40), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_NP,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP,	_NP,	_NP}
 };
+/*
 sequence_t const panel_init PROGMEM =
 {
 		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
 		// time				servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
 		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP}
+};
+*/
+sequence_t const panel_init PROGMEM =
+{
+		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
+		// time				servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
+		//{SPLIT_WORD(10), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(10), 	_CLS, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_CLS, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_CLS, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_CLS,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_CLS, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_CLS, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_CLS, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_CLS, 	_NP,	_NP,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_CLS,	_NP,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_CLS,	_NP,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_CLS,	_NP,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_CLS,	_NP},
+		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP}
 };
 
