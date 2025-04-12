@@ -61,6 +61,7 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Description |
 |--|--|--|
+| 2025-01-19|V1.3.0|Support for Tiny MK4 Baddeley Dome Panels, Support for multiple Body Modules|
 | 2024-07-19|V1.2.0|New Architecture, additional BT-1 Sequences|
 | 2024-04-05|V1.0.12|Additional BT-1 Sequence|
 | 2024-04-04|V1.0.11|Sound Hotfix|
