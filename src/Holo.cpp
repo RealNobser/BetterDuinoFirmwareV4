@@ -179,21 +179,13 @@ void Holo::setBrightness(const uint8_t bright)
 void Holo::move(const word HPos, const word VPos, const byte speed /*=0*/)
 {
     if(!HServo.attached())
-    {
-        if (firstAttachH) 
-            HServo.write(HPos);
-        firstAttachH = false;
         HServo.attach(HPin);
-    }
+
     HServo.write(HPos, speed);
 
     if(!VServo.attached())
-    {
-        if (firstAttachV) 
-            VServo.write(VPos);
-        firstAttachV = false;
         VServo.attach(VPin);
-    }
+
     VServo.write(VPos, speed);
 }
 

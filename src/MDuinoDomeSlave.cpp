@@ -80,7 +80,8 @@ void MDuinoDomeSlave::run()
         {
             for (byte i = MinPanel; i <= MaxPanel; i++)
             {
-                Panels[i]->detach();
+                if (!Panels[i]->isMoving())                
+                    Panels[i]->detach();
             }
             ServoBuzzMillis = millis();
         }

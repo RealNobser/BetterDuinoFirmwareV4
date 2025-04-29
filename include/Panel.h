@@ -17,6 +17,8 @@ class Panel
         void move(const word angle, const int speed = -1);
         void move(const byte percent, const int speed = -1);
         void lock(const bool lock) { locked = lock; }
+
+        bool isMoving();
         
         void setEndPositions(const word OpenPos, const word ClosedPos);
         void setOpenPos(const word Pos);
@@ -29,7 +31,6 @@ class Panel
         word OpenPos        = 0;
         word ClosedPos      = 0;
         byte Speed          = 0;
-        bool firstAttach    = true;     // Bug in VarSpeedServo
         bool locked         = false;    // Don't react on movement commands
 };
 

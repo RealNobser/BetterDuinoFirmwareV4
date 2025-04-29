@@ -75,9 +75,6 @@ class Holo
 
         byte testStep   = 0;
 
-        bool firstAttachH   = true;    // Bug in VarSpeedServo
-        bool firstAttachV   = true;    // Bug in VarSpeedServo
-
         unsigned long HoloMillis   = 0;
         unsigned long HoloIntervall= 0;
 

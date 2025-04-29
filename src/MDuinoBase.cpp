@@ -168,6 +168,7 @@ void MDuinoBase::toggleHeartBeat()
 void MDuinoBase::resetServoBuzz()
 {
     ServoBuzzIntervall = SERVO_BUZZ_MILLIS;
+    ServoBuzzMillis = millis();
 }
 
 void MDuinoBase::sequenceCallbackBuzz(MDuinoBase* object)

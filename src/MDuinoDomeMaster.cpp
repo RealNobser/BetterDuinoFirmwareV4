@@ -106,7 +106,8 @@ void MDuinoDomeMaster::run()
         {
             for (byte i = MinPanel; i <= MaxPanel; i++)
             {
-                Panels[i]->detach();
+                if (!Panels[i]->isMoving())
+                    Panels[i]->detach();
             }
             ServoBuzzMillis = millis();
         }
@@ -261,7 +262,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         return;
 
     // Address Slave Panels (12+13) + Addon Body Slave Servos (16-24)
-    if ((param_num == 12) || (param_num == 13) || ((param_num >= 16) && (param_num <= 24)))   
+    if ((param_num == 12) || (param_num == 13))
     {
         if (strcmp(cmd, "SE") != 0)
         { 
@@ -322,7 +323,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             for(byte i=MinPanel; i<= MaxPanel; i++)
                 Panels[i]->close();
             
-            // Open Slave, too
+            // Close Slave, too
             Serial_Slave.print(F(":CL00\r"));
         }
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
@@ -354,7 +355,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             for(byte i=MinPanel; i<= MaxPanel; i++)
                 Panels[i]->lock(true);
             
-            // Open Slave, too
+            // Lock Slave, too
             Serial_Slave.print(F(":LK00\r"));
         }
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))
@@ -386,7 +387,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
             for(byte i=MinPanel; i<= MaxPanel; i++)
                 Panels[i]->lock(false);
             
-            // Open Slave, too
+            // Unlock Slave, too
             Serial_Slave.print(F(":UL00\r"));
         }
         else if ((param_num >= MinPanel) && (param_num <= MaxPanel))

@@ -44,14 +44,10 @@ void Panel::move(const word position, const int speed)
 {
     if (locked)
         return;
-        
+
     if(!Servo.attached())
-    {
-        if (firstAttach) 
-            Servo.write(position);
-        firstAttach = false;
         Servo.attach(Pin);
-    }
+
     if (speed == -1)    // Use stored speed value
         Servo.write(position, this->Speed);
     else
@@ -62,6 +58,14 @@ void Panel::move(const byte percent, const int speed)
 {
     word position = map(percent, 0, 100, ClosedPos, OpenPos);
     move(position, speed);
+}
+
+bool Panel::isMoving()
+{
+    if (!Servo.attached())
+        return false;
+
+    return Servo.isMoving();
 }
 
 void Panel::setEndPositions(const word OpenPos, const word ClosedPos)

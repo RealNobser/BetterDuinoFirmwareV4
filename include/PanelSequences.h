@@ -282,7 +282,7 @@ sequence_t const panel_dance PROGMEM =  //Used in SE07
 		{SPLIT_WORD(40), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_NP,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP,	_NP,	_NP}
 };
-/*
+
 sequence_t const panel_init PROGMEM =
 {
 		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
@@ -290,7 +290,8 @@ sequence_t const panel_init PROGMEM =
 		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP}
 };
-*/
+
+/*
 sequence_t const panel_init PROGMEM =
 {
 		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
@@ -311,6 +312,7 @@ sequence_t const panel_init PROGMEM =
 		{SPLIT_WORD(10), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP}
 };
+*/
 
 // 6min26sec disco sequence to trigger callback at the right time
 sequence_t const panel_long_disco PROGMEM =  //SE09
@@ -979,7 +981,7 @@ sequence_t const bt_dome_panel_init PROGMEM = //SE00
 {
 		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
 		// time				servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
-		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	50, 	50,		_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	_MID, 	_MID,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP}
 };
 
@@ -1030,13 +1032,13 @@ sequence_t const bt_dome_danger_fire PROGMEM = //SE38
 {
 		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
 		// time				servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
-		{SPLIT_WORD(30), 	_CLS, 	_CLS, 	  50, 	  50,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
-		{SPLIT_WORD(120), 	_OPN, 	_OPN, 	  50, 	  50,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
-		{SPLIT_WORD(50), 	_OPN, 	_OPN, 	  50, 	  50,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(30), 	_CLS, 	_CLS, 	_MID, 	_MID,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(120), 	_OPN, 	_OPN, 	_MID, 	_MID,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(50), 	_OPN, 	_OPN, 	_MID, 	_MID,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
 		{SPLIT_WORD(30), 	_OPN, 	_OPN, 	_OPN, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
 		{SPLIT_WORD(30), 	_OPN, 	_OPN, 	_CLS, 	_OPN,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
-		{SPLIT_WORD(170), 	_OPN, 	_OPN, 	  50, 	  50,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
-		{SPLIT_WORD(250), 	_CLS, 	_CLS, 	  50, 	  50,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(170), 	_OPN, 	_OPN, 	_MID, 	_MID,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(250), 	_CLS, 	_CLS, 	_MID, 	_MID,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,    _NP,    _NP,	_NP}
 };
 // Steinke END

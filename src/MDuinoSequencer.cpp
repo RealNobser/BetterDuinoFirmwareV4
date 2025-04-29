@@ -124,11 +124,13 @@ void MDuinoSequencer::movePanels()
 
         if (Position == _NP)
         {
-            Panels[panel]->detach();
-            return;
+            if (!Panels[panel]->isMoving())
+                Panels[panel]->detach();
         }
-
-        Panels[panel]->move(Position, servoSpeed[panel]);
+        else
+        {
+            Panels[panel]->move(Position, servoSpeed[panel]);
+        }
     }
 }
 
