@@ -119,13 +119,13 @@
 #define _MID 50
 
 // Generic GPIOs
-#define P_I2C_SCL 19
-#define P_I2C_SDA 18
-#define P_LED2 17
+#define P_I2C_SCL 19    // A5
+#define P_I2C_SDA 18    // A4
+#define P_LED2 17       // A3
 #define P_RC_IN 8
-#define P_SERIAL1 14
-#define P_SERIAL2 15
-#define P_AUX1 16
+#define P_SERIAL1 14    // A0
+#define P_SERIAL2 15    // A1
+#define P_AUX1 16       // A2
 
 // Dome Master
 #define P_SERVO_01 2
