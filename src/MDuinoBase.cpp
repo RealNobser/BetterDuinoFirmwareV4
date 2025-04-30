@@ -93,7 +93,6 @@ void MDuinoBase::run()
         if ((c == '\r') || (WireIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
         {
             WireBuffer[WireIndex-1] = 0x00; // ensure proper termination
-            Serial.println(WireBuffer);
             parseCommand(WireBuffer);
             memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
             WireIndex = 0;

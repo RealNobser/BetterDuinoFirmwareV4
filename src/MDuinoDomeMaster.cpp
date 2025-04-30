@@ -91,6 +91,14 @@ void MDuinoDomeMaster::init()
             RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
     }
 
+    // Check for Lift module
+    Serial_Lift.print(F(":L?\r"));
+    delay(500);
+    if (LiftModuleConnected)
+    {
+        Serial_Lift.printf(F(":LI99")); // Unlift all
+        delay(500);                     // Panels should be locked now
+    }
     parseCommand(":SE00");              // Init Panels
 }
 
@@ -433,6 +441,10 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     else if (strcmp(cmd, "LI")==0)
     {
         Serial_Lift.printf(F("%s\r"), command);
+    }
+    else if (strcmp(cmd, "L?")==0)
+    {
+        LiftModuleConnected = true;
     }
 }
 
