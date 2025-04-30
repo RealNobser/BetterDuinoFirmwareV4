@@ -3,9 +3,15 @@
 
 #include <Arduino.h>
 #include <VarSpeedServo.h>
-#include <Adafruit_NeoPixel.h>
-
 #include "config.h"
+
+#ifdef INCLUDE_HOLO_RGB
+#if defined(ARDUINO_NEOPIXEL)
+#include <Adafruit_NeoPixel.h>
+#elif defined(FASTLED_NEOPIXEL)
+#include <FastLED.h>
+#endif
+#endif  // INCLUDE_HOLO_RGB
 
 class Holo
 {
@@ -61,7 +67,12 @@ class Holo
         uint8_t NrPixels        = 7;
 
         #ifdef INCLUDE_HOLO_RGB
+        #if defined(ARDUINO_NEOPIXEL)
         Adafruit_NeoPixel* pixels = nullptr;
+        #elif defined(FASTLED_NEOPIXEL)
+        CLEDController& ledController;
+        CRGB* led_array			= nullptr;
+        #endif        
         uint8_t red             = 255;
         uint8_t green           = 255;
         uint8_t blue            = 255;

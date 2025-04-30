@@ -14,9 +14,11 @@ Holo::Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo,
     #ifdef INCLUDE_HOLO_RGB
     if (NeoPixelHolo)
     {
+        #ifdef ARDUINO_NEOPIXEL
         pixels = new Adafruit_NeoPixel(NrPixels, LightPin, HP_NEO_TYPE);
         pixels->begin();
         pixels->clear();
+        #endif
     }
     else
     #endif
@@ -102,6 +104,7 @@ void Holo::setColor(const uint8_t red, const uint8_t green, const uint8_t blue, 
 
     uint32_t color = 0x00000000;
 
+    #ifdef ARDUINO_NEOPIXEL
     pixels->clear();
 
     color |= static_cast<uint32_t>(0x00)    << 24;
@@ -119,6 +122,7 @@ void Holo::setColor(const uint8_t red, const uint8_t green, const uint8_t blue, 
     */
 
     pixels->setBrightness(bright);
+    #endif
 
 }
 
@@ -126,7 +130,9 @@ void Holo::on(const uint8_t red, const uint8_t green, const uint8_t blue, const 
 {
     setColor(red, green, blue, bright);
 
+    #ifdef ARDUINO_NEOPIXEL
     pixels->show();
+    #endif 
 
     LightOn = true;
 
@@ -150,8 +156,10 @@ void Holo::off()
     #ifdef INCLUDE_HOLO_RGB
     if(NeoPixelHolo)
     {
+        #ifdef ARDUINO_NEOPIXEL
         pixels->clear();
         pixels->show();
+        #endif
     }
     else
     #endif
@@ -168,8 +176,10 @@ void Holo::setBrightness(const uint8_t bright)
     #ifdef INCLUDE_HOLO_RGB
     if(NeoPixelHolo)
     {
+        #ifdef ARDUINO_NEOPIXEL
         pixels->setBrightness(bright);
         pixels->show();
+        #endif
     }
     else
     #endif
@@ -221,8 +231,10 @@ void Holo::flickerTrigger()
         #ifdef INCLUDE_HOLO_RGB
         if (NeoPixelHolo)
         {
+            #ifdef ARDUINO_NEOPIXEL
             pixels->clear();
             pixels->show();
+            #endif
         }
         else
         #endif
@@ -238,7 +250,9 @@ void Holo::flickerTrigger()
         if (NeoPixelHolo)
         {
             setColor(red, green, blue, bright);
+            #ifdef ARDUINO_NEOPIXEL
             pixels->show();
+            #endif
         }
         else
         #endif
