@@ -22,7 +22,10 @@ class MDuinoDomeMaster : public MDuinoDome
         SendOnlySoftwareSerial& Serial_Slave;
         SendOnlySoftwareSerial& Serial_MP3;
         SERIAL_LIFT_TYPE& Serial_Lift;
+
+        #ifndef INCLUDE_CLASSIC_I2C_SUPPORT
         bool LiftModuleConnected = false;
+        #endif
 
         static const byte MinPanel =  1;   // Master Board has 11 Panel Connectors
         static const byte MaxPanel = 11;   // Master Board has 11 Panel Connectors

@@ -438,9 +438,9 @@ void MDuinoBase::processSetupCommand(const char* command)
     #endif
 }
 
+#ifdef INCLUDE_CLASSIC_I2C_SUPPORT
 void MDuinoBase::processI2CCommand(const char* command)
 {
-    #ifdef INCLUDE_CLASSIC_I2C_SUPPORT
 
     #ifdef DEBUG_MSG
     Serial.printf(F("I2CCommand(Base): %s\r\n"), command);
@@ -520,6 +520,5 @@ void MDuinoBase::processI2CCommand(const char* command)
         token=strtok(NULL, delim); 	// get next token
     }
     Wire.endTransmission();
-
-    #endif
 }
+#endif

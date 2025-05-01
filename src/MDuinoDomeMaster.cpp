@@ -92,6 +92,7 @@ void MDuinoDomeMaster::init()
     }
 
     // Check for Lift module
+    #ifndef INCLUDE_CLASSIC_I2C_SUPPORT
     Serial_Lift.print(F(":L?\r"));
     delay(500);
     if (LiftModuleConnected)
@@ -99,6 +100,7 @@ void MDuinoDomeMaster::init()
         Serial_Lift.printf(F(":LI99")); // Unlift all
         delay(500);                     // Panels should be locked now
     }
+    #endif
     parseCommand(":SE00");              // Init Panels
 }
 
@@ -229,11 +231,13 @@ void MDuinoDomeMaster::parseCommand(const char* command)
     case '%':
         processAltHoloCommand(command);
         break;
+    #ifdef INCLUDE_CLASSIC_I2C_SUPPORT
     case '&':
         processI2CCommand(command);
         // Forward to slave
         Serial_Slave.printf(F("%s\r"), command);
         break;
+    #endif
     case '#':
         processSetupCommand(command);
         // Forwarding all but #MD to Slave to be in sync
@@ -443,10 +447,12 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     {
         Serial_Lift.printf(F("%s\r"), command);
     }
+    #ifndef INCLUDE_CLASSIC_I2C_SUPPORT
     else if (strcmp(cmd, "L?")==0)
     {
         LiftModuleConnected = true;
     }
+    #endif
 }
 
 void MDuinoDomeMaster::processHoloCommand(const char* command)

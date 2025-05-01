@@ -139,9 +139,11 @@ void MDuinoDomeSlave::parseCommand(const char* command)
     case '%':
         processExpansionCommand(command);
         break;
+    #ifdef INCLUDE_CLASSIC_I2C_SUPPORT
     case '&':
         processI2CCommand(command);
-        break;        
+        break;
+    #endif
     case '#':
         processSetupCommand(command);
         break;    

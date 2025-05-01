@@ -27,11 +27,13 @@ public:
 
 protected:
 	VarSpeedServo &Servo;
-	uint8_t Pin = 0;
-	uint16_t OpenPos = 0;
-	uint16_t ClosedPos = 0;
-	uint8_t Speed = 0;
-	bool locked = false; // Don't react on movement commands
+	uint16_t OpenPos	= 0;
+	uint16_t ClosedPos	= 0;
+	uint8_t Speed		= 0;
+	uint8_t Pin			= 0;
+	
+	bool locked			= false; // Don't react on movement commands
+	bool firstAttach	= true;
 };
 
 #endif // __PANEL_H__

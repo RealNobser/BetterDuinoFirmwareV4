@@ -66,7 +66,10 @@ class MDuinoBase
         bool separateCommand(const char* command, char* cmd, unsigned int & param_num, unsigned int & param_num_ext);       
 
         void processSetupCommand(const char* command);
+        
+        #ifdef INCLUDE_CLASSIC_I2C_SUPPORT        
         virtual void processI2CCommand(const char* command);
+        #endif
 
         virtual void checkEEPROM(const bool factoryReset = false);
 

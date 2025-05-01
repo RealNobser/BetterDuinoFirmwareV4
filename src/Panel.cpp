@@ -10,10 +10,10 @@ Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin) :
 
 Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin, const uint16_t OpenPos, const uint16_t ClosedPos, const uint8_t Speed ) :
     Servo(Servo),
-    Pin(Pin),
     OpenPos(OpenPos),
     ClosedPos(ClosedPos),
-    Speed(Speed)
+    Speed(Speed),
+    Pin(Pin)
 {
     // attach();    
 }
@@ -46,12 +46,19 @@ void Panel::moveMS(const uint16_t position, const uint8_t speed,  const bool sto
         return;
 
     if(!Servo.attached())
-        Servo.attach(Pin);
+    {
+        if (firstAttach)
+            Servo.attach(Pin, position);
+        else
+            Servo.attach(Pin);
+    }
 
     if (storedSpeed)    // Use stored speed value
         Servo.write(position, this->Speed);
     else
         Servo.write(position, speed);
+    
+    firstAttach = false;
 }
 
 void Panel::moveDeg(const uint8_t percent, const uint8_t speed, const bool storedSpeed)
