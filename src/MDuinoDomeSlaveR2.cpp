@@ -7,6 +7,7 @@ MDuinoDomeSlaveR2::MDuinoDomeSlaveR2(SendOnlySoftwareSerial& Serial_Magic, SendO
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11) :
     MDuinoDomeSlave(Serial_Magic, Serial_Teeces, Serial_Lift, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11)
 {
+    SequencePlayer = new MDuinoDomeSequencePlayerR2(Sequencer);
 }
 
 void MDuinoDomeSlaveR2::init()
@@ -17,23 +18,6 @@ void MDuinoDomeSlaveR2::init()
 void MDuinoDomeSlaveR2::run()
 {
     MDuinoDomeSlave::run();
-}
-
-void MDuinoDomeSlaveR2::playSequence(const byte SeqNr)
-{
-    Sequencer.stopSequence();
-    Sequencer.clearSequence();
-    
-    switch (SeqNr)
-    {
-    case 0: // CLOSE ALL PANELS
-        //Sequencer.loadSequence(body_panel_init, SEQ_SIZE(panel_init));
-        Sequencer.setServoSpeed(MDuinoSequencer::slow);
-        break;
-    default:
-        break;         
-    }
-    playSequenceAddons(SeqNr);
 }
 
 void MDuinoDomeSlaveR2::playSequenceAddons(const byte SeqNr)

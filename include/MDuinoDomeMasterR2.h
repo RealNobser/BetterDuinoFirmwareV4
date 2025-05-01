@@ -2,7 +2,6 @@
 #define __MDUINODOMEMASTERR2_H__
 
 #include <SendOnlySoftwareSerial.h>
-
 #include "MDuinoDomeMaster.h"
 
 /** Command implementation
@@ -26,7 +25,6 @@ class MDuinoDomeMasterR2 : public MDuinoDomeMaster
         virtual const char* getProductName() override { return "BetterDuino Dome Master (R2-D2)"; }
 
     protected:
-        void playSequence(const byte SeqNr) override;
         void playSequenceAddons(const byte SeqNr) override;
         
 };

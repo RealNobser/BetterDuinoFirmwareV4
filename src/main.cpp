@@ -8,17 +8,14 @@
 #include "MDuinoDomeMasterR2.h"
 #include "MDuinoDomeSlaveR2.h"
 #include "MDuinoBodyMasterR2.h"
-#include "MDuinoBodySlaveR2.h"
 #elif defined(CHOPPER)
 #include "MDuinoDomeMasterChopper.h"
 #include "MDuinoDomeSlaveChopper.h"
 #include "MDuinoBodyMasterChopper.h"
-#include "MDuinoBodySlaveChopper.h"
 #elif defined(BT1)
 #include "MDuinoDomeMasterBT1.h"
 #include "MDuinoDomeSlaveBT1.h"
 #include "MDuinoBodyMasterBT1.h"
-#include "MDuinoBodySlaveBT1.h"
 #endif
 
 MDuinoBase *MDuino = nullptr;
@@ -124,23 +121,6 @@ void setup()
         #endif
         break;
     #endif
-    #ifdef INCLUDE_BODY_SLAVE
-    case MDuinoStorage::BodySlave:
-        #if defined(R2D2)
-        MDuino = new MDuinoBodySlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
-        #elif defined(CHOPPER)
-        MDuino = new MDuinoBodySlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
-        #elif defined(BT1)
-        MDuino = new MDuinoBodySlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
-        #else
-        #error Please include at least one astromech type in config.h
-        #endif
-        #ifdef INCLUDE_I2C_SLAVE
-        Wire.begin(I2C_BODY_SLAVE);
-        Wire.onReceive(I2C_Callback);
-        #endif
-        break;
-    #endif
     case MDuinoStorage::UnknownType:
     default:
         #ifdef INCLUDE_DOME_MASTER
@@ -191,23 +171,6 @@ void setup()
         Wire.begin(I2C_BODY_MASTER);
         Wire.onReceive(I2C_Callback);
         #endif
-
-        #elif defined(INCLUDE_BODY_SLAVE)
-
-        #if defined(R2D2)
-        MDuino = new MDuinoBodySlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
-        #elif defined(CHOPPER)
-        MDuino = new MDuinoBodySlaveChopper(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
-        #elif defined(BT1)
-        MDuino = new MDuinoBodySlaveBT1(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
-        #else
-        #error Please include at least one astromech type in config.h
-        #endif
-        #ifdef INCLUDE_I2C_SLAVE
-        Wire.begin(I2C_BODY_SLAVE);
-        Wire.onReceive(I2C_Callback);
-        #endif
-        
         #else
         #error Please include at least one role type in config.h
         #endif

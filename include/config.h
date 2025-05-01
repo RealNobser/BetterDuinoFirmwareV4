@@ -21,8 +21,7 @@
 
 #define INCLUDE_DOME_MASTER // Uncomment to include Dome Master Controller in combined firmware
 #define INCLUDE_DOME_SLAVE	// Uncomment to include Dome Slave Controller in combined firmware
-#define INCLUDE_BODY_MASTER // Uncomment to include Body Master Controller in combined firmware
-// #define INCLUDE_BODY_SLAVE	// Uncomment to include Body Slave Controller in combined firmware
+//#define INCLUDE_BODY_MASTER // Uncomment to include Body Master Controller in combined firmware
 
 // #define INCLUDE_CLASSIC_I2C_SUPPORT  // Uncomment to include classic Serial to I2C support (excludes body master built)
 #define INCLUDE_I2C_SLAVE // Uncommend for new I2C slave mode
@@ -40,12 +39,10 @@
 
 #ifdef INCLUDE_CLASSIC_I2C_SUPPORT
 #undef INCLUDE_BODY_MASTER
-#undef INCLUDE_BODY_SLAVE
 #endif
 
 #ifdef INCLUDE_HOLO_RGB
 #undef INCLUDE_BODY_MASTER
-#undef INCLUDE_BODY_SLAVE
 #undef INCLUDE_DOME_MASTER
 // #define NEO_JEWEL_RGBW
 #ifdef NEO_JEWEL_RGBW
@@ -168,19 +165,5 @@
 #define P_CHRG_BAY_DR 13
 #define P_RFU 7
 #define I2C_BODY_MASTER 52
-
-// Body Slave
-// #define P_DPL            2
-// #define P_UTIL_ARM_U     3
-// #define P_UTIL_ARM_L     4
-// #define P_LEFT_BDY_DR    5
-// #define P_LEFT_ARM       6
-// #define P_LEFT_ARM_TOOL  9
-// #define P_RIGHT_BDY_DR   10
-// #define P_RIGHT_ARM      11
-// #define P_RIGHT_ARM_TOOL 12
-// #define P_CHRG_BAY_DR    13
-// #define P_RFU            7
-#define I2C_BODY_SLAVE 53
 
 #endif // __CONFIG_H__

@@ -7,6 +7,7 @@
 
 #include "MDuinoStorage.h"
 #include "MDuinoSequencer.h"
+#include "MDuinoSequencePlayer.h"
 
 class MDuinoBase
 {
@@ -52,9 +53,10 @@ class MDuinoBase
 
         MDuinoStorage    Storage;
         MDuinoSequencer  Sequencer;
+        MDuinoSequencePlayer* SequencePlayer = nullptr;
 
     protected:
-        virtual void playSequence(const byte SeqNr) = 0;
+        virtual void playSequence(const byte SeqNr);
         virtual void playSequenceAddons(const byte SeqNr) = 0;
 
         void toggleHeartBeat();

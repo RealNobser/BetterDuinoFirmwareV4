@@ -101,6 +101,15 @@ void MDuinoBase::run()
     #endif
 }
 
+void MDuinoBase::playSequence(const byte SeqNr)
+{
+    if (SequencePlayer != nullptr)
+    {
+        SequencePlayer->playSequence(SeqNr);
+        playSequenceAddons(SeqNr);
+    }
+}
+
 void MDuinoBase::checkEEPROM(const bool factoryReset /*= false*/)
 {
     byte ConfigVersion = Storage.getConfigVersion();
