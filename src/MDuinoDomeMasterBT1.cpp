@@ -43,9 +43,6 @@ void MDuinoDomeMasterBT1::playSequence(const byte SeqNr)
 
 void MDuinoDomeMasterBT1::playSequenceAddons(const byte SeqNr)
 {
-    // Also forward to Slave
-    Serial_Slave.printf(F(":SE%2u\r"), SeqNr);
-
     // Disable Servo detach during Animations
     ServoBuzzIntervall = 0;
     Sequencer.addSequenceCompletionCallback(sequenceCallbackBuzz);

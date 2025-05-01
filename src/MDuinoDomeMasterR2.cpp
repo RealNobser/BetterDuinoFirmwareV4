@@ -22,10 +22,6 @@ void MDuinoDomeMasterR2::run()
 
 void MDuinoDomeMasterR2::playSequenceAddons(const byte SeqNr)
 {
-    // Also forward to Slave
-    Serial_Slave.printf(F(":SE%2d\r"), SeqNr);
-    Serial_Slave.flush();
-
     // Disable Servo detach during Animations
     ServoBuzzIntervall = 0;
     Sequencer.addSequenceCompletionCallback(sequenceCallbackBuzz);

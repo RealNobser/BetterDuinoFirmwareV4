@@ -15,7 +15,7 @@ void MDuinoSequencePlayer::playSequence(const byte SeqNr)
 }
 
 // ----------
-
+#ifdef R2D2
 MDuinoDomeSequencePlayerR2::MDuinoDomeSequencePlayerR2(MDuinoSequencer &Sequencer) : 
 	MDuinoSequencePlayer(Sequencer)
 {
@@ -194,3 +194,4 @@ void MDuinoBodySequencePlayerR2::playSequence(const byte SeqNr)
 		break;
 	}
 }
+#endif

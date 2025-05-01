@@ -12,7 +12,6 @@ MDuinoBodyMasterBT1::MDuinoBodyMasterBT1(SendOnlySoftwareSerial& Serial_Slave, S
 void MDuinoBodyMasterBT1::init()
 {
     MDuinoDomeMasterBT1::init();
-    // Serial_Slave.print(F("#MD03\r"));   // Force Slave board to be in Body Slave Mode
 }
 
 void MDuinoBodyMasterBT1::run()
@@ -102,9 +101,6 @@ void MDuinoBodyMasterBT1::playSequence(const byte SeqNr)
 
 void MDuinoBodyMasterBT1::playSequenceAddons(const byte SeqNr)
 {
-    // Also forward to Slave
-    Serial_Slave.printf(F(":SE%2u\r"), SeqNr);
-
     // Disable Servo detach during Animations
     ServoBuzzIntervall = 0;
     Sequencer.addSequenceCompletionCallback(sequenceCallbackBuzz);

@@ -13,6 +13,7 @@ protected:
 	MDuinoSequencer& Sequencer;
 };
 
+#ifdef R2D2
 class MDuinoDomeSequencePlayerR2 : public MDuinoSequencePlayer
 {
 public:
@@ -26,5 +27,6 @@ public:
 	MDuinoBodySequencePlayerR2(MDuinoSequencer &Sequencer);
 	virtual void playSequence(const byte SeqNr) override;
 };
+#endif
 
 #endif
