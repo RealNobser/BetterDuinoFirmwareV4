@@ -5,33 +5,33 @@
 
 class Panel
 {
-    public:
-        Panel(VarSpeedServo& Servo, const uint8_t Pin);
-        Panel(VarSpeedServo& Servo, const uint8_t Pin, const word OpenPos, const word ClosedPos, const byte Speed = 0);
+public:
+	Panel(VarSpeedServo &Servo, const uint8_t Pin);
+	Panel(VarSpeedServo &Servo, const uint8_t Pin, const uint16_t OpenPos, const uint16_t ClosedPos, const uint8_t Speed = 0);
 
-        void attach();
-        void detach();
+	void attach();
+	void detach();
 
-        void open(const int speed = -1);
-        void close(const int speed = -1);
-        void move(const word angle, const int speed = -1);
-        void move(const byte percent, const int speed = -1);
-        void lock(const bool lock) { locked = lock; }
+	void open(const uint8_t speed = 0);
+	void close(const uint8_t speed = 0);
+	void moveMS(const uint16_t angle, const uint8_t speed, const bool storedSpeed);
+	void moveDeg(const uint8_t percent, const uint8_t speed, const bool storedSpeed);
+	void lock(const bool lock) { locked = lock; }
 
-        bool isMoving();
-        
-        void setEndPositions(const word OpenPos, const word ClosedPos);
-        void setOpenPos(const word Pos);
-        void setClosedPos(const word Pos);
-        void setSpeed(const byte Speed);
+	bool isMoving();
 
-    protected:
-        VarSpeedServo& Servo;
-        uint8_t Pin         = 0;
-        word OpenPos        = 0;
-        word ClosedPos      = 0;
-        byte Speed          = 0;
-        bool locked         = false;    // Don't react on movement commands
+	void setEndPositions(const uint16_t OpenPos, const uint16_t ClosedPos);
+	void setOpenPos(const uint16_t Pos);
+	void setClosedPos(const uint16_t Pos);
+	void setSpeed(const uint8_t Speed);
+
+protected:
+	VarSpeedServo &Servo;
+	uint8_t Pin = 0;
+	uint16_t OpenPos = 0;
+	uint16_t ClosedPos = 0;
+	uint8_t Speed = 0;
+	bool locked = false; // Don't react on movement commands
 };
 
 #endif // __PANEL_H__

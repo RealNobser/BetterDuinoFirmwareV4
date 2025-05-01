@@ -30,6 +30,7 @@
 // #define FASTLED_NEOPIXEL		// Choose one!
 // #define SEPARATE_DOMELIFT    // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
 // #define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module (not recommended at the moment, to many problems)
+// #define INCLUDE_HOLO_TEST
 
 #ifdef SEPARATE_DOMELIFT
 #define SERIAL_LIFT_TYPE SendOnlySoftwareSerial
@@ -100,7 +101,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION "4.4.0"
+#define VERSION "4.4.1"
 #define HW_VERSION "1.5.3"
 #define CONFIG_VERSION 41
 

@@ -35,20 +35,22 @@ class Holo
         void flickerOn(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t bright, const unsigned long duration = 0);
         #endif
 
-        void move(const word HPos, const word VPos, const byte speed = 0);
+        void move(const uint16_t HPos, const uint16_t VPos, const uint8_t speed = 0);
                
         void randomMove(const bool moving=true);
 
         bool isOn() { return LightOn; }
         bool isNeoPixelHolo() { return NeoPixelHolo; }
 
-        void setEndPositions(const word HMin, const word HMax, const word VMin, const word VMax);
+        void setEndPositions(const uint16_t HMin, const uint16_t HMax, const uint16_t VMin, const uint16_t VMax);
 
         void run();
 
         void flickerTrigger();
         void moveTrigger();
+        #ifdef INCLUDE_HOLO_TEST
         void testTrigger();
+        #endif
 
     protected:
         uint8_t LightPin        = 0;
@@ -79,12 +81,14 @@ class Holo
         uint8_t bright          = 200;
         #endif
 
-        word HMinPos     = 0;
-        word HMaxPos     = 0;
-        word VMinPos     = 0;
-        word VMaxPos     = 0;
+        uint16_t HMinPos     = 0;
+        uint16_t HMaxPos     = 0;
+        uint16_t VMinPos     = 0;
+        uint16_t VMaxPos     = 0;
 
-        byte testStep   = 0;
+        #ifdef INCLUDE_HOLO_TEST
+        uint8_t testStep   = 0;
+        #endif
 
         unsigned long HoloMillis   = 0;
         unsigned long HoloIntervall= 0;
@@ -95,14 +99,19 @@ class Holo
         unsigned long HoloMoveMillis      = 0;
         unsigned long HoloMoveIntervall   = 0;
 
+        #ifdef INCLUDE_HOLO_TEST
         unsigned long HoloTestMillis      = 0;
         unsigned long HoloTestIntervall   = 0;
+        #endif
 
         void checkTimer(const unsigned long intervall, const unsigned long milli, void (*func)(Holo*));
 
         static void static_Off(Holo* object);
         static void static_flickerTrigger(Holo* object);
         static void static_moveTrigger(Holo* object);
+
+        #ifdef INCLUDE_HOLO_TEST
         static void static_testTrigger(Holo* object);
+        #endif
 };
 #endif

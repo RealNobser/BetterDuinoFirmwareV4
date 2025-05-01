@@ -8,7 +8,7 @@ Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin) :
     //attach();
 }
 
-Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin, const word OpenPos, const word ClosedPos, const byte Speed ) :
+Panel::Panel(VarSpeedServo& Servo, const uint8_t Pin, const uint16_t OpenPos, const uint16_t ClosedPos, const uint8_t Speed ) :
     Servo(Servo),
     Pin(Pin),
     OpenPos(OpenPos),
@@ -30,17 +30,17 @@ void Panel::detach()
         Servo.detach();
 }
 
-void Panel::open(const int speed)
+void Panel::open(const uint8_t speed)
 {
-    move(OpenPos, speed);
+    moveMS(OpenPos, speed, false);
 }
 
-void Panel::close(const int speed)
+void Panel::close(const uint8_t speed)
 {
-    move(ClosedPos, speed);
+    moveMS(ClosedPos, speed, false);
 }
 
-void Panel::move(const word position, const int speed)
+void Panel::moveMS(const uint16_t position, const uint8_t speed,  const bool storedSpeed)
 {
     if (locked)
         return;
@@ -48,16 +48,16 @@ void Panel::move(const word position, const int speed)
     if(!Servo.attached())
         Servo.attach(Pin);
 
-    if (speed == -1)    // Use stored speed value
+    if (storedSpeed)    // Use stored speed value
         Servo.write(position, this->Speed);
     else
         Servo.write(position, speed);
 }
 
-void Panel::move(const byte percent, const int speed)
+void Panel::moveDeg(const uint8_t percent, const uint8_t speed, const bool storedSpeed)
 {
-    word position = map(percent, 0, 100, ClosedPos, OpenPos);
-    move(position, speed);
+    uint16_t position = map(percent, 0, 100, ClosedPos, OpenPos);
+    moveMS(position, speed, storedSpeed);
 }
 
 bool Panel::isMoving()
@@ -68,23 +68,23 @@ bool Panel::isMoving()
     return Servo.isMoving();
 }
 
-void Panel::setEndPositions(const word OpenPos, const word ClosedPos)
+void Panel::setEndPositions(const uint16_t OpenPos, const uint16_t ClosedPos)
 {
     this->OpenPos     = OpenPos;
     this->ClosedPos   = ClosedPos;
 }
 
-void Panel::setOpenPos(const word Pos)
+void Panel::setOpenPos(const uint16_t Pos)
 {
     this->OpenPos = Pos;
 }
 
-void Panel::setClosedPos(const word Pos)
+void Panel::setClosedPos(const uint16_t Pos)
 {
     this->ClosedPos = Pos;
 }
 
-void Panel::setSpeed(const byte Speed)
+void Panel::setSpeed(const uint8_t Speed)
 {
     this->Speed = Speed;
 }

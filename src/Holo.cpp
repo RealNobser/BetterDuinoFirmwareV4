@@ -34,7 +34,9 @@ void Holo::run()
     checkTimer(HoloIntervall, HoloMillis, static_Off);
     checkTimer(HoloFlickerIntervall, HoloFlickerMillis, static_flickerTrigger);
     checkTimer(HoloMoveIntervall, HoloMoveMillis, static_moveTrigger);
+    #ifdef INCLUDE_HOLO_TEST
     checkTimer(HoloTestIntervall, HoloTestMillis, static_testTrigger);
+    #endif
 }
 
 void Holo::setHighActive(const bool HighActive /*= true*/)
@@ -185,7 +187,7 @@ void Holo::setBrightness(const uint8_t bright)
         ;    // PWM ?
 }
 
-void Holo::move(const word HPos, const word VPos, const byte speed /*=0*/)
+void Holo::move(const uint16_t HPos, const uint16_t VPos, const uint8_t speed /*=0*/)
 {
     if(!HServo.attached())
         HServo.attach(HPin);
@@ -201,7 +203,9 @@ void Holo::move(const word HPos, const word VPos, const byte speed /*=0*/)
 void Holo::randomMove(const bool moving /*=true*/)
 {
     HoloMoveIntervall = 0;
+    #ifdef INCLUDE_HOLO_TEST
     HoloTestIntervall = 0;
+    #endif
     
     if (!moving)
     {
@@ -212,7 +216,7 @@ void Holo::randomMove(const bool moving /*=true*/)
     moveTrigger();
 }
 
-void Holo::setEndPositions(const word HMin, const word HMax, const word VMin, const word VMax)
+void Holo::setEndPositions(const uint16_t HMin, const uint16_t HMax, const uint16_t VMin, const uint16_t VMax)
 {
     HMinPos = HMin;
     HMaxPos = HMax;
@@ -264,9 +268,9 @@ void Holo::flickerTrigger()
 
 void Holo::moveTrigger()
 {
-    word HPos = 0;
-    word VPos = 0;
-    word Speed = 0;
+    uint16_t HPos = 0;
+    uint16_t VPos = 0;
+    uint8_t Speed = 0;
 
     HPos = random(HMinPos, HMaxPos);
     VPos = random(VMinPos, VMaxPos);
@@ -278,11 +282,12 @@ void Holo::moveTrigger()
     HoloMoveMillis      = millis();
 }
 
+#ifdef INCLUDE_HOLO_TEST
 void Holo::testTrigger()
 {
-    word HPos    = 0;
-    word VPos    = 0;
-    word Speed   = 0;
+    uint16_t HPos    = 0;
+    uint16_t VPos    = 0;
+    uint8_t Speed    = 0;
 
     // Center
     HPos = (HMaxPos-HMinPos)/2 + HMinPos;
@@ -332,6 +337,7 @@ void Holo::testTrigger()
     if (testStep > 10)
         testStep = 0;
 }
+#endif
 
 void Holo::checkTimer(const unsigned long intervall, const unsigned long milli, void (*func)(Holo*))
 {
@@ -359,7 +365,9 @@ void Holo::static_moveTrigger(Holo* object)
     object->moveTrigger();
 }
 
+#ifdef INCLUDE_HOLO_TEST
 void Holo::static_testTrigger(Holo* object)
 {
     object->testTrigger();
 }
+#endif

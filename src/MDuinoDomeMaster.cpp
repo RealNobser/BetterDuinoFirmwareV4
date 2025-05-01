@@ -285,7 +285,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
         if (param_num > MaxPanel)
             return;
 
-        Panels[param_num]->move((word)param_num_ext);
+        Panels[param_num]->moveMS((uint16_t)param_num_ext, 0, true);
     }
     else if (strcmp(cmd, "SE")==0)       // Start Sequence
     {

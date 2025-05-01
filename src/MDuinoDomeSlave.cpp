@@ -173,7 +173,7 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
         if (param_num > MaxPanel)
             return;
 
-        Panels[param_num]->move((word)param_num_ext);
+        Panels[param_num]->moveMS((uint16_t)param_num_ext, 0, true);
     }
     else if (strcmp(cmd, "SE")==0)       // Start Sequence
     {
@@ -404,12 +404,14 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     else if (strcmp(cmd, "OF")==0)  // Holo Lights off
     {
         HolosOff(param_num);
-    }    
+    }
+    #ifdef INCLUDE_HOLO_TEST    
     else if (strcmp(cmd, "TE")==0)  // Holo Movement Test
     {
         adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
         Holos[param_num]->testTrigger();
-    }    
+    }
+    #endif
     else if (strcmp(cmd, "CH")==0)  // Center Holo
     {
         adjustHoloEndPositions(Holos, MinHolo, MaxHolo);

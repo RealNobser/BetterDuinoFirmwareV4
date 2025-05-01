@@ -129,7 +129,7 @@ void MDuinoSequencer::movePanels()
         }
         else
         {
-            Panels[panel]->move(Position, servoSpeed[panel]);
+            Panels[panel]->moveDeg((uint8_t)Position, servoSpeed[panel], false);
         }
     }
 }
