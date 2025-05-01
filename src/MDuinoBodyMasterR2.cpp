@@ -29,7 +29,7 @@ void MDuinoBodyMasterR2::playSequence(const byte SeqNr)
     {
     case 0: // CLOSE ALL PANELS
         Sequencer.loadSequence(body_panel_init, SEQ_SIZE(body_panel_init));
-        Sequencer.setServoSpeed(MDuinoSequencer::slow);
+        Sequencer.setServoSpeed(MDuinoSequencer::super_slow);
         break;
     case 1:  // SCREAM
     case 51:

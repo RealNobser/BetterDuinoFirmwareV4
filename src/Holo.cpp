@@ -102,9 +102,8 @@ void Holo::setColor(const uint8_t red, const uint8_t green, const uint8_t blue, 
     this->blue  = blue;
     this->bright= bright;
 
-    uint32_t color = 0x00000000;
-
     #ifdef ARDUINO_NEOPIXEL
+    uint32_t color = 0x00000000;
     pixels->clear();
 
     color |= static_cast<uint32_t>(0x00)    << 24;
