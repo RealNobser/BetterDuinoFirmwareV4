@@ -3,7 +3,8 @@
 #include "MDuinoSequencePlayer.h"
 #include "PanelSequences.h"
 
-MDuinoSequencePlayer::MDuinoSequencePlayer(MDuinoSequencer &Sequencer) : Sequencer(Sequencer)
+MDuinoSequencePlayer::MDuinoSequencePlayer(MDuinoSequencer &Sequencer) : 
+	Sequencer(Sequencer)
 {
 }
 
@@ -15,7 +16,8 @@ void MDuinoSequencePlayer::playSequence(const byte SeqNr)
 
 // ----------
 
-MDuinoDomeSequencePlayerR2::MDuinoDomeSequencePlayerR2(MDuinoSequencer &Sequencer) : MDuinoSequencePlayer(Sequencer)
+MDuinoDomeSequencePlayerR2::MDuinoDomeSequencePlayerR2(MDuinoSequencer &Sequencer) : 
+	MDuinoSequencePlayer(Sequencer)
 {
 }
 

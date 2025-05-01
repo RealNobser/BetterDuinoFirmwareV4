@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "author": "RealNobser",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-nano", "id": "nano", "top": 190, "left": 90, "attrs": {} },
+    {
+      "type": "wokwi-servo",
+      "id": "servo10",
+      "top": 8.6,
+      "left": 289.8,
+      "rotate": 270,
+      "attrs": { "hornColor": "DarkBlue" }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo11",
+      "top": 8.6,
+      "left": 433.8,
+      "rotate": 270,
+      "attrs": { "hornColor": "DarkBlue" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 67,
+      "left": 115,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    { "type": "wokwi-led", "id": "led", "top": 0, "left": 120, "attrs": { "color": "red" } },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 67,
+      "left": 215,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    { "type": "wokwi-led", "id": "aux", "top": 0, "left": 220, "attrs": { "color": "blue" } }
+  ],
+  "connections": [
+    [ "nano:GND.1", "servo10:GND", "black", [ "v-25", "h122" ] ],
+    [ "nano:GND.1", "servo11:GND", "black", [ "v-25", "h122" ] ],
+    [ "nano:5V", "servo10:V+", "red", [ "v-29", "h122" ] ],
+    [ "nano:5V", "servo11:V+", "red", [ "v-29", "h122" ] ],
+    [ "nano:13", "servo10:PWM", "DarkMagenta", [ "v-29", "h122" ] ],
+    [ "nano:7", "servo11:PWM", "DarkMagenta", [ "v-29", "h122" ] ],
+    [ "nano:GND.1", "led:C", "black", [] ],
+    [ "nano:GND.1", "aux:C", "black", [] ],
+    [ "r1:1", "led:A", "blue", [] ],
+    [ "r2:1", "aux:A", "blue", [] ],
+    [ "nano:A3", "r1:2", "blue", [] ],
+    [ "nano:A2", "r2:2", "blue", [] ]
+  ],
+  "dependencies": {}
+}

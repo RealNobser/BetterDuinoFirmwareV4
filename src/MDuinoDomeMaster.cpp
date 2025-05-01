@@ -269,7 +269,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     if (!separateCommand(command, cmd, param_num, param_num_ext))
         return;
 
-    // Address Slave Panels (12+13) + Addon Body Slave Servos (16-24)
+    // Address Slave Panels (12+13)
     if ((param_num == 12) || (param_num == 13))
     {
         if (strcmp(cmd, "SE") != 0)
@@ -289,6 +289,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     }
     else if (strcmp(cmd, "SE")==0)       // Start Sequence
     {
+        Serial_Slave.printf(F("%s\r"), command);    // Tiny Panels on Slave Board
         playSequence(param_num);
     } 
     else if (strcmp(cmd, "OP")==0)  // Open Panel

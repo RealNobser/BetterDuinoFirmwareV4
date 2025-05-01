@@ -18,12 +18,9 @@ class MDuinoDomeSlave : public MDuinoDome
         virtual void init() override;
         virtual void run() override;
 
-        virtual void parseCommand(const char* command) override;
-
     protected:
         SendOnlySoftwareSerial& Serial_Magic;
         SendOnlySoftwareSerial& Serial_Teeces;
-        SERIAL_LIFT_TYPE& Serial_Lift;
 
         unsigned long MagicPanelMillis  = 0;
         unsigned long MagicPanelInterval= 0;
@@ -35,6 +32,8 @@ class MDuinoDomeSlave : public MDuinoDome
 
         Panel* Panels[MaxPanel + 1];    // +1 for index 0 dummy
         Holo* Holos[MaxHolo + 1];       // +1 for index 0 dummy
+
+        virtual void parseCommand(const char* command) override;
 
         void processPanelCommand(const char* command);
         void processHoloCommand(const char* command);

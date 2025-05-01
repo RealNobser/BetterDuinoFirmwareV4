@@ -21,12 +21,12 @@
 
 #define INCLUDE_DOME_MASTER // Uncomment to include Dome Master Controller in combined firmware
 #define INCLUDE_DOME_SLAVE	// Uncomment to include Dome Slave Controller in combined firmware
-//#define INCLUDE_BODY_MASTER // Uncomment to include Body Master Controller in combined firmware
+#define INCLUDE_BODY_MASTER // Uncomment to include Body Master Controller in combined firmware
 
 // #define INCLUDE_CLASSIC_I2C_SUPPORT  // Uncomment to include classic Serial to I2C support (excludes body master built)
 #define INCLUDE_I2C_SLAVE // Uncommend for new I2C slave mode
 // #define INCLUDE_HOLO_RGB		// Uncomment for NeoPixel-Holo (excludes body master built)
-#define ARDUINO_NEOPIXEL // Choose one!
+// #define ARDUINO_NEOPIXEL // Choose one!
 // #define FASTLED_NEOPIXEL		// Choose one!
 // #define SEPARATE_DOMELIFT    // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
 // #define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module (not recommended at the moment, to many problems)
@@ -88,7 +88,7 @@
 #define SERVO_SPEED_SLOW        50
 #define SERVO_SPEED_SUPER_SLOW  20
 
-#define SERVO_BUZZ_MILLIS 3000
+#define SERVO_BUZZ_MILLIS 2000
 
 #define COMMAND_DELAY 50
 
