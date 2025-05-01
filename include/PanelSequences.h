@@ -506,14 +506,16 @@ sequence_t const body_panel_all_open PROGMEM = //SE51
 {
 		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
 		// time				servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
-		//     	DPL		UtlArmU	UtlArmL	LBdyDr	LArm	LArmToolRBdyDr	RArm	RArmTool ChrgBay 
+		//     				DPL		UtlArmU	UtlArmL	LBdyDr	LArm	LArmToolRBdyDr	RArm	RArmTool ChrgBay 
 		{SPLIT_WORD(20), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
-		{SPLIT_WORD(150), 	_OPN, 	_OPN, 	_OPN, 	_OPN,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Open Doors
-		{SPLIT_WORD(150), 	_OPN, 	_NP, 	_NP, 	_NP,	_OPN, 	_OPN, 	_NP, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Raise Arms open tools
-		{SPLIT_WORD(50), 	_OPN, 	_NP, 	_NP, 	_NP,	_NP, 	_CLS, 	_NP, 	_NP,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Close tools
-		{SPLIT_WORD(50), 	_OPN, 	_NP, 	_NP, 	_NP,	_NP, 	_OPN, 	_NP, 	_NP,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Open tools
-		{SPLIT_WORD(50), 	_OPN, 	_NP, 	_NP, 	_NP,	_NP, 	_CLS, 	_NP, 	_NP,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Close tools
-		{SPLIT_WORD(150), 	_OPN, 	_CLS, 	_CLS, 	_NP,	_CLS, 	_CLS, 	_NP, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Lower Arms
+		{SPLIT_WORD(150), 	_CLS, 	_OPN, 	_OPN, 	_OPN,	_CLS, 	_CLS, 	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Open Doors (except DPL because of Restraining Bolt)
+		{SPLIT_WORD(150), 	_CLS, 	_NP, 	_NP, 	_NP,	_OPN, 	_OPN, 	_NP, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Raise Arms open tools
+		{SPLIT_WORD(150), 	_OPN, 	_NP, 	_NP, 	_NP,	_OPN, 	_OPN, 	_NP, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Open DPL
+		{SPLIT_WORD(150), 	_CLS, 	_NP, 	_NP, 	_NP,	_OPN, 	_OPN, 	_NP, 	_OPN,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Close DPL
+		{SPLIT_WORD(50), 	_CLS, 	_NP, 	_NP, 	_NP,	_NP, 	_CLS, 	_NP, 	_NP,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Close tools
+		{SPLIT_WORD(50), 	_CLS, 	_NP, 	_NP, 	_NP,	_NP, 	_OPN, 	_NP, 	_NP,	_OPN, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Open tools
+		{SPLIT_WORD(50), 	_CLS, 	_NP, 	_NP, 	_NP,	_NP, 	_CLS, 	_NP, 	_NP,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Close tools
+		{SPLIT_WORD(150), 	_CLS, 	_CLS, 	_CLS, 	_NP,	_CLS, 	_CLS, 	_NP, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Lower Arms
 		{SPLIT_WORD(200), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS}, //Close Doors
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP}
 };
