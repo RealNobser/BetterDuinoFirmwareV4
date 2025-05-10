@@ -1,5 +1,7 @@
 #include "MDuinoDomeSlaveBT1.h"
 
+#ifdef BT1
+
 MDuinoDomeSlaveBT1::MDuinoDomeSlaveBT1(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11):
@@ -16,23 +18,6 @@ void MDuinoDomeSlaveBT1::init()
 void MDuinoDomeSlaveBT1::run()
 {
     MDuinoDomeSlave::run();
-}
-
-void MDuinoDomeSlaveBT1::playSequence(const byte SeqNr)
-{
-    Sequencer.stopSequence();
-    Sequencer.clearSequence();
-    
-    switch (SeqNr)
-    {
-    case 0: // CLOSE ALL PANELS
-        //Sequencer.loadSequence(body_panel_init, SEQ_SIZE(panel_init));
-        Sequencer.setServoSpeed(MDuinoSequencer::slow);
-        break;
-    default:
-        break;         
-    }
-    playSequenceAddons(SeqNr);
 }
 
 void MDuinoDomeSlaveBT1::playSequenceAddons(const byte SeqNr)
@@ -54,3 +39,5 @@ void MDuinoDomeSlaveBT1::playSequenceAddons(const byte SeqNr)
     // Finally GOOOOO
     Sequencer.startSequence();
 }
+
+#endif

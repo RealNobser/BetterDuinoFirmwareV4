@@ -35,7 +35,6 @@ class MDuinoBodyMasterBT1 : public MDuinoDomeMasterBT1
         virtual const char* getProductName() override { return "BetterDuino Body Master (BT-1)"; }
 
     protected:
-        void playSequence(const byte SeqNr) override;
         void playSequenceAddons(const byte SeqNr) override;
         
 };

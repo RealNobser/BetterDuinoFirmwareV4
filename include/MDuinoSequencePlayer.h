@@ -29,4 +29,42 @@ public:
 };
 #endif
 
+//
+// -----
+//
+#ifdef CHOPPER
+class MDuinoDomeSequencePlayerChopper : public MDuinoSequencePlayer
+{
+public:
+	MDuinoDomeSequencePlayerChopper(MDuinoSequencer &Sequencer);
+	virtual void playSequence(const byte SeqNr) override;
+};
+
+class MDuinoBodySequencePlayerChopper : public MDuinoSequencePlayer
+{
+public:
+	MDuinoBodySequencePlayerChopper(MDuinoSequencer &Sequencer);
+	virtual void playSequence(const byte SeqNr) override;
+};
+#endif
+
+//
+// -----
+//
+#ifdef BT1
+class MDuinoDomeSequencePlayerBT1 : public MDuinoSequencePlayer
+{
+public:
+	MDuinoDomeSequencePlayerBT1(MDuinoSequencer &Sequencer);
+	virtual void playSequence(const byte SeqNr) override;
+};
+
+class MDuinoBodySequencePlayerBT1 : public MDuinoSequencePlayer
+{
+public:
+	MDuinoBodySequencePlayerBT1(MDuinoSequencer &Sequencer);
+	virtual void playSequence(const byte SeqNr) override;
+};
+#endif
+
 #endif

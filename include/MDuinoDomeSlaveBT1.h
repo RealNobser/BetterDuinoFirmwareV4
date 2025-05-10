@@ -25,7 +25,6 @@ class MDuinoDomeSlaveBT1 : public MDuinoDomeSlave
         virtual const char* getProductName() override { return "BetterDuino Dome Slave (BT-1)"; }
 
     protected:
-        void playSequence(const byte SeqNr) override;
         void playSequenceAddons(const byte SeqNr) override;
         
 };

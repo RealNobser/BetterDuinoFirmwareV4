@@ -1,6 +1,8 @@
 #include "MDuinoDomeMasterR2.h"
 #include "MDuinoSequencePlayer.h"
 
+#ifdef R2D2
+
 MDuinoDomeMasterR2::MDuinoDomeMasterR2(SendOnlySoftwareSerial& Serial_Slave, SendOnlySoftwareSerial& Serial_MP3, SERIAL_LIFT_TYPE& Serial_Lift,
             VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, 
             VarSpeedServo& Servo6, VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11):
@@ -138,3 +140,5 @@ void MDuinoDomeMasterR2::playSequenceAddons(const byte SeqNr)
     // Finally GOOOOO
     Sequencer.startSequence();
 }
+
+#endif
