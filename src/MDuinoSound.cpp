@@ -2,6 +2,8 @@
 
 MDuinoSound::MDuinoSound()
 {
+	for(uint8_t ui=0; ui < MAX_SOUND_BANK; ui++)
+		lastSoundPlayed[ui] = 0;
 }
 
 void MDuinoSound::VolumeStandard()
@@ -13,7 +15,18 @@ void MDuinoSound::Play(const byte BankNr, const byte SoundNr)
 {
 	byte CalcSoundNr = 0;
 	CalcSoundNr = (BankNr - 1) * 25 + SoundNr;
+	lastSoundPlayed[BankNr] = SoundNr;
 	Play(CalcSoundNr);
+}
+
+void MDuinoSound::PlayNext(const byte BankNr, const byte MaxSoundNr)
+{
+	lastSoundPlayed[BankNr] = lastSoundPlayed[BankNr] + 1;
+
+	if (lastSoundPlayed[BankNr] > MaxSoundNr)
+		lastSoundPlayed[BankNr] = 0;
+
+	Play(BankNr, lastSoundPlayed[BankNr]);
 }
 
 ///////////

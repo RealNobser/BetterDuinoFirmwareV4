@@ -86,9 +86,11 @@ class MDuinoSound
 
         void VolumeStandard();
         void Play(const byte BankNr, const byte SoundNr);
+        void PlayNext(const byte BankNr, const byte MaxSoundNr);
 
     protected:
         byte CurrentVolume = 0;
+        uint8_t lastSoundPlayed[MAX_SOUND_BANK];
 };
 
 class MDuinoSoundMP3Trigger : public MDuinoSound
