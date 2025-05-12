@@ -517,10 +517,17 @@ void MDuinoDomeMaster::processSoundCommand(const char* command)
     Serial.printf(F("SoundCommand(Master): %s\r\n"), command);
     #endif
 
+    Sound->VolumeStandard();
+
+    if (strlen(command) == 2)
+    {
+        memcpy(cmd, command+1, 1);
+        Sound->PlayNext(atoi(cmd), Storage.getMaxSound(atoi(cmd)));
+        return;
+    }
+
     if (!separateSoundCommand(command, cmd, bank, sound))
         return;
-
-    Sound->VolumeStandard();
 
     if ((bank != 0) && (sound != 0))
     {

@@ -65,20 +65,7 @@ bool MDuinoDome::separateSoundCommand(const char* command, char* cmd, byte & ban
     memset(bank_char, 0x00, 2);
     memset(sound_char, 0x00, 3);
 
-    //if ((strlen(command) != 4) && (strlen(command) != 2)) 
-    if ((strlen(command) <2) || (strlen(command) >4))
-    {
-        #ifdef DEBUG_MSG
-        Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
-        #endif
-        return false;
-    }
-    
-    if (strlen(command) == 2)
-    {
-        memcpy(cmd, command+1, 1);
-    }
-    else if (strlen(command) == 3)
+    if (strlen(command) == 3)
     {
         memcpy(bank_char, command+1, 1);
         memcpy(sound_char, command+2, 1);
@@ -87,6 +74,13 @@ bool MDuinoDome::separateSoundCommand(const char* command, char* cmd, byte & ban
     {
         memcpy(bank_char, command+1, 1);
         memcpy(sound_char, command+2, 2);
+    }
+    else
+    {
+        #ifdef DEBUG_MSG
+        Serial.printf(F("Invalid Size: %i\r\n"), strlen(command));
+        #endif
+        return false;        
     }
 
     bank=atoi(bank_char);
