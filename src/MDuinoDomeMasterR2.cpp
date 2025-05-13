@@ -39,21 +39,25 @@ void MDuinoDomeMasterR2::playSequenceAddons(const byte SeqNr)
         parseCommand("*F004");      // HP Flicker for 4 seconds
         break;
     case 2: // WAVE
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetSound);
         parseCommand("*H004");      // flash holos for 4 seconds
         parseCommand("$213");		// happy sound
         break;
     case 3: // MOODY FAST WAVE
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetSound);
         parseCommand("@0T2");       // flash display ...
         parseCommand("@0W4");       // ... for 4 seconds
         parseCommand("*F004");      // HP Flicker for 4 seconds
         parseCommand("$34");		// moody sound
         break;
     case 4: // OPEN WAVE
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetSound);
         parseCommand("*H005");      // flash holos for 5 seconds
         parseCommand("$36");		// long happy sound
         break;
     case 5: // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetSound);
         parseCommand("@0T92");      // spectrum display
         parseCommand("*HP17");      // HPs flash for 17 seconds
         parseCommand("$c");         // beeping cantina sound
@@ -70,6 +74,7 @@ void MDuinoDomeMasterR2::playSequenceAddons(const byte SeqNr)
         break;
     case 7: // Cantina (Orchestral Cantina, Rhythmic Panels)
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetSound);
         parseCommand("$C");         // Cantina sound        
         parseCommand("@0T92");      // spectrum display
         parseCommand("*F046");      // HPs flicker 46 seconds        
@@ -85,6 +90,7 @@ void MDuinoDomeMasterR2::playSequenceAddons(const byte SeqNr)
         break;
     case 9:	// DISCO
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
+        Sequencer.addSequenceCompletionCallback(sequenceCallbackResetSound);
         parseCommand("@0T92");      // spectrum display
         parseCommand("*F099");      // HPs flicker as long as possible   
         parseCommand("%T52");	    // Magic Panel in VU Mode
@@ -92,15 +98,15 @@ void MDuinoDomeMasterR2::playSequenceAddons(const byte SeqNr)
         break;
     case 10: // QUIET   sounds off, holo stop, panel closed
         Sequencer.addSequenceCompletionCallback(sequenceCallbackJedi);
-        parseCommand("*ST00");  // all holos to stop
-        parseCommand("$s");		// stop sounds
-        // stop_command(0);					// all panels off RC        
+        parseCommand("*ST00");      // all holos to stop
+        parseCommand("$s");		    // stop sounds
+        // stop_command(0);			// all panels off RC        
         break;
     case 11: // WIDE AWAKE	random sounds, holos on random, panels closed
-        // init_jedi();						// JEDI back to default
-        parseCommand("*RD00\r");			// all HPs to random
-        parseCommand("$R");					// random sounds mode
-        //stop_command(0);					// all panels off RC and closed
+        // init_jedi();				// JEDI back to default
+        parseCommand("*RD00");	    // all HPs to random
+        parseCommand("$R");			// random sounds mode
+        //stop_command(0);			// all panels off RC and closed
         break;
     case 12: // TOP PIE PANELS RC
         /*
@@ -112,14 +118,14 @@ void MDuinoDomeMasterR2::playSequenceAddons(const byte SeqNr)
         break;
     case 13: // AWAKE	random sounds, holos off, panels closed
         //init_jedi();						// JEDI back to default
-        parseCommand("*ST00\r");			// all HPs to stop
+        parseCommand("*ST00");  			// all HPs to stop
         parseCommand("$R");					// random sounds mode
         // stop_command(0);					// all panels off RC and closed
         break;
     case 14: // EXCITED	random sounds, holos movement, holo lights on, panels closed
         // init_jedi();						// JEDI back to default
-        parseCommand("*RD00\r");			// all HPs to random
-        parseCommand("*ON00\r");			// all HPs lights on
+        parseCommand("*RD00");  			// all HPs to random
+        parseCommand("*ON00");	    		// all HPs lights on
         parseCommand("$R");					// random sounds mode
         //stop_command(0);					// all panels off RC and closed
         break;
@@ -127,12 +133,12 @@ void MDuinoDomeMasterR2::playSequenceAddons(const byte SeqNr)
     case 15: // SCREAM no panels: sound + lights but no panels
         Sequencer.addSequenceCompletionCallback(sequenceCallbackResetMP);
         parseCommand("$S");	 				// code for scream sound
-        parseCommand("@0T5\r");				// scream display
-        parseCommand("*F003\r");			// holos flicker for 4 seconds
-        parseCommand("*MF04\r");			// magic panel on for 4 seconds
+        parseCommand("@0T5");				// scream display
+        parseCommand("*F003");		    	// holos flicker for 4 seconds
+        parseCommand("*MF04");	    		// magic panel on for 4 seconds
         break;
     case 16: // Panel Wiggle
-        parseCommand("@0T5\r");				// scream display
+        parseCommand("@0T5");				// scream display
         break;
     default:
         break;

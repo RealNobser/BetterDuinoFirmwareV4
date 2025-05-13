@@ -521,13 +521,7 @@ void MDuinoDomeMaster::processSoundCommand(const char* command)
     #endif
 
     Sound->VolumeStandard();
-
-    if (strlen(command) == 2)
-    {
-        memcpy(cmd, command+1, 1);
-        Sound->PlayNext(atoi(cmd), Storage.getMaxSound(atoi(cmd)));
-        return;
-    }
+    RandomSoundMillis = millis();
 
     if (!separateSoundCommand(command, cmd, bank, sound))
         return;
@@ -535,7 +529,6 @@ void MDuinoDomeMaster::processSoundCommand(const char* command)
     if ((bank != 0) && (sound != 0))
     {
         RandomSoundIntervall = 0;   // Stop Random sounds
-        RandomSoundMillis = millis();
         Sound->Play(bank, sound);
         return;
     }
@@ -563,11 +556,9 @@ void MDuinoDomeMaster::processSoundCommand(const char* command)
             Sound->Play(9,1);
         break;
         case 'S':   // Scream (bank 6 sound 1)
-            RandomSoundMillis    = millis();
             Sound->Play(6,1);
         break;
         case 'F':   // Faint/Short Circuit (bank 6 sound 3)
-            RandomSoundMillis    = millis();
             if (Sound->hasVocalizer())
             {
                 Sound->Overload();
@@ -618,7 +609,8 @@ void MDuinoDomeMaster::processSoundCommand(const char* command)
             setSoundIntervall(10000);
             Sound->Play(Storage.getStartupSoundNr());            
         break;
-        default:    // Ignore
+        default:
+            Sound->PlayNext(atoi(cmd), Storage.getMaxSound(atoi(cmd)));
         break;
     }
 }
@@ -643,19 +635,19 @@ void MDuinoDomeMaster::processAltHoloCommand(const char* command)
 // callback to reset JEDI to normal after a sequence, works only once
 void MDuinoDomeMaster::sequenceCallbackJedi(MDuinoBase* object)
 {
-    object->parseCommand("*H000\r"); // quick way to turn off holos if connected to board
-	object->parseCommand("@0T1\r");  // abort test routine, reset all to normal
-	object->parseCommand("%T00\r");  // MP Off
-	object->parseCommand("$R\r");  	 // Back to random mode if configured
+    object->parseCommand("*H000");      // quick way to turn off holos if connected to board
+	object->parseCommand("@0T1");       // abort test routine, reset all to normal
+    sequenceCallbackResetMP(object);    // MP Off
+    //sequenceCallbackResetSound(object); // Back to random mode if configured
 }
 
 // callback to reset JEDI to normal after a sequence, works only once
 void MDuinoDomeMaster::sequenceCallbackResetMP(MDuinoBase* object)
 {
-	object->parseCommand("%T00\r");  	// Off
+	object->parseCommand("%T00");  	// Off
 }
 
 void MDuinoDomeMaster::sequenceCallbackResetSound(MDuinoBase* object)
 {
-	object->parseCommand("$R\r");  	    // Back to random mode if configured
+	object->parseCommand("$R");     // Back to random mode if configured
 }

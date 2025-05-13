@@ -90,7 +90,7 @@ class MDuinoSound
 
     protected:
         byte CurrentVolume = 0;
-        uint8_t lastSoundPlayed[MAX_SOUND_BANK];
+        uint8_t lastSoundPlayed[MAX_SOUND_BANK+1];
 };
 
 class MDuinoSoundMP3Trigger : public MDuinoSound

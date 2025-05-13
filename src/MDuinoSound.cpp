@@ -24,7 +24,7 @@ void MDuinoSound::PlayNext(const byte BankNr, const byte MaxSoundNr)
 	lastSoundPlayed[BankNr] = lastSoundPlayed[BankNr] + 1;
 
 	if (lastSoundPlayed[BankNr] > MaxSoundNr)
-		lastSoundPlayed[BankNr] = 0;
+		lastSoundPlayed[BankNr] = 1;
 
 	Play(BankNr, lastSoundPlayed[BankNr]);
 }

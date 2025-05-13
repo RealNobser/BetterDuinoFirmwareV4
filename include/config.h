@@ -29,7 +29,7 @@
 #define ARDUINO_NEOPIXEL // Choose one!
 // #define FASTLED_NEOPIXEL		// Choose one!
 // #define SEPARATE_DOMELIFT    // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
-#define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module (not recommended at the moment, to many problems)
+// #define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module (not recommended at the moment, to many problems)
                                 // Including DY-Player excludes DF-Player
 // #define INCLUDE_HOLO_TEST
 
@@ -102,7 +102,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION "4.4.2"
+#define VERSION "4.4.4"
 #define HW_VERSION "1.5.3"
 #define CONFIG_VERSION 41
 
