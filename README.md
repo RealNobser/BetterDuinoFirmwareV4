@@ -506,7 +506,7 @@ Setup Commands
 | #STxxx | Setup Delay time between Master and Slave Panel Sequence. Use this if the Slave panels are starting too soon. Values up to 255 are supported. Values are in ms. | maybe depricated |
 |     | **System Configuration and Management** |     |
 | #MDxx | Set MarcDuino Mode<br><br>· #MD00 : MarcDuino Dome Master<br><br>· #MD01 : MarcDuino Dome Slave<br><br>· #MD02 : MarcDuino Body Master<br><br>MarcDuino will reboot immediately after setup and start up in new mode. |     |
-| #MPxx | Set MP3-Player Type<br><br>· #MP00 : SparkFun MP3 Trigger<br><br>· #MP01 : DFPlayer<br><br>· #MP02 : Vocalizer |     |
+| #MPxx | Set MP3-Player Type<br><br>· #MP00 : SparkFun MP3 Trigger<br><br>· #MP01 : DFPlayer<br><br>· #MP02 : Vocalizer<br><br>· #MP03 : DY-Player |     |
 | #MSxyy | Set maximum sounds per soundbank. x=1-9 (Soundbank), y=0-25 (max. Sounds) |     |
 |     | **Holo Projector Configuration** |     |
 | #HLxy | Set HoloLight x to High Active (y=1) or Low Active (y=0). x=0 → All Holo Lights | Reset board afterwards to take effect |
