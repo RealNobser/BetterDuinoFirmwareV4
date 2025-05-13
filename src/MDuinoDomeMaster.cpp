@@ -32,9 +32,11 @@ MDuinoDomeMaster::MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnl
         case MDuinoStorage::MP3Trigger:
             Sound = new MDuinoSoundMP3Trigger(Serial_MP3);
         break;
+#ifndef INCLUDE_DY_PLAYER
         case MDuinoStorage::DFPlayer:
             Sound = new MDuinoSoundDFPlayer(Serial_MP3);
         break;
+#endif  // INCLUDE_DY_PLAYER
         case MDuinoStorage::Vocalizer:
             Sound = new MDuinoSoundVocalizer(Serial_MP3);
         break;
@@ -92,15 +94,20 @@ void MDuinoDomeMaster::init()
     }
 
     // Check for Lift module
+    // TODO: Change Init Sequence, if Lift is present.
+    /*
     #ifndef INCLUDE_CLASSIC_I2C_SUPPORT
     Serial_Lift.print(F(":L?\r"));
+    #endif
+    */
+    /*
     delay(500);
     if (LiftModuleConnected)
     {
         Serial_Lift.printf(F(":LI99")); // Unlift all
         delay(500);                     // Panels should be locked now
     }
-    #endif
+    */
     parseCommand(":SE00");              // Init Panels
 }
 
@@ -324,8 +331,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
                 Panels[i]->open();
             }
             // Open Tiny, too (Dome MK4)
-            Serial_Slave.print(F(":OP12\r"));
-            Serial_Slave.print(F(":OP13\r"));
+            Serial_Slave.print(F(":OP12\r:OP13\r"));
         }
 
     }
@@ -357,8 +363,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
                 Panels[i]->close();
             }
             // Close Tiny, too (Dome MK4)
-            Serial_Slave.print(F(":CL12\r"));
-            Serial_Slave.print(F(":CL13\r"));
+            Serial_Slave.print(F(":CL12\r:CL13\r"));
         }        
     }
     else if (strcmp(cmd, "LK")==0)  // Lock Panel
@@ -389,8 +394,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
                 Panels[i]->lock(true);
             }
             // Lock Tiny, too (Dome MK4)
-            Serial_Slave.print(F(":LK12\r"));
-            Serial_Slave.print(F(":LK13\r"));
+            Serial_Slave.print(F(":LK12\r:LK13\r"));
         }        
     }
     else if (strcmp(cmd, "UL")==0)  // Unlock Panel
@@ -421,8 +425,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
                 Panels[i]->lock(false);
             }
             // Unlock Tiny, too (Dome MK4)
-            Serial_Slave.print(F(":UL12\r"));
-            Serial_Slave.print(F(":UL13\r"));
+            Serial_Slave.print(F(":UL12\r:UL13\r"));
         }        
     }
     else if (strcmp(cmd, "ST")==0)

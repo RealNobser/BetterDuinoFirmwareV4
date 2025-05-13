@@ -124,7 +124,7 @@ void MDuinoSoundMP3Trigger::Quiet(const bool on /* = true*/)
 }
 
 ///////////
-
+#ifndef INCLUDE_DY_PLAYER
 MDuinoSoundDFPlayer::MDuinoSoundDFPlayer(SendOnlySoftwareSerial &SoundSerial) : SoundSerial(SoundSerial)
 {
 	CurrentVolume = 15; // Medium Volume
@@ -218,6 +218,7 @@ void MDuinoSoundDFPlayer::sendCommand(const byte Command, const byte Param1, con
 	// Delay needed between successive commands
 	delay(100);
 }
+#endif
 
 //////////
 
@@ -238,9 +239,8 @@ void MDuinoSoundVocalizer::SetVolume(const byte Volume, const bool SetAsStandard
 	if (SetAsStandard)
 		CurrentVolume = Volume;
 
-	SoundSerial.printf(F("<PVV%d>"), Volume); // Vocaliser
-	SoundSerial.printf(F("<PVA%d>"), Volume); // Wav Channel A
-	SoundSerial.printf(F("<PVB%d>"), Volume); // Wav Channel B
+
+	SoundSerial.printf(F("<PVV%d><PVA%d><PVB%d>"), Volume, Volume, Volume); // Vocaliser
 }
 
 void MDuinoSoundVocalizer::VolumeUp()

@@ -118,6 +118,7 @@ class MDuinoSoundMP3Trigger : public MDuinoSound
         SendOnlySoftwareSerial& SoundSerial;
 };
 
+#ifndef INCLUDE_DY_PLAYER
 class MDuinoSoundDFPlayer : public MDuinoSound
 {
     public:
@@ -143,6 +144,7 @@ class MDuinoSoundDFPlayer : public MDuinoSound
         SendOnlySoftwareSerial& SoundSerial;
         void sendCommand(const byte Command, const byte Param1, const byte Param2);
 };
+#endif
 
 class MDuinoSoundVocalizer : public MDuinoSound
 {
