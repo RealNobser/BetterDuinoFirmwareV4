@@ -143,6 +143,8 @@ void MDuinoBase::checkEEPROM(const bool factoryReset /*= false*/)
         Storage.setMinRandomPause(MINRANDOMPAUSE);
         Storage.setMaxRandomPause(MAXRANDOMPAUSE);
 
+        Storage.setServoInit(1);
+
         for (byte i=1; i <= MAX_MARCUDINOSERVOS; i++)
         {
             Storage.setServoSpeed(i, 0);            // Full Speed
@@ -312,6 +314,10 @@ void MDuinoBase::processSetupCommand(const char* command)
     {
         Storage.getServoPositions(param_num, OpenPos, ClosedPos);
         Storage.setServoPositions(param_num, ClosedPos, OpenPos);
+    }
+    else if (strcmp(cmd, "SI") == 0)       // Init Panels on startup
+    {
+        Storage.setServoInit(param_num);
     }
     else if (strcmp(cmd, "HO") == 0)       // Set Holo HServo Degrees/Microseconds Max Pos,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {

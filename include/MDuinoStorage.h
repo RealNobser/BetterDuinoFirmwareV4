@@ -165,6 +165,8 @@
 #define ADDR_SERVOOPENBASE      0x40
 #define ADDR_SERVOCLOSEDBASE    0x60
 
+#define ADDR_SERVOBINITBASE      0x80
+
 #define ADDR_HOLODIRBASE        0xa0
 #define ADDR_HOLOMINBASE        0xb0
 #define ADDR_HOLOMAXBASE        0xc0
@@ -218,6 +220,9 @@ class MDuinoStorage
 
         byte getMinRandomPause();
         void setMinRandomPause(const byte Seconds);
+
+        byte getServoInit();
+        void setServoInit(const byte init);
 
         //
         // Panels / Servos

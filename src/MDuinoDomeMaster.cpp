@@ -93,22 +93,8 @@ void MDuinoDomeMaster::init()
             RandomSoundIntervall = 12000;  // Extended Intervall for Startup Sound
     }
 
-    // Check for Lift module
-    // TODO: Change Init Sequence, if Lift is present.
-    /*
-    #ifndef INCLUDE_CLASSIC_I2C_SUPPORT
-    Serial_Lift.print(F(":L?\r"));
-    #endif
-    */
-    /*
-    delay(500);
-    if (LiftModuleConnected)
-    {
-        Serial_Lift.printf(F(":LI99")); // Unlift all
-        delay(500);                     // Panels should be locked now
-    }
-    */
-    parseCommand(":SE00");              // Init Panels
+    if (Storage.getServoInit() == 1)
+        parseCommand(":SE00"); // Init Panels
 }
 
 void MDuinoDomeMaster::run()
@@ -450,12 +436,6 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     {
         Serial_Lift.printf(F("%s\r"), command);
     }
-    #ifndef INCLUDE_CLASSIC_I2C_SUPPORT
-    else if (strcmp(cmd, "L?")==0)
-    {
-        LiftModuleConnected = true;
-    }
-    #endif
 }
 
 void MDuinoDomeMaster::processHoloCommand(const char* command)

@@ -112,6 +112,17 @@ void MDuinoStorage::setMinRandomPause(const byte seconds)
     EEPROM.update(ADDR_MINRANDOMPAUSE, seconds);
 }
 
+
+byte MDuinoStorage::getServoInit()
+{
+    return EEPROM.read(ADDR_SERVOBINITBASE);
+}
+
+void MDuinoStorage::setServoInit(const byte init)
+{
+    EEPROM.update(ADDR_SERVOBINITBASE, init);
+}
+
 //
 // Panels / Servos
 // 
