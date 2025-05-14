@@ -52,6 +52,8 @@ class MDuinoDomeSlave : public MDuinoDome
 
         void MagicPanelCtrl(const byte param);
         void HoloMovementCtrl(const byte param, const bool moving);
+        void HoloOnOffCtrl(const byte holo, const unsigned int param);
+        void HoloFlickerCtrl(const byte holo, const unsigned int param);
 };
 
 #endif // __MDUINODOMESLAVE_H__

@@ -35,19 +35,9 @@ void MDuinoDomeSlave::init()
     MDuinoDome::init();
 
     // 3 Holos
-    bool isNeoPixel = false;
-    uint8_t nrLEDs = 7;
-    isNeoPixel  = Storage.getHoloNeoPixel(1);
-    nrLEDs      = Storage.getHoloLEDs(1);
-    Holos[1] = new Holo(P_FL, Storage.getHoloLightHighActive(1), Servo1, P_HPF_H, Servo2, P_HPF_V, isNeoPixel, nrLEDs);    // Front
-
-    isNeoPixel  = Storage.getHoloNeoPixel(2);
-    nrLEDs      = Storage.getHoloLEDs(2);
-    Holos[2] = new Holo(P_RL, Storage.getHoloLightHighActive(2), Servo3, P_HPR_H, Servo4, P_HPR_V, isNeoPixel, nrLEDs);    // Rear
-
-    isNeoPixel  = Storage.getHoloNeoPixel(3);
-    nrLEDs      = Storage.getHoloLEDs(3);
-    Holos[3] = new Holo(P_TL, Storage.getHoloLightHighActive(3), Servo5, P_HPT_H, Servo6, P_HPT_V, isNeoPixel, nrLEDs);    // Top
+    Holos[1] = new Holo(P_FL, Storage.getHoloLightHighActive(1), Servo1, P_HPF_H, Servo2, P_HPF_V, Storage.getHoloNeoPixel(1), Storage.getHoloLEDs(1));    // Front
+    Holos[2] = new Holo(P_RL, Storage.getHoloLightHighActive(2), Servo3, P_HPR_H, Servo4, P_HPR_V, Storage.getHoloNeoPixel(2), Storage.getHoloLEDs(2));    // Rear
+    Holos[3] = new Holo(P_TL, Storage.getHoloLightHighActive(3), Servo5, P_HPT_H, Servo6, P_HPT_V, Storage.getHoloNeoPixel(3), Storage.getHoloLEDs(3));    // Top
 
     // 2 Panels
     Panels[12] = new Panel(Servo10, P_SERVO_12);
@@ -462,64 +452,36 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     else if (strcmp(cmd, "H0")==0)  // Holos On for xx seconds
     {
         for (byte i=MinHolo; i <= MaxHolo; i++)
-        {
-            if (param_num > 0)
-                Holos[i]->on(param_num);
-            else
-                Holos[i]->off();
-        }
+            HoloOnOffCtrl(i, param_num);
     }    
     else if (strcmp(cmd, "H1")==0)  // Holo1 On for xx seconds
     {
-        if (param_num > 0)
-            Holos[1]->on(param_num);
-        else
-            Holos[1]->off();
+        HoloOnOffCtrl(1, param_num);
     }    
     else if (strcmp(cmd, "H2")==0)  // Holo2 On for xx seconds
     {
-        if (param_num > 0)
-            Holos[2]->on(param_num);
-        else
-            Holos[2]->off();
+        HoloOnOffCtrl(2, param_num);
     }    
     else if (strcmp(cmd, "H3")==0)  // Holo3 On for xx seconds
     {
-        if (param_num > 0)
-            Holos[3]->on(param_num);
-        else
-            Holos[3]->off();
+        HoloOnOffCtrl(3, param_num);
     }    
     else if (strcmp(cmd, "F0")==0)  // Holos Flicker for xx seconds
     {        
         for (byte i=MinHolo; i <= MaxHolo; i++)
-        {
-            if (param_num > 0)
-                Holos[i]->flickerOn(param_num);
-            else
-                Holos[i]->off();
-        }
+            HoloFlickerCtrl(i, param_num);
     }    
     else if (strcmp(cmd, "F1")==0)  // Holo1 Flicker for xx seconds
     {
-        if (param_num > 0)
-            Holos[1]->flickerOn(param_num);
-        else
-            Holos[1]->off();
+        HoloFlickerCtrl(1, param_num);
     }    
     else if (strcmp(cmd, "F2")==0)  // Holo2 Flicker for xx seconds
     {
-        if (param_num > 0)
-            Holos[2]->flickerOn(param_num);
-        else
-            Holos[2]->off();
+        HoloFlickerCtrl(2, param_num);
     }    
     else if (strcmp(cmd, "F3")==0)  // Holo3 Flicker for xx seconds
     {
-        if (param_num > 0)
-            Holos[3]->flickerOn(param_num);
-        else
-            Holos[3]->off();
+        HoloFlickerCtrl(3, param_num);
     }    
     else if (strcmp(cmd, "EO")==0)  // AUX1 on
     {
@@ -636,4 +598,20 @@ void MDuinoDomeSlave::HoloMovementCtrl(const byte param, const bool moving)
     }
     else
         Holos[param]->randomMove(moving);
+}
+
+void MDuinoDomeSlave::HoloOnOffCtrl(const byte holo, const unsigned int param)
+{
+    if (param > 0)
+        Holos[holo]->on(param);
+    else
+        Holos[holo]->off();
+}
+
+void MDuinoDomeSlave::HoloFlickerCtrl(const byte holo, const unsigned int param)
+{
+    if (param > 0)
+        Holos[holo]->flickerOn(param);
+    else
+        Holos[holo]->off();
 }

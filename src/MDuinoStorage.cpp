@@ -165,7 +165,7 @@ bool MDuinoStorage::getHoloNeoPixel(const byte HoloNr)
     bool value = false;
 
     if (HoloNr > MAX_MDUINOHOLOS)
-        return 0;
+        return false;
 
     EEPROM.get(ADDR_HOLOLIGHTBASE + 3 + HoloNr, value);
     return value;
