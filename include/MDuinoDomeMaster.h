@@ -48,6 +48,8 @@ class MDuinoDomeMaster : public MDuinoDome
         void processAltSoundCommand(const char* command);
         void processAltHoloCommand(const char* command);
 
+        void forwardToSlave(const char* command);
+
         static void sequenceCallbackJedi(MDuinoBase* object);
         static void sequenceCallbackResetMP(MDuinoBase* object);
         static void sequenceCallbackResetSound(MDuinoBase* object);

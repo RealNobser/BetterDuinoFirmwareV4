@@ -29,19 +29,19 @@ MDuinoDomeMaster::MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnl
 
     switch (player)
     {
-        case MDuinoStorage::MP3Trigger:
+        case MDuinoStorage::MDuinoMP3PlayerType::MP3Trigger:
             Sound = new MDuinoSoundMP3Trigger(Serial_MP3);
         break;
 #ifndef INCLUDE_DY_PLAYER
-        case MDuinoStorage::DFPlayer:
+        case MDuinoStorage::MDuinoMP3PlayerType::DFPlayer:
             Sound = new MDuinoSoundDFPlayer(Serial_MP3);
         break;
 #endif  // INCLUDE_DY_PLAYER
-        case MDuinoStorage::Vocalizer:
+        case MDuinoStorage::MDuinoMP3PlayerType::Vocalizer:
             Sound = new MDuinoSoundVocalizer(Serial_MP3);
         break;
 #ifdef INCLUDE_DY_PLAYER
-        case MDuinoStorage::DYPlayer:
+        case MDuinoStorage::MDuinoMP3PlayerType::DYPlayer:
             Sound = new MDuinoSoundDYPlayer(Serial_MP3);
         break;
 #endif  // INCLUDE_DY_PLAYER
@@ -228,25 +228,23 @@ void MDuinoDomeMaster::parseCommand(const char* command)
     case '&':
         processI2CCommand(command);
         // Forward to slave
-        Serial_Slave.printf(F("%s\r"), command);
+        forwardToSlave(command);
         break;
     #endif
     case '#':
         processSetupCommand(command);
         // Forwarding all but #MD to Slave to be in sync
         if (strncmp(command, "#MD", 3) != 0)
-        {
-            Serial_Slave.printf(F("%s\r"), command);
-        }
+            forwardToSlave(command);
         break;
     case '>':
         // Forward to slave without prefix
-        Serial_Slave.printf(F("%s\r"), command+1);
+        forwardToSlave(command+1);
         break;    
     default:
         break;
     }
-    Serial_Slave.flush();
+    // Serial_Slave.flush();
 }
 
 void MDuinoDomeMaster::processPanelCommand(const char* command)
@@ -270,8 +268,8 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     if ((param_num == 12) || (param_num == 13))
     {
         if (strcmp(cmd, "SE") != 0)
-        { 
-            Serial_Slave.printf(F("%s\r"), command);
+        {
+            forwardToSlave(command);
             return;
         }
     }
@@ -286,7 +284,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     }
     else if (strcmp(cmd, "SE")==0)       // Start Sequence
     {
-        Serial_Slave.printf(F("%s\r"), command);    // Tiny Panels on Slave Board
+        forwardToSlave(command);
         playSequence(param_num);
     } 
     else if (strcmp(cmd, "OP")==0)  // Open Panel
@@ -445,7 +443,7 @@ void MDuinoDomeMaster::processHoloCommand(const char* command)
     #endif
 
     // Forward to slave
-    Serial_Slave.printf(F("%s\r"), command);
+    forwardToSlave(command);
 }
 
 void MDuinoDomeMaster::processDisplayCommand(const char* command)
@@ -455,7 +453,7 @@ void MDuinoDomeMaster::processDisplayCommand(const char* command)
     #endif
 
     // Forward to slave
-    Serial_Slave.printf(F("%s\r"), command);
+    forwardToSlave(command);
  }
 
 	////////////////////////////////////////////////
@@ -609,7 +607,13 @@ void MDuinoDomeMaster::processAltHoloCommand(const char* command)
     #ifdef DEBUG_MSG
     Serial.printf(F("AltHoloCommand(Master): %s\r\n"), command);
     #endif
-    Serial_Slave.printf(F("%s\r"), command);
+    forwardToSlave(command);
+}
+
+void MDuinoDomeMaster::forwardToSlave(const char *command)
+{
+   Serial_Slave.printf(F("%s\r"), command);
+   Serial_Slave.flush();
 }
 
 // callback to reset JEDI to normal after a sequence, works only once

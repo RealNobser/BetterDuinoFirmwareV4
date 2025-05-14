@@ -176,22 +176,21 @@
 class MDuinoStorage
 {
     public:
-        enum MDuinoType
+        enum class MDuinoType
         {
             DomeMaster = 0,
             DomeSlave,
             BodyMaster,
-            BodySlave,
-            UnknownType,
+            unknown,
         };
 
-        enum MDuinoMP3PlayerType
+        enum class MDuinoMP3PlayerType
         {
             MP3Trigger      = 0,
             DFPlayer        = 1,
             Vocalizer       = 2,
             DYPlayer        = 3,
-            UnknownPlayer   = 4
+            unknown         = 4
         };
         
     public:

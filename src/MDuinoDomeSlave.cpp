@@ -193,12 +193,14 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
         {
             Panels[param_num]->open();
         }
+        /*
         else if (param_num == 14)    // Open Top Panels
         {
         }
         else if (param_num == 15)    // Open Bottom Panels
         {
         }
+        */
 
     }
     else if (strcmp(cmd, "CL")==0)  // Close Panel
@@ -212,12 +214,14 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
         {
             Panels[param_num]->close();
         }
+        /*
         else if (param_num == 14)    // Close Top Panels
         {
         }
         else if (param_num == 15)    // Close Bottom Panels
         {
         }
+        */
     }
     else if (strcmp(cmd, "LK")==0)  // Lock Panel
     {
@@ -230,12 +234,14 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
         {
             Panels[param_num]->lock(true);
         }
+        /*
         else if (param_num == 14)    // Lock Top Panels
         {
         }
         else if (param_num == 15)    // Lock Bottom Panels
         {
-        }        
+        }
+        */       
     }
     else if (strcmp(cmd, "UL")==0)  // Unlock Panel
     {
@@ -248,12 +254,14 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
         {
             Panels[param_num]->lock(false);
         }
+        /*
         else if (param_num == 14)    // Unlock Top Panels
         {
         }
         else if (param_num == 15)    // Unlock Bottom Panels
         {
-        }        
+        }
+        */
     }    
     else if (strcmp(cmd, "ST")==0)
     {

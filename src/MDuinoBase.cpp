@@ -21,11 +21,10 @@ MDuinoBase::MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedSer
 void MDuinoBase::init()
 {
     // Seed Random Generator
-    randomSeed(analogRead(0));
+    //randomSeed(analogRead(0));
 
     // HeartBeat-LED
     pinMode(P_LED2, OUTPUT);
-    digitalWrite(P_LED2, HeartBeatStatus);
 
     // AUX1 Port
     #ifndef SEPARATE_DOMELIFT
@@ -85,12 +84,8 @@ void MDuinoBase::run()
     #ifdef INCLUDE_I2C_SLAVE
     if (Wire.available())
     {
-        int i = Wire.read();
-        unsigned char c;
-        c = (unsigned char)i;
-
-        WireBuffer[WireIndex++] = c;
-        if ((c == '\r') || (WireIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
+        WireBuffer[WireIndex++] = (unsigned char)Wire.read();
+        if (( WireBuffer[WireIndex-1] == '\r') || (WireIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
         {
             WireBuffer[WireIndex-1] = 0x00; // ensure proper termination
             parseCommand(WireBuffer);
@@ -123,8 +118,8 @@ void MDuinoBase::checkEEPROM(const bool factoryReset /*= false*/)
         // Fast blink
         HeartBeatIntervall = HEARTBEAT_MILLIS / 8;        
 
-        Storage.setType(MDuinoStorage::DomeMaster);
-        Storage.setMP3Player(MDuinoStorage::MP3Trigger);
+        Storage.setType(MDuinoStorage::MDuinoType::DomeMaster);
+        Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::MP3Trigger);
         Storage.setStartupSoundNr(255);
         Storage.setDisableRandomSound(0);
 
@@ -238,7 +233,6 @@ bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & 
         param_num_ext = atoi(param_ext);
     }
 
-
     return true;
 }
 
@@ -330,10 +324,12 @@ void MDuinoBase::processSetupCommand(const char* command)
         Storage.getHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
         HMinPos = param_num_ext;
         Storage.setHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
-    }    
+    }
+    /*
     else if (strcmp(cmd, "HP") == 0)       // Set Holo HServo Speed (0-255)
     {
-    }    
+    } 
+    */   
     else if (strcmp(cmd, "VO") == 0)       // Set Holo VServo Degrees/Microseconds Max Pos,  dddd=0000-0180  deg, dddd > 0544 Microseconds
     {
         Storage.getHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
@@ -345,10 +341,12 @@ void MDuinoBase::processSetupCommand(const char* command)
         Storage.getHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
         VMinPos = param_num_ext;
         Storage.setHoloPositions(param_num, HMinPos, HMaxPos, VMinPos, VMaxPos);
-    }    
+    }
+    /*
     else if (strcmp(cmd, "VP") == 0)       // Set Holo VServo Speed (0-255)
     {
     }
+    */
     else if (strcmp(cmd, "SS") == 0)       // Sound Control
     {
         Storage.setStartupSoundNr(param_num);
@@ -366,33 +364,33 @@ void MDuinoBase::processSetupCommand(const char* command)
     {
         Storage.setMinRandomPause(param_num);
     }
+    /*
     else if (strcmp(cmd, "ST") == 0)       // Delay Time Master/Slave
     {
     }
+    */
     else if (strcmp(cmd, "MD") == 0)       // Set board mode and reboot in new mode
     {
         if (param_num == 0)
-            Storage.setType(MDuinoStorage::DomeMaster);
+            Storage.setType(MDuinoStorage::MDuinoType::DomeMaster);
         else if (param_num == 1)
-            Storage.setType(MDuinoStorage::DomeSlave);
+            Storage.setType(MDuinoStorage::MDuinoType::DomeSlave);
         else if (param_num == 2)
-            Storage.setType(MDuinoStorage::BodyMaster);
-        else if (param_num == 3)
-            Storage.setType(MDuinoStorage::BodySlave);
+            Storage.setType(MDuinoStorage::MDuinoType::BodyMaster);
         delay(500);
         resetFunc();
     }
     else if (strcmp(cmd, "MP") == 0)       // Set MP3Player Type
     {
         if (param_num == 0)
-            Storage.setMP3Player(MDuinoStorage::MP3Trigger);
+            Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::MP3Trigger);
         else if (param_num == 1)
-            Storage.setMP3Player(MDuinoStorage::DFPlayer);
+            Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::DFPlayer);
         else if (param_num == 2)
-            Storage.setMP3Player(MDuinoStorage::Vocalizer);
+            Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::Vocalizer);
 #ifdef INCLUDE_DY_PLAYER
         else if (param_num == 3)
-            Storage.setMP3Player(MDuinoStorage::DYPlayer);
+            Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::DYPlayer);
 #endif
         delay(500);
         resetFunc();
@@ -432,14 +430,11 @@ void MDuinoBase::processSetupCommand(const char* command)
         delay(500);
         resetFunc();
     }
+    #ifdef DEBUG_MSG
     else
     {
-        #ifdef DEBUG_MSG
         Serial.print(F("NOT "));
-        #endif
     }
-
-    #ifdef DEBUG_MSG
     Serial.printf(F("valid %s\r\n"), cmd);
     #endif
 }

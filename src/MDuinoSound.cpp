@@ -124,108 +124,11 @@ void MDuinoSoundMP3Trigger::Quiet(const bool on /* = true*/)
 }
 
 ///////////
-#ifndef INCLUDE_DY_PLAYER
-MDuinoSoundDFPlayer::MDuinoSoundDFPlayer(SendOnlySoftwareSerial &SoundSerial) : SoundSerial(SoundSerial)
-{
-	CurrentVolume = 15; // Medium Volume
-}
-
-void MDuinoSoundDFPlayer::init()
-{
-	SoundSerial.flush();
-
-	sendCommand(0x09, 0x00, 0x01); // Playback Source TF
-	delay(500);
-	sendCommand(0x07, 0x00, 0x00); // EQ Normal
-	delay(100);
-	VolumeMid();
-	delay(100);
-}
-
-void MDuinoSoundDFPlayer::SetVolume(const byte Volume, const bool SetAsStandard /*= true*/)
-{
-	if (SetAsStandard)
-		CurrentVolume = Volume;
-
-	sendCommand(0x06, 0x00, Volume); // Specify Volume (0-30)
-}
-
-void MDuinoSoundDFPlayer::VolumeUp()
-{
-	if (CurrentVolume < 30)
-	{
-		CurrentVolume += 2;
-		SetVolume(CurrentVolume);
-	}
-}
-
-void MDuinoSoundDFPlayer::VolumeDown()
-{
-	if (CurrentVolume >= 2)
-	{
-		CurrentVolume -= 2;
-		SetVolume(CurrentVolume);
-	}
-}
-
-void MDuinoSoundDFPlayer::VolumeMid()
-{
-	SetVolume(15);
-}
-
-void MDuinoSoundDFPlayer::VolumeMax()
-{
-	SetVolume(30);
-}
-
-void MDuinoSoundDFPlayer::VolumeMin()
-{
-	SetVolume(5);
-}
-
-void MDuinoSoundDFPlayer::VolumeOff()
-{
-	SetVolume(0, false);
-}
-
-void MDuinoSoundDFPlayer::Play(const byte SoundNr)
-{
-	sendCommand(0x12, 0x00, SoundNr); // Playback
-}
-
-void MDuinoSoundDFPlayer::Stop()
-{
-	sendCommand(0x16, 0x00, 0x00);
-}
-
-void MDuinoSoundDFPlayer::Quiet(const bool on /* = true*/)
-{
-}
-
-void MDuinoSoundDFPlayer::sendCommand(const byte Command, const byte Param1, const byte Param2)
-{
-
-	// Calculate the checksum
-	unsigned int checkSum = -(0xFF + 0x06 + Command + 0x00 + Param1 + Param2);
-
-	// Construct the command line
-	byte commandBuffer[10] = { 0x7E, 0xFF, 0x06, Command, 0x00, Param1, Param2,
-							  highByte(checkSum), lowByte(checkSum), 0xEF };
-
-	SoundSerial.write(commandBuffer, 10);
-	SoundSerial.flush();
-
-	// Delay needed between successive commands
-	delay(100);
-}
-#endif
-
-//////////
 
 MDuinoSoundVocalizer::MDuinoSoundVocalizer(SendOnlySoftwareSerial &SoundSerial) : SoundSerial(SoundSerial)
 {
 	// Init
-	SoundSerial.flush();
+	// SoundSerial.flush();
 	CurrentVolume = 50; // Medium Volume
 }
 
@@ -307,18 +210,114 @@ void MDuinoSoundVocalizer::Overload()
 
 ///////////
 
-#ifdef INCLUDE_DY_PLAYER
-
-MDuinoSoundDYPlayer::MDuinoSoundDYPlayer(SendOnlySoftwareSerial &SoundSerial) : SoundSerial(SoundSerial)
+MDuinoSoundDFPlayer::MDuinoSoundDFPlayer(SendOnlySoftwareSerial &SoundSerial) : SoundSerial(SoundSerial)
 {
 	CurrentVolume = 15; // Medium Volume
+}
+
+void MDuinoSoundDFPlayer::init()
+{
+	// SoundSerial.flush();
+
+	sendCommand(0x09, 0x00, 0x01); // Playback Source TF
+	delay(500);
+	sendCommand(0x07, 0x00, 0x00); // EQ Normal
+	delay(100);
+	VolumeMid();
+	delay(100);
+}
+
+void MDuinoSoundDFPlayer::SetVolume(const byte Volume, const bool SetAsStandard /*= true*/)
+{
+	if (SetAsStandard)
+		CurrentVolume = Volume;
+
+	sendCommand(0x06, 0x00, Volume); // Specify Volume (0-30)
+}
+
+void MDuinoSoundDFPlayer::VolumeUp()
+{
+	if (CurrentVolume < 30)
+	{
+		CurrentVolume += 2;
+		SetVolume(CurrentVolume);
+	}
+}
+
+void MDuinoSoundDFPlayer::VolumeDown()
+{
+	if (CurrentVolume >= 2)
+	{
+		CurrentVolume -= 2;
+		SetVolume(CurrentVolume);
+	}
+}
+
+void MDuinoSoundDFPlayer::VolumeMid()
+{
+	SetVolume(15);
+}
+
+void MDuinoSoundDFPlayer::VolumeMax()
+{
+	SetVolume(30);
+}
+
+void MDuinoSoundDFPlayer::VolumeMin()
+{
+	SetVolume(5);
+}
+
+void MDuinoSoundDFPlayer::VolumeOff()
+{
+	SetVolume(0, false);
+}
+
+void MDuinoSoundDFPlayer::Play(const byte SoundNr)
+{
+	sendCommand(0x12, 0x00, SoundNr); // Playback
+}
+
+void MDuinoSoundDFPlayer::Stop()
+{
+	sendCommand(0x16, 0x00, 0x00);
+}
+
+void MDuinoSoundDFPlayer::Quiet(const bool on /* = true*/)
+{
+}
+
+void MDuinoSoundDFPlayer::sendCommand(const byte Command, const byte Param1, const byte Param2)
+{
+
+	// Calculate the checksum
+	unsigned int checkSum = -(0xFF + 0x06 + Command + 0x00 + Param1 + Param2);
+
+	// Construct the command line
+	byte commandBuffer[10] = { 0x7E, 0xFF, 0x06, Command, 0x00, Param1, Param2,
+							  highByte(checkSum), lowByte(checkSum), 0xEF };
+
+	SoundSerial.write(commandBuffer, 10);
+	// SoundSerial.flush();
+
+	// Delay needed between successive commands
+	delay(100);
+}
+
+//////////
+
+#ifdef INCLUDE_DY_PLAYER
+
+MDuinoSoundDYPlayer::MDuinoSoundDYPlayer(SendOnlySoftwareSerial &SoundSerial)
+	: MDuinoSoundDFPlayer(SoundSerial)
+{
 }
 
 void MDuinoSoundDYPlayer::init()
 {
 	byte cmd[] = { 0xAA, 0x1A, 0x01, 0x00 }; // EQ-Normal
 
-	SoundSerial.flush();
+	// SoundSerial.flush();
 
 	sendCommand(cmd, 0x04);
 
@@ -329,7 +328,7 @@ void MDuinoSoundDYPlayer::init()
 
 void MDuinoSoundDYPlayer::SetVolume(const byte Volume, const bool SetAsStandard /*= true*/)
 {
-	byte cmd[4] = { 0xAA, 0x13, 0x01, 0x00 }; // Set Volume, Specify Volume (0-30)
+	byte cmd[] = { 0xAA, 0x13, 0x01, 0x00 }; // Set Volume, Specify Volume (0-30)
 
 	cmd[3] = Volume;
 
@@ -339,47 +338,9 @@ void MDuinoSoundDYPlayer::SetVolume(const byte Volume, const bool SetAsStandard 
 	sendCommand(cmd, 0x04);
 }
 
-void MDuinoSoundDYPlayer::VolumeUp()
-{
-	if (CurrentVolume < 30)
-	{
-		CurrentVolume += 2;
-		SetVolume(CurrentVolume);
-	}
-}
-
-void MDuinoSoundDYPlayer::VolumeDown()
-{
-	if (CurrentVolume >= 2)
-	{
-		CurrentVolume -= 2;
-		SetVolume(CurrentVolume);
-	}
-}
-
-void MDuinoSoundDYPlayer::VolumeMid()
-{
-	SetVolume(15);
-}
-
-void MDuinoSoundDYPlayer::VolumeMax()
-{
-	SetVolume(30);
-}
-
-void MDuinoSoundDYPlayer::VolumeMin()
-{
-	SetVolume(5);
-}
-
-void MDuinoSoundDYPlayer::VolumeOff()
-{
-	SetVolume(0, false);
-}
-
 void MDuinoSoundDYPlayer::Play(const byte SoundNr)
 {
-	byte cmd[5] = { 0xAA, 0x07, 0x02, 0x00, 0x00 };	// Play specific Song
+	byte cmd[] = { 0xAA, 0x07, 0x02, 0x00, 0x00 };	// Play specific Song
 
 	cmd[4] = SoundNr;
 
@@ -388,13 +349,13 @@ void MDuinoSoundDYPlayer::Play(const byte SoundNr)
 
 void MDuinoSoundDYPlayer::Stop()
 {
-	byte cmd[3] = { 0xAA, 0x04, 0x00 };
+	byte cmd[] = { 0xAA, 0x04, 0x00 };
 	sendCommand(cmd, 0x03);
 }
 
 void MDuinoSoundDYPlayer::Quiet(const bool on /* = true*/)
 {
-	byte cmd[3] = { 0xAA, 0x10, 0x00 };
+	byte cmd[] = { 0xAA, 0x10, 0x00 };
 	sendCommand(cmd, 0x03);
 }
 
@@ -409,10 +370,9 @@ void MDuinoSoundDYPlayer::sendCommand(const byte *Command, const byte len)
 	SoundSerial.write(Command, len);
 	// Write Checksum
 	SoundSerial.write(sum);
-	SoundSerial.flush();
+	// SoundSerial.flush();
 
 	// Delay needed between successive commands
 	delay(100);
 }
-
-#endif	//INCLUDE_DY_PLAYER
+#endif

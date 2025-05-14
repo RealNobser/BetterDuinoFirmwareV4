@@ -24,7 +24,7 @@ class MDuinoBodyMasterChopper : public MDuinoDomeMasterChopper
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "BetterDuino Body Master (C1-10P)"; }
+        virtual const char* getProductName() override { return "BD Body C1-10P"; }
 
     protected:
         void playSequenceAddons(const byte SeqNr) override;

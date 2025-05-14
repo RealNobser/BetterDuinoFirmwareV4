@@ -30,7 +30,7 @@ class MDuinoBodyMasterR2 : public MDuinoDomeMasterR2
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "BetterDuino Body Master (R2-D2)"; }
+        virtual const char* getProductName() override { return "BD Body R2-D2"; }
 
     protected:
         void playSequenceAddons(const byte SeqNr) override;

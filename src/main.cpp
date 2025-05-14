@@ -71,7 +71,7 @@ void setup()
     switch (type)
     {
     #ifdef INCLUDE_DOME_MASTER
-    case MDuinoStorage::DomeMaster:
+    case MDuinoStorage::MDuinoType::DomeMaster:
         #if defined(R2D2)
         MDuino = new MDuinoDomeMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
@@ -88,7 +88,7 @@ void setup()
         break;
     #endif
     #ifdef INCLUDE_DOME_SLAVE
-    case MDuinoStorage::DomeSlave:
+    case MDuinoStorage::MDuinoType::DomeSlave:
         #if defined(R2D2)
         MDuino = new MDuinoDomeSlaveR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
@@ -105,7 +105,7 @@ void setup()
         break;
     #endif
     #ifdef INCLUDE_BODY_MASTER
-    case MDuinoStorage::BodyMaster:
+    case MDuinoStorage::MDuinoType::BodyMaster:
         #if defined(R2D2)
         MDuino = new MDuinoBodyMasterR2(Serial1, Serial2, Serial3, Servo1, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8, Servo9, Servo10, Servo11);
         #elif defined(CHOPPER)
@@ -121,7 +121,7 @@ void setup()
         #endif
         break;
     #endif
-    case MDuinoStorage::UnknownType:
+    case MDuinoStorage::MDuinoType::unknown:
     default:
         #ifdef INCLUDE_DOME_MASTER
 
@@ -134,7 +134,7 @@ void setup()
         #else
         #error Please include at least one astromech type in config.h
         #endif
-        Storage.setType(MDuinoStorage::DomeMaster);
+        Storage.setType(MDuinoStorage::MDuinoType::DomeMaster);
         #ifdef INCLUDE_I2C_SLAVE
         Wire.begin(I2C_DOME_MASTER);
         Wire.onReceive(I2C_Callback);
@@ -180,7 +180,7 @@ void setup()
 
     MDuino->init();
 
-    Serial.printf(F("%s\r\nVersion %s\r\n\r\n"), MDuino->getProductName(), VERSION);
+    Serial.printf(F("%s\r\nV%s\r\n\r\n"), MDuino->getProductName(), VERSION);
 }
 
 void loop()

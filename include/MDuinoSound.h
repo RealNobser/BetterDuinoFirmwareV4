@@ -5,8 +5,6 @@
 #include <SendOnlySoftwareSerial.h>
 #include "config.h"
 
-#define DFPLAYER_MAX_CMD    16
-
 /***********************************************************
  *  On the MP3, there are a maximum of 255 sound files
  *  They must be named NNN-xxxx.mp3
@@ -118,34 +116,6 @@ class MDuinoSoundMP3Trigger : public MDuinoSound
         SendOnlySoftwareSerial& SoundSerial;
 };
 
-#ifndef INCLUDE_DY_PLAYER
-class MDuinoSoundDFPlayer : public MDuinoSound
-{
-    public:
-        explicit MDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial);
-
-        virtual void init() override;
-
-        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
-        virtual void VolumeUp() override;
-        virtual void VolumeDown() override;
-        virtual void VolumeMid() override;
-        virtual void VolumeMax() override;
-        virtual void VolumeMin() override;
-        virtual void VolumeOff() override;
-
-        virtual void Play(const byte SoundNr) override;
-        virtual void Stop() override;
-        virtual void Quiet(const bool on = true) override;
-
-        virtual bool hasVocalizer() override { return false; }
-
-    protected:
-        SendOnlySoftwareSerial& SoundSerial;
-        void sendCommand(const byte Command, const byte Param1, const byte Param2);
-};
-#endif
-
 class MDuinoSoundVocalizer : public MDuinoSound
 {
     public:
@@ -174,11 +144,10 @@ class MDuinoSoundVocalizer : public MDuinoSound
         SendOnlySoftwareSerial& SoundSerial;
 };
 
-#ifdef INCLUDE_DY_PLAYER
-class MDuinoSoundDYPlayer : public MDuinoSound
+class MDuinoSoundDFPlayer : public MDuinoSound
 {
     public:
-        explicit MDuinoSoundDYPlayer(SendOnlySoftwareSerial& SoundSerial);
+        explicit MDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial);
 
         virtual void init() override;
 
@@ -198,8 +167,26 @@ class MDuinoSoundDYPlayer : public MDuinoSound
 
     protected:
         SendOnlySoftwareSerial& SoundSerial;
+        void sendCommand(const byte Command, const byte Param1, const byte Param2);
+};
+
+#ifdef INCLUDE_DY_PLAYER
+class MDuinoSoundDYPlayer : public MDuinoSoundDFPlayer
+{
+    public:
+        explicit MDuinoSoundDYPlayer(SendOnlySoftwareSerial& SoundSerial);
+
+        virtual void init() override;
+
+        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
+
+        virtual void Play(const byte SoundNr) override;
+        virtual void Stop() override;
+        virtual void Quiet(const bool on = true) override;
+
+    protected:
         void sendCommand(const byte* Command, const byte len);
 };
-#endif // INCLUDE_DY_PLAYER
+#endif
 
 #endif // __MDUINOSOUND_H__

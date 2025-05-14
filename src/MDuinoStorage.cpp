@@ -24,15 +24,15 @@ MDuinoStorage::MDuinoType MDuinoStorage::getType()
 {
     uint8_t value = EEPROM.read(ADDR_MDUINOTYPE);
 
-    if (value >= MDuinoType::UnknownType)
-        return MDuinoType::UnknownType;
+    if (value >= (uint8_t)MDuinoType::unknown)
+        return MDuinoType::unknown;
     else
         return (MDuinoType)value;
 }
 
 void MDuinoStorage::setType(const MDuinoType type)
 {
-    EEPROM.update(ADDR_MDUINOTYPE, type);
+    EEPROM.update(ADDR_MDUINOTYPE, (uint8_t)type);
 }
 
 
@@ -40,15 +40,15 @@ MDuinoStorage::MDuinoMP3PlayerType MDuinoStorage::getMP3Player()
 {
     uint8_t value = EEPROM.read(ADDR_MDUINOMP3PLAYER);
 
-    if (value > MDuinoMP3PlayerType::UnknownPlayer)
-        return MDuinoMP3PlayerType::UnknownPlayer;
+    if (value > (uint8_t)MDuinoMP3PlayerType::unknown)
+        return MDuinoMP3PlayerType::unknown;
     else
         return (MDuinoMP3PlayerType)value;
 }
 
 void MDuinoStorage::setMP3Player(const MDuinoMP3PlayerType type)
 {
-    EEPROM.update(ADDR_MDUINOMP3PLAYER, type);
+    EEPROM.update(ADDR_MDUINOMP3PLAYER, (uint8_t)type);
 }
 
 byte MDuinoStorage::getStartupSoundNr()

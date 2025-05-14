@@ -22,7 +22,7 @@ class MDuinoDomeSlaveBT1 : public MDuinoDomeSlave
         virtual void init() override;
         virtual void run() override;
 
-        virtual const char* getProductName() override { return "BetterDuino Dome Slave (BT-1)"; }
+        virtual const char* getProductName() override { return "BD Slave BT-1"; }
 
     protected:
         void playSequenceAddons(const byte SeqNr) override;
