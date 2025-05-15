@@ -43,16 +43,6 @@ VarSpeedServo Servo9;
 VarSpeedServo Servo10;
 VarSpeedServo Servo11;
 
-#ifdef INCLUDE_I2C_SLAVE
-void I2C_Callback(int count)
-{
-    // MarcDuinio->I2C_Callback();
-    #ifdef DEBUG_MSG
-    Serial.print("\rI2C\r");
-    #endif
-}
-#endif
-
 void setup()
 {
     // put your setup code here, to run once:
@@ -83,7 +73,6 @@ void setup()
         #endif
         #ifdef INCLUDE_I2C_SLAVE
         Wire.begin(I2C_DOME_MASTER);
-        Wire.onReceive(I2C_Callback);
         #endif
         break;
     #endif
@@ -100,7 +89,6 @@ void setup()
         #endif
         #ifdef INCLUDE_I2C_SLAVE
         Wire.begin(I2C_DOME_SLAVE);
-        Wire.onReceive(I2C_Callback);
         #endif
         break;
     #endif
@@ -117,7 +105,6 @@ void setup()
         #endif
         #ifdef INCLUDE_I2C_SLAVE
         Wire.begin(I2C_BODY_MASTER);
-        Wire.onReceive(I2C_Callback);
         #endif
         break;
     #endif
@@ -137,7 +124,6 @@ void setup()
         Storage.setType(MDuinoStorage::MDuinoType::DomeMaster);
         #ifdef INCLUDE_I2C_SLAVE
         Wire.begin(I2C_DOME_MASTER);
-        Wire.onReceive(I2C_Callback);
         #endif
 
         #elif defined(INCLUDE_DOME_SLAVE)
@@ -153,7 +139,6 @@ void setup()
         #endif
         #ifdef INCLUDE_I2C_SLAVE
         Wire.begin(I2C_DOME_SLAVE);
-        Wire.onReceive(I2C_Callback);
         #endif
 
         #elif defined(INCLUDE_BODY_MASTER)
@@ -169,7 +154,6 @@ void setup()
         #endif
         #ifdef INCLUDE_I2C_SLAVE
         Wire.begin(I2C_BODY_MASTER);
-        Wire.onReceive(I2C_Callback);
         #endif
         #else
         #error Please include at least one role type in config.h
