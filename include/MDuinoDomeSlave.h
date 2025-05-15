@@ -41,19 +41,18 @@ class MDuinoDomeSlave : public MDuinoDome
         void processAltDisplayCommand(const char* command);
         void processExpansionCommand(const char* command);
 
-        void HolosOn(const byte HoloNr);
+        void HolosOn(const byte HoloNr, const unsigned long duration);
+        void HolosFlicker(const byte HoloNr, const unsigned long duration);
         void HolosOff(const byte HoloNr);
 
         #ifdef INCLUDE_HOLO_RGB
-        void HolosOn(const byte HoloNr, const byte red, const byte green, const byte blue, const byte bright);
+        void HolosOn(const byte HoloNr, const unsigned long duration, const byte red, const byte green, const byte blue, const byte bright);
         #endif
 
         void HoloCenter(const byte HoloNr);
 
         void MagicPanelCtrl(const byte param);
         void HoloMovementCtrl(const byte param, const bool moving);
-        void HoloOnOffCtrl(const byte holo, const unsigned int param);
-        void HoloFlickerCtrl(const byte holo, const unsigned int param);
 };
 
 #endif // __MDUINODOMESLAVE_H__

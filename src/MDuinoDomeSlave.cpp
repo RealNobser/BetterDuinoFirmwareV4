@@ -322,7 +322,7 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
         }
         else if (strcmp(cmd, "ON")==0)  // Holo Lights on
         {
-            HolosOn(param_num, red_num, green_num, blue_num, bright_num);
+            HolosOn(param_num, 0, red_num, green_num, blue_num, bright_num);
         }
         else if (strcmp(cmd, "H0")==0)  // Holos On for xx seconds
         {
@@ -399,7 +399,7 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     }
     else if (strcmp(cmd, "ON")==0)  // Holo Lights on
     {
-        HolosOn(param_num);
+        HolosOn(param_num, 0);
     }    
     else if (strcmp(cmd, "OF")==0)  // Holo Lights off
     {
@@ -451,37 +451,35 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     }    
     else if (strcmp(cmd, "H0")==0)  // Holos On for xx seconds
     {
-        for (byte i=MinHolo; i <= MaxHolo; i++)
-            HoloOnOffCtrl(i, param_num);
+        HolosOn(0, param_num);
     }    
     else if (strcmp(cmd, "H1")==0)  // Holo1 On for xx seconds
     {
-        HoloOnOffCtrl(1, param_num);
+        HolosOn(1, param_num);
     }    
     else if (strcmp(cmd, "H2")==0)  // Holo2 On for xx seconds
     {
-        HoloOnOffCtrl(2, param_num);
+        HolosOn(2, param_num);
     }    
     else if (strcmp(cmd, "H3")==0)  // Holo3 On for xx seconds
     {
-        HoloOnOffCtrl(3, param_num);
+        HolosOn(3, param_num);
     }    
     else if (strcmp(cmd, "F0")==0)  // Holos Flicker for xx seconds
     {        
-        for (byte i=MinHolo; i <= MaxHolo; i++)
-            HoloFlickerCtrl(i, param_num);
+        HolosFlicker(0, param_num);
     }    
     else if (strcmp(cmd, "F1")==0)  // Holo1 Flicker for xx seconds
     {
-        HoloFlickerCtrl(1, param_num);
+        HolosFlicker(1, param_num);
     }    
     else if (strcmp(cmd, "F2")==0)  // Holo2 Flicker for xx seconds
     {
-        HoloFlickerCtrl(2, param_num);
+        HolosFlicker(2, param_num);
     }    
     else if (strcmp(cmd, "F3")==0)  // Holo3 Flicker for xx seconds
     {
-        HoloFlickerCtrl(3, param_num);
+        HolosFlicker(3, param_num);
     }    
     else if (strcmp(cmd, "EO")==0)  // AUX1 on
     {
@@ -514,42 +512,56 @@ void MDuinoDomeSlave::processExpansionCommand(const char* command)
 }
 
 
-void MDuinoDomeSlave::HolosOn(const byte HoloNr)
+void MDuinoDomeSlave::HolosOn(const byte HoloNr, const unsigned long duration)
 {
-    if (HoloNr > (MAX_MDUINOHOLOS + 1)) // Parameter = 4
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
 
-    if((HoloNr == 0) || (HoloNr == 4))  // All Holos
+    if (HoloNr == 0)    // All Holos
     {
         for(byte i=1; i<= MAX_MDUINOHOLOS; i++)
-            Holos[i]->on();
+            Holos[i]->on(duration);
     }
     else
-        Holos[HoloNr]->on();
+        Holos[HoloNr]->on(duration);
+}
+
+void MDuinoDomeSlave::HolosFlicker(const byte HoloNr, const unsigned long duration)
+{
+    if (HoloNr > MAX_MDUINOHOLOS)
+        return;
+
+    if (HoloNr == 0)     // All holos
+    {
+        for(byte i=1; i<= MAX_MDUINOHOLOS; i++)
+            Holos[i]->flickerOn(duration);
+    }
+    else
+        Holos[HoloNr]->flickerOn(duration);
 }
 
 #ifdef INCLUDE_HOLO_RGB
-void MDuinoDomeSlave::HolosOn(const byte HoloNr, const byte red, const byte green, const byte blue, const byte bright)
+void MDuinoDomeSlave::HolosOn(const byte HoloNr, const unsigned long duration, const byte red, const byte green, const byte blue, const byte bright)
 {
-    if (HoloNr > (MAX_MDUINOHOLOS + 1)) // Parameter = 4
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
 
-    if((HoloNr == 0) || (HoloNr == 4))  // All Holos
+    if (HoloNr == 0) // All Holos
     {
         for(byte i=1; i<= MAX_MDUINOHOLOS; i++)
-            Holos[i]->on(red, green, blue, bright);
+            Holos[i]->on(red, green, blue, bright, duration);
     }
     else
-        Holos[HoloNr]->on(red, green, blue, bright);
+        Holos[HoloNr]->on(red, green, blue, bright, duration);
 }
 #endif
 
 void MDuinoDomeSlave::HolosOff(const byte HoloNr)
 {
-    if (HoloNr > (MAX_MDUINOHOLOS + 1))    // Parameter = 4
+    if (HoloNr > MAX_MDUINOHOLOS)
         return;
 
-    if((HoloNr == 0) || (HoloNr == 4))  // All Holos
+    if (HoloNr == 0)    // All Holos
     {
         for(byte i=1; i<= MAX_MDUINOHOLOS; i++)
             Holos[i]->off();
@@ -598,20 +610,4 @@ void MDuinoDomeSlave::HoloMovementCtrl(const byte param, const bool moving)
     }
     else
         Holos[param]->randomMove(moving);
-}
-
-void MDuinoDomeSlave::HoloOnOffCtrl(const byte holo, const unsigned int param)
-{
-    if (param > 0)
-        Holos[holo]->on(param);
-    else
-        Holos[holo]->off();
-}
-
-void MDuinoDomeSlave::HoloFlickerCtrl(const byte holo, const unsigned int param)
-{
-    if (param > 0)
-        Holos[holo]->flickerOn(param);
-    else
-        Holos[holo]->off();
 }
