@@ -32,11 +32,9 @@ MDuinoDomeMaster::MDuinoDomeMaster(SendOnlySoftwareSerial& Serial_Slave, SendOnl
         case MDuinoStorage::MDuinoMP3PlayerType::MP3Trigger:
             Sound = new MDuinoSoundMP3Trigger(Serial_MP3);
         break;
-#ifndef INCLUDE_DY_PLAYER
         case MDuinoStorage::MDuinoMP3PlayerType::DFPlayer:
             Sound = new MDuinoSoundDFPlayer(Serial_MP3);
         break;
-#endif  // INCLUDE_DY_PLAYER
         case MDuinoStorage::MDuinoMP3PlayerType::Vocalizer:
             Sound = new MDuinoSoundVocalizer(Serial_MP3);
         break;

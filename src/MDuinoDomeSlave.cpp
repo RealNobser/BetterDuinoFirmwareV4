@@ -448,39 +448,15 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
             MagicPanelMillis = millis();
             Serial_Magic.print(F("T42\r"));
         }
-    }    
-    else if (strcmp(cmd, "H0")==0)  // Holos On for xx seconds
+    }
+    else if ((strcmp(cmd, "H0")==0) || (strcmp(cmd, "H1")==0) || (strcmp(cmd, "H2")==0) || (strcmp(cmd, "H3")==0))  // Holos On for xx seconds
     {
-        HolosOn(0, param_num);
-    }    
-    else if (strcmp(cmd, "H1")==0)  // Holo1 On for xx seconds
+        HolosOn(cmd[1]-'0', param_num); // I know, bad style but saves lots of flash memory
+    }
+    else if ((strcmp(cmd, "F0")==0) || (strcmp(cmd, "F1")==0) || (strcmp(cmd, "F2")==0) || (strcmp(cmd, "F3")==0))  // Holos On for xx seconds
     {
-        HolosOn(1, param_num);
-    }    
-    else if (strcmp(cmd, "H2")==0)  // Holo2 On for xx seconds
-    {
-        HolosOn(2, param_num);
-    }    
-    else if (strcmp(cmd, "H3")==0)  // Holo3 On for xx seconds
-    {
-        HolosOn(3, param_num);
-    }    
-    else if (strcmp(cmd, "F0")==0)  // Holos Flicker for xx seconds
-    {        
-        HolosFlicker(0, param_num);
-    }    
-    else if (strcmp(cmd, "F1")==0)  // Holo1 Flicker for xx seconds
-    {
-        HolosFlicker(1, param_num);
-    }    
-    else if (strcmp(cmd, "F2")==0)  // Holo2 Flicker for xx seconds
-    {
-        HolosFlicker(2, param_num);
-    }    
-    else if (strcmp(cmd, "F3")==0)  // Holo3 Flicker for xx seconds
-    {
-        HolosFlicker(3, param_num);
-    }    
+        HolosFlicker(cmd[1]-'0', param_num); // I know, bad style but saves lots of flash memory
+    }
     else if (strcmp(cmd, "EO")==0)  // AUX1 on
     {
         AUX1(param_num);
