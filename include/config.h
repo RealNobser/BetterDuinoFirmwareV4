@@ -26,12 +26,13 @@
 // #define INCLUDE_CLASSIC_I2C_SUPPORT  // Uncomment to include classic Serial to I2C support (excludes body master built)
 #define INCLUDE_I2C_SLAVE // Uncommend for new I2C slave mode
 // #define INCLUDE_HOLO_RGB		// Uncomment for NeoPixel-Holo (excludes body master built)
-#define ARDUINO_NEOPIXEL // Choose one!
+ #define ARDUINO_NEOPIXEL     // Choose one!
 // #define FASTLED_NEOPIXEL		// Choose one!
 // #define SEPARATE_DOMELIFT    // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
-#define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module (not recommended at the moment, to many problems)
+#define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module (not recommended at the moment, too many problems)
                                 // Including DY-Player excludes DF-Player
 // #define INCLUDE_HOLO_TEST
+// #define INCLUDE_CMD_ECHO
 
 #ifdef SEPARATE_DOMELIFT
 #define SERIAL_LIFT_TYPE SendOnlySoftwareSerial
@@ -45,7 +46,7 @@
 
 #ifdef INCLUDE_HOLO_RGB
 #undef INCLUDE_BODY_MASTER
-#undef INCLUDE_DOME_MASTER
+// #undef INCLUDE_DOME_MASTER
 // #define NEO_JEWEL_RGBW
 #ifdef NEO_JEWEL_RGBW
 #define HP_NEO_TYPE (NEO_GRBW + NEO_KHZ800)
@@ -102,7 +103,7 @@
 //
 // Module Specific stuff
 //
-#define VERSION "4.4.4"
+#define VERSION "4.4.5"
 #define HW_VERSION "1.5.3"
 #define CONFIG_VERSION 41
 

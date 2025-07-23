@@ -48,6 +48,9 @@ void MDuinoBase::run()
     if (Serial.available())
     {
         unsigned char c = Serial.read();
+        #ifdef INCLUDE_CMD_ECHO
+            echo(c);
+        #endif
         if (c == '\n')
             return;        
         SerialBuffer[BufferIndex++] = c;
@@ -95,6 +98,18 @@ void MDuinoBase::run()
     }
     #endif
 }
+
+#ifdef INCLUDE_CMD_ECHO
+// utility to echo characters back cleanly
+void MDuinoBase::echo(const char ch)
+{
+	// echo return and line feeds nicely on a terminal
+	if(ch=='\r' || ch=='\n')
+        Serial.print("\r\n");
+	else 
+        Serial.print(ch);
+}
+#endif 
 
 void MDuinoBase::playSequence(const byte SeqNr)
 {

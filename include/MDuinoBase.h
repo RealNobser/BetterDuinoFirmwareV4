@@ -56,6 +56,10 @@ class MDuinoBase
         MDuinoSequencePlayer* SequencePlayer = nullptr;
 
     protected:
+        #ifdef INCLUDE_CMD_ECHO
+        void echo(const char ch);
+        #endif
+
         virtual void playSequence(const byte SeqNr);
         virtual void playSequenceAddons(const byte SeqNr) = 0;
 
