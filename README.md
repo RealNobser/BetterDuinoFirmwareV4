@@ -521,6 +521,7 @@ Setup Commands
 | #DUxx | Dump EEPORM to serial<br><br>· #DUxx : value at address xx<br><br>· #DUMP : dump complete EEPROM content | DEACTIVATED AT THE MOMENT, UNDER REVISON |
 | #RSET<br><br>#RS01 | Restart MarcDuino<br><br>Factory Reset |     |
 | #ADxx | Adjustment Mode: When setting up individual Servo settings, servo will positioned immediately<br><br>· #AD00 : Adjustment Mode Off<br><br>· #AD01 : Adjustment Mode On |     |
+| #ECxx | Activate (xx=01)/Deactivate (xx=00) serial echo | Do not activate when using Dome Lift module on TX port! |
 
 I2C Commands (Classic, Master-Mode)
 ============
