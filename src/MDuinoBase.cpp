@@ -8,8 +8,8 @@ MDuinoBase::MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedSer
     Servo7(Servo7), Servo8(Servo8), Servo9(Servo9), Servo10(Servo10), Servo11(Servo11),
     Sequencer(this)
 {
-    memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
-    memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
+    SerialBuffer[0]     = '\0';
+    WireBuffer[0]       = '\0';
 
     HeartBeatMillis     = millis();
     HeartBeatIntervall  = HEARTBEAT_MILLIS;
@@ -21,7 +21,7 @@ MDuinoBase::MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedSer
 void MDuinoBase::init()
 {
     // Seed Random Generator
-    //randomSeed(analogRead(0));
+    randomSeed(analogRead(0));
 
     // HeartBeat-LED
     pinMode(P_LED2, OUTPUT);
@@ -31,9 +31,6 @@ void MDuinoBase::init()
     pinMode(P_AUX1, OUTPUT);
     digitalWrite(P_AUX1, LOW);
     #endif
-
-    memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
-    memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
 
     Sequencer.init();
 
@@ -63,7 +60,7 @@ void MDuinoBase::run()
             SerialBuffer[BufferIndex-1] = 0x00; // ensure proper termination
             if (BufferIndex>1)
                 parseCommand(SerialBuffer);
-            memset(SerialBuffer, 0x00, SERIALBUFFERSIZE);
+            SerialBuffer[0] = '\0';
             BufferIndex = 0;
         }
     }
@@ -96,7 +93,7 @@ void MDuinoBase::run()
         {
             WireBuffer[WireIndex-1] = 0x00; // ensure proper termination
             parseCommand(WireBuffer);
-            memset(WireBuffer, 0x00, SERIALBUFFERSIZE);
+            WireBuffer[0] = '\0';
             WireIndex = 0;
         }
     }
