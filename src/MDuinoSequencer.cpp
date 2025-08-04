@@ -13,7 +13,7 @@ MDuinoSequencer::MDuinoSequencer(MDuinoBase* instance)
 
 void MDuinoSequencer::init()
 {
-    setServoSpeed(fast);    // filling array
+    setServoSpeed(speed_t::fast);    // filling array
 }
 
 void MDuinoSequencer::run()
@@ -138,26 +138,26 @@ void MDuinoSequencer::setServoSpeed(speed_t speed)
 {
     byte set_speed = SERVO_SPEED_FULL;
 
-    if (speed == custom)
+    if (speed == speed_t::custom)
     {
         // Need Storage access
     }
 
     switch (speed)
     {
-    case full:
+    case speed_t::full:
         set_speed = SERVO_SPEED_FULL;
         break;
-    case fast:
+    case speed_t::fast:
         set_speed = SERVO_SPEED_FAST;
         break;
-    case medium:
+    case speed_t::medium:
         set_speed = SERVO_SPEED_MEDIUM;
         break;
-    case slow:
+    case speed_t::slow:
         set_speed = SERVO_SPEED_SLOW;
         break;
-    case super_slow:
+    case speed_t::super_slow:
         set_speed = SERVO_SPEED_SUPER_SLOW;
         break;
     default:

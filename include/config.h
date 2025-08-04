@@ -32,7 +32,6 @@
 #define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module (not recommended at the moment, too many problems)
                                 // Including DY-Player excludes DF-Player
 // #define INCLUDE_HOLO_TEST
-// #define INCLUDE_CMD_ECHO
 
 #ifdef SEPARATE_DOMELIFT
 #define SERIAL_LIFT_TYPE SendOnlySoftwareSerial

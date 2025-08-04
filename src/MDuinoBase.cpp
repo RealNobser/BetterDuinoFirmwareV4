@@ -38,6 +38,8 @@ void MDuinoBase::init()
     Sequencer.init();
 
     checkEEPROM();
+
+    echoMode = Storage.getEchoMode();
 }
 
 void MDuinoBase::run()
@@ -48,11 +50,13 @@ void MDuinoBase::run()
     if (Serial.available())
     {
         unsigned char c = Serial.read();
-        #ifdef INCLUDE_CMD_ECHO
+
+        if (echoMode)
             echo(c);
-        #endif
+
         if (c == '\n')
-            return;        
+            return;
+            
         SerialBuffer[BufferIndex++] = c;
         if ((c == '\r') || (BufferIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
         {
@@ -99,17 +103,15 @@ void MDuinoBase::run()
     #endif
 }
 
-#ifdef INCLUDE_CMD_ECHO
 // utility to echo characters back cleanly
 void MDuinoBase::echo(const char ch)
 {
 	// echo return and line feeds nicely on a terminal
 	if(ch=='\r' || ch=='\n')
-        Serial.print("\r\n");
+        Serial.print(F("\r\n"));
 	else 
         Serial.print(ch);
 }
-#endif 
 
 void MDuinoBase::playSequence(const byte SeqNr)
 {
@@ -137,6 +139,7 @@ void MDuinoBase::checkEEPROM(const bool factoryReset /*= false*/)
         Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::MP3Trigger);
         Storage.setStartupSoundNr(255);
         Storage.setDisableRandomSound(0);
+        Storage.setEchoMode(false);
 
         // check SD-Card and edit sound banks!
         Storage.setMaxSound(1, 19);
@@ -386,29 +389,21 @@ void MDuinoBase::processSetupCommand(const char* command)
     */
     else if (strcmp(cmd, "MD") == 0)       // Set board mode and reboot in new mode
     {
-        if (param_num == 0)
-            Storage.setType(MDuinoStorage::MDuinoType::DomeMaster);
-        else if (param_num == 1)
-            Storage.setType(MDuinoStorage::MDuinoType::DomeSlave);
-        else if (param_num == 2)
-            Storage.setType(MDuinoStorage::MDuinoType::BodyMaster);
-        delay(500);
-        resetFunc();
+        if (param_num < ((unsigned int)MDuinoStorage::MDuinoType::unknown))
+        {
+            Storage.setType((MDuinoStorage::MDuinoType)param_num);
+            delay(500);
+            resetFunc();
+        }
     }
     else if (strcmp(cmd, "MP") == 0)       // Set MP3Player Type
     {
-        if (param_num == 0)
-            Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::MP3Trigger);
-        else if (param_num == 1)
-            Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::DFPlayer);
-        else if (param_num == 2)
-            Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::Vocalizer);
-#ifdef INCLUDE_DY_PLAYER
-        else if (param_num == 3)
-            Storage.setMP3Player(MDuinoStorage::MDuinoMP3PlayerType::DYPlayer);
-#endif
-        delay(500);
-        resetFunc();
+        if (param_num < ((unsigned int)MDuinoStorage::MDuinoMP3PlayerType::unknown))
+        {
+            Storage.setMP3Player((MDuinoStorage::MDuinoMP3PlayerType)param_num);
+            delay(500);
+            resetFunc();
+        }
     }
     else if (strcmp(cmd, "MS") == 0)
     {
@@ -444,6 +439,11 @@ void MDuinoBase::processSetupCommand(const char* command)
 
         delay(500);
         resetFunc();
+    }
+    else if (strcmp(cmd, "EC") == 0)             // Echo Mode for better R2-Touch Compatibility
+    {
+        echoMode = (param_num == 1);
+        Storage.setEchoMode(echoMode);
     }
     #ifdef DEBUG_MSG
     else

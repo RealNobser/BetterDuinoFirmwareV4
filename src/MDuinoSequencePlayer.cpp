@@ -34,56 +34,56 @@ void MDuinoDomeSequencePlayerR2::playSequence(const byte SeqNr)
 	case 13:    // AWAKE	random sounds, holos off, panels closed
 	case 14:    // EXCITED	random sounds, holos movement, holo lights on, panels closed
 		Sequencer.loadSequence(panel_init, SEQ_SIZE(panel_init));
-		Sequencer.setServoSpeed(MDuinoSequencer::slow);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::slow);
 		break;
 	case 1:	    // SCREAM
 	case 51:    // Panel only Version
 		Sequencer.loadSequence(panel_all_open, SEQ_SIZE(panel_all_open));
-		Sequencer.setServoSpeed(MDuinoSequencer::slow);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::slow);
 		break;
 	case 2:	    // WAVE
 	case 52:    // Panel only Version
 		Sequencer.loadSequence(panel_wave, SEQ_SIZE(panel_wave));
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	case 3:	    // MOODY FAST WAVE
 	case 53:    // Panel only Version
 		Sequencer.loadSequence(panel_fast_wave, SEQ_SIZE(panel_fast_wave));
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	case 4:	    // OPEN WAVE
 	case 54:    // Panel only Version
 		Sequencer.loadSequence(panel_open_close_wave, SEQ_SIZE(panel_open_close_wave));
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	case 5:	    // Beep Cantina (R2 beeping the cantina, panels doing marching ants)
 	case 55:    // Panel only Version
 		Sequencer.loadSequence(panel_marching_ants, SEQ_SIZE(panel_marching_ants));
-		Sequencer.setServoSpeed(MDuinoSequencer::slow);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::slow);
 		break;
 	case 6:	    // SHORT CIRCUIT / FAINT
 	case 56:    // Panel only Version
 		Sequencer.loadSequence(panel_all_open_long, SEQ_SIZE(panel_all_open_long));
-		Sequencer.setServoSpeed(MDuinoSequencer::super_slow);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::super_slow);
 		break;
 	case 7:	    // Cantina (Orchestral Cantina, Rhythmic Panels)
 	case 57:    // Panel only Version
 		Sequencer.loadSequence(panel_dance, SEQ_SIZE(panel_dance));
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	case 9:		// DISCO
 		Sequencer.loadSequence(panel_long_disco, SEQ_SIZE(panel_long_disco)); // 6:26 seconds sequence
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	case 15:    // SCREAM no panels: sound + lights but no panels
 		break;
 	case 16:    // Panel Wiggle
 		Sequencer.loadSequence(panel_wiggle, SEQ_SIZE(panel_wiggle));
-		Sequencer.setServoSpeed(MDuinoSequencer::medium);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::medium);
 		break;
 	case 58:    // Panel Wave Bye Bye
 		Sequencer.loadSequence(panel_bye_bye_wave, SEQ_SIZE(panel_bye_bye_wave));
-		Sequencer.setServoSpeed(MDuinoSequencer::slow);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::slow);
 		break;
 	}
 }
@@ -107,22 +107,22 @@ void MDuinoBodySequencePlayerR2::playSequence(const byte SeqNr)
 	case 13:
 	case 14:
 		Sequencer.loadSequence(body_panel_init, SEQ_SIZE(body_panel_init));
-		Sequencer.setServoSpeed(MDuinoSequencer::slow);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::slow);
 		break;
 	case 1: // SCREAM
 	case 51:
 		Sequencer.loadSequence(body_panel_all_open, SEQ_SIZE(body_panel_all_open));
-		Sequencer.setServoSpeed(MDuinoSequencer::slow);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::slow);
 		break;
 	case 2: // WAVE
 	case 52:
 		Sequencer.loadSequence(body_panel_wave, SEQ_SIZE(body_panel_wave));
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	case 6: // SHORT CIRCUIT / FAINT
 	case 56:
 		Sequencer.loadSequence(body_panel_all_open_long, SEQ_SIZE(body_panel_all_open_long));
-		Sequencer.setServoSpeed(MDuinoSequencer::super_slow);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::super_slow);
 		break;
 
     //
@@ -134,27 +134,27 @@ void MDuinoBodySequencePlayerR2::playSequence(const byte SeqNr)
 	//
 	case 30: // Utility ARM open and close sequence
 		Sequencer.loadSequence(body_utility_arms_open, SEQ_SIZE(body_utility_arms_open));
-		Sequencer.setServoSpeed(MDuinoSequencer::medium);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::medium);
 		break;
 	case 31: // All Body Panels open and close sequence
 		Sequencer.loadSequence(body_panel_all_test, SEQ_SIZE(body_panel_all_test));
-		Sequencer.setServoSpeed(MDuinoSequencer::medium);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::medium);
 		break;
 	case 32: // All Body Doors open and wiggle close sequence
 		Sequencer.loadSequence(body_panel_spook, SEQ_SIZE(body_panel_spook));
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	case 33: // Body - Use Gripper
 		Sequencer.loadSequence(body_panel_use_gripper, SEQ_SIZE(body_panel_use_gripper));
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	case 34: // Body - Use Interface Tool
 		Sequencer.loadSequence(body_panel_use_interface_tool, SEQ_SIZE(body_panel_use_interface_tool));
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	case 35: // Body - Ping Pong Body Doors
 		Sequencer.loadSequence(body_panel_pingpong_Doors, SEQ_SIZE(body_panel_pingpong_Doors));
-		Sequencer.setServoSpeed(MDuinoSequencer::full);
+		Sequencer.setServoSpeed(MDuinoSequencer::speed_t::full);
 		break;
 	default:
 		break;

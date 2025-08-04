@@ -24,13 +24,14 @@ class MDuinoBase;
 class MDuinoSequencer
 {
     public:
-        enum speed_t {
+        enum class speed_t {
             custom = 0,
             full,
             fast,
             medium,
             slow,
-            super_slow
+            super_slow,
+            unknown
         };
 
         explicit MDuinoSequencer(MDuinoBase* instance);

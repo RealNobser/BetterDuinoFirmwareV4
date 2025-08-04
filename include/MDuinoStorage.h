@@ -1,6 +1,7 @@
 #ifndef __MDUINOSTORAGE_H__
 #define __MDUINOSTORAGE_H__
 
+#include <Arduino.h>
 #include "config.h"
 
 /*
@@ -25,7 +26,7 @@
 *  0x09     Startup Sound Nr (default 255)
 *  0x0a     MinRandomPause in seconds (default 6s)
 *  0x0b     MaxRandomPause in seconds (default 12s)
-*  0x0c     
+*  0x0c     Serial Echo Mode     
 *  0x0d
 
 *  0x10
@@ -157,6 +158,7 @@
 
 #define ADDR_MINRANDOMPAUSE     0x0a
 #define ADDR_MAXRANDOMPAUSE     0x0b
+#define ADDR_ECHOMODE           0x0c
 
 #define ADDR_MAXSONGSBASE       0x10
 
@@ -249,6 +251,9 @@ class MDuinoStorage
 
         byte getHoloLEDs(const byte HoloNr);
         void setHoloLEDs(const byte HoloNr, const byte LEDs);
+
+        bool getEchoMode();
+        void setEchoMode(const bool echoMode);
 
         #ifdef DEBUG_MSG
         void dumpToSerial(const byte Address);

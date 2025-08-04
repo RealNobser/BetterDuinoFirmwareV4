@@ -39,6 +39,8 @@ class MDuinoBase
         byte BufferIndex = 0;
         byte WireIndex = 0;
 
+        bool echoMode = false;
+
         VarSpeedServo& Servo1;
         VarSpeedServo& Servo2;
         VarSpeedServo& Servo3;
@@ -56,9 +58,7 @@ class MDuinoBase
         MDuinoSequencePlayer* SequencePlayer = nullptr;
 
     protected:
-        #ifdef INCLUDE_CMD_ECHO
         void echo(const char ch);
-        #endif
 
         virtual void playSequence(const byte SeqNr);
         virtual void playSequenceAddons(const byte SeqNr) = 0;

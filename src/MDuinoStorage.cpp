@@ -267,6 +267,18 @@ void MDuinoStorage::setHoloLightHighActive(const byte HoloNr, const bool HighAct
         EEPROM.put(ADDR_HOLOLIGHTBASE+HoloNr, HighActive);
 }
 
+bool MDuinoStorage::getEchoMode()
+{ 
+    bool value = false;
+    EEPROM.get(ADDR_ECHOMODE, value);
+    return value;
+}
+
+void MDuinoStorage::setEchoMode(const bool echoMode)
+{
+    EEPROM.put(ADDR_ECHOMODE, echoMode);
+}
+
 #ifdef DEBUG_MSG
 void MDuinoStorage::dumpToSerial(const byte Address)
 {

@@ -176,7 +176,7 @@ void MDuinoDomeMaster::setStandardRandomSoundIntervall()
     else
     {
         RandomSoundIntervall = random(MinRandomPause * 1000, MaxRandomPause * 1000 + 1);
-        Storage.setDisableRandomSound(0);        
+        Storage.setDisableRandomSound(0);     
     }
 }
 
@@ -583,7 +583,7 @@ void MDuinoDomeMaster::processSoundCommand(const char* command)
         break;
         case 'B':   // Startup Sound
             setSoundIntervall(10000);
-            Sound->Play(Storage.getStartupSoundNr());            
+            Sound->Play(Storage.getStartupSoundNr());             
         break;
         default:
             Sound->PlayNext(atoi(cmd), Storage.getMaxSound(atoi(cmd)));
