@@ -21,7 +21,10 @@ MDuinoBase::MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedSer
 void MDuinoBase::init()
 {
     // Seed Random Generator
-    randomSeed(analogRead(0));
+    // randomSeed(analogRead(0));
+    #ifndef INCLUDE_CLASSIC_I2C_SUPPORT
+    randomSeed(millis());
+    #endif
 
     // HeartBeat-LED
     pinMode(P_LED2, OUTPUT);
