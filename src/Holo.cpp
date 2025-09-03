@@ -187,17 +187,23 @@ void Holo::setBrightness(const uint8_t bright)
         ;    // PWM ?
 }
 
-void Holo::move(const uint16_t HPos, const uint16_t VPos, const uint8_t speed /*=0*/)
+void Holo::move(const int16_t HPos, const int16_t VPos, const uint8_t speed /*=0*/)
 {
-    if(!HServo.attached())
-        HServo.attach(HPin);
+    if (HPos != -1)
+    {
+        if(!HServo.attached())
+            HServo.attach(HPin);
 
-    HServo.write(HPos, speed);
+        HServo.write((uint16_t)HPos, speed);
+    }
 
-    if(!VServo.attached())
-        VServo.attach(VPin);
+    if (VPos != -1)
+    {
+        if(!VServo.attached())
+            VServo.attach(VPin);
 
-    VServo.write(VPos, speed);
+        VServo.write((uint16_t)VPos, speed);
+    }
 }
 
 void Holo::randomMove(const bool moving /*=true*/)

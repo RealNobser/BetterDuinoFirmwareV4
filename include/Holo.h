@@ -35,7 +35,7 @@ class Holo
         void flickerOn(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t bright, const unsigned long duration = 0);
         #endif
 
-        void move(const uint16_t HPos, const uint16_t VPos, const uint8_t speed = 0);
+        void move(const int16_t HPos, const int16_t VPos, const uint8_t speed = 0);
                
         void randomMove(const bool moving=true);
 

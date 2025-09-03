@@ -460,7 +460,21 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     else if (strcmp(cmd, "EO")==0)  // AUX1 on
     {
         AUX1(param_num);
-    }    
+    }
+    else if (strcmp(cmd, "MH")==0)  // 
+    {
+        if (param_num > MaxHolo)
+            return;
+
+        Holos[param_num]->move((uint16_t)param_num_ext, -1, 0);
+    }
+    else if (strcmp(cmd, "MV")==0)  // AUX1 on
+    {
+        if (param_num > MaxHolo)
+            return;
+
+        Holos[param_num]->move(-1, (uint16_t)param_num_ext, 0);
+    }
 }
 
 void MDuinoDomeSlave::processDisplayCommand(const char* command)
