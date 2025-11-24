@@ -67,7 +67,7 @@ void MDuinoSequencer::startSequence()
 
     currentStep         = 0;
 
-    currentStepDuration = (unsigned int)pgm_read_word(&currentSequence[currentStep][0]);
+    currentStepDuration = (unsigned long)pgm_read_word(&currentSequence[currentStep][0]);
     currentStepDuration *= 10;
 
     currentStepTime     = millis();
@@ -104,7 +104,7 @@ void MDuinoSequencer::nextStep()
         return;
     }
 
-    currentStepDuration = (unsigned int)pgm_read_word(&currentSequence[currentStep][0]);
+    currentStepDuration = (unsigned long)pgm_read_word(&currentSequence[currentStep][0]);
     currentStepDuration *= 10;
 
     currentStepTime     = millis();
