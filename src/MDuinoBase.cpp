@@ -478,14 +478,17 @@ void MDuinoBase::processI2CCommand(const char* command)
     // get the address field. Need to tokenize on the next "," or "\0"
 	token = strtok(cmd, delim);
     if (token == NULL) {
+        delete[] cmd;
         return;
     }
 
 	if (sscanf(token, "%u", &I2C_Address) != 1) {
+        delete[] cmd;
         return;
     }
 
     if (I2C_Address > 127) {
+        delete[] cmd;
         return;
     }     
 
@@ -536,5 +539,6 @@ void MDuinoBase::processI2CCommand(const char* command)
         token=strtok(NULL, delim); 	// get next token
     }
     Wire.endTransmission();
+    delete[] cmd;
 }
 #endif

@@ -36,6 +36,15 @@
 	// 36000 is 6 minutes
 	*/
 
+sequence_t const panel_init PROGMEM =
+{
+		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
+		// time				servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
+		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
+		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP}
+};
+
+#ifdef R2D2
 sequence_t const panel_all_open PROGMEM =
 {
 		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
@@ -283,14 +292,6 @@ sequence_t const panel_dance PROGMEM =  //Used in SE07
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP,	_NP,	_NP}
 };
 
-sequence_t const panel_init PROGMEM =
-{
-		//				---------------------------------------MASTER--------------------------------------------  ----SLAVE------ 
-		// time				servo1	servo2	servo3	servo4	servo5	servo6	servo7	servo8	servo9 servo10 servo11 servo12 servo13 
-		{SPLIT_WORD(100), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS},
-		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,	_NP,	_NP,	_NP}
-};
-
 /*
 sequence_t const panel_init PROGMEM =
 {
@@ -383,7 +384,9 @@ sequence_t const panel_wiggle PROGMEM = //SE16
 		{SPLIT_WORD(50), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP,	_NP,	_NP}
 };
+#endif
 
+#if defined(R2D2)||defined(BT1)
 
 //
 // Body Sequences
@@ -563,6 +566,7 @@ sequence_t const body_panel_init PROGMEM = //SE00
 		{SPLIT_WORD(130), 	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS, 	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS, 	_CLS,	_CLS},
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP}
 };
+#endif
 
 /*
  *****
@@ -571,6 +575,8 @@ sequence_t const body_panel_init PROGMEM = //SE00
  *
  * See README.md for Servo Connections
  */
+
+ #ifdef CHOPPER
 
 /*
 // Template
@@ -970,6 +976,8 @@ sequence_t const cp_body_panel_pingpong_Doors PROGMEM = //SE35
  		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP}
 };
 
+#endif
+
 /*
  *****
  ***** BT-1 Sequences *****
@@ -977,6 +985,8 @@ sequence_t const cp_body_panel_pingpong_Doors PROGMEM = //SE35
  *
  * See README.md for Servo Connections
  */
+
+ #ifdef BT1
 
 // Steinke BEGIN
 sequence_t const bt_dome_panel_init PROGMEM = //SE00
@@ -1044,5 +1054,7 @@ sequence_t const bt_dome_danger_fire PROGMEM = //SE38
 		{SPLIT_WORD(0), 	_NP, 	_NP, 	_NP, 	_NP,	_NP, 	_NP, 	_NP, 	_NP, 	_NP,	_NP,    _NP,    _NP,	_NP}
 };
 // Steinke END
+
+#endif
 
 #endif  // __PANELSEQUENCES_H__

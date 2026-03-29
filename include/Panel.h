@@ -26,7 +26,7 @@ public:
 	void setSpeed(const uint8_t Speed);
 
 protected:
-	VarSpeedServo &Servo;
+	VarSpeedServo& Servo;
 	uint16_t OpenPos	= 0;
 	uint16_t ClosedPos	= 0;
 	uint8_t Speed		= 0;

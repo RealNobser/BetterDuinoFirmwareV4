@@ -59,10 +59,10 @@ class Holo
         uint8_t LightStateOn    = HIGH;
         uint8_t LightStateOff   = LOW;
 
-        VarSpeedServo HServo;
+        VarSpeedServo& HServo;
         uint8_t HPin = 0;
         
-        VarSpeedServo VServo;
+        VarSpeedServo& VServo;
         uint8_t VPin = 0;
 
         bool NeoPixelHolo       = false;
