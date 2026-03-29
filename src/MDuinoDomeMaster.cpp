@@ -99,20 +99,8 @@ void MDuinoDomeMaster::run()
 {
     MDuinoDome::run();
 
-    // Servos. TODO: Double implementation, check BaseClass Idea for Dome Board
-    // check https://stackoverflow.com/questions/13340074/c-static-const-members-overriding for const static members MinPanel/MaxPanel
-    if (ServoBuzzIntervall != 0)
-    {
-        if ((millis() - ServoBuzzMillis) > ServoBuzzIntervall)
-        {
-            for (byte i = MinPanel; i <= MaxPanel; i++)
-            {
-                if (!Panels[i]->isMoving())
-                    Panels[i]->detach();
-            }
-            ServoBuzzMillis = millis();
-        }
-    }
+    // Servos - detach idle servos to eliminate buzz
+    checkServoBuzz(Panels, MinPanel, MaxPanel);
 
     // Random Sounds
     if (RandomSoundIntervall != 0)

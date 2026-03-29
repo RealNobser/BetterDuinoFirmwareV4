@@ -21,6 +21,8 @@ class MDuinoDome : public MDuinoBase
         void adjustHoloEndPositions(Holo* Holos[], const byte MinHolo, const byte MaxHolo);
         void adjustPanelEndPositions(Panel* Panels[], const byte MinPanel, const byte MaxPanel);
 
+        void checkServoBuzz(Panel* Panels[], const byte MinPanel, const byte MaxPanel);
+
         bool separateSoundCommand(const char* command, char* cmd, byte & bank, byte & sound);
 
         void getRandomSound(byte & bank, byte & sound);

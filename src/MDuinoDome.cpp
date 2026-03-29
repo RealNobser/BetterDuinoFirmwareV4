@@ -52,6 +52,22 @@ void MDuinoDome::adjustPanelEndPositions(Panel* Panels[], const byte MinPanel, c
     }
 }
 
+void MDuinoDome::checkServoBuzz(Panel* Panels[], const byte MinPanel, const byte MaxPanel)
+{
+    if (ServoBuzzIntervall != 0)
+    {
+        if ((millis() - ServoBuzzMillis) > ServoBuzzIntervall)
+        {
+            for (byte i = MinPanel; i <= MaxPanel; i++)
+            {
+                if (!Panels[i]->isMoving())
+                    Panels[i]->detach();
+            }
+            ServoBuzzMillis = millis();
+        }
+    }
+}
+
 bool MDuinoDome::separateSoundCommand(const char* command, char* cmd, byte & bank, byte & sound)
 {
     char bank_char[2];
