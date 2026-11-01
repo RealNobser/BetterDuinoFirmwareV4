@@ -115,6 +115,7 @@ Der Code der BetterDuino Firmware V4 wurde komplett von Grund auf neu geschriebe
 
 **Speicher**
 - Der Code für die Soundmodule (MP3 Trigger, DF-Player, DY-Player, Vocalizer) wurde zu einer einzigen Klasse ohne virtuelle Funktionen umgebaut: rund 700 Byte weniger Flash und rund 160 Byte weniger RAM, bei unveränderten seriellen Protokollen.
+- Build-Flag `-mcall-prologues`: rund 1,2 KB weniger Flash.
 - Alle Bugfixes zusammen kosten praktisch keinen Flash; der NeoPixel-Build ist insgesamt rund 2 KB kleiner (Sound-Umbau plus der dort nicht mehr enthaltene I2C-Slave-Modus).
 
 **Entwicklung**
@@ -218,7 +219,7 @@ pio run                      # Firmware bauen (.pio/build/ATmega328P/firmware.he
 pio run -t upload            # per ISP-Programmer flashen (setzt auch die Fuses)
 ```
 
-**Flash und RAM sind nahezu ausgeschöpft** (32 KB Flash, 2 KB RAM beim ATmega328P). Die Release-Builds verwenden die Standard-AVR-Toolchain von PlatformIO (GCC 7.3). Neuere Compiler erzeugen merklich größeren Code (GCC 9.5: ca. +1,2 KB), und die kombinierte Firmware passt dann nicht mehr. Auf Apple-Silicon-Macs ohne Rosetta läuft die AVR-Toolchain von PlatformIO nicht; ein nativer avr-gcc (z. B. Homebrew `osx-cross/avr`) funktioniert für Entwicklung und Größenvergleiche, der Größenunterschied sollte dabei aber berücksichtigt werden.
+**Flash und RAM sind nahezu ausgeschöpft** (32 KB Flash, 2 KB RAM beim ATmega328P). Die Release-Builds verwenden die Standard-AVR-Toolchain von PlatformIO (GCC 7.3). Neuere Compiler erzeugen merklich größeren Code (GCC 9.5: ca. +1,2 KB). Der Build verwendet `-mcall-prologues` (siehe `platformio.ini`), das spart rund 1,2 KB, sodass die kombinierte Firmware auch mit neueren Compilern passt (GCC 9.5: 31.914 von 32.768 Byte). Auf Apple-Silicon-Macs ohne Rosetta läuft die AVR-Toolchain von PlatformIO nicht; stattdessen kann ein nativer avr-gcc (z. B. Homebrew `osx-cross/avr`) verwendet werden.
 
 ### Tests
 Die Firmware-Quellen werden unverändert gegen Arduino-Mocks kompiliert und auf dem Host-Rechner ausgeführt, mit AddressSanitizer und UndefinedBehaviorSanitizer. Weder Hardware noch eine AVR-Toolchain werden benötigt.

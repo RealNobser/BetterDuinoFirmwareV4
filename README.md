@@ -115,6 +115,7 @@ Changes since V1.4.5:
 
 **Memory**
 - The sound module code (MP3 Trigger, DF-Player, DY-Player, Vocalizer) was restructured into a single class without virtual functions: about 700 bytes less flash and about 160 bytes less RAM, with identical serial protocols.
+- Build flag `-mcall-prologues`: about 1.2 KB less flash.
 - All bugfixes together cost almost no flash; the NeoPixel build is about 2 KB smaller in total (sound restructuring plus the I2C slave mode no longer being included there).
 
 **Development**
@@ -218,7 +219,7 @@ pio run                      # build firmware (.pio/build/ATmega328P/firmware.he
 pio run -t upload            # flash via ISP programmer (also sets the fuses)
 ```
 
-**Flash and RAM are nearly exhausted** (32 KB flash, 2 KB RAM on the ATmega328P). The release builds use PlatformIO's default AVR toolchain (GCC 7.3). Newer compilers generate noticeably larger code (GCC 9.5: about +1.2 KB) and the combined firmware will then not fit any more. On Apple Silicon Macs without Rosetta, PlatformIO's AVR toolchain does not run; a native avr-gcc (e.g. Homebrew `osx-cross/avr`) works for development and size comparisons, but keep the size difference in mind.
+**Flash and RAM are nearly exhausted** (32 KB flash, 2 KB RAM on the ATmega328P). The release builds use PlatformIO's default AVR toolchain (GCC 7.3). Newer compilers generate noticeably larger code (GCC 9.5: about +1.2 KB). The build uses `-mcall-prologues` (see `platformio.ini`), which saves about 1.2 KB, so the combined firmware also fits with newer compilers (GCC 9.5: 31,914 of 32,768 bytes). On Apple Silicon Macs without Rosetta, PlatformIO's AVR toolchain does not run; a native avr-gcc (e.g. Homebrew `osx-cross/avr`) can be used instead.
 
 ### Tests
 The firmware sources are compiled unchanged against Arduino mocks and run on the host computer, with AddressSanitizer and UndefinedBehaviorSanitizer. No hardware and no AVR toolchain are needed.
