@@ -346,7 +346,7 @@ void MDuinoBodySequencePlayerBT1::playSequence(const byte SeqNr)
     switch (SeqNr)
     {
     case 0: // CLOSE ALL PANELS
-        Sequencer.loadSequence(body_panel_init, SEQ_SIZE(panel_init));
+        Sequencer.loadSequence(body_panel_init, SEQ_SIZE(body_panel_init));
         Sequencer.setServoSpeed(MDuinoSequencer::speed_t::slow);
         break;
     case 1:  // SCREAM

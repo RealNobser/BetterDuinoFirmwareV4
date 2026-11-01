@@ -44,6 +44,7 @@ class MDuinoSequencer
         void clearSequence();
         void startSequence();
         void stopSequence();
+        bool isActive() const { return currentSequence != nullptr; }
         void pauseSequence();
         void resumeSequence();
 
@@ -69,7 +70,8 @@ class MDuinoSequencer
         void nextStep();
         void movePanels();
 
-        byte servoSpeed[SEQUENCE_SIZE];
+        byte servoSpeed = SERVO_SPEED_FAST;    // same speed for all panels of a sequence (was a per-panel array that was always uniform)
+        bool customSpeed = false;              // speed_t::custom: each panel uses its own stored speed (#SP, EEPROM)
 
         void(*seq_completion_callback[MAX_SEQUENCE_COMPLETION_CALLBACKS])(MDuinoBase*); // Maximum 5 Sequence Completion Callbacks
         byte CompletionCallbacksNr = 0;

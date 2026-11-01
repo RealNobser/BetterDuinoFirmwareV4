@@ -9,7 +9,8 @@ class Holo;
 class MDuinoDome : public MDuinoBase
 {
     public:
-        MDuinoDome(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
+        // noinline: otherwise LTO copies this constructor into every role constructor (~370 bytes flash)
+        __attribute__((noinline)) MDuinoDome(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                     VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11);
 
         virtual void init() override;

@@ -13,9 +13,12 @@
 // For connecting servos see https://github.com/RealNobser/BetterDuinoFirmwareV4/blob/main/README.md#connecting-servos-r2d2-common-way
 //
 // Specific Astromech, Choose one
+// (can also be set via build flag -DR2D2 / -DCHOPPER / -DBT1, e.g. by the native test environments)
+#if !defined(R2D2) && !defined(CHOPPER) && !defined(BT1)
 #define R2D2
 // #define CHOPPER
 // #define BT1
+#endif
 
 // #define DEBUG_MSG                        // Additional Log Messages to Serial
 
@@ -25,7 +28,7 @@
 
 // #define INCLUDE_CLASSIC_I2C_SUPPORT  // Uncomment to include classic Serial to I2C support (excludes body master built)
 #define INCLUDE_I2C_SLAVE // Uncommend for new I2C slave mode
-// #define INCLUDE_HOLO_RGB		// Uncomment for NeoPixel-Holo (excludes body master built)
+// #define INCLUDE_HOLO_RGB		// Uncomment for NeoPixel-Holo (excludes body master and I2C slave mode)
 #define ARDUINO_NEOPIXEL     // Choose one!
 // #define FASTLED_NEOPIXEL		// Choose one!
 // #define SEPARATE_DOMELIFT    // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
@@ -46,6 +49,7 @@
 
 #ifdef INCLUDE_HOLO_RGB
 #undef INCLUDE_BODY_MASTER
+#undef INCLUDE_I2C_SLAVE    // no flash left for the I2C slave receive path in the NeoPixel build
 // #undef INCLUDE_DOME_MASTER
 // #define NEO_JEWEL_RGBW
 #ifdef NEO_JEWEL_RGBW

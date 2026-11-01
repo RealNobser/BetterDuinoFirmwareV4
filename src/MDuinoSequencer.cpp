@@ -6,9 +6,7 @@
 MDuinoSequencer::MDuinoSequencer(MDuinoBase* instance)
     : instance(instance)
 {
-    clearSequenceCompletionCallbacks();
-    for(byte panel = MinPanel; panel <= MaxPanel; panel++)
-        servoSpeed[panel]=0;
+    // servoSpeed and CompletionCallbacksNr are default-initialized in the class definition
 }
 
 void MDuinoSequencer::init()
@@ -55,9 +53,7 @@ void MDuinoSequencer::clearSequence()
     currentStepTime     = 0;
     currentStepDuration = 0;
 
-    CompletionCallbacksNr = 0;
-
-    clearSequenceCompletionCallbacks();    
+    clearSequenceCompletionCallbacks();
 }
 
 void MDuinoSequencer::startSequence()
@@ -129,7 +125,7 @@ void MDuinoSequencer::movePanels()
         }
         else
         {
-            Panels[panel]->moveDeg((uint8_t)Position, servoSpeed[panel], false);
+            Panels[panel]->moveDeg((uint8_t)Position, servoSpeed, customSpeed);
         }
     }
 }
@@ -138,10 +134,8 @@ void MDuinoSequencer::setServoSpeed(speed_t speed)
 {
     byte set_speed = SERVO_SPEED_FULL;
 
-    if (speed == speed_t::custom)
-    {
-        // Need Storage access
-    }
+    // custom: per panel speed from EEPROM (#SP), already stored in each Panel object
+    customSpeed = (speed == speed_t::custom);
 
     switch (speed)
     {
@@ -165,10 +159,7 @@ void MDuinoSequencer::setServoSpeed(speed_t speed)
         break;
     }
 
-    for(byte panel = MinPanel; panel <= MaxPanel; panel++)
-    {
-        servoSpeed[panel] = set_speed;
-    }
+    servoSpeed = set_speed;
 }
 
 
@@ -183,6 +174,6 @@ void MDuinoSequencer::addSequenceCompletionCallback(void(*usercallback)(MDuinoBa
 
 void MDuinoSequencer::clearSequenceCompletionCallbacks()
 {
-    for (byte i = 0; i < MAX_SEQUENCE_COMPLETION_CALLBACKS; i++)
-        seq_completion_callback[CompletionCallbacksNr] = nullptr;
+    // Callbacks are only invoked for index < CompletionCallbacksNr, so resetting the counter is sufficient
+    CompletionCallbacksNr = 0;
 }

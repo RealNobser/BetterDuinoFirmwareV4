@@ -263,7 +263,7 @@ void MDuinoDomeMaster::processPanelCommand(const char* command)
     // Address Master Panels
     if (strcmp(cmd, "MV")==0)
     {
-        if (param_num > MaxPanel)
+        if ((param_num < MinPanel) || (param_num > MaxPanel))
             return;
 
         Panels[param_num]->moveMS((uint16_t)param_num_ext, 0, true);

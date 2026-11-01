@@ -30,14 +30,14 @@ void Panel::detach()
         Servo.detach();
 }
 
-void Panel::open(const uint8_t speed)
+void Panel::open()
 {
-    moveMS(OpenPos, speed, false);
+    moveMS(OpenPos, 0, true);
 }
 
-void Panel::close(const uint8_t speed)
+void Panel::close()
 {
-    moveMS(ClosedPos, speed, false);
+    moveMS(ClosedPos, 0, true);
 }
 
 void Panel::moveMS(const uint16_t position, const uint8_t speed,  const bool storedSpeed)

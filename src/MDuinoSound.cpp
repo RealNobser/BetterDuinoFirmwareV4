@@ -2,7 +2,7 @@
 
 MDuinoSound::MDuinoSound()
 {
-	for(uint8_t ui=0; ui < MAX_SOUND_BANK; ui++)
+	for(uint8_t ui=0; ui <= MAX_SOUND_BANK; ui++)
 		lastSoundPlayed[ui] = 0;
 }
 
@@ -14,6 +14,8 @@ void MDuinoSound::VolumeStandard()
 void MDuinoSound::Play(const byte BankNr, const byte SoundNr)
 {
 	byte CalcSoundNr = 0;
+	if ((BankNr == 0) || (BankNr > MAX_SOUND_BANK) || (SoundNr > MAX_BANK_SOUND))
+		return;	// would wrap to a wrong track number
 	CalcSoundNr = (BankNr - 1) * 25 + SoundNr;
 	lastSoundPlayed[BankNr] = SoundNr;
 	Play(CalcSoundNr);

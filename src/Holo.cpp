@@ -16,11 +16,16 @@ Holo::Holo(const uint8_t LightPin, const bool HighActive, VarSpeedServo& HServo,
     {
         #ifdef ARDUINO_NEOPIXEL
         pixels = new Adafruit_NeoPixel(NrPixels, LightPin, HP_NEO_TYPE);
-        pixels->begin();
-        pixels->clear();
+        if (pixels != nullptr)
+        {
+            pixels->begin();
+            pixels->clear();
+        }
+        else
+            this->NeoPixelHolo = false;     // allocation failed (RAM): fall back to standard LED holo
         #endif
     }
-    else
+    if (!this->NeoPixelHolo)
     #endif
     {
         setHighActive(HighActive);
@@ -105,6 +110,9 @@ void Holo::setColor(const uint8_t red, const uint8_t green, const uint8_t blue, 
     this->bright= bright;
 
     #ifdef ARDUINO_NEOPIXEL
+    if (pixels == nullptr)  // standard LED holo or allocation failed
+        return;
+
     uint32_t color = 0x00000000;
     pixels->clear();
 
@@ -132,7 +140,8 @@ void Holo::on(const uint8_t red, const uint8_t green, const uint8_t blue, const 
     setColor(red, green, blue, bright);
 
     #ifdef ARDUINO_NEOPIXEL
-    pixels->show();
+    if (pixels != nullptr)
+        pixels->show();
     #endif 
 
     LightOn = true;

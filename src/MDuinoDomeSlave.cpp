@@ -150,7 +150,7 @@ void MDuinoDomeSlave::processPanelCommand(const char* command)
 
     if (strcmp(cmd, "MV")==0)
     {
-        if (param_num > MaxPanel)
+        if ((param_num < MinPanel) || (param_num > MaxPanel))
             return;
 
         Panels[param_num]->moveMS((uint16_t)param_num_ext, 0, true);
@@ -306,6 +306,8 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
 
         if (strcmp(cmd, "CO")==0)  // Holo Lights Color
         {
+            if ((param_num < MinHolo) || (param_num > MaxHolo))
+                return;
             Holos[param_num]->setColor(red_num, green_num, blue_num, bright_num);
         }
         else if (strcmp(cmd, "ON")==0)  // Holo Lights on
@@ -396,6 +398,8 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     #ifdef INCLUDE_HOLO_TEST    
     else if (strcmp(cmd, "TE")==0)  // Holo Movement Test
     {
+        if ((param_num < MinHolo) || (param_num > MaxHolo))
+            return;
         adjustHoloEndPositions(Holos, MinHolo, MaxHolo);
         Holos[param_num]->testTrigger();
     }
@@ -432,7 +436,7 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
             Serial_Magic.print(F("T0\r"));
         else
         {
-            MagicPanelInterval = param_num * 1000;
+            MagicPanelInterval = param_num * 1000UL;
             MagicPanelMillis = millis();
             Serial_Magic.print(F("T42\r"));
         }
@@ -449,16 +453,16 @@ void MDuinoDomeSlave::processHoloCommand(const char* command)
     {
         AUX1(param_num);
     }
-    else if (strcmp(cmd, "MH")==0)  // 
+    else if (strcmp(cmd, "MH")==0)  // Move Holo horizontal
     {
-        if (param_num > MaxHolo)
+        if ((param_num < MinHolo) || (param_num > MaxHolo))
             return;
 
         Holos[param_num]->move((uint16_t)param_num_ext, -1, 0);
     }
-    else if (strcmp(cmd, "MV")==0)  // AUX1 on
+    else if (strcmp(cmd, "MV")==0)  // Move Holo vertical
     {
-        if (param_num > MaxHolo)
+        if ((param_num < MinHolo) || (param_num > MaxHolo))
             return;
 
         Holos[param_num]->move(-1, (uint16_t)param_num_ext, 0);
@@ -573,7 +577,7 @@ void MDuinoDomeSlave::MagicPanelCtrl(const byte param)
         Serial_Magic.print(F("T1\r"));   // ON
     else
     {
-        MagicPanelInterval = param * 1000;
+        MagicPanelInterval = param * 1000UL;
         MagicPanelMillis = millis();
         Serial_Magic.print(F("T1\r"));   // Timer
     }

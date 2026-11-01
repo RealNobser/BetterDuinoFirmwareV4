@@ -12,8 +12,8 @@ public:
 	void attach();
 	void detach();
 
-	void open(const uint8_t speed = 0);
-	void close(const uint8_t speed = 0);
+	void open();	// uses the stored per panel speed (#SP)
+	void close();	// uses the stored per panel speed (#SP)
 	void moveMS(const uint16_t angle, const uint8_t speed, const bool storedSpeed);
 	void moveDeg(const uint8_t percent, const uint8_t speed, const bool storedSpeed);
 	void lock(const bool lock) { locked = lock; }

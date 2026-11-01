@@ -2,6 +2,10 @@
 #include "MDuinoBase.h"
 #include <Wire.h>
 
+// Buffer index sentinel: skip remainder of an overlong line up to the next '\r'.
+// Prevents the tail of an overlong line from being executed as a new command.
+static const byte DISCARD_LINE = 0xFF;
+
 MDuinoBase::MDuinoBase(VarSpeedServo& Servo1, VarSpeedServo& Servo2, VarSpeedServo& Servo3, VarSpeedServo& Servo4, VarSpeedServo& Servo5, VarSpeedServo& Servo6,
                              VarSpeedServo& Servo7, VarSpeedServo& Servo8, VarSpeedServo& Servo9, VarSpeedServo& Servo10, VarSpeedServo& Servo11) :
     Servo1(Servo1), Servo2(Servo2), Servo3(Servo3), Servo4(Servo4), Servo5(Servo5), Servo6(Servo6),
@@ -55,16 +59,23 @@ void MDuinoBase::run()
             echo(c);
 
         if (c == '\n')
-            return;
-            
-        SerialBuffer[BufferIndex++] = c;
-        if ((c == '\r') || (BufferIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
+            ;   // ignore
+        else if (BufferIndex == DISCARD_LINE)
         {
-            SerialBuffer[BufferIndex-1] = 0x00; // ensure proper termination
-            if (BufferIndex>1)
-                parseCommand(SerialBuffer);
-            SerialBuffer[0] = '\0';
-            BufferIndex = 0;
+            if (c == '\r')
+                BufferIndex = 0;
+        }
+        else
+        {
+            SerialBuffer[BufferIndex++] = c;
+            if ((c == '\r') || (BufferIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
+            {
+                SerialBuffer[BufferIndex-1] = 0x00; // ensure proper termination
+                if (BufferIndex>1)
+                    parseCommand(SerialBuffer);
+                SerialBuffer[0] = '\0';
+                BufferIndex = (c == '\r') ? 0 : DISCARD_LINE;
+            }
         }
     }
 
@@ -91,13 +102,23 @@ void MDuinoBase::run()
     #ifdef INCLUDE_I2C_SLAVE
     if (Wire.available())
     {
-        WireBuffer[WireIndex++] = (unsigned char)Wire.read();
-        if (( WireBuffer[WireIndex-1] == '\r') || (WireIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
+        unsigned char c = (unsigned char)Wire.read();
+        if (WireIndex == DISCARD_LINE)
         {
-            WireBuffer[WireIndex-1] = 0x00; // ensure proper termination
-            parseCommand(WireBuffer);
-            WireBuffer[0] = '\0';
-            WireIndex = 0;
+            if (c == '\r')
+                WireIndex = 0;
+        }
+        else
+        {
+            WireBuffer[WireIndex++] = c;
+            if ((c == '\r') || (WireIndex == SERIALBUFFERSIZE))   // Command complete or buffer full
+            {
+                WireBuffer[WireIndex-1] = 0x00; // ensure proper termination
+                if (WireIndex>1)
+                    parseCommand(WireBuffer);
+                WireBuffer[0] = '\0';
+                WireIndex = (c == '\r') ? 0 : DISCARD_LINE;
+            }
         }
     }
     #endif
@@ -119,6 +140,9 @@ void MDuinoBase::playSequence(const byte SeqNr)
     {
         SequencePlayer->playSequence(SeqNr);
         playSequenceAddons(SeqNr);
+        // Sequence numbers without panel table: completion callbacks never fire -> restore buzz handling
+        if (!Sequencer.isActive())
+            resetServoBuzz();
     }
 }
 
@@ -215,7 +239,7 @@ void MDuinoBase::AUX1(const unsigned int Duration)
     else
     {
         AUX1Millis = millis();
-        AUX1Duration = Duration*1000;
+        AUX1Duration = Duration*1000UL;
         digitalWrite(P_AUX1, HIGH);
     }
     #endif
@@ -224,10 +248,8 @@ void MDuinoBase::AUX1(const unsigned int Duration)
 bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & param_num, unsigned int & param_num_ext)
 {
     char param[3];
-    char param_ext[16];
 
     memset(param, 0x00, 3);
-    memset(param_ext, 0x00, 16);
 
     // Minimum Command Size is 5
     // Prefix(1)+Command(2)+Params(>=2)
@@ -247,8 +269,7 @@ bool MDuinoBase::separateCommand(const char* command, char* cmd, unsigned int & 
 
     if (strlen(command) > 5)
     {
-        memcpy(param_ext, command+5, strlen(command)-5);
-        param_num_ext = atoi(param_ext);
+        param_num_ext = atoi(command+5);    // parse in place: no copy buffer (stack overflow fix, saves RAM/flash)
     }
 
     return true;
@@ -424,7 +445,8 @@ void MDuinoBase::processSetupCommand(const char* command)
     }
     else if (strcmp(cmd, "HX") == 0)
     {
-        Storage.setHoloLEDs(param_num, param_num_ext);
+        if (param_num != 0)
+            Storage.setHoloLEDs(param_num, param_num_ext);
     }
     #ifdef DEBUG_MSG
     else if (strcmp(cmd, "DM") == 0)             // Dump EEPROM
@@ -472,6 +494,8 @@ void MDuinoBase::processI2CCommand(const char* command)
         return;
 
     cmd = new char[strlen(command)];
+    if (cmd == nullptr)
+        return;
     memset(cmd, 0x00, strlen(command));
     memcpy(cmd, command+1, strlen(command)-1);  // truncate leading "&"
 

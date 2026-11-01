@@ -43,6 +43,12 @@ VarSpeedServo Servo9;
 VarSpeedServo Servo10;
 VarSpeedServo Servo11;
 
+#ifdef INCLUDE_I2C_SLAVE
+// The Wire core only copies received slave data into its RX buffer if a receive callback
+// is registered. Data is consumed by polling Wire.available()/read() in MDuinoBase::run().
+static void onI2CReceive(int) {}
+#endif
+
 void setup()
 {
     // put your setup code here, to run once:
@@ -161,6 +167,10 @@ void setup()
 
         break;
     }
+
+    #ifdef INCLUDE_I2C_SLAVE
+    Wire.onReceive(onI2CReceive);
+    #endif
 
     MDuino->init();
 
