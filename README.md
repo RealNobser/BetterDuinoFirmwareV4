@@ -258,7 +258,7 @@ Normally you do not need to change the defines, but, for experienced users, some
 |INCLUDE_HOLO_RGB|NeoPixel holoprojectors|disables Body Master role and I2C slave mode (flash size), choose ARDUINO_NEOPIXEL or FASTLED_NEOPIXEL|off|
 |SEPARATE_DOMELIFT|use (Master) AUX as separate Dome Lift serial||off|
 |INCLUDE_DY_PLAYER|support DY-SV5W sound module|replaces DF-Player support|on|
-|INCLUDE_HOLO_TEST|holo movement test command `*TExx`|for setting up holo servos|off|
+|INCLUDE_HOLO_TEST|holo movement test command `*TExx`|for setting up holo servos (~370 bytes flash)|on|
 
 ***Do not touch any other of the defines.***
 

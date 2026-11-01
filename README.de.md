@@ -258,7 +258,7 @@ Normalerweise müssen die Defines nicht geändert werden, für erfahrene Anwende
 |INCLUDE_HOLO_RGB|NeoPixel-Holoprojektoren|deaktiviert die Body-Master-Rolle und den I2C-Slave-Modus (Flash-Größe), ARDUINO_NEOPIXEL oder FASTLED_NEOPIXEL wählen|aus|
 |SEPARATE_DOMELIFT|(Master-)AUX als separate serielle Dome-Lift-Schnittstelle verwenden||aus|
 |INCLUDE_DY_PLAYER|Unterstützung für das Soundmodul DY-SV5W|ersetzt die DF-Player-Unterstützung|an|
-|INCLUDE_HOLO_TEST|Holo-Bewegungstest-Befehl `*TExx`|zum Einrichten der Holo-Servos|aus|
+|INCLUDE_HOLO_TEST|Holo-Bewegungstest-Befehl `*TExx`|zum Einrichten der Holo-Servos (ca. 370 Byte Flash)|an|
 
 ***Alle übrigen Defines bitte nicht verändern.***
 

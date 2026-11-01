@@ -34,7 +34,7 @@
 // #define SEPARATE_DOMELIFT    // uncomment, if you want to use (Master) AUX as separate Dome Lift Serial
 #define INCLUDE_DY_PLAYER       // Uncomment to include DY sound module (not recommended at the moment, too many problems)
                                 // Including DY-Player excludes DF-Player
-// #define INCLUDE_HOLO_TEST
+#define INCLUDE_HOLO_TEST
 
 #ifdef SEPARATE_DOMELIFT
 #define SERIAL_LIFT_TYPE SendOnlySoftwareSerial
