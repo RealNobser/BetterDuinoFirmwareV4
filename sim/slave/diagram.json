@@ -1,0 +1,542 @@
+{
+  "version": 1,
+  "author": "RealNobser",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-arduino-nano",
+      "id": "nano",
+      "top": 260,
+      "left": 380,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_fh",
+      "top": 0,
+      "left": 0,
+      "rotate": 270,
+      "attrs": {
+        "hornColor": "DarkBlue"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "servo_fh_lbl",
+      "top": -24,
+      "left": 4,
+      "attrs": {
+        "text": "FH"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_fv",
+      "top": 0,
+      "left": 95,
+      "rotate": 270,
+      "attrs": {
+        "hornColor": "DarkBlue"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "servo_fv_lbl",
+      "top": -24,
+      "left": 99,
+      "attrs": {
+        "text": "FV"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_rh",
+      "top": 0,
+      "left": 190,
+      "rotate": 270,
+      "attrs": {
+        "hornColor": "DarkBlue"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "servo_rh_lbl",
+      "top": -24,
+      "left": 194,
+      "attrs": {
+        "text": "RH"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_rv",
+      "top": 0,
+      "left": 285,
+      "rotate": 270,
+      "attrs": {
+        "hornColor": "DarkBlue"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "servo_rv_lbl",
+      "top": -24,
+      "left": 289,
+      "attrs": {
+        "text": "RV"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_th",
+      "top": 0,
+      "left": 380,
+      "rotate": 270,
+      "attrs": {
+        "hornColor": "DarkBlue"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "servo_th_lbl",
+      "top": -24,
+      "left": 384,
+      "attrs": {
+        "text": "TH"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_tv",
+      "top": 0,
+      "left": 475,
+      "rotate": 270,
+      "attrs": {
+        "hornColor": "DarkBlue"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "servo_tv_lbl",
+      "top": -24,
+      "left": 479,
+      "attrs": {
+        "text": "TV"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_p12",
+      "top": 0,
+      "left": 570,
+      "rotate": 270,
+      "attrs": {
+        "hornColor": "DarkBlue"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "servo_p12_lbl",
+      "top": -24,
+      "left": 574,
+      "attrs": {
+        "text": "P12"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_p13",
+      "top": 0,
+      "left": 665,
+      "rotate": 270,
+      "attrs": {
+        "hornColor": "DarkBlue"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "servo_p13_lbl",
+      "top": -24,
+      "left": 669,
+      "attrs": {
+        "text": "P13"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "heartbeat",
+      "top": 470,
+      "left": 400,
+      "attrs": {
+        "color": "red",
+        "label": "LED2"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "heartbeat_r",
+      "top": 430,
+      "left": 390,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "aux1",
+      "top": 470,
+      "left": 470,
+      "attrs": {
+        "color": "blue",
+        "label": "AUX1"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "aux1_r",
+      "top": 430,
+      "left": 460,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "holo_front",
+      "top": 470,
+      "left": 540,
+      "attrs": {
+        "color": "white",
+        "label": "FL"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "holo_front_r",
+      "top": 430,
+      "left": 530,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "holo_rear",
+      "top": 470,
+      "left": 610,
+      "attrs": {
+        "color": "white",
+        "label": "RL"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "holo_rear_r",
+      "top": 430,
+      "left": 600,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "holo_top",
+      "top": 470,
+      "left": 680,
+      "attrs": {
+        "color": "white",
+        "label": "TL"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "holo_top_r",
+      "top": 430,
+      "left": 670,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-logic-analyzer",
+      "id": "logic",
+      "top": 300,
+      "left": 700,
+      "attrs": {
+        "bufferSize": "1000000",
+        "triggerMode": "off",
+        "channelNames": "magic_panel,teeces,AUX1"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "nano:GND.1",
+      "servo_fh:GND",
+      "black",
+      []
+    ],
+    [
+      "nano:5V",
+      "servo_fh:V+",
+      "red",
+      []
+    ],
+    [
+      "nano:3",
+      "servo_fh:PWM",
+      "orange",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "servo_fv:GND",
+      "black",
+      []
+    ],
+    [
+      "nano:5V",
+      "servo_fv:V+",
+      "red",
+      []
+    ],
+    [
+      "nano:2",
+      "servo_fv:PWM",
+      "orange",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "servo_rh:GND",
+      "black",
+      []
+    ],
+    [
+      "nano:5V",
+      "servo_rh:V+",
+      "red",
+      []
+    ],
+    [
+      "nano:5",
+      "servo_rh:PWM",
+      "orange",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "servo_rv:GND",
+      "black",
+      []
+    ],
+    [
+      "nano:5V",
+      "servo_rv:V+",
+      "red",
+      []
+    ],
+    [
+      "nano:4",
+      "servo_rv:PWM",
+      "orange",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "servo_th:GND",
+      "black",
+      []
+    ],
+    [
+      "nano:5V",
+      "servo_th:V+",
+      "red",
+      []
+    ],
+    [
+      "nano:9",
+      "servo_th:PWM",
+      "orange",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "servo_tv:GND",
+      "black",
+      []
+    ],
+    [
+      "nano:5V",
+      "servo_tv:V+",
+      "red",
+      []
+    ],
+    [
+      "nano:6",
+      "servo_tv:PWM",
+      "orange",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "servo_p12:GND",
+      "black",
+      []
+    ],
+    [
+      "nano:5V",
+      "servo_p12:V+",
+      "red",
+      []
+    ],
+    [
+      "nano:13",
+      "servo_p12:PWM",
+      "orange",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "servo_p13:GND",
+      "black",
+      []
+    ],
+    [
+      "nano:5V",
+      "servo_p13:V+",
+      "red",
+      []
+    ],
+    [
+      "nano:7",
+      "servo_p13:PWM",
+      "orange",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "heartbeat:C",
+      "black",
+      []
+    ],
+    [
+      "heartbeat_r:1",
+      "heartbeat:A",
+      "green",
+      []
+    ],
+    [
+      "nano:A3",
+      "heartbeat_r:2",
+      "green",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "aux1:C",
+      "black",
+      []
+    ],
+    [
+      "aux1_r:1",
+      "aux1:A",
+      "green",
+      []
+    ],
+    [
+      "nano:A2",
+      "aux1_r:2",
+      "green",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "holo_front:C",
+      "black",
+      []
+    ],
+    [
+      "holo_front_r:1",
+      "holo_front:A",
+      "green",
+      []
+    ],
+    [
+      "nano:10",
+      "holo_front_r:2",
+      "green",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "holo_rear:C",
+      "black",
+      []
+    ],
+    [
+      "holo_rear_r:1",
+      "holo_rear:A",
+      "green",
+      []
+    ],
+    [
+      "nano:11",
+      "holo_rear_r:2",
+      "green",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "holo_top:C",
+      "black",
+      []
+    ],
+    [
+      "holo_top_r:1",
+      "holo_top:A",
+      "green",
+      []
+    ],
+    [
+      "nano:12",
+      "holo_top_r:2",
+      "green",
+      []
+    ],
+    [
+      "nano:GND.1",
+      "logic:GND",
+      "black",
+      []
+    ],
+    [
+      "nano:A0",
+      "logic:D0",
+      "violet",
+      []
+    ],
+    [
+      "nano:A1",
+      "logic:D1",
+      "violet",
+      []
+    ],
+    [
+      "nano:A2",
+      "logic:D2",
+      "violet",
+      []
+    ]
+  ],
+  "dependencies": {},
+  "serialMonitor": {
+    "display": "always",
+    "newline": "cr"
+  }
+}

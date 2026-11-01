@@ -1,0 +1,20 @@
+# Inputs that crashed or misbehaved before the fixes. The board must stay responsive.
+name: 'Master: crash regressions'
+version: 1
+author: 'RealNobser'
+steps:
+  - wait-serial: 'BD Master R2-D2'
+  - delay: 500ms
+  # null pointer: Panels[0]
+  - write-serial: ":MV00\r"
+  - write-serial: ":MV001500\r"
+  # stack overflow in separateCommand (23 char command)
+  - write-serial: "#SO01123456789012345678\r"
+  # overlong line: the tail must not be executed as a separate command
+  - write-serial: "@1MAAAAAAAAAAAAAAAAAAAAA:EO99\r"
+  - delay: 300ms
+  - expect-pin: { part-id: nano, name: A2, value: 0 }
+  # still alive
+  - write-serial: ":EO99\r"
+  - delay: 200ms
+  - expect-pin: { part-id: nano, name: A2, value: 1 }

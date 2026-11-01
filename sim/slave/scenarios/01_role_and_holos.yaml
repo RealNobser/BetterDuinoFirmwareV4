@@ -1,0 +1,21 @@
+# Assigns the Dome Slave role (#MD01, reboot) and switches the holo lights.
+name: 'Slave: role and holo lights'
+version: 1
+author: 'RealNobser'
+steps:
+  - wait-serial: 'BD Master R2-D2'
+  - write-serial: "#MD01\r"
+  - wait-serial: 'BD Slave R2-D2'
+  - delay: 500ms
+  - write-serial: "*ON01\r"
+  - delay: 200ms
+  - expect-pin: { part-id: nano, name: '10', value: 1 }
+  - expect-pin: { part-id: nano, name: '11', value: 0 }
+  - write-serial: "*ON00\r"
+  - delay: 200ms
+  - expect-pin: { part-id: nano, name: '11', value: 1 }
+  - expect-pin: { part-id: nano, name: '12', value: 1 }
+  - write-serial: "*OF00\r"
+  - delay: 200ms
+  - expect-pin: { part-id: nano, name: '10', value: 0 }
+  - expect-pin: { part-id: nano, name: '12', value: 0 }

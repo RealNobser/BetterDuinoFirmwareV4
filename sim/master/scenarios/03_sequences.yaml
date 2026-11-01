@@ -1,0 +1,18 @@
+# Plays a few panel sequences and checks the board keeps processing commands afterwards.
+name: 'Master: sequences'
+version: 1
+author: 'RealNobser'
+steps:
+  - wait-serial: 'BD Master R2-D2'
+  - delay: 500ms
+  - write-serial: ":SE01\r"
+  - delay: 5s
+  - write-serial: ":SE02\r"
+  - delay: 5s
+  - write-serial: ":SE15\r"
+  - delay: 1s
+  - write-serial: ":SE00\r"
+  - delay: 3s
+  - write-serial: ":EO99\r"
+  - delay: 200ms
+  - expect-pin: { part-id: nano, name: A2, value: 1 }

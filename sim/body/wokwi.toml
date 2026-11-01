@@ -1,0 +1,5 @@
+[wokwi]
+version = 1
+# Paths are relative to this directory. Build first: pio run
+elf = "../../.pio/build/ATmega328P/firmware.elf"
+firmware = "../../.pio/build/ATmega328P/firmware.hex"

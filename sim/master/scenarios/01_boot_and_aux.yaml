@@ -1,0 +1,13 @@
+# Dome Master boots on blank EEPROM (factory reset + reboot) and reacts to commands.
+name: 'Master: boot and AUX1'
+version: 1
+author: 'RealNobser'
+steps:
+  - wait-serial: 'BD Master R2-D2'
+  - delay: 500ms
+  - write-serial: ":EO99\r"
+  - delay: 200ms
+  - expect-pin: { part-id: nano, name: A2, value: 1 }
+  - write-serial: ":EO00\r"
+  - delay: 200ms
+  - expect-pin: { part-id: nano, name: A2, value: 0 }

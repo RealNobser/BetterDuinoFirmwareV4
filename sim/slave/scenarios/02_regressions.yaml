@@ -1,0 +1,21 @@
+# Holo / panel moves on non-existing objects crashed the slave before the fixes.
+name: 'Slave: crash regressions'
+version: 1
+author: 'RealNobser'
+steps:
+  - wait-serial: 'BD Master R2-D2'
+  - write-serial: "#MD01\r"
+  - wait-serial: 'BD Slave R2-D2'
+  - delay: 500ms
+  # null pointer: Holos[0]
+  - write-serial: "*MV001500\r"
+  - write-serial: "*MH001500\r"
+  # null pointer: slave only has panels 12/13
+  - write-serial: ":MV051500\r"
+  # 16 bit overflow of magic panel timer (*MO40 was ~49 days)
+  - write-serial: "*MO40\r"
+  - delay: 200ms
+  # still alive
+  - write-serial: "*ON02\r"
+  - delay: 200ms
+  - expect-pin: { part-id: nano, name: '11', value: 1 }

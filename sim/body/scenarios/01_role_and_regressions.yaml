@@ -1,0 +1,15 @@
+# Assigns the Body Master role (#MD02, reboot) and checks the panel null pointer fix.
+name: 'Body: role and crash regressions'
+version: 1
+author: 'RealNobser'
+steps:
+  - wait-serial: 'BD Master R2-D2'
+  - write-serial: "#MD02\r"
+  - wait-serial: 'BD Body R2-D2'
+  - delay: 500ms
+  - write-serial: ":MV001500\r"
+  - write-serial: ":SE00\r"
+  - delay: 3s
+  - write-serial: ":EO99\r"
+  - delay: 200ms
+  - expect-pin: { part-id: nano, name: A2, value: 1 }
