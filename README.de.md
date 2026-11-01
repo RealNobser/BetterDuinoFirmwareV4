@@ -65,7 +65,7 @@ Der Code der BetterDuino Firmware V4 wurde komplett von Grund auf neu geschriebe
 ### Versionshistorie
 | Datum | Rev | Firmware | Beschreibung |
 |--|--|--|--|
-| unveröffentlicht | main Branch | 4.4.6 (dev) | Bugfixes aus einem Security-/Robustheits-Review, Geschwindigkeit pro Servo für `:OP`/`:CL`, Holo-Move-Befehle, Testsuite und Wokwi-Simulation. Siehe [Aktueller Entwicklungsstand](#aktueller-entwicklungsstand-main-branch-unveröffentlicht) |
+| unveröffentlicht | main Branch | 4.4.6 (dev) | Bugfixes aus einem Security-/Robustheits-Review, Geschwindigkeit pro Servo für `:OP`/`:CL`, Holo-Move-Befehle, schlankerer Soundmodul-Code (ca. 700 Byte Flash und ca. 160 Byte RAM gespart), Testsuite und Wokwi-Simulation. Siehe [Aktueller Entwicklungsstand](#aktueller-entwicklungsstand-main-branch-unveröffentlicht) |
 | 2025-08-10 | V1.4.5 | 4.4.5 | Konfigurierbares serielles Echo (`#EC`) für R2-Touch-Kompatibilität, DY Player im Standard-Release enthalten, Speicheroptimierungen |
 | 2025-05-13 | V1.4.4 | 4.4.4 | Mehrere Bugfixes bei Sound- und Sequenzverarbeitung, Issue #9 behoben, DY Player als Option, Speicheroptimierungen |
 | 2025-05-01 | V1.4.2 | 4.4.2 | Verbesserte Servo-Initialisierung |
@@ -112,6 +112,10 @@ Der Code der BetterDuino Firmware V4 wurde komplett von Grund auf neu geschriebe
 - `INCLUDE_HOLO_RGB` (NeoPixel-Build) deaktiviert jetzt auch den I2C-Slave-Modus (Flash-Größe, wie `INCLUDE_CLASSIC_I2C_SUPPORT`).
 - `:OP`/`:CL` verwenden die mit `#SP` gespeicherte Geschwindigkeit pro Servo (Werkseinstellung 0 = volle Geschwindigkeit, d. h. unverändertes Verhalten, sofern keine Geschwindigkeit konfiguriert wurde). Sequenzen mit dem Geschwindigkeitsmodus "custom" verwenden sie ebenfalls.
 - Neue Holo-Befehle `*MHxxdddd` / `*MVxxdddd` (Holo horizontal / vertikal bewegen).
+
+**Speicher**
+- Der Code für die Soundmodule (MP3 Trigger, DF-Player, DY-Player, Vocalizer) wurde zu einer einzigen Klasse ohne virtuelle Funktionen umgebaut: rund 700 Byte weniger Flash und rund 160 Byte weniger RAM, bei unveränderten seriellen Protokollen.
+- Alle Bugfixes zusammen kosten praktisch keinen Flash; der NeoPixel-Build ist insgesamt rund 2 KB kleiner (Sound-Umbau plus der dort nicht mehr enthaltene I2C-Slave-Modus).
 
 **Entwicklung**
 - Native Unit-Test-Suite (`pio test -e native`) und Wokwi-Simulation für alle drei Board-Rollen, siehe [Entwicklung](#entwicklung).

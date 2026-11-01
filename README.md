@@ -65,7 +65,7 @@ The BetterDuino Firmware V4 code has completely been rewritten from scratch. I t
 ### Revision History
 | Date | Rev | Firmware | Description |
 |--|--|--|--|
-| unreleased | main branch | 4.4.6 (dev) | Bugfixes from a security/robustness review, per-servo speed for `:OP`/`:CL`, holo move commands, test suite and Wokwi simulation. See [Current development state](#current-development-state-main-branch-unreleased) |
+| unreleased | main branch | 4.4.6 (dev) | Bugfixes from a security/robustness review, per-servo speed for `:OP`/`:CL`, holo move commands, leaner sound module code (~700 bytes flash and ~160 bytes RAM saved), test suite and Wokwi simulation. See [Current development state](#current-development-state-main-branch-unreleased) |
 | 2025-08-10 | V1.4.5 | 4.4.5 | Configurable serial echo (`#EC`) for R2 Touch compatibility, DY player included in standard release, memory optimizations |
 | 2025-05-13 | V1.4.4 | 4.4.4 | Multiple bugfixes in sound and sequence handling, fixed issue #9, DY player as option, memory optimizations |
 | 2025-05-01 | V1.4.2 | 4.4.2 | Improved servo initialization |
@@ -112,6 +112,10 @@ Changes since V1.4.5:
 - `INCLUDE_HOLO_RGB` (NeoPixel build) now also disables the I2C slave mode (flash size, like `INCLUDE_CLASSIC_I2C_SUPPORT`).
 - `:OP`/`:CL` use the per-servo speed stored with `#SP` (factory default 0 = full speed, i.e. unchanged behaviour unless you configured a speed). Sequences using speed mode "custom" also use it.
 - New holo commands `*MHxxdddd` / `*MVxxdddd` (move holo horizontally / vertically).
+
+**Memory**
+- The sound module code (MP3 Trigger, DF-Player, DY-Player, Vocalizer) was restructured into a single class without virtual functions: about 700 bytes less flash and about 160 bytes less RAM, with identical serial protocols.
+- All bugfixes together cost almost no flash; the NeoPixel build is about 2 KB smaller in total (sound restructuring plus the I2C slave mode no longer being included there).
 
 **Development**
 - Native unit test suite (`pio test -e native`) and Wokwi simulation for all three board roles, see [Development](#development).
