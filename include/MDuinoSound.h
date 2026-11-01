@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <SendOnlySoftwareSerial.h>
 #include "config.h"
+#include "MDuinoStorage.h"
 
 /***********************************************************
  *  On the MP3, there are a maximum of 255 sound files
@@ -58,135 +59,47 @@
 	//
 	///////////////////////////////////////////////
 
-
 class MDuinoSound
 {
     public:
-        MDuinoSound();
+        // Single concrete class - no virtual functions, no vtable overhead.
+        // Uses MDuinoStorage::MDuinoMP3PlayerType as internal type discriminator.
+        MDuinoSound(SendOnlySoftwareSerial& SoundSerial, MDuinoStorage::MDuinoMP3PlayerType playerType);
 
-        virtual void init() = 0;
+        void init();
 
-        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) = 0;
-        virtual void VolumeUp()     = 0;
-        virtual void VolumeDown()   = 0;
-        virtual void VolumeMid()    = 0;
-        virtual void VolumeMax()    = 0;
-        virtual void VolumeMin()    = 0;
-        virtual void VolumeOff()    = 0;
+        void SetVolume(const byte Volume, const bool SetAsStandard = true);
+        void VolumeUp();
+        void VolumeDown();
+        void VolumeMid();
+        void VolumeMax();
+        void VolumeMin();
+        void VolumeOff();
 
-        virtual void Play(const byte SoundNr) = 0;
-        virtual void Stop() = 0;
-        virtual void Quiet(const bool on = true) = 0;
+        void Play(const byte SoundNr);
+        void Stop();
+        void Quiet(const bool on = true);
 
-        virtual bool hasVocalizer() = 0;
-        virtual void Muse() {}; // empty, but not pure virtual by design
-        virtual void Overload() {}; // empty, but not pure virtual by design
+        bool hasVocalizer() { return (playerType == MDuinoStorage::MDuinoMP3PlayerType::Vocalizer); }
+        void Muse();
+        void Overload();
 
+        // Shared logic (unchanged)
         void VolumeStandard();
         void Play(const byte BankNr, const byte SoundNr);
         void PlayNext(const byte BankNr, const byte MaxSoundNr);
 
-    protected:
+    private:
+        MDuinoStorage::MDuinoMP3PlayerType playerType;
+        SendOnlySoftwareSerial& SoundSerial;
         byte CurrentVolume = 0;
         uint8_t lastSoundPlayed[MAX_SOUND_BANK+1];
-};
 
-class MDuinoSoundMP3Trigger : public MDuinoSound
-{
-    public:
-        explicit MDuinoSoundMP3Trigger(SendOnlySoftwareSerial& SoundSerial);
-
-        virtual void init() override;
-
-        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
-        virtual void VolumeUp() override;
-        virtual void VolumeDown() override;
-        virtual void VolumeMid() override;
-        virtual void VolumeMax() override;
-        virtual void VolumeMin() override;
-        virtual void VolumeOff() override;
-
-        virtual void Play(const byte SoundNr) override;
-        virtual void Stop() override;
-        virtual void Quiet(const bool on = true) override;
-
-        virtual bool hasVocalizer() override { return false; }
-
-    protected:
-        SendOnlySoftwareSerial& SoundSerial;
-};
-
-class MDuinoSoundVocalizer : public MDuinoSound
-{
-    public:
-        explicit MDuinoSoundVocalizer(SendOnlySoftwareSerial& SoundSerial);
-
-        virtual void init() override;
-
-        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
-        virtual void VolumeUp() override;
-        virtual void VolumeDown() override;
-        virtual void VolumeMid() override;
-        virtual void VolumeMax() override;
-        virtual void VolumeMin() override;
-        virtual void VolumeOff() override;
-
-        virtual void Play(const byte SoundNr) override;
-        virtual void Stop() override;
-        virtual void Quiet(const bool on = true) override;
-
-        virtual bool hasVocalizer() override { return true; }
-
-        virtual void Muse() override;
-        virtual void Overload() override;
-
-    protected:
-        SendOnlySoftwareSerial& SoundSerial;
-};
-
-class MDuinoSoundDFPlayer : public MDuinoSound
-{
-    public:
-        explicit MDuinoSoundDFPlayer(SendOnlySoftwareSerial& SoundSerial);
-
-        virtual void init() override;
-
-        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
-        virtual void VolumeUp() override;
-        virtual void VolumeDown() override;
-        virtual void VolumeMid() override;
-        virtual void VolumeMax() override;
-        virtual void VolumeMin() override;
-        virtual void VolumeOff() override;
-
-        virtual void Play(const byte SoundNr) override;
-        virtual void Stop() override;
-        virtual void Quiet(const bool on = true) override;
-
-        virtual bool hasVocalizer() override { return false; }
-
-    protected:
-        SendOnlySoftwareSerial& SoundSerial;
-        void sendCommand(const byte Command, const byte Param1, const byte Param2);
-};
-
+        // Protocol helpers
+        void sendDFCommand(const byte Command, const byte Param1, const byte Param2);
 #ifdef INCLUDE_DY_PLAYER
-class MDuinoSoundDYPlayer : public MDuinoSoundDFPlayer
-{
-    public:
-        explicit MDuinoSoundDYPlayer(SendOnlySoftwareSerial& SoundSerial);
-
-        virtual void init() override;
-
-        virtual void SetVolume(const byte Volume, const bool SetAsStandard = true) override;
-
-        virtual void Play(const byte SoundNr) override;
-        virtual void Stop() override;
-        virtual void Quiet(const bool on = true) override;
-
-    protected:
-        void sendCommand(const byte* Command, const byte len);
-};
+        void sendDYCommand(const byte* Command, const byte len);
 #endif
+};
 
 #endif // __MDUINOSOUND_H__
